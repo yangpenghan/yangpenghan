@@ -4,798 +4,344 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Will Yang — Problem Solver</title>
-    <meta name="description" content="Behavioral Science × AI × Human Factors — I break down complex problems and build solutions.">
+    <meta name="description" content="Behavioral Science × AI × Human Factors — Problem Solver">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter','Noto Sans SC','sans-serif'], mono: ['JetBrains Mono','monospace'] },
+                    colors: {
+                        b: { 50:'#06080f', 100:'#0c1222', 200:'#111827', 300:'#1a2332', 400:'#243044', 500:'#334155', 600:'#64748b' },
+                        ac: { DEFAULT:'#3b82f6', l:'#60a5fa', d:'#2563eb', v:'#a78bfa', m:'#34d399', r:'#fb7185', a:'#fbbf24' },
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        :root {
-            --bg-primary: #0d1117;
-            --bg-secondary: #161b22;
-            --bg-tertiary: #21262d;
-            --text-primary: #e6edf3;
-            --text-secondary: #8b949e;
-            --accent: #58a6ff;
-            --accent-glow: rgba(88, 166, 255, 0.15);
-            --green: #3fb950;
-            --purple: #bc8cff;
-            --orange: #f0883e;
-        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        html{scroll-behavior:smooth}
+        body{font-family:'Inter','Noto Sans SC',sans-serif;background:#06080f;color:#e2e8f0;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 
-        html { scroll-behavior: smooth; }
-        
-        body {
-            font-family: 'Inter', 'Noto Sans SC', sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            overflow-x: hidden;
+        /* Noise */
+        body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+        /* Ambient orbs */
+        .orb{position:fixed;border-radius:50%;filter:blur(100px);pointer-events:none;z-index:0;animation:orbFloat 25s ease-in-out infinite}
+        @keyframes orbFloat{0%,100%{transform:translate(0,0)}33%{transform:translate(30px,-20px)}66%{transform:translate(-20px,15px)}}
+
+        /* Bento card */
+        .bc{
+            background:linear-gradient(145deg,rgba(17,24,39,.95),rgba(12,18,34,.98));
+            border:1px solid rgba(51,65,85,.35);
+            border-radius:24px;
+            padding:28px;
+            position:relative;
+            overflow:hidden;
+            transition:all .5s cubic-bezier(.25,.46,.45,.94);
         }
+        .bc::before{content:'';position:absolute;inset:0;border-radius:24px;padding:1px;background:linear-gradient(135deg,rgba(59,130,246,.15),transparent 50%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .5s}
+        .bc:hover{transform:translateY(-4px) scale(1.01);box-shadow:0 25px 60px rgba(0,0,0,.4),0 0 40px rgba(59,130,246,.06)}
+        .bc:hover::before{opacity:1}
+
+        /* Glow variants */
+        .glow-b{background:linear-gradient(145deg,rgba(37,99,235,.12),rgba(17,24,39,.95) 50%)}
+        .glow-v{background:linear-gradient(145deg,rgba(167,139,250,.12),rgba(17,24,39,.95) 50%)}
+        .glow-m{background:linear-gradient(145deg,rgba(52,211,153,.1),rgba(17,24,39,.95) 50%)}
+        .glow-r{background:linear-gradient(145deg,rgba(251,113,133,.1),rgba(17,24,39,.95) 50%)}
+        .glow-a{background:linear-gradient(145deg,rgba(251,191,36,.1),rgba(17,24,39,.95) 50%)}
+
+        /* Grid */
+        .grid-bento{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:minmax(200px,auto);gap:16px;max-width:1240px;margin:0 auto;padding:0 24px}
+        .c2{grid-column:span 2}.c3{grid-column:span 3}.c4{grid-column:span 4}.r2{grid-row:span 2}
+        @media(max-width:1024px){.grid-bento{grid-template-columns:repeat(2,1fr);gap:12px}.c3,.c4{grid-column:span 2}}
+        @media(max-width:640px){.grid-bento{grid-template-columns:1fr;gap:12px;padding:0 16px}.c2,.c3,.c4{grid-column:span 1}.r2{grid-row:span 1}}
+
+        /* Stat */
+        .sn{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:3rem;line-height:1}
+
+        /* Tags */
+        .tg{display:inline-flex;align-items:center;padding:7px 16px;border-radius:100px;font-size:.8125rem;font-weight:500;background:rgba(26,35,50,.6);border:1px solid rgba(51,65,85,.3);transition:all .25s}
+        .tg:hover{border-color:rgba(59,130,246,.35);background:rgba(59,130,246,.08)}
+
+        /* Avatar */
+        .av{width:88px;height:88px;border-radius:50%;padding:3px;background:linear-gradient(135deg,#3b82f6,#a78bfa,#34d399);flex-shrink:0}
+        .av img{width:100%;height:100%;border-radius:50%;object-fit:cover;background:#1a2332}
+
+        /* Sparkline */
+        .spark{stroke-dasharray:300;stroke-dashoffset:300;animation:draw 2s ease forwards}
+        @keyframes draw{to{stroke-dashoffset:0}}
+
+        /* CTA */
+        .cta{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:14px;font-weight:600;font-size:.8125rem;transition:all .3s;text-decoration:none;color:#fff}
+        .cta-p{background:linear-gradient(135deg,#3b82f6,#1d4ed8);box-shadow:0 4px 20px rgba(59,130,246,.3)}
+        .cta-p:hover{box-shadow:0 8px 30px rgba(59,130,246,.4);transform:translateY(-1px)}
+        .cta-g{background:rgba(26,35,50,.6);border:1px solid rgba(51,65,85,.35)}
+        .cta-g:hover{border-color:rgba(59,130,246,.4);background:rgba(59,130,246,.08)}
+
+        /* Reveal */
+        .rv{opacity:0;transform:translateY(35px);transition:opacity .7s ease,transform .7s cubic-bezier(.25,.46,.45,.94)}
+        .rv.vis{opacity:1;transform:translateY(0)}
 
         /* Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--bg-primary); }
-        ::-webkit-scrollbar-thumb { background: var(--bg-tertiary); border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+        ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:#06080f}::-webkit-scrollbar-thumb{background:#1a2332;border-radius:3px}
 
-        /* Navigation */
-        .nav {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-            background: rgba(13, 17, 23, 0.8);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(48, 54, 61, 0.4);
-            transition: all 0.3s ease;
-        }
-        .nav.scrolled { background: rgba(13, 17, 23, 0.95); }
-        .nav-link {
-            color: var(--text-secondary);
-            transition: color 0.2s;
-            font-size: 0.875rem;
-            font-weight: 500;
-        }
-        .nav-link:hover, .nav-link.active { color: var(--accent); }
+        /* Lang */
+        .lt{position:fixed;bottom:24px;right:24px;z-index:100;display:flex;gap:3px;padding:4px;border-radius:50px;background:rgba(12,18,34,.9);border:1px solid rgba(51,65,85,.35);backdrop-filter:blur(10px)}
+        .lb{padding:6px 14px;border-radius:25px;font-size:.75rem;font-weight:600;cursor:pointer;border:none;background:transparent;color:#64748b;transition:all .2s}
+        .lb.on{background:#3b82f6;color:#fff}
 
-        /* Hero */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%; left: -50%;
-            width: 200%; height: 200%;
-            background: radial-gradient(ellipse at 30% 50%, rgba(88, 166, 255, 0.08) 0%, transparent 50%),
-                        radial-gradient(ellipse at 70% 50%, rgba(188, 140, 255, 0.05) 0%, transparent 50%);
-            animation: heroGlow 20s ease-in-out infinite;
-        }
-        @keyframes heroGlow {
-            0%, 100% { transform: translate(0, 0); }
-            33% { transform: translate(-2%, 1%); }
-            66% { transform: translate(1%, -1%); }
-        }
+        /* Quote */
+        .qm{font-size:3.5rem;line-height:1;font-family:Georgia,serif;background:linear-gradient(135deg,#3b82f6,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;opacity:.6}
 
-        /* Typing effect */
-        .typing-container {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: clamp(1.25rem, 3vw, 2.25rem);
-            color: var(--accent);
-            min-height: 2.5em;
-        }
-        .typing-cursor {
-            display: inline-block;
-            width: 3px;
-            height: 1.2em;
-            background: var(--accent);
-            margin-left: 4px;
-            vertical-align: text-bottom;
-            animation: blink 1s step-end infinite;
-        }
-        @keyframes blink {
-            50% { opacity: 0; }
-        }
+        /* Problem icon */
+        .pi{width:48px;height:48px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
 
-        /* Section transitions */
-        .section-reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-        .section-reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Cards */
-        .problem-card {
-            background: var(--bg-secondary);
-            border: 1px solid rgba(48, 54, 61, 0.6);
-            border-radius: 12px;
-            padding: 2rem;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .problem-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent), var(--purple));
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        .problem-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-4px);
-            box-shadow: 0 8px 30px rgba(88, 166, 255, 0.1);
-        }
-        .problem-card:hover::before { opacity: 1; }
-
-        /* Stat numbers */
-        .stat-number {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 2.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--accent), var(--purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* Tech badges */
-        .tech-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 0.375rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.8125rem;
-            font-weight: 500;
-            border: 1px solid rgba(48, 54, 61, 0.6);
-            background: var(--bg-secondary);
-            transition: all 0.2s;
-        }
-        .tech-badge:hover {
-            border-color: var(--accent);
-            background: var(--accent-glow);
-        }
-
-        /* Language toggle */
-        .lang-toggle {
-            position: fixed;
-            bottom: 2rem; right: 2rem;
-            z-index: 100;
-            background: var(--bg-secondary);
-            border: 1px solid rgba(48, 54, 61, 0.6);
-            border-radius: 50px;
-            padding: 0.5rem;
-            display: flex;
-            gap: 0.25rem;
-            backdrop-filter: blur(10px);
-        }
-        .lang-btn {
-            padding: 0.375rem 0.875rem;
-            border-radius: 25px;
-            font-size: 0.8125rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: none;
-            background: transparent;
-            color: var(--text-secondary);
-        }
-        .lang-btn.active {
-            background: var(--accent);
-            color: #fff;
-        }
-
-        /* Quote block */
-        .quote-block {
-            position: relative;
-            padding: 1.5rem 2rem;
-            border-left: 3px solid var(--accent);
-            background: var(--accent-glow);
-            border-radius: 0 12px 12px 0;
-            font-style: italic;
-            color: var(--text-secondary);
-        }
-
-        /* Timeline */
-        .timeline-item {
-            position: relative;
-            padding-left: 2.5rem;
-            padding-bottom: 2rem;
-        }
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: 7px; top: 24px; bottom: 0;
-            width: 1px;
-            background: var(--bg-tertiary);
-        }
-        .timeline-item:last-child::before { display: none; }
-        .timeline-dot {
-            position: absolute;
-            left: 0; top: 8px;
-            width: 15px; height: 15px;
-            border-radius: 50%;
-            background: var(--bg-primary);
-            border: 2px solid var(--accent);
-        }
-
-        /* Contact links */
-        .contact-link {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 1rem 1.5rem;
-            border-radius: 12px;
-            background: var(--bg-secondary);
-            border: 1px solid rgba(48, 54, 61, 0.6);
-            color: var(--text-primary);
-            text-decoration: none;
-            transition: all 0.2s;
-        }
-        .contact-link:hover {
-            border-color: var(--accent);
-            background: var(--accent-glow);
-            transform: translateX(4px);
-        }
-
-        /* Footer wave */
-        .footer-wave {
-            background: linear-gradient(180deg, var(--bg-primary) 0%, rgba(88, 166, 255, 0.05) 50%, var(--bg-primary) 100%);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .stat-number { font-size: 2rem; }
-            .problem-card { padding: 1.5rem; }
-            .lang-toggle { bottom: 1rem; right: 1rem; }
-        }
-
-        /* Grid background pattern */
-        .grid-bg {
-            background-image: 
-                linear-gradient(rgba(48, 54, 61, 0.3) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(48, 54, 61, 0.3) 1px, transparent 1px);
-            background-size: 60px 60px;
-        }
-
-        /* Fade for content switch */
-        .fade-content {
-            transition: opacity 0.3s ease;
-        }
-        .fade-content.switching {
-            opacity: 0;
-        }
-
-        /* Animated border gradient */
-        .gradient-border {
-            position: relative;
-        }
-        .gradient-border::after {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 10%; right: 10%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--accent), var(--purple), transparent);
-        }
-
-        /* Emoji icon container */
-        .icon-circle {
-            width: 48px; height: 48px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-            background: var(--bg-tertiary);
-            flex-shrink: 0;
-        }
+        /* Dot */
+        .td{width:10px;height:10px;border-radius:50%;background:#3b82f6;box-shadow:0 0 12px rgba(59,130,246,.4);flex-shrink:0}
     </style>
 </head>
-<body class="grid-bg">
+<body>
 
-    <!-- Navigation -->
-    <nav class="nav" id="nav">
-        <div class="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
-            <a href="#" class="text-sm font-semibold tracking-tight" style="color: var(--text-primary);">
-                W<span style="color: var(--accent);">.</span>Yang
-            </a>
-            <div class="hidden sm:flex items-center gap-6">
-                <a href="#about" class="nav-link" data-i18n="nav_about">关于我</a>
-                <a href="#problems" class="nav-link" data-i18n="nav_work">我解决的问题</a>
-                <a href="#toolkit" class="nav-link" data-i18n="nav_toolkit">工具箱</a>
-                <a href="#background" class="nav-link" data-i18n="nav_background">背景</a>
-                <a href="#contact" class="nav-link" data-i18n="nav_contact">联系</a>
-            </div>
-            <div class="sm:hidden">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
-                </svg>
+<!-- Ambient background -->
+<div class="orb" style="top:-15%;left:-8%;width:550px;height:550px;background:radial-gradient(circle,rgba(59,130,246,.07),transparent 70%)"></div>
+<div class="orb" style="bottom:-15%;right:-8%;width:650px;height:650px;background:radial-gradient(circle,rgba(167,139,250,.05),transparent 70%);animation-delay:-8s"></div>
+<div class="orb" style="top:35%;left:45%;width:400px;height:400px;background:radial-gradient(circle,rgba(52,211,153,.03),transparent 70%);animation-delay:-16s"></div>
+
+<main style="position:relative;z-index:1;padding:56px 0 80px">
+
+<div class="grid-bento">
+
+    <!-- === HERO (2col × 2row) === -->
+    <div class="bc glow-b c2 r2 rv flex flex-col justify-between" style="padding:36px">
+        <div class="flex items-center gap-5 mb-8">
+            <div class="av"><img src="assets/avatar.jpg" alt="WY" onerror="this.style.display='none'"></div>
+            <div>
+                <h1 class="text-3xl font-extrabold tracking-tight">Will <span class="text-ac">Yang</span></h1>
+                <p class="text-sm text-slate-400 mt-1.5 font-medium" data-i="sub">问题解决者 · 行为科学 × AI × 人因工程</p>
             </div>
         </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="hero" id="hero">
-        <div class="text-center px-6 relative z-10">
-            <div class="mb-6">
-                <img src="assets/avatar.jpg" alt="Will Yang" 
-                     class="w-28 h-28 rounded-full mx-auto mb-6 border-2"
-                     style="border-color: var(--accent); object-fit: cover; background: var(--bg-tertiary);"
-                     onerror="this.style.display='none'">
-                <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-3 tracking-tight">
-                    Will <span style="color: var(--accent);">Yang</span>
-                </h1>
-                <div class="typing-container" id="typingTarget">
-                    <span id="typingText"></span><span class="typing-cursor"></span>
-                </div>
-            </div>
-            <p class="text-base sm:text-lg max-w-2xl mx-auto leading-relaxed fade-content" style="color: var(--text-secondary);" data-i18n="hero_desc">
-                不管面对的是什么行业、什么挑战，我的本能反应都是：<strong style="color: var(--text-primary);">拆解它，分析它，找到最短路径，然后执行。</strong>
+        <div class="flex-1 flex flex-col justify-center">
+            <div class="qm">"</div>
+            <p class="text-lg text-slate-300 -mt-5 leading-relaxed max-w-md" data-i="quote">
+                不管面对什么挑战，本能反应是：拆解它，分析它，找到最短路径，然后执行。
             </p>
-            <div class="flex items-center justify-center gap-4 mt-8">
-                <a href="mailto:yangpenghan1988@gmail.com" 
-                   class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium transition-all"
-                   style="background: var(--accent); color: #fff;">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                    <span data-i18n="btn_email">邮件联系</span>
-                </a>
-                <a href="https://www.linkedin.com/in/thereisawillyang" target="_blank"
-                   class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium transition-all"
-                   style="border: 1px solid rgba(48,54,61,0.6); background: var(--bg-secondary); color: var(--text-primary);">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                    LinkedIn
-                </a>
-            </div>
-            <div class="mt-12 animate-bounce" style="color: var(--text-secondary);">
-                <svg class="mx-auto" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
-            </div>
         </div>
-    </section>
-
-    <!-- Stats Bar -->
-    <section class="py-16 px-6">
-        <div class="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 section-reveal">
-            <div class="text-center">
-                <div class="stat-number" data-count="25">0</div>
-                <div class="text-sm mt-1" style="color: var(--text-secondary);" data-i18n="stat_1">企业服务</div>
-            </div>
-            <div class="text-center">
-                <div class="stat-number" data-count="243" data-suffix="%">0</div>
-                <div class="text-sm mt-1" style="color: var(--text-secondary);" data-i18n="stat_2">年同比增长</div>
-            </div>
-            <div class="text-center">
-                <div class="stat-number" data-count="10" data-suffix="+">0</div>
-                <div class="text-sm mt-1" style="color: var(--text-secondary);" data-i18n="stat_3">年行为学研究</div>
-            </div>
-            <div class="text-center">
-                <div class="stat-number" data-count="1" data-prefix="" style="font-size: 1.5rem;">∞</div>
-                <div class="text-sm mt-1" style="color: var(--text-secondary);" data-i18n="stat_4">持续进化中</div>
-            </div>
+        <div class="flex flex-wrap gap-3 mt-8">
+            <a href="mailto:yangpenghan1988@gmail.com" class="cta cta-p">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                <span data-i="email">邮件联系</span>
+            </a>
+            <a href="https://www.linkedin.com/in/thereisawillyang" target="_blank" class="cta cta-g">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                LinkedIn
+            </a>
+            <a href="https://github.com/yangpenghan" target="_blank" class="cta cta-g">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                GitHub
+            </a>
         </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="py-20 px-6">
-        <div class="max-w-4xl mx-auto section-reveal">
-            <h2 class="text-2xl sm:text-3xl font-bold mb-8" data-i18n="about_title">🧭 我是谁</h2>
-            <div class="quote-block mb-8 fade-content" data-i18n="about_quote">
-                💡 最好的解决方案，总是来自跨学科的碰撞。
-            </div>
-            <div class="space-y-5 text-base sm:text-lg leading-relaxed fade-content" style="color: var(--text-secondary);">
-                <p data-i18n="about_p1">
-                    我是一个<strong style="color: var(--text-primary);">问题解决者</strong>。
-                </p>
-                <p data-i18n="about_p2">
-                    这个能力长在两个根基上——<strong style="color: var(--accent);">行为科学</strong>（华东师范大学心理学 + 10 年多模态行为数据研究）和<strong style="color: var(--accent);">系统工程思维</strong>（从零组建团队、开辟新业务线、用咨询驱动千万级产品转化）。
-                </p>
-                <p data-i18n="about_p3">
-                    现在我在做第三个版本的自己：把 <strong style="color: var(--accent);">AI Agent</strong> 作为新的工具层，让行为分析和人因工程从人工走向自动化。
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Problems Section -->
-    <section id="problems" class="py-20 px-6" style="background: rgba(22, 27, 34, 0.5);">
-        <div class="max-w-5xl mx-auto">
-            <h2 class="text-2xl sm:text-3xl font-bold mb-12 section-reveal" data-i18n="problems_title">🎯 我解决过的问题</h2>
-            <div class="grid md:grid-cols-2 gap-6">
-                <!-- Card 1 -->
-                <div class="problem-card section-reveal">
-                    <div class="flex items-start gap-4 mb-4">
-                        <div class="icon-circle">🏥</div>
-                        <div>
-                            <h3 class="font-semibold text-base" data-i18n="prob1_title">医疗器械</h>
-                            <p class="text-sm mt-1" style="color: var(--text-secondary);" data-i18n="prob1_problem">国内 IEC 62366 认知空白</p>
-                        </div>
-                    </div>
-                    <p class="text-sm leading-relaxed fade-content" style="color: var(--text-secondary);" data-i18n="prob1_solution">
-                        率先建立标准化流程，服务 <strong style="color: var(--text-primary);">25+</strong> 企业，与莱茵 TÜV 等共建行业评估标准
-                    </p>
-                </div>
-                <!-- Card 2 -->
-                <div class="problem-card section-reveal">
-                    <div class="flex items-start gap-4 mb-4">
-                        <div class="icon-circle">🚗</div>
-                        <div>
-                            <h3 class="font-semibold text-base" data-i18n="prob2_title">汽车行业</h3>
-                            <p class="text-sm mt-1" style="color: var(--text-secondary);" data-i18n="prob2_problem">豪华品牌需要系统化 HMI/UX 评估</p>
-                        </div>
-                    </div>
-                    <p class="text-sm leading-relaxed fade-content" style="color: var(--text-secondary);" data-i18n="prob2_solution">
-                        从方法论到交付，建立年度框架合作（<strong style="color: var(--text-primary);">百万级</strong>）
-                    </p>
-                </div>
-                <!-- Card 3 -->
-                <div class="problem-card section-reveal">
-                    <div class="flex items-start gap-4 mb-4">
-                        <div class="icon-circle">🤖</div>
-                        <div>
-                            <h3 class="font-semibold text-base" data-i18n="prob3_title">AI + 行为分析</h3>
-                            <p class="text-sm mt-1" style="color: var(--text-secondary);" data-i18n="prob3_problem">传统行为编码耗时数周</p>
-                        </div>
-                    </div>
-                    <p class="text-sm leading-relaxed fade-content" style="color: var(--text-secondary);" data-i18n="prob3_solution">
-                        构建多智能体系统，探索<strong style="color: var(--text-primary);">分钟级</strong>自动化洞察
-                    </p>
-                </div>
-                <!-- Card 4 -->
-                <div class="problem-card section-reveal">
-                    <div class="flex items-start gap-4 mb-4">
-                        <div class="icon-circle">🏗️</div>
-                        <div>
-                            <h3 class="font-semibold text-base" data-i18n="prob4_title">组织建设</h3>
-                            <p class="text-sm mt-1" style="color: var(--text-secondary);" data-i18n="prob4_problem">公司缺乏解决方案能力</p>
-                        </div>
-                    </div>
-                    <p class="text-sm leading-relaxed fade-content" style="color: var(--text-secondary);" data-i18n="prob4_solution">
-                        从 <strong style="color: var(--text-primary);">1</strong> 个人到完整咨询体系，2024 年同比增长 <strong style="color: var(--text-primary);">243%</strong>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Toolkit Section -->
-    <section id="toolkit" class="py-20 px-6">
-        <div class="max-w-5xl mx-auto">
-            <h2 class="text-2xl sm:text-3xl font-bold mb-12 section-reveal" data-i18n="toolkit_title">🛠️ 核心工具链</h2>
-            <div class="grid md:grid-cols-2 gap-8 section-reveal">
-                <div>
-                    <h3 class="text-sm font-semibold uppercase tracking-wider mb-4" style="color: var(--accent);" data-i18n="tool1_label">行为测量</h3>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="tech-badge" data-i18n="tool_eye">👁️ 眼动追踪</span>
-                        <span class="tech-badge" data-i18n="tool_eeg">🧠 EEG</span>
-                        <span class="tech-badge" data-i18n="tool_face">😊 面部表情分析</span>
-                        <span class="tech-badge" data-i18n="tool_bio">💓 生理信号</span>
-                        <span class="tech-badge" data-i18n="tool_code">📝 行为观察编码</span>
-                    </div>
-                </div>
-                <div>
-                    <h3 class="text-sm font-semibold uppercase tracking-wider mb-4" style="color: var(--accent);" data-i18n="tool2_label">工程标准</h3>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="tech-badge">IEC 62366</span>
-                        <span class="tech-badge">ANSI/AAMI HE75</span>
-                        <span class="tech-badge">ISO 14971</span>
-                        <span class="tech-badge" data-i18n="tool_formative">形成性/总结性评价</span>
-                        <span class="tech-badge" data-i18n="tool_risk">风险管理</span>
-                    </div>
-                </div>
-                <div>
-                    <h3 class="text-sm font-semibold uppercase tracking-wider mb-4" style="color: var(--accent);">Tech Stack</h3>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="tech-badge">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3776AB" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-                            Python
-                        </span>
-                        <span class="tech-badge">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4285F4" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10H12V2z"/></svg>
-                            LLM APIs
-                        </span>
-                        <span class="tech-badge">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#58a6ff" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                            Multi-Agent
-                        </span>
-                        <span class="tech-badge">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3fb950" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                            RAG
-                        </span>
-                        <span class="tech-badge">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FCC624" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><circle cx="6" cy="6" r="1"/><circle cx="6" cy="18" r="1"/></svg>
-                            Linux
-                        </span>
-                        <span class="tech-badge">n8n</span>
-                    </div>
-                </div>
-                <div>
-                    <h3 class="text-sm font-semibold uppercase tracking-wider mb-4" style="color: var(--accent);" data-i18n="tool4_label">研究方法</h3>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="tech-badge" data-i18n="tool_usability">可用性测试</span>
-                        <span class="tech-badge" data-i18n="tool_field">田野调查</span>
-                        <span class="tech-badge" data-i18n="tool_exp">实验设计</span>
-                        <span class="tech-badge" data-i18n="tool_cross">跨文化研究</span>
-                        <span class="tech-badge" data-i18n="tool_kano">卡诺模型</span>
-                        <span class="tech-badge">NPS</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Background Section -->
-    <section id="background" class="py-20 px-6" style="background: rgba(22, 27, 34, 0.5);">
-        <div class="max-w-4xl mx-auto section-reveal">
-            <h2 class="text-2xl sm:text-3xl font-bold mb-12" data-i18n="bg_title">📚 背景</h2>
-            <div class="space-y-0">
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div>
-                        <h3 class="font-semibold" data-i18n="bg_edu">🎓 华东师范大学 · 心理学</h3>
-                        <p class="text-sm mt-1" style="color: var(--text-secondary);" data-i18n="bg_edu_sub">国家二级心理咨询师 | 用研工程师师资</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div>
-                        <h3 class="font-semibold" data-i18n="bg_talk">🎤 行业演讲</h3>
-                        <p class="text-sm mt-1" style="color: var(--text-secondary);" data-i18n="bg_talk_sub">中国用户体验峰会 · 智能汽车创新发展论坛 · 人机环境工程大会</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div>
-                        <h3 class="font-semibold" data-i18n="bg_grow">📖 持续进化</h3>
-                        <p class="text-sm mt-1" style="color: var(--text-secondary);" data-i18n="bg_grow_sub">认知哲学（GEB）· 投资思维（芒格）· AI Agent · 健康生活管理</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="py-20 px-6">
-        <div class="max-w-4xl mx-auto section-reveal">
-            <h2 class="text-2xl sm:text-3xl font-bold mb-12" data-i18n="proj_title">📌 Featured Projects</h2>
-            <div class="space-y-4">
-                <a href="https://github.com/psyphiclaw" target="_blank" class="problem-card flex items-start gap-4 block no-underline" style="text-decoration: none;">
-                    <div class="icon-circle">🤖</div>
-                    <div>
-                        <h3 class="font-semibold text-base" style="color: var(--text-primary);">PsyPhiClaw</h3>
-                        <p class="text-sm mt-1" style="color: var(--text-secondary);" data-i18n="proj1_desc">Multi-agent platform for multimodal behavioral data analysis — Psychology + Physiology + Claw</p>
-                    </div>
-                    <svg class="ml-auto flex-shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--text-secondary);"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-                </a>
-                <a href="https://github.com/yangpenghan" target="_blank" class="problem-card flex items-start gap-4 block" style="text-decoration: none;">
-                    <div class="icon-circle">📊</div>
-                    <div>
-                        <h3 class="font-semibold text-base" style="color: var(--text-primary);" data-i18n="proj2_title">Stock Quote CLI</h3>
-                        <p class="text-sm mt-1" style="color: var(--text-secondary);" data-i18n="proj2_desc">Real-time market data tool on Yahoo Finance API</p>
-                    </div>
-                    <svg class="ml-auto flex-shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--text-secondary);"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="py-20 px-6" style="background: rgba(22, 27, 34, 0.5);">
-        <div class="max-w-3xl mx-auto text-center section-reveal">
-            <h2 class="text-2xl sm:text-3xl font-bold mb-4" data-i18n="contact_title">Let's Connect</h2>
-            <p class="mb-10" style="color: var(--text-secondary);" data-i18n="contact_desc">如果你也在解决有趣的难题，或者想探讨跨学科合作的可能</p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="mailto:yangpenghan1988@gmail.com" class="contact-link">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                    yangpenghan1988@gmail.com
-                </a>
-                <a href="https://www.linkedin.com/in/thereisawillyang" target="_blank" class="contact-link">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                    Will Yang
-                </a>
-                <a href="https://github.com/yangpenghan" target="_blank" class="contact-link">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                    GitHub
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer-wave py-12 px-6 text-center">
-        <p class="text-sm" style="color: var(--text-secondary);">
-            Built with curiosity · Hosted on GitHub Pages
-        </p>
-        <p class="text-xs mt-2" style="color: var(--bg-tertiary);">
-            © 2025 Will Yang
-        </p>
-    </footer>
-
-    <!-- Language Toggle -->
-    <div class="lang-toggle">
-        <button class="lang-btn active" data-lang="zh" onclick="switchLang('zh')">🇨🇳 中文</button>
-        <button class="lang-btn" data-lang="en" onclick="switchLang('en')">🇬🇧 EN</button>
     </div>
 
-    <script>
-    // === Typing Effect ===
-    const phrases = {
-        zh: ['Problem Solver', '行为科学 × AI × 人因工程', '系统性拆解复杂问题'],
-        en: ['Problem Solver', 'Behavioral Science × AI × Human Factors', 'Breaking down complex problems systematically']
-    };
-    let lang = 'zh';
-    let phraseIdx = 0, charIdx = 0, deleting = false;
-    const typingEl = document.getElementById('typingText');
+    <!-- === 25+ stat === -->
+    <div class="bc glow-m rv flex flex-col justify-center items-center text-center">
+        <div class="sn" style="background:linear-gradient(135deg,#34d399,#6ee7b7);-webkit-background-clip:text;-webkit-text-fill-color:transparent" data-c="25" data-s="+">0</div>
+        <p class="text-sm text-slate-400 mt-2 font-medium" data-i="s1">企业服务</p>
+        <svg class="mt-3 opacity-60" width="90" height="35" viewBox="0 0 90 35"><polyline class="spark" fill="none" stroke="#34d399" stroke-width="2.5" stroke-linecap="round" points="2,30 18,25 35,27 52,12 68,14 88,4"/></svg>
+    </div>
 
-    function typeLoop() {
-        const current = phrases[lang][phraseIdx];
-        if (!deleting) {
-            typingEl.textContent = current.slice(0, charIdx++);
-            if (charIdx > current.length) {
-                setTimeout(() => { deleting = true; typeLoop(); }, 2000);
-                return;
-            }
-        } else {
-            typingEl.textContent = current.slice(0, charIdx--);
-            if (charIdx < 0) {
-                deleting = false;
-                phraseIdx = (phraseIdx + 1) % phrases[lang].length;
-                charIdx = 0;
-            }
-        }
-        setTimeout(typeLoop, deleting ? 40 : 80);
-    }
-    typeLoop();
+    <!-- === 243% stat === -->
+    <div class="bc glow-v rv flex flex-col justify-center items-center text-center">
+        <div class="sn" style="background:linear-gradient(135deg,#a78bfa,#c4b5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent" data-c="243" data-s="%">0</div>
+        <p class="text-sm text-slate-400 mt-2 font-medium" data-i="s2">年同比增长</p>
+        <svg class="mt-3 opacity-60" width="90" height="35" viewBox="0 0 90 35"><polyline class="spark" fill="none" stroke="#a78bfa" stroke-width="2.5" stroke-linecap="round" points="2,32 22,28 38,22 54,18 70,9 88,3"/></svg>
+    </div>
 
-    // === Scroll Animations ===
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.section-reveal').forEach(el => observer.observe(el));
+    <!-- === 医疗器械 (2col) === -->
+    <div class="bc rv c2">
+        <div class="flex items-start gap-4">
+            <div class="pi" style="background:rgba(59,130,246,.12)">🏥</div>
+            <div>
+                <h3 class="font-semibold text-blue-300" data-i="p1t">医疗器械</h3>
+                <p class="text-xs text-slate-500 mt-0.5" data-i="p1p">国内 IEC 62366 认知空白</p>
+            </div>
+        </div>
+        <p class="text-sm text-slate-300 mt-5 leading-relaxed" data-i="p1s">率先建立标准化流程，服务 <strong class="text-white">25+</strong> 企业，与莱茵 TÜV 等共建行业评估标准</p>
+    </div>
 
-    // === Nav Scroll ===
-    window.addEventListener('scroll', () => {
-        document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
-    });
+    <!-- === 汽车 (2col) === -->
+    <div class="bc rv c2">
+        <div class="flex items-start gap-4">
+            <div class="pi" style="background:rgba(251,191,36,.12)">🚗</div>
+            <div>
+                <h3 class="font-semibold text-amber-300" data-i="p2t">汽车行业</h3>
+                <p class="text-xs text-slate-500 mt-0.5" data-i="p2p">豪华品牌需要系统化 HMI/UX 评估</p>
+            </div>
+        </div>
+        <p class="text-sm text-slate-300 mt-5 leading-relaxed" data-i="p2s">从方法论到交付，建立年度框架合作（<strong class="text-white">百万级</strong>）</p>
+    </div>
 
-    // === Stat Counter ===
-    const statObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.querySelectorAll('.stat-number[data-count]').forEach(el => {
-                    const target = parseInt(el.dataset.count);
-                    const suffix = el.dataset.suffix || '';
-                    const prefix = el.dataset.prefix !== undefined ? el.dataset.prefix : '';
-                    let current = 0;
-                    const step = Math.max(1, Math.floor(target / 40));
-                    const timer = setInterval(() => {
-                        current += step;
-                        if (current >= target) { current = target; clearInterval(timer); }
-                        el.textContent = prefix + current + suffix;
-                    }, 30);
-                });
-                statObserver.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.5 });
-    document.querySelectorAll('.stat-number[data-count]').forEach(el => 
-        statObserver.observe(el.closest('.section-reveal') || el)
-    );
+    <!-- === 10+ stat === -->
+    <div class="bc glow-r rv flex flex-col justify-center items-center text-center">
+        <div class="sn" style="background:linear-gradient(135deg,#fb7185,#fda4af);-webkit-background-clip:text;-webkit-text-fill-color:transparent" data-c="10" data-s="+">0</div>
+        <p class="text-sm text-slate-400 mt-2 font-medium" data-i="s3">年行为学研究</p>
+    </div>
 
-    // === Language Switching ===
-    const i18n = {
-        zh: {
-            nav_about: '关于我', nav_work: '我解决的问题', nav_toolkit: '工具箱', nav_background: '背景', nav_contact: '联系',
-            hero_desc: '不管面对的是什么行业、什么挑战，我的本能反应都是：<strong style="color: var(--text-primary);">拆解它，分析它，找到最短路径，然后执行。</strong>',
-            btn_email: '邮件联系',
-            stat_1: '企业服务', stat_2: '年同比增长', stat_3: '年行为学研究', stat_4: '持续进化中',
-            about_title: '🧭 我是谁',
-            about_quote: '💡 最好的解决方案，总是来自跨学科的碰撞。',
-            about_p1: '我是一个<strong style="color: var(--text-primary);">问题解决者</strong>。',
-            about_p2: '这个能力长在两个根基上——<strong style="color: var(--accent);">行为科学</strong>（华东师范大学心理学 + 10 年多模态行为数据研究）和<strong style="color: var(--accent);">系统工程思维</strong>（从零组建团队、开辟新业务线、用咨询驱动千万级产品转化）。',
-            about_p3: '现在我在做第三个版本的自己：把 <strong style="color: var(--accent);">AI Agent</strong> 作为新的工具层，让行为分析和人因工程从人工走向自动化。',
-            problems_title: '🎯 我解决过的问题',
-            prob1_title: '医疗器械', prob1_problem: '国内 IEC 62366 认知空白',
-            prob1_solution: '率先建立标准化流程，服务 <strong style="color: var(--text-primary);">25+</strong> 企业，与莱茵 TÜV 等共建行业评估标准',
-            prob2_title: '汽车行业', prob2_problem: '豪华品牌需要系统化 HMI/UX 评估',
-            prob2_solution: '从方法论到交付，建立年度框架合作（<strong style="color: var(--text-primary);">百万级</strong>）',
-            prob3_title: 'AI + 行为分析', prob3_problem: '传统行为编码耗时数周',
-            prob3_solution: '构建多智能体系统，探索<strong style="color: var(--text-primary);">分钟级</strong>自动化洞察',
-            prob4_title: '组织建设', prob4_problem: '公司缺乏解决方案能力',
-            prob4_solution: '从 <strong style="color: var(--text-primary);">1</strong> 个人到完整咨询体系，2024 年同比增长 <strong style="color: var(--text-primary);">243%</strong>',
-            toolkit_title: '🛠️ 核心工具链',
-            tool1_label: '行为测量', tool2_label: '工程标准', tool4_label: '研究方法',
-            tool_eye: '👁️ 眼动追踪', tool_eeg: '🧠 EEG', tool_face: '😊 面部表情分析', tool_bio: '💓 生理信号', tool_code: '📝 行为观察编码',
-            tool_formative: '形成性/总结性评价', tool_risk: '风险管理',
-            tool_usability: '可用性测试', tool_field: '田野调查', tool_exp: '实验设计', tool_cross: '跨文化研究', tool_kano: '卡诺模型',
-            bg_title: '📚 背景',
-            bg_edu: '🎓 华东师范大学 · 心理学', bg_edu_sub: '国家二级心理咨询师 | 用研工程师师资',
-            bg_talk: '🎤 行业演讲', bg_talk_sub: '中国用户体验峰会 · 智能汽车创新发展论坛 · 人机环境工程大会',
-            bg_grow: '📖 持续进化', bg_grow_sub: '认知哲学（GEB）· 投资思维（芒格）· AI Agent · 健康生活管理',
-            proj_title: '📌 Featured Projects',
-            proj1_desc: '多模态行为数据洞察多智能体平台 — Psychology + Physiology + Claw',
-            proj2_title: 'Stock Quote CLI', proj2_desc: '基于 Yahoo Finance API 的实时行情工具',
-            contact_title: '来聊聊', contact_desc: '如果你也在解决有趣的难题，或者想探讨跨学科合作的可能',
-        },
-        en: {
-            nav_about: 'About', nav_work: 'Problems', nav_toolkit: 'Toolkit', nav_background: 'Background', nav_contact: 'Contact',
-            hero_desc: 'No matter the industry or the challenge, my instinct is the same: <strong style="color: var(--text-primary);">break it down, analyze it, find the shortest path, then execute.</strong>',
-            btn_email: 'Email Me',
-            stat_1: 'Companies Served', stat_2: 'YoY Growth', stat_3: 'Years in Research', stat_4: 'Always Evolving',
-            about_title: '🧭 Who I Am',
-            about_quote: '💡 The best solutions always emerge from interdisciplinary collisions.',
-            about_p1: 'I\'m a <strong style="color: var(--text-primary);">problem solver</strong>.',
-            about_p2: 'This ability is rooted in two foundations — <strong style="color: var(--accent);">behavioral science</strong> (B.S. Psychology, 10+ years of multimodal behavioral data research) and <strong style="color: var(--accent);">systems thinking</strong> (building consulting teams from zero, driving 10M+ RMB in annual product conversion).',
-            about_p3: 'Now I\'m building version three of myself: adding <strong style="color: var(--accent);">AI Agents</strong> as a new tool layer to move behavioral analysis and human factors engineering from manual to automated.',
-            problems_title: '🎯 Problems I\'ve Solved',
-            prob1_title: 'Medical Devices', prob1_problem: 'IEC 62366 unknown in China',
-            prob1_solution: 'Pioneered standardized processes, served <strong style="color: var(--text-primary);">25+</strong> companies, co-built standards with TÜV Rheinland',
-            prob2_title: 'Automotive', prob2_problem: 'Luxury brand needed systematic HMI/UX evaluation',
-            prob2_solution: 'From methodology to delivery, established annual framework partnership (<strong style="color: var(--text-primary);">million-level</strong>)',
-            prob3_title: 'AI + Behavioral Analysis', prob3_problem: 'Traditional behavioral coding takes weeks',
-            prob3_solution: 'Multi-agent systems → <strong style="color: var(--text-primary);">minute-level</strong> automated insights',
-            prob4_title: 'Organization', prob4_problem: 'Lacked solution engineering capability',
-            prob4_solution: 'From <strong style="color: var(--text-primary);">1</strong> person to full consulting system — <strong style="color: var(--text-primary);">243%</strong> YoY growth',
-            toolkit_title: '🛠️ Toolkit',
-            tool1_label: 'Behavioral Measurement', tool2_label: 'Engineering Standards', tool4_label: 'Research Methods',
-            tool_eye: '👁️ Eye Tracking', tool_eeg: '🧠 EEG', tool_face: '😊 Facial Expression', tool_bio: '💓 Biosignals', tool_code: '📝 Behavioral Coding',
-            tool_formative: 'Formative/Summative', tool_risk: 'Risk Management',
-            tool_usability: 'Usability Testing', tool_field: 'Field Studies', tool_exp: 'Experimental Design', tool_cross: 'Cross-cultural', tool_kano: 'Kano Model',
-            bg_title: '📚 Background',
-            bg_edu: '🎓 East China Normal University · Psychology', bg_edu_sub: 'Certified Psychological Counselor | UX Research Instructor',
-            bg_talk: '🎤 Speaker', bg_talk_sub: 'China UX Summit · Smart Auto Innovation Forum · HME Conference',
-            bg_grow: '📖 Always Evolving', bg_grow_sub: 'Cognitive philosophy (GEB) · Investment thinking (Munger) · AI Agents · Healthy lifestyle',
-            proj_title: '📌 Featured Projects',
-            proj1_desc: 'Multi-agent platform for multimodal behavioral data analysis — Psychology + Physiology + Claw',
-            proj2_title: 'Stock Quote CLI', proj2_desc: 'Real-time market data tool on Yahoo Finance API',
-            contact_title: 'Let\'s Connect', contact_desc: 'If you\'re also solving interesting problems, or exploring interdisciplinary collaboration',
-        }
-    };
+    <!-- === AI (1col) === -->
+    <div class="bc glow-v rv flex flex-col justify-center">
+        <div class="pi mb-3" style="background:rgba(167,139,250,.12)">🤖</div>
+        <h3 class="font-semibold text-violet-300 text-sm" data-i="p3t">AI + 行为分析</h3>
+        <p class="text-xs text-slate-500 mt-1" data-i="p3p">传统编码耗时数周</p>
+        <p class="text-sm text-slate-300 mt-3" data-i="p3s">多智能体 → <strong class="text-white">分钟级</strong>洞察</p>
+    </div>
 
-    function switchLang(newLang) {
-        lang = newLang;
-        document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
-        
-        // Reset typing with new phrases
-        phraseIdx = 0; charIdx = 0; deleting = false;
-        
-        // Update all i18n elements
-        document.querySelectorAll('[data-i18n]').forEach(el => {
-            const key = el.dataset.i18n;
-            if (i18n[lang][key]) el.innerHTML = i18n[lang][key];
-        });
+    <!-- === 组织 (1col) === -->
+    <div class="bc glow-a rv flex flex-col justify-center">
+        <div class="pi mb-3" style="background:rgba(251,191,36,.12)">🏗️</div>
+        <h3 class="font-semibold text-amber-300 text-sm" data-i="p4t">组织建设</h3>
+        <p class="text-xs text-slate-500 mt-1" data-i="p4p">从 1 人到完整体系</p>
+        <p class="text-sm text-slate-300 mt-3" data-i="p4s"><strong class="text-white">243%</strong> YoY</p>
+    </div>
 
-        // Update page title
-        document.title = `Will Yang — ${lang === 'zh' ? '问题解决者' : 'Problem Solver'}`;
-    }
+    <!-- === Tech Stack (2col) === -->
+    <div class="bc rv c2">
+        <h3 class="font-semibold text-sm mb-5 flex items-center gap-2"><span class="text-blue-400">⚡</span><span data-i="tt">技术栈</span></h3>
+        <div class="flex flex-wrap gap-2.5">
+            <span class="tg"><span class="w-2 h-2 rounded-full bg-blue-500"></span>Python</span>
+            <span class="tg"><span class="w-2 h-2 rounded-full bg-violet-400"></span>LLM APIs</span>
+            <span class="tg"><span class="w-2 h-2 rounded-full bg-blue-400"></span>Multi-Agent</span>
+            <span class="tg"><span class="w-2 h-2 rounded-full bg-green-400"></span>RAG</span>
+            <span class="tg"><span class="w-2 h-2 rounded-full bg-amber-400"></span>Linux</span>
+            <span class="tg"><span class="w-2 h-2 rounded-full bg-rose-400"></span>n8n</span>
+            <span class="tg"><span class="w-2 h-2 rounded-full bg-slate-400"></span>Git</span>
+        </div>
+    </div>
 
-    // === Mobile menu toggle (simple) ===
-    document.querySelector('.sm\\:hidden')?.addEventListener('click', () => {
-        const navLinks = document.querySelector('.hidden.sm\\:flex');
-        if (navLinks) {
-            navLinks.classList.toggle('hidden');
-            navLinks.classList.toggle('flex');
-            navLinks.classList.toggle('flex-col');
-            navLinks.classList.toggle('absolute');
-            navLinks.classList.toggle('top-full');
-            navLinks.classList.toggle('left-0');
-            navLinks.classList.toggle('right-0');
-            navLinks.classList.toggle('p-6');
-            navLinks.classList.toggle('gap-4');
-            navLinks.style.background = 'rgba(13,17,23,0.95)';
-            navLinks.style.backdropFilter = 'blur(20px)';
-            navLinks.style.borderBottom = '1px solid rgba(48,54,61,0.4)';
-        }
-    });
-    </script>
+    <!-- === Toolkit (2col) === -->
+    <div class="bc rv c2">
+        <h3 class="font-semibold text-sm mb-5 flex items-center gap-2"><span class="text-green-400">🧬</span><span data-i="kt">核心能力</span></h3>
+        <div class="grid grid-cols-2 gap-x-6 gap-y-5">
+            <div>
+                <p class="text-[11px] text-slate-500 font-bold uppercase tracking-widest mb-1.5" data-i="k1">行为测量</p>
+                <p class="text-sm text-slate-300 leading-relaxed" data-i="k1l">眼动 · EEG · 表情 · 生理信号 · 行为编码</p>
+            </div>
+            <div>
+                <p class="text-[11px] text-slate-500 font-bold uppercase tracking-widest mb-1.5" data-i="k2">工程标准</p>
+                <p class="text-sm text-slate-300 leading-relaxed">IEC 62366 · HE75 · ISO 14971</p>
+            </div>
+            <div>
+                <p class="text-[11px] text-slate-500 font-bold uppercase tracking-widest mb-1.5" data-i="k3">研究方法</p>
+                <p class="text-sm text-slate-300 leading-relaxed" data-i="k3l">可用性测试 · 实验设计 · 跨文化研究</p>
+            </div>
+            <div>
+                <p class="text-[11px] text-slate-500 font-bold uppercase tracking-widest mb-1.5" data-i="k4">持续进化</p>
+                <p class="text-sm text-slate-300 leading-relaxed" data-i="k4l">GEB · 芒格 · AI Agent · 健康管理</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- === Background (2col) === -->
+    <div class="bc rv c2">
+        <h3 class="font-semibold text-sm mb-5 flex items-center gap-2"><span class="text-rose-400">🎓</span><span data-i="bt">背景</span></h3>
+        <div class="space-y-5">
+            <div class="flex items-start gap-3">
+                <div class="td mt-1"></div>
+                <div>
+                    <p class="text-sm font-medium" data-i="b1">华东师范大学 · 心理学</p>
+                    <p class="text-xs text-slate-500 mt-0.5" data-i="b1s">国家二级心理咨询师 | 用研工程师师资</p>
+                </div>
+            </div>
+            <div class="flex items-start gap-3">
+                <div class="td mt-1"></div>
+                <div>
+                    <p class="text-sm font-medium" data-i="b2">行业演讲</p>
+                    <p class="text-xs text-slate-500 mt-0.5" data-i="b2s">中国用户体验峰会 · 智能汽车创新发展论坛 · 人机环境工程大会</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- === Projects (2col) === -->
+    <div class="bc rv c2">
+        <h3 class="font-semibold text-sm mb-5 flex items-center gap-2"><span class="text-blue-400">📌</span><span>Projects</span></h3>
+        <div class="space-y-2">
+            <a href="https://github.com/psyphiclaw" target="_blank" class="flex items-center justify-between p-3.5 rounded-2xl transition-all hover:bg-white/[.04]" style="text-decoration:none;color:inherit">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-violet-500/15 flex items-center justify-center text-base">🧬</div>
+                    <div>
+                        <p class="text-sm font-semibold">PsyPhiClaw</p>
+                        <p class="text-xs text-slate-500" data-i="j1">多模态行为数据洞察平台</p>
+                    </div>
+                </div>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-slate-600"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+            </a>
+            <a href="https://github.com/yangpenghan" target="_blank" class="flex items-center justify-between p-3.5 rounded-2xl transition-all hover:bg-white/[.04]" style="text-decoration:none;color:inherit">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-green-500/15 flex items-center justify-center text-base">📊</div>
+                    <div>
+                        <p class="text-sm font-semibold">Stock Quote CLI</p>
+                        <p class="text-xs text-slate-500" data-i="j2">实时行情工具</p>
+                    </div>
+                </div>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-slate-600"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+            </a>
+        </div>
+    </div>
+
+    <!-- === Location === -->
+    <div class="bc rv flex flex-col justify-center items-center text-center">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="1.5" class="mb-2 opacity-70"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <p class="text-sm font-semibold">Beijing, China</p>
+        <p class="text-xs text-slate-500 mt-0.5" data-i="loc">重庆 → 北京</p>
+    </div>
+
+    <!-- === Philosophy === -->
+    <div class="bc glow-v rv flex flex-col justify-center">
+        <div class="qm" style="font-size:2.5rem">"</div>
+        <p class="text-sm text-slate-300 leading-relaxed -mt-4" data-i="ph">最好的解决方案，总是来自跨学科的碰撞。</p>
+    </div>
+
+</div>
+
+<!-- Footer -->
+<div class="max-w-[1240px] mx-auto px-6 mt-16 pt-8" style="border-top:1px solid rgba(51,65,85,.2)">
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-600">
+        <p>© 2025 Will Yang · Built with curiosity</p>
+        <div class="flex gap-5">
+            <a href="https://github.com/yangpenghan" target="_blank" class="hover:text-slate-400 transition-colors">GitHub</a>
+            <a href="https://www.linkedin.com/in/thereisawillyang" target="_blank" class="hover:text-slate-400 transition-colors">LinkedIn</a>
+            <a href="mailto:yangpenghan1988@gmail.com" class="hover:text-slate-400 transition-colors">Email</a>
+        </div>
+    </div>
+</div>
+
+</main>
+
+<!-- Lang toggle -->
+<div class="lt">
+    <button class="lb on" data-l="zh" onclick="sw('zh')">中文</button>
+    <button class="lb" data-l="en" onclick="sw('en')">EN</button>
+</div>
+
+<script>
+const T={
+zh:{sub:'问题解决者 · 行为科学 × AI × 人因工程',quote:'不管面对什么挑战，本能反应是：拆解它，分析它，找到最短路径，然后执行。',email:'邮件联系',s1:'企业服务',s2:'年同比增长',s3:'年行为学研究',p1t:'医疗器械',p1p:'国内 IEC 62366 认知空白',p1s:'率先建立标准化流程，服务 <strong class="text-white">25+</strong> 企业，与莱茵 TÜV 等共建行业评估标准',p2t:'汽车行业',p2p:'豪华品牌需要系统化 HMI/UX 评估',p2s:'从方法论到交付，建立年度框架合作（<strong class="text-white">百万级</strong>）',p3t:'AI + 行为分析',p3p:'传统编码耗时数周',p3s:'多智能体 → <strong class="text-white">分钟级</strong>洞察',p4t:'组织建设',p4p:'从 1 人到完整体系',p4s:'<strong class="text-white">243%</strong> YoY',tt:'技术栈',kt:'核心能力',k1:'行为测量',k1l:'眼动 · EEG · 表情 · 生理信号 · 行为编码',k2:'工程标准',k3:'研究方法',k3l:'可用性测试 · 实验设计 · 跨文化研究',k4:'持续进化',k4l:'GEB · 芒格 · AI Agent · 健康管理',bt:'背景',b1:'华东师范大学 · 心理学',b1s:'国家二级心理咨询师 | 用研工程师师资',b2:'行业演讲',b2s:'中国用户体验峰会 · 智能汽车创新发展论坛 · 人机环境工程大会',j1:'多模态行为数据洞察平台',j2:'实时行情工具',loc:'重庆 → 北京',ph:'最好的解决方案，总是来自跨学科的碰撞。'},
+en:{sub:'Problem Solver · Behavioral Science × AI × Human Factors',quote:'No matter the challenge, my instinct: break it down, analyze it, find the shortest path, then execute.',email:'Email Me',s1:'Companies Served',s2:'YoY Growth',s3:'Years in Research',p1t:'Medical Devices',p1p:'IEC 62366 unknown in China',p1s:'Pioneered standardized processes, served <strong class="text-white">25+</strong> companies, co-built standards with TÜV Rheinland',p2t:'Automotive',p2p:'Luxury brand needed systematic HMI/UX',p2s:'Methodology to delivery, annual partnership (<strong class="text-white">million-level</strong>)',p3t:'AI + Behavioral',p3p:'Traditional coding takes weeks',p3s:'Multi-agent → <strong class="text-white">minute-level</strong> insights',p4t:'Organization',p4p:'From 1 person to full system',p4s:'<strong class="text-white">243%</strong> YoY',tt:'Tech Stack',kt:'Core Expertise',k1:'Measurement',k1l:'Eye tracking · EEG · Expression · Biosignals · Coding',k2:'Standards',k3:'Research',k3l:'Usability testing · Experimental design · Cross-cultural',k4:'Always Evolving',k4l:'GEB · Munger · AI Agents · Wellness',bt:'Background',b1:'East China Normal University · Psychology',b1s:'Certified Counselor | UX Research Instructor',b2:'Speaker',b2s:'China UX Summit · Smart Auto Forum · HME Conference',j1:'Multimodal behavioral analysis platform',j2:'Real-time market data',loc:'Chongqing → Beijing',ph:'The best solutions emerge from interdisciplinary collisions.'}
+};
+let lang='zh';
+function sw(l){lang=l;document.querySelectorAll('.lb').forEach(b=>b.classList.toggle('on',b.dataset.l===l));document.querySelectorAll('[data-i]').forEach(e=>{if(T[l][e.dataset.i])e.innerHTML=T[l][e.dataset.i]})}
+
+// Reveal
+const io=new IntersectionObserver(es=>{es.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('vis'),i*60);io.unobserve(e.target)}})},{threshold:.08});
+document.querySelectorAll('.rv').forEach(e=>io.observe(e));
+
+// Counter
+const co=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){const el=e.target,t=parseInt(el.dataset.c),s=el.dataset.s||'';let c=0;const step=Math.max(1,Math.floor(t/25));const tm=setInterval(()=>{c+=step;if(c>=t){c=t;clearInterval(tm)}el.textContent=c+s},45);co.unobserve(el)}})},{threshold:.4});
+document.querySelectorAll('.sn[data-c]').forEach(e=>co.observe(e));
+</script>
 </body>
 </html>
