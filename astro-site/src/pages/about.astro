@@ -1,0 +1,172 @@
+---
+import ContactCTA from '../components/ContactCTA.astro';
+import Hero from '../components/Hero.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="About | Will Yang" description="Behavioral Science × AI × Human Factors — Problem Solver">
+	<div class="stack gap-20">
+		<main class="wrapper about">
+			<Hero
+				title="About"
+				tagline="A problem solver at the intersection of behavioral science, AI, and human factors engineering."
+			>
+				<img
+					width="1553"
+					height="873"
+					src="/assets/at-work.jpg"
+					alt="Behavioral analysis and usability testing"
+				/>
+			</Hero>
+
+			<section>
+				<h2 class="section-title">Background</h2>
+				<div class="content">
+					<p>
+						With 10+ years in behavioral science, I specialize in bridging the gap between human cognition and technology.
+						Currently based in Beijing, I lead consulting and business development at <a href="https://www.noldus.com">Noldus</a>,
+						a world leader in behavioral research solutions — serving 25+ enterprises across medical devices,
+						automotive, and research industries.
+					</p>
+					<p>
+						My approach is always the same: <strong>break it down, analyze it, find the shortest path, execute.</strong>
+						Whether it's pioneering IEC 62366 usability engineering processes in China, building million-level
+						automotive HMI/UX evaluation frameworks, or exploring multi-agent AI for behavioral data insights —
+						every challenge gets the same systematic treatment.
+					</p>
+					<p>
+						Recently, I've been diving deep into <strong>Agentic AI</strong>, building proof-of-concept platforms
+						that transform weeks of manual behavioral coding into minute-level automated insights.
+						The intersection of behavioral science and AI is where I believe the next breakthrough will happen.
+					</p>
+				</div>
+			</section>
+
+			<section>
+				<h2 class="section-title">Education</h2>
+				<div class="content">
+					<p><strong>East China Normal University</strong> — Psychology</p>
+					<p style="color:var(--gray-400);margin-top:0.25rem;">National Level 2 Psychological Counselor · UX Research Engineer Instructor</p>
+				</div>
+			</section>
+
+			<section>
+				<h2 class="section-title">Core Expertise</h2>
+				<div class="content">
+					<div class="expertise-grid">
+						<div class="expertise-item">
+							<strong>Measurement</strong>
+							<p>Eye tracking · EEG · Facial expression · Biosignals · Behavior coding</p>
+						</div>
+						<div class="expertise-item">
+							<strong>Standards</strong>
+							<p>IEC 62366 · ANSI/AAMI HE75 · ISO 14971 · NMPA</p>
+						</div>
+						<div class="expertise-item">
+							<strong>Research Methods</strong>
+							<p>Usability testing · Experimental design · Cross-cultural studies</p>
+						</div>
+						<div class="expertise-item">
+							<strong>Tech & AI</strong>
+							<p>Python · LLM APIs · Multi-Agent systems · RAG · n8n automation</p>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section>
+				<h2 class="section-title">Philosophy</h2>
+				<div class="content">
+					<p style="font-size:var(--text-lg);font-style:italic;color:var(--gray-300);">
+						"The best solutions emerge from interdisciplinary collisions."
+					</p>
+					<p style="margin-top:0.5rem;color:var(--gray-400);">
+						Mentored by Charlie Munger's mental models, Douglas Hofstadter's cognitive philosophy,
+						and Steve Jobs' obsession with excellence. Always learning, always building.
+					</p>
+				</div>
+			</section>
+		</main>
+
+		<ContactCTA />
+	</div>
+</BaseLayout>
+
+<style>
+	.about {
+		display: flex;
+		flex-direction: column;
+		gap: 3.5rem;
+	}
+
+	img {
+		margin-top: 1.5rem;
+		border-radius: 1.5rem;
+		box-shadow: var(--shadow-md);
+	}
+
+	section {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		color: var(--gray-200);
+	}
+
+	.section-title {
+		grid-column-start: 1;
+		font-size: var(--text-xl);
+		color: var(--gray-0);
+	}
+
+	.content {
+		grid-column: 2 / 4;
+	}
+
+	.content :global(a) {
+		text-decoration: 1px solid underline transparent;
+		text-underline-offset: 0.25em;
+		transition: text-decoration-color var(--theme-transition);
+	}
+
+	.content :global(a:hover),
+	.content :global(a:focus) {
+		text-decoration-color: currentColor;
+	}
+
+	.expertise-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1.5rem;
+		margin-top: 0.75rem;
+	}
+
+	.expertise-item strong {
+		font-size: var(--text-sm);
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: var(--gray-100);
+		display: block;
+		margin-bottom: 0.25rem;
+	}
+
+	.expertise-item p {
+		color: var(--gray-400);
+		font-size: var(--text-sm);
+	}
+
+	@media (min-width: 50em) {
+		.about {
+			display: grid;
+			grid-template-columns: 1fr 60% 1fr;
+		}
+
+		.about > :global(:first-child) {
+			grid-column-start: 2;
+		}
+
+		section {
+			display: contents;
+			font-size: var(--text-lg);
+		}
+	}
+</style>

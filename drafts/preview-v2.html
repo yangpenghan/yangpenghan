@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will Yang — GitHub Profile V2 Preview</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0d1117; color: #c9d1d9; line-height: 1.6; }
+  .container { max-width: 900px; margin: 0 auto; padding: 40px 24px; }
+  img { max-width: 100%; }
+
+  /* Typing SVG header */
+  .typing-header { text-align: center; margin: 30px 0 20px; }
+  .typing-header .line1 { font-size: 28px; font-weight: 700; color: #f0f6fc; }
+  .typing-header .line2 { font-size: 22px; color: #58a6ff; font-weight: 600; margin-top: 8px; }
+
+  /* Badge nav */
+  .badge-nav { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 20px 0 30px; }
+  .badge { display: inline-flex; align-items: center; gap: 4px; padding: 4px 12px; border-radius: 6px; font-size: 13px; text-decoration: none; }
+  .badge-blue { background: #1f2937; color: #58a6ff; border: 1px solid #30363d; }
+  .badge-info { background: #1f2937; color: #79c0ff; border: 1px solid #30363d; }
+  .badge-linkedin { background: #0d419d; color: #fff; border: 1px solid #0d419d; }
+  .badge-views { background: #161b22; color: #58a6ff; border: 1px solid #30363d; }
+
+  /* Profile layout */
+  .profile-layout { display: flex; gap: 24px; align-items: flex-start; margin-bottom: 30px; }
+  .avatar-placeholder { width: 200px; height: 200px; background: #161b22; border: 2px solid #30363d; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 64px; color: #484f58; flex-shrink: 0; }
+  .content-area { flex: 1; }
+
+  /* Sections */
+  .section { border-top: 1px solid #21262d; padding-top: 24px; margin-top: 24px; }
+  .section h2 { font-size: 22px; color: #f0f6fc; margin-bottom: 16px; }
+  .section h3 { font-size: 18px; color: #f0f6fc; margin-bottom: 12px; }
+  .section p { font-size: 14px; color: #c9d1d9; margin-bottom: 12px; }
+  .section strong { color: #f0f6fc; }
+
+  /* Blockquote */
+  blockquote { border-left: 3px solid #58a6ff; padding: 12px 16px; margin: 16px 0; background: #161b22; font-style: italic; color: #8b949e; }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  th { text-align: left; padding: 10px 12px; background: #161b22; color: #8b949e; border: 1px solid #30363d; font-weight: 500; font-size: 13px; }
+  td { padding: 10px 12px; border: 1px solid #30363d; color: #c9d1d9; vertical-align: top; }
+  tr:hover td { background: #161b22; }
+  td strong { color: #f0f6fc; }
+
+  /* Toolkit badges */
+  .tech-badges { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .tech-badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 500; }
+  .badge-python { background: #1a3a5c; color: #3776AB; }
+  .badge-llm { background: #1a2a4c; color: #79c0ff; }
+  .badge-agent { background: #1a2a3c; color: #58a6ff; }
+  .badge-rag { background: #1a3a2c; color: #3fb950; }
+  .badge-linux { background: #2a2a1a; color: #FCC624; }
+  .badge-n8n { background: #2a1a1a; color: #FF6C37; }
+
+  /* Background items */
+  .bg-list { list-style: none; margin: 12px 0; }
+  .bg-list li { font-size: 14px; color: #c9d1d9; padding: 6px 0; }
+
+  /* Featured projects */
+  .project-table td:first-child { white-space: nowrap; }
+
+  /* Stats */
+  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+  .stats-card { background: #161b22; border: 1px solid #30363d; padding: 16px; text-align: center; }
+  .stats-card .stat-title { color: #8b949e; font-size: 13px; margin-bottom: 8px; }
+  .stats-card .stat-content { color: #c9d1d9; font-size: 14px; }
+  .stats-card .stat-number { font-size: 32px; font-weight: 700; color: #58a6ff; }
+  .stats-card .stat-label { color: #8b949e; font-size: 12px; margin-top: 4px; }
+  .lang-bar { display: flex; height: 8px; overflow: hidden; margin-top: 12px; background: #21262d; }
+  .lang-bar div { height: 100%; }
+  .lang-python { background: #3776AB; width: 35%; }
+  .lang-shell { background: #89e051; width: 20%; }
+  .lang-js { background: #f1e05a; width: 15%; }
+  .lang-html { background: #e34c26; width: 12%; }
+  .lang-md { background: #8b949e; width: 18%; }
+
+  /* Wave footer */
+  .wave-footer { margin-top: 40px; text-align: center; color: #484f58; font-size: 12px; }
+
+  /* Lang toggle */
+  .lang-toggle { display: flex; gap: 8px; margin-bottom: 20px; }
+  .lang-btn { padding: 6px 14px; border: 1px solid #30363d; background: #161b22; color: #7d8590; cursor: pointer; font-size: 13px; border-radius: 6px; }
+  .lang-btn.active { background: #1f6feb; color: #fff; border-color: #1f6feb; }
+  .lang-section { display: none; }
+  .lang-section.active { display: block; }
+
+  @media (max-width: 600px) {
+    .profile-layout { flex-direction: column; align-items: center; text-align: center; }
+    .avatar-placeholder { width: 120px; height: 120px; font-size: 40px; }
+    .stats-grid { grid-template-columns: 1fr; }
+    .tech-badges { justify-content: center; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="typing-header">
+    <div class="line1">Problem Solver</div>
+    <div class="line2">Behavioral Science × AI × Human Factors</div>
+  </div>
+
+  <div class="badge-nav">
+    <a class="badge badge-blue" href="#">🇨🇳 中文</a>
+    <a class="badge badge-blue" href="#">🇬🇧 English</a>
+    <a class="badge badge-info" href="#">✉️ Email</a>
+    <a class="badge badge-linkedin" href="#">💼 LinkedIn</a>
+    <span class="badge badge-views">👁 Profile Views</span>
+  </div>
+
+  <div class="profile-layout">
+    <div class="avatar-placeholder">W</div>
+    <div class="content-area">
+      <div class="lang-toggle">
+        <button class="lang-btn active" onclick="switchLang('cn')">🇨🇳 中文</button>
+        <button class="lang-btn" onclick="switchLang('en')">🇬🇧 English</button>
+      </div>
+
+      <div id="lang-cn" class="lang-section active">
+        <div class="section" style="border:none;padding-top:0;margin-top:0;">
+          <h2>🧭 我是谁</h2>
+          <p>我是一个<strong>问题解决者</strong>。</p>
+          <p>不管面对的是什么行业、什么挑战，我的本能反应都是：拆解它，分析它，找到最短路径，然后执行。</p>
+          <p>这个能力长在两个根基上——<strong>行为科学</strong>（华东师范大学心理学 + 10 年多模态行为数据研究）和<strong>系统工程思维</strong>（从零组建团队、开辟新业务线、用咨询驱动千万级产品转化）。</p>
+          <p>现在我在做第三个版本的自己：把 <strong>AI Agent</strong> 作为新的工具层，让行为分析和人因工程从人工走向自动化。</p>
+          <blockquote>💡 最好的解决方案，总是来自跨学科的碰撞。</blockquote>
+        </div>
+
+        <div class="section">
+          <h2>🎯 我解决过的问题</h2>
+          <table>
+            <tr><th>领域</th><th>问题</th><th>怎么拆解的</th></tr>
+            <tr><td>🏥</td><td>医疗器械 — 国内 IEC 62366 认知空白</td><td>率先建立标准化流程，服务 <strong>25+</strong> 企业，与莱茵 TÜV 等共建行业评估标准</td></tr>
+            <tr><td>🚗</td><td>汽车 — 豪华品牌需要系统化 HMI/UX 评估</td><td>从方法论到交付，建立年度框架合作（<strong>百万级</strong>）</td></tr>
+            <tr><td>🤖</td><td>AI + 行为分析 — 传统行为编码耗时数周</td><td>构建多智能体系统，探索分钟级自动化洞察</td></tr>
+            <tr><td>🏗️</td><td>组织 — 公司缺乏解决方案能力</td><td>从 <strong>1</strong> 个人到完整咨询体系，2024 年同比增长 <strong>243%</strong></td></tr>
+          </table>
+        </div>
+
+        <div class="section">
+          <h2>🛠️ 核心工具链</h2>
+          <table>
+            <tr><th>维度</th><th>内容</th></tr>
+            <tr><td>行为测量</td><td>眼动追踪 · EEG · 面部表情分析 · 生理信号 · 行为观察编码</td></tr>
+            <tr><td>工程标准</td><td>IEC 62366 · HE75 · ISO 14971 · 形成性/总结性评价 · 风险管理</td></tr>
+            <tr><td>技术栈</td><td>
+              <div class="tech-badges">
+                <span class="tech-badge badge-python">🐍 Python</span>
+                <span class="tech-badge badge-llm">🤖 LLM APIs</span>
+                <span class="tech-badge badge-agent">Multi-Agent</span>
+                <span class="tech-badge badge-rag">RAG</span>
+                <span class="tech-badge badge-linux">🐧 Linux</span>
+                <span class="tech-badge badge-n8n">⚡ n8n</span>
+              </div>
+            </td></tr>
+            <tr><td>研究方法</td><td>可用性测试 · 田野调查 · 实验设计 · 跨文化研究 · 卡诺模型 · NPS</td></tr>
+          </table>
+        </div>
+
+        <div class="section">
+          <h2>📚 背景</h2>
+          <ul class="bg-list">
+            <li>🎓 心理学学士（华东师范大学）| 国家二级心理咨询师 | 用研工程师师资</li>
+            <li>🎤 中国用户体验峰会 · 智能汽车创新发展论坛 · 人机环境工程大会</li>
+            <li>📖 持续进化中：认知哲学（GEB）· 投资思维（芒格）· AI Agent · 健康生活管理</li>
+          </ul>
+        </div>
+      </div>
+
+      <div id="lang-en" class="lang-section">
+        <div class="section" style="border:none;padding-top:0;margin-top:0;">
+          <h2>🧭 Who I Am</h2>
+          <p>I'm a <strong>problem solver</strong>.</p>
+          <p>No matter the industry or the challenge, my instinct is the same: break it down, analyze it, find the shortest path, then execute.</p>
+          <p>Rooted in <strong>behavioral science</strong> (B.S. Psychology, 10+ years) and <strong>systems thinking</strong> (built consulting team from zero, driving 10M+ RMB in product conversion).</p>
+          <p>Now building version three: adding <strong>AI Agents</strong> to move behavioral analysis from manual to automated.</p>
+          <blockquote>💡 The best solutions always emerge from interdisciplinary collisions.</blockquote>
+        </div>
+
+        <div class="section">
+          <h2>🎯 Problems I've Solved</h2>
+          <table>
+            <tr><th>Domain</th><th>The Problem</th><th>How I Approached It</th></tr>
+            <tr><td>🏥</td><td>Medical Devices — IEC 62366 unknown in China</td><td>Pioneered standardized processes, <strong>25+</strong> companies, co-built standards with TÜV</td></tr>
+            <tr><td>🚗</td><td>Automotive — Luxury brand HMI/UX</td><td>Annual framework partnership (<strong>million-level</strong>)</td></tr>
+            <tr><td>🤖</td><td>AI + Behavioral Analysis</td><td>Multi-agent → minute-level automated insights</td></tr>
+            <tr><td>🏗️</td><td>Organization</td><td><strong>1</strong> person → full system — <strong>243%</strong> YoY</td></tr>
+          </table>
+        </div>
+
+        <div class="section">
+          <h2>🛠️ Toolkit</h2>
+          <table>
+            <tr><th>Dimension</th><th>Stack</th></tr>
+            <tr><td>Behavioral Measurement</td><td>Eye tracking · EEG · Facial expression · Biosignals</td></tr>
+            <tr><td>Engineering Standards</td><td>IEC 62366 · HE75 · ISO 14971</td></tr>
+            <tr><td>Tech Stack</td><td>
+              <div class="tech-badges">
+                <span class="tech-badge badge-python">🐍 Python</span>
+                <span class="tech-badge badge-llm">🤖 LLM APIs</span>
+                <span class="tech-badge badge-agent">Multi-Agent</span>
+                <span class="tech-badge badge-rag">RAG</span>
+                <span class="tech-badge badge-linux">🐧 Linux</span>
+                <span class="tech-badge badge-n8n">⚡ n8n</span>
+              </div>
+            </td></tr>
+            <tr><td>Research Methods</td><td>Usability testing · Field studies · Experimental design</td></tr>
+          </table>
+        </div>
+
+        <div class="section">
+          <h2>📚 Background</h2>
+          <ul class="bg-list">
+            <li>🎓 B.S. Psychology (ECNU) | Certified Psychological Counselor</li>
+            <li>🎤 China UX Summit · Smart Auto Forum · Human-Machine-Environment Conference</li>
+            <li>📖 Always evolving: GEB · Munger · AI Agents · healthy lifestyle</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Featured Projects -->
+  <div class="section">
+    <h2>📌 Featured Projects</h2>
+    <table class="project-table">
+      <tr><td>🤖 <strong>AI Agent Behavioral Analysis</strong></td><td>Multi-agent system — weeks of manual coding → minutes</td></tr>
+      <tr><td>🏥 <strong>Medical Device Usability KB</strong></td><td>IEC 62366 · HE75 · FDA HFE — 216 docs, 6K+ paragraphs</td></tr>
+      <tr><td>📊 <strong>Stock Quote CLI</strong></td><td>Real-time market data on Yahoo Finance API</td></tr>
+    </table>
+  </div>
+
+  <!-- Stats -->
+  <div class="section">
+    <h2>📊 GitHub Activity</h2>
+    <div class="stats-grid">
+      <div class="stats-card">
+        <div class="stat-content">
+          <div class="stat-number">42</div>
+          <div class="stat-label">Contributions this year</div>
+        </div>
+      </div>
+      <div class="stats-card">
+        <div class="stat-title">Top Languages</div>
+        <div class="lang-bar">
+          <div class="lang-python"></div>
+          <div class="lang-shell"></div>
+          <div class="lang-js"></div>
+          <div class="lang-html"></div>
+          <div class="lang-md"></div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;font-size:12px;color:#8b949e;">
+          <span>🐍 Python 35%</span><span>🟢 Shell 20%</span><span>🟡 JS 15%</span><span>🔴 HTML 12%</span><span>⬜ Markdown 18%</span>
+        </div>
+      </div>
+    </div>
+    <p style="color:#484f58;font-size:12px;margin-top:8px;">* Stats are simulated for preview; actual data will populate after publishing.</p>
+  </div>
+
+  <div class="wave-footer">_Preview V2 — actual GitHub page may render slightly differently_</div>
+</div>
+
+<script>
+function switchLang(lang) {
+  document.querySelectorAll('.lang-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('lang-' + lang).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>
