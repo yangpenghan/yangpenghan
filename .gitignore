@@ -21,3 +21,15 @@ pnpm-debug.log*
 .idea/
 .vscode/
 *.swp
+
+# Planning docs & source materials (kept locally, mirrored in private repo
+# yangpenghan/personal-brand-private — must NOT be committed to this public repo)
+STATUS.md
+linkedin-optimization.md
+portrait.png
+content-plan/
+drafts/
+profile-info/
+projects/
+research/
+assets/
