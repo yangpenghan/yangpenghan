@@ -24,11 +24,15 @@ const isCurrentPage = (href: string) => {
 	if (pathname.at(-1) !== '/') pathname += '/';
 	return pathname === href || (href !== '/' && pathname.startsWith(href));
 };
+
+// Prefix internal links with the site base for sub-path deployment.
+const base = import.meta.env.BASE_URL;
+const url = (p: string) => `${base}${p.replace(/^\//, '')}`;
 ---
 
 <nav>
 	<div class="menu-header">
-		<a href="/" class="site-title">
+		<a href={url('/')} class="site-title">
 			<Icon icon="beaker" color="var(--accent-regular)" size="1.6em" gradient />
 			Will Yang
 		</a>
@@ -46,7 +50,7 @@ const isCurrentPage = (href: string) => {
 			{
 				textLinks.map(({ label, href }) => (
 					<li>
-						<a aria-current={isCurrentPage(href) ? 'page' : null} class="link" href={href}>
+						<a aria-current={isCurrentPage(href) ? 'page' : null} class="link" href={url(href)}>
 							{label}
 						</a>
 					</li>
@@ -73,7 +77,7 @@ const isCurrentPage = (href: string) => {
 			{
 				textLinks.map(({ label, href }) => (
 					<li>
-						<a aria-current={isCurrentPage(href) ? 'page' : null} class="link" href={href}>
+						<a aria-current={isCurrentPage(href) ? 'page' : null} class="link" href={url(href)}>
 							{label}
 						</a>
 					</li>

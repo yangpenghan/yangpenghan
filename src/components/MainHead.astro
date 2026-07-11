@@ -10,6 +10,10 @@ const {
 	title = 'Will Yang — Problem Solver',
 	description = 'Behavioral Science × AI × Human Factors',
 } = Astro.props;
+
+// All internal paths must be prefixed with the site base for sub-path deployment.
+const base = import.meta.env.BASE_URL;
+const url = (p: string) => `${base}${p.replace(/^\//, '')}`;
 ---
 
 <meta charset="utf-8" />
@@ -18,8 +22,8 @@ const {
 <meta name="generator" content={Astro.generator} />
 <title>{title}</title>
 
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-<link rel="icon" href="/favicon.ico" />
+<link rel="icon" type="image/svg+xml" href={url('/favicon.svg')} />
+<link rel="icon" href={url('/favicon.ico')} />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link
