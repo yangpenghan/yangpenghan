@@ -1,4 +1,5 @@
 ---
+locale: 'en'
 title: Medical Device Usability Engineering
 publishDate: 2022-03-01
 img: /assets/stock-2.jpg

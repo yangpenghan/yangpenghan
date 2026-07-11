@@ -1,4 +1,5 @@
 ---
+locale: 'en'
 title: Automotive HMI/UX Evaluation Framework
 publishDate: 2023-06-01
 img: /assets/stock-1.jpg

@@ -1,21 +1,27 @@
 ---
 import Icon from './Icon.astro';
+import { useTranslations, type Locale } from '../i18n';
 
+interface Props {
+	locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale);
 const currentYear = new Date().getFullYear();
 ---
 
 <footer>
 	<div class="group">
 		<p>
-			Behavioral Science × AI × Human Factors
+			{t('footer.tagline')}
 			<Icon icon="rocket-launch" size="1.2em" />
 		</p>
-		<p>&copy; {currentYear} Will Yang</p>
+		<p>&copy; {currentYear} {t('footer.copyright')}</p>
 	</div>
 	<p class="socials">
-		<a href="https://github.com/yangpenghan"> GitHub</a>
-		<a href="https://www.linkedin.com/in/thereisawillyang"> LinkedIn</a>
-		<a href="mailto:yangpenghan1988@gmail.com"> Email</a>
+		<a href="https://github.com/yangpenghan"> {t('footer.github')}</a>
+		<a href="https://www.linkedin.com/in/thereisawillyang"> {t('footer.linkedin')}</a>
+		<a href="mailto:yangpenghan1988@gmail.com"> {t('footer.email')}</a>
 	</p>
 </footer>
 

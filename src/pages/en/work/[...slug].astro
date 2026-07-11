@@ -1,13 +1,13 @@
 ---
 import { getCollection } from 'astro:content';
-import WorkDetailPage from '../../components/pages/WorkDetailPage.astro';
+import WorkDetailPage from '../../../components/pages/WorkDetailPage.astro';
 
 export async function getStaticPaths() {
 	const allWork = await getCollection('work');
 	return allWork
-		.filter((entry) => entry.data.locale === 'zh')
+		.filter((entry) => entry.data.locale === 'en')
 		.map((entry) => ({
-			// Strip the locale dir segment: 'zh/automotive-hmi' -> 'automotive-hmi'
+			// Strip the locale dir segment: 'en/automotive-hmi' -> 'automotive-hmi'
 			params: { slug: entry.id.split('/').slice(1).join('/') },
 			props: { entry },
 		}));
@@ -16,4 +16,4 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 ---
 
-<WorkDetailPage entry={entry} locale="zh" />
+<WorkDetailPage entry={entry} locale="en" />

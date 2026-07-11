@@ -1,0 +1,167 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import ContactCTA from '../ContactCTA.astro';
+import Hero from '../Hero.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { useTranslations, type Locale } from '../../i18n';
+
+interface Props {
+	locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const base = import.meta.env.BASE_URL;
+const assetUrl = (p: string) => `${base}${p.replace(/^\//, '')}`;
+---
+
+<BaseLayout locale={locale} title={t('about.metaTitle')} description={t('about.metaDesc')}>
+	<div class="stack gap-20">
+		<main class="wrapper about">
+			<Hero title={t('about.heroTitle')} tagline={t('about.heroTagline')}>
+				<img
+					width="1553"
+					height="873"
+					src={assetUrl('/assets/at-work.jpg')}
+					alt={t('about.heroImgAlt')}
+				/>
+			</Hero>
+
+			<section>
+				<h2 class="section-title">{t('about.backgroundTitle')}</h2>
+				<div class="content">
+					<p>{t('about.bgP1')}</p>
+					<p>
+						{t('about.bgP2')}
+					</p>
+					<p>{t('about.bgP3')}</p>
+				</div>
+			</section>
+
+			<section>
+				<h2 class="section-title">{t('about.educationTitle')}</h2>
+				<div class="content">
+					<p><strong>{t('about.edu1')}</strong></p>
+					<p style="color:var(--gray-400);margin-top:0.25rem;">{t('about.edu1Sub')}</p>
+				</div>
+			</section>
+
+			<section>
+				<h2 class="section-title">{t('about.expertiseTitle')}</h2>
+				<div class="content">
+					<div class="expertise-grid">
+						<div class="expertise-item">
+							<strong>{t('about.expMeasurement')}</strong>
+							<p>{t('about.expMeasurementItems')}</p>
+						</div>
+						<div class="expertise-item">
+							<strong>{t('about.expStandards')}</strong>
+							<p>{t('about.expStandardsItems')}</p>
+						</div>
+						<div class="expertise-item">
+							<strong>{t('about.expResearch')}</strong>
+							<p>{t('about.expResearchItems')}</p>
+						</div>
+						<div class="expertise-item">
+							<strong>{t('about.expTech')}</strong>
+							<p>{t('about.expTechItems')}</p>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section>
+				<h2 class="section-title">{t('about.philosophyTitle')}</h2>
+				<div class="content">
+					<p style="font-size:var(--text-lg);font-style:italic;color:var(--gray-300);">
+						{t('about.philosophyQuote')}
+					</p>
+					<p style="margin-top:0.5rem;color:var(--gray-400);">
+						{t('about.philosophyDesc')}
+					</p>
+				</div>
+			</section>
+		</main>
+
+		<ContactCTA locale={locale} />
+	</div>
+</BaseLayout>
+
+<style>
+	.about {
+		display: flex;
+		flex-direction: column;
+		gap: 3.5rem;
+	}
+
+	img {
+		margin-top: 1.5rem;
+		border-radius: 1.5rem;
+		box-shadow: var(--shadow-md);
+	}
+
+	section {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		color: var(--gray-200);
+	}
+
+	.section-title {
+		grid-column-start: 1;
+		font-size: var(--text-xl);
+		color: var(--gray-0);
+	}
+
+	.content {
+		grid-column: 2 / 4;
+	}
+
+	.content :global(a) {
+		text-decoration: 1px solid underline transparent;
+		text-underline-offset: 0.25em;
+		transition: text-decoration-color var(--theme-transition);
+	}
+
+	.content :global(a:hover),
+	.content :global(a:focus) {
+		text-decoration-color: currentColor;
+	}
+
+	.expertise-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1.5rem;
+		margin-top: 0.75rem;
+	}
+
+	.expertise-item strong {
+		font-size: var(--text-sm);
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: var(--gray-100);
+		display: block;
+		margin-bottom: 0.25rem;
+	}
+
+	.expertise-item p {
+		color: var(--gray-400);
+		font-size: var(--text-sm);
+	}
+
+	@media (min-width: 50em) {
+		.about {
+			display: grid;
+			grid-template-columns: 1fr 60% 1fr;
+		}
+
+		.about > :global(:first-child) {
+			grid-column-start: 2;
+		}
+
+		section {
+			display: contents;
+			font-size: var(--text-lg);
+		}
+	}
+</style>

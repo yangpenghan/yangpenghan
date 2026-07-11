@@ -2,12 +2,20 @@
 import Icon from './Icon.astro';
 import type { iconPaths } from './IconPaths';
 import ThemeToggle from './ThemeToggle.astro';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { useTranslations, type Locale, type UIKey } from '../i18n';
 
-/** Main menu items */
-const textLinks: { label: string; href: string }[] = [
-	{ label: 'Home', href: '/' },
-	{ label: 'Work', href: '/work/' },
-	{ label: 'About', href: '/about/' },
+interface Props {
+	locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+/** Main menu items (href is locale-relative; prefixed at render time) */
+const textLinks: { label: UIKey; href: string }[] = [
+	{ label: 'nav.home', href: '/' },
+	{ label: 'nav.work', href: '/work/' },
+	{ label: 'nav.about', href: '/about/' },
 ];
 
 /** Icon links to social media — edit these with links to your profiles! */
@@ -17,29 +25,41 @@ const iconLinks: { label: string; href: string; icon: keyof typeof iconPaths }[]
 	{ label: 'Email', href: 'mailto:yangpenghan1988@gmail.com', icon: 'twitter-logo' },
 ];
 
-/** Test if a link is pointing to the current page. */
+/** Test if a link is pointing to the current page (locale-agnostic). */
 const isCurrentPage = (href: string) => {
 	let pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, '');
+	pathname = pathname.replace(/^en\//, ''); // strip non-default locale prefix
 	if (pathname.at(0) !== '/') pathname = '/' + pathname;
 	if (pathname.at(-1) !== '/') pathname += '/';
 	return pathname === href || (href !== '/' && pathname.startsWith(href));
 };
 
-// Prefix internal links with the site base for sub-path deployment.
-const base = import.meta.env.BASE_URL;
-const url = (p: string) => `${base}${p.replace(/^\//, '')}`;
+// Locale-aware internal link: zh -> /yangpenghan/x/, en -> /yangpenghan/en/x/
+const navUrl = (p: string) => getRelativeLocaleUrl(locale, p.replace(/^\//, ''));
+
+// Language switcher: preserve the current path, swap the locale prefix.
+const pathCore = Astro.url.pathname
+	.replace(import.meta.env.BASE_URL, '')
+	.replace(/^en\//, '');
+const switchToZh = getRelativeLocaleUrl('zh', pathCore);
+const switchToEn = getRelativeLocaleUrl('en', pathCore);
 ---
 
 <nav>
 	<div class="menu-header">
-		<a href={url('/')} class="site-title">
+		<a href={navUrl('/')} class="site-title">
 			<Icon icon="beaker" color="var(--accent-regular)" size="1.6em" gradient />
-			Will Yang
+			{t('nav.brand')}
 		</a>
+		<div class="lang-switch">
+			<a href={switchToZh} aria-current={locale === 'zh' ? 'true' : null}>中</a>
+			<span aria-hidden="true">/</span>
+			<a href={switchToEn} aria-current={locale === 'en' ? 'true' : null}>EN</a>
+		</div>
 		<menu-button>
 			<template>
 				<button class="menu-button" aria-expanded="false">
-					<span class="sr-only">Menu</span>
+					<span class="sr-only">{t('nav.menu')}</span>
 					<Icon icon="list" />
 				</button>
 			</template>
@@ -50,8 +70,8 @@ const url = (p: string) => `${base}${p.replace(/^\//, '')}`;
 			{
 				textLinks.map(({ label, href }) => (
 					<li>
-						<a aria-current={isCurrentPage(href) ? 'page' : null} class="link" href={url(href)}>
-							{label}
+						<a aria-current={isCurrentPage(href) ? 'page' : null} class="link" href={navUrl(href)}>
+							{t(label)}
 						</a>
 					</li>
 				))
@@ -77,8 +97,8 @@ const url = (p: string) => `${base}${p.replace(/^\//, '')}`;
 			{
 				textLinks.map(({ label, href }) => (
 					<li>
-						<a aria-current={isCurrentPage(href) ? 'page' : null} class="link" href={url(href)}>
-							{label}
+						<a aria-current={isCurrentPage(href) ? 'page' : null} class="link" href={navUrl(href)}>
+							{t(label)}
 						</a>
 					</li>
 				))
@@ -152,8 +172,37 @@ const url = (p: string) => `${base}${p.replace(/^\//, '')}`;
 	.menu-header {
 		display: flex;
 		justify-content: space-between;
+		align-items: center;
 		gap: 0.5rem;
 		padding: 1.5rem;
+	}
+
+	.lang-switch {
+		display: flex;
+		align-items: center;
+		gap: 0.25rem;
+		margin-left: auto;
+		margin-right: 1rem;
+		font-size: var(--text-sm);
+		font-weight: 600;
+		color: var(--gray-300);
+	}
+	.lang-switch a {
+		color: var(--gray-400);
+		text-decoration: none;
+		padding: 0.15rem 0.2rem;
+		border-radius: 0.3rem;
+		transition: color var(--theme-transition);
+	}
+	.lang-switch a:hover,
+	.lang-switch a:focus {
+		color: var(--gray-0);
+	}
+	.lang-switch a[aria-current='true'] {
+		color: var(--accent-regular);
+	}
+	.lang-switch span {
+		color: var(--gray-600);
 	}
 
 	.site-title {
