@@ -1,4 +1,5 @@
 ---
+locale: 'en'
 title: Organizational Growth — From Solo to System
 publishDate: 2024-01-01
 img: /assets/stock-4.jpg

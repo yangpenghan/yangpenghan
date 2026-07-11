@@ -1,4 +1,5 @@
 ---
+locale: 'en'
 title: PsyPhiClaw — Multi-Agent Behavioral Analysis
 publishDate: 2025-01-01
 img: /assets/stock-3.jpg

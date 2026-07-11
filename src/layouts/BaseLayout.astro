@@ -6,24 +6,26 @@ import Footer from '../components/Footer.astro';
 // Component Imports
 import MainHead from '../components/MainHead.astro';
 import Nav from '../components/Nav.astro';
+import type { Locale } from '../i18n';
 
 interface Props {
 	title?: string | undefined;
 	description?: string | undefined;
+	locale: Locale;
 }
 
-const { title, description } = Astro.props;
+const { title, description, locale } = Astro.props;
 ---
 
-<html lang="en">
+<html lang={locale === 'zh' ? 'zh-CN' : 'en'}>
 	<head>
-		<MainHead title={title} description={description} />
+		<MainHead title={title} description={description} locale={locale} />
 	</head>
 	<body>
 		<div class="stack backgrounds">
-			<Nav />
+			<Nav locale={locale} />
 			<slot />
-			<Footer />
+			<Footer locale={locale} />
 		</div>
 
 		<script>

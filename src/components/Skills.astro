@@ -1,22 +1,29 @@
 ---
 import Icon from './Icon.astro';
+import { useTranslations, type Locale } from '../i18n';
+
+interface Props {
+	locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale);
 ---
 
 <section class="box skills">
 	<div class="stack gap-2 lg:gap-4">
 		<Icon icon="beaker" color="var(--accent-regular)" size="2.5rem" gradient />
-		<h2>Behavioral Science</h2>
-		<p>10+ years decoding human behavior — from eye tracking and EEG to facial expression analysis. Building bridges between research and real-world impact.</p>
+		<h2>{t('skills.bsTitle')}</h2>
+		<p>{t('skills.bsDesc')}</p>
 	</div>
 	<div class="stack gap-2 lg:gap-4">
 		<Icon icon="cpu" color="var(--accent-regular)" size="2.5rem" gradient />
-		<h2>AI-Powered Analysis</h2>
-		<p>Exploring multi-agent systems and LLM-powered tools to transform weeks of manual behavioral coding into minute-level automated insights.</p>
+		<h2>{t('skills.aiTitle')}</h2>
+		<p>{t('skills.aiDesc')}</p>
 	</div>
 	<div class="stack gap-2 lg:gap-4">
 		<Icon icon="lightbulb" color="var(--accent-regular)" size="2.5rem" gradient />
-		<h2>Problem Solver</h2>
-		<p>25+ enterprise clients, 243% YoY growth. From pioneering IEC 62366 in China to million-level automotive UX partnerships — every challenge gets the same systematic treatment.</p>
+		<h2>{t('skills.psTitle')}</h2>
+		<p>{t('skills.psDesc')}</p>
 	</div>
 </section>
 

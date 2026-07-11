@@ -1,20 +1,28 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import type { Locale } from '../i18n';
 
 interface Props {
 	project: CollectionEntry<'work'>;
+	locale: Locale;
 }
 
-const { data, id } = Astro.props.project;
+const { project, locale } = Astro.props;
+const { data, id } = project;
 
-// Prefix internal paths with the site base for sub-path deployment.
+// Strip the locale dir segment from the collection id ('zh/auto' -> 'auto').
+const slug = id.split('/').slice(1).join('/');
+
+// Navigation links are locale-aware; static /public assets keep the plain base prefix.
+const navUrl = (p: string) => getRelativeLocaleUrl(locale, p.replace(/^\//, ''));
 const base = import.meta.env.BASE_URL;
-const url = (p: string) => `${base}${p.replace(/^\//, '')}`;
+const assetUrl = (p: string) => `${base}${p.replace(/^\//, '')}`;
 ---
 
-<a class="card" href={url(`/work/${id}`)}>
+<a class="card" href={navUrl(`/work/${slug}/`)}>
 	<span class="title">{data.title}</span>
-	<img src={url(data.img)} alt={data.img_alt || ''} loading="lazy" decoding="async" />
+	<img src={assetUrl(data.img)} alt={data.img_alt || ''} loading="lazy" decoding="async" />
 </a>
 
 <style>
