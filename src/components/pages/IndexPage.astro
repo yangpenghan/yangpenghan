@@ -24,11 +24,9 @@ const projects = (await getCollection('work'))
 	.slice(0, 4);
 
 const talks = [
-	t('index.talk1'),
-	t('index.talk2'),
-	t('index.talk3'),
-	t('index.talk4'),
-	t('index.talk5'),
+	{ venue: t('index.talk1'), topic: t('index.talk1Sub') },
+	{ venue: t('index.talk2'), topic: t('index.talk2Sub') },
+	{ venue: t('index.talk3'), topic: t('index.talk3Sub') },
 ];
 
 // Navigation links are locale-aware; static /public assets keep the plain base prefix.
@@ -100,9 +98,10 @@ const assetUrl = (p: string) => `${base}${p.replace(/^\//, '')}`;
 				<div class="gallery">
 					<Grid variant="small">
 						{
-							talks.map((brand) => (
+							talks.map((talk) => (
 								<li class="mention-card">
-									<p>{brand}</p>
+									<p class="talk-venue">{talk.venue}</p>
+									<p class="talk-topic">{talk.topic}</p>
 								</li>
 							))
 						}
@@ -237,10 +236,12 @@ const assetUrl = (p: string) => `${base}${p.replace(/^\//, '')}`;
 
 	.mention-card {
 		display: flex;
-		height: 7rem;
+		flex-direction: column;
+		gap: 0.4rem;
+		height: 9rem;
+		padding: 1.25rem 1.5rem;
 		justify-content: center;
-		align-items: center;
-		text-align: center;
+		text-align: left;
 		border: 1px solid var(--gray-800);
 		border-radius: 1.5rem;
 		color: var(--gray-300);
@@ -248,10 +249,22 @@ const assetUrl = (p: string) => `${base}${p.replace(/^\//, '')}`;
 		box-shadow: var(--shadow-sm);
 	}
 
+	.talk-venue {
+		font-size: var(--text-md);
+		font-weight: 600;
+		color: var(--gray-0);
+		line-height: 1.3;
+	}
+
+	.talk-topic {
+		font-size: var(--text-sm);
+		color: var(--gray-300);
+		line-height: 1.4;
+	}
+
 	@media (min-width: 50em) {
 		.mention-card {
-			border-radius: 1.5rem;
-			height: 9.5rem;
+			height: 10rem;
 		}
 	}
 </style>

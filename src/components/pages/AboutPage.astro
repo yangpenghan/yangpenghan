@@ -31,10 +31,33 @@ const assetUrl = (p: string) => `${base}${p.replace(/^\//, '')}`;
 				<h2 class="section-title">{t('about.backgroundTitle')}</h2>
 				<div class="content">
 					<p>{t('about.bgP1')}</p>
-					<p>
-						{t('about.bgP2')}
-					</p>
+					<p>{t('about.bgP2')}</p>
 					<p>{t('about.bgP3')}</p>
+					<p>{t('about.bgP4')}</p>
+				</div>
+			</section>
+
+			<section>
+				<h2 class="section-title">{t('about.statsTitle')}</h2>
+				<div class="content">
+					<div class="stats-grid">
+						<div class="stat">
+							<span class="stat-num">{t('about.stat1Num')}</span>
+							<span class="stat-label">{t('about.stat1Label')}</span>
+						</div>
+						<div class="stat">
+							<span class="stat-num">{t('about.stat2Num')}</span>
+							<span class="stat-label">{t('about.stat2Label')}</span>
+						</div>
+						<div class="stat">
+							<span class="stat-num">{t('about.stat3Num')}</span>
+							<span class="stat-label">{t('about.stat3Label')}</span>
+						</div>
+						<div class="stat">
+							<span class="stat-num">{t('about.stat4Num')}</span>
+							<span class="stat-label">{t('about.stat4Label')}</span>
+						</div>
+					</div>
 				</div>
 			</section>
 
@@ -133,6 +156,42 @@ const assetUrl = (p: string) => `${base}${p.replace(/^\//, '')}`;
 		grid-template-columns: repeat(2, 1fr);
 		gap: 1.5rem;
 		margin-top: 0.75rem;
+	}
+
+	.stats-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1rem;
+		margin-top: 0.75rem;
+	}
+
+	.stat {
+		display: flex;
+		flex-direction: column;
+		gap: 0.1rem;
+		padding: 1rem 1.25rem;
+		border: 1px solid var(--gray-800);
+		border-radius: 1rem;
+		background: var(--gradient-subtle);
+	}
+
+	.stat-num {
+		font-family: var(--font-brand);
+		font-size: var(--text-2xl);
+		font-weight: 600;
+		color: var(--accent-regular);
+		line-height: 1.1;
+	}
+
+	.stat-label {
+		font-size: var(--text-sm);
+		color: var(--gray-300);
+	}
+
+	@media (min-width: 50em) {
+		.stats-grid {
+			grid-template-columns: repeat(4, 1fr);
+		}
 	}
 
 	.expertise-item strong {
