@@ -28,7 +28,7 @@ export const ui = {
     // Index — Selected Work
     'index.selectedWorkTitle': '精选作品',
     'index.selectedWorkDesc':
-      '四个代表性项目——从在中国率先引入 IEC 62366 可用性工程，到为豪华汽车品牌交付百万级 HMI/UX 评估框架，再到多智能体 AI 平台 PsyPhiClaw。',
+      '四个代表性项目——从在中国率先引入 IEC 62366 可用性工程，到为奔驰交付百万级 HMI/UX 评估框架，再到多智能体 AI 平台 PsyPhiClaw。',
     'index.viewAll': '查看全部',
 
     // Index — Talks
@@ -71,7 +71,7 @@ export const ui = {
     'about.bgP1':
       '故事从华东师范大学的心理学实验室开始。我意识到：理解人类行为不能只靠问卷和直觉——它需要可量化的测量、严谨的实验设计，以及对数据的敬畏。2011 年毕业后，我先做了 4 年一线心理与数学教师，然后带着这份对"用数据看见人"的执念进入行为研究行业。',
     'about.bgP2':
-      '2015 年起，我在 Noldus 从研究经理做起，用 eye tracking、EEG、面部表情分析和电生理仪器为甲方定制人类行为洞察研究——从某金融 APP 跨 6 城测试发现 84 个问题，到用 EEG + eye tracking 评估快消品包装。期间还曾在猎豹移动负责人-机器人交互（HRI）研究，探索提示音、动作、表情如何塑造人对机器人的感知。',
+      '2015 年起，我在 Noldus 从研究经理做起，用 eye tracking、EEG、面部表情分析和电生理仪器为甲方定制人类行为洞察研究——从某金融 APP 跨 6 城测试发现 84 个问题，到用 EEG + eye tracking 评估伊利酸奶包装。期间还曾在猎豹移动负责人-机器人交互（HRI）研究，探索提示音、动作、表情如何塑造人对机器人的感知。',
     'about.bgP3':
       '2019 年回到 Noldus 担任 Consulting Manager，从零组建 Solution Engineering 团队，把零散的咨询打包成标准化解决方案，连续开辟医疗器械人因、汽车人因、建筑人因、航空人因等新赛道。这套"咨询驱动增长"模式年均撬动千万级产品订单转化，2024 年实现 243% 同比增长。',
     'about.bgP4':
@@ -147,7 +147,7 @@ export const ui = {
     // Index — Selected Work
     'index.selectedWorkTitle': 'Selected Work',
     'index.selectedWorkDesc':
-      'Four representative projects — from pioneering IEC 62366 usability engineering in China, to delivering million-level HMI/UX evaluation frameworks for luxury automotive brands, to the multi-agent AI platform PsyPhiClaw.',
+      'Four representative projects — from pioneering IEC 62366 usability engineering in China, to delivering a million-level HMI/UX evaluation framework for Mercedes-Benz, to the multi-agent AI platform PsyPhiClaw.',
     'index.viewAll': 'View All',
 
     // Index — Talks
@@ -192,7 +192,7 @@ export const ui = {
     'about.bgP1':
       "My story starts in the psychology labs at East China Normal University. I realized early on that understanding human behavior takes more than surveys and intuition — it demands quantifiable measurement, rigorous experimental design, and respect for the data. After graduating in 2011, I spent four years as a front-line psychology and math teacher before carrying that conviction — seeing people through data — into behavioral research.",
     'about.bgP2':
-      "From 2015, I built my craft at Noldus as a research manager, running bespoke human-behavior insight studies with eye tracking, EEG, facial-expression analysis, and biophysiological instruments — from a 6-city study that surfaced 84 issues in a financial app, to EEG + eye-tracking evaluations of FMCG packaging. Along the way I also led human-robot interaction (HRI) research at Cheetah Mobile, exploring how sound, motion, and expression shape people's perception of robots.",
+      "From 2015, I built my craft at Noldus as a research manager, running bespoke human-behavior insight studies with eye tracking, EEG, facial-expression analysis, and biophysiological instruments — from a 6-city study that surfaced 84 issues in a financial app, to EEG + eye-tracking evaluations of Yili yogurt packaging. Along the way I also led human-robot interaction (HRI) research at Cheetah Mobile, exploring how sound, motion, and expression shape people's perception of robots.",
     'about.bgP3':
       "In 2019 I returned to Noldus as Consulting Manager. I built the Solution Engineering team from scratch, productized scattered consulting into standardized solutions, and opened up entirely new tracks — medical-device human factors, automotive human factors, architectural human factors, aviation human factors. This consulting-led growth engine now drives eight-figure product orders every year, with 243% YoY growth in 2024.",
     'about.bgP4':

@@ -5,7 +5,7 @@ publishDate: 2023-06-01
 img: /assets/stock-1.jpg
 img_alt: Automotive HMI evaluation with eye tracking and behavioral analysis
 description: |
-  Designed and delivered a comprehensive HMI/UX evaluation framework for a luxury automotive brand,
+  Designed and delivered a comprehensive HMI/UX evaluation framework for Mercedes-Benz,
   evolving from a single project into a million-level (RMB) annual framework partnership.
 tags:
   - Automotive
@@ -17,7 +17,7 @@ tags:
 
 ## Background & challenge
 
-A luxury automotive brand needed more than ad-hoc UX testing — they needed a systematic, repeatable evaluation framework that could scale across product lines and model years. As cockpit interaction grows more complex, traditional subjective rating is no longer enough to support product decisions.
+Mercedes-Benz needed more than ad-hoc UX testing — they needed a systematic, repeatable evaluation framework that could scale across product lines and model years. As cockpit interaction grows more complex, traditional subjective rating is no longer enough to support product decisions.
 
 ## Scope of evaluation
 
