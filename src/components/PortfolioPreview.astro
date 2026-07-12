@@ -22,14 +22,16 @@ const assetUrl = (p: string) => `${base}${p.replace(/^\//, '')}`;
 
 <a class="card" href={navUrl(`/work/${slug}/`)}>
 	<span class="title">{data.title}</span>
+	<span class="desc">{data.description}</span>
+	<span class="tags">{data.tags.slice(0, 3).map((tag) => <span class="tag">{tag}</span>)}</span>
 	<img src={assetUrl(data.img)} alt={data.img_alt || ''} loading="lazy" decoding="async" />
 </a>
 
 <style>
 	.card {
 		display: grid;
-		grid-template: auto 1fr / auto 1fr;
-		height: 11rem;
+		grid-template-rows: 1fr auto;
+		height: 13rem;
 		background: var(--gradient-subtle);
 		border: 1px solid var(--gray-800);
 		border-radius: 0.75rem;
@@ -37,7 +39,6 @@ const assetUrl = (p: string) => `${base}${p.replace(/^\//, '')}`;
 		box-shadow: var(--shadow-sm);
 		text-decoration: none;
 		font-family: var(--font-brand);
-		font-size: var(--text-lg);
 		font-weight: 500;
 		transition: box-shadow var(--theme-transition);
 	}
@@ -46,21 +47,71 @@ const assetUrl = (p: string) => `${base}${p.replace(/^\//, '')}`;
 		box-shadow: var(--shadow-md);
 	}
 
+	/* Top-left title chip, kept above the image */
 	.title {
-		grid-area: 1 / 1 / 2 / 2;
-		z-index: 1;
+		grid-row: 1 / 2;
+		z-index: 2;
+		align-self: start;
 		margin: 0.5rem;
-		padding: 0.5rem 1rem;
+		padding: 0.4rem 0.85rem;
 		background: var(--gray-999);
 		color: var(--gray-200);
+		font-size: var(--text-lg);
 		border-radius: 0.375rem;
 	}
 
+	/* Bottom text block over a gradient scrim for legibility on the image */
+	.desc {
+		grid-row: 2 / 3;
+		z-index: 2;
+		padding: 0.85rem 0.9rem 0;
+		font-family: var(--font-sans);
+		font-size: var(--text-sm);
+		line-height: 1.4;
+		color: var(--gray-100);
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+
+	.tags {
+		grid-row: 2 / 3;
+		z-index: 2;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.35rem;
+		padding: 0.6rem 0.9rem 0.75rem;
+	}
+
+	.tag {
+		font-size: var(--text-xs);
+		color: var(--gray-100);
+		background: rgba(0, 0, 0, 0.45);
+		border: 1px solid var(--gray-700);
+		padding: 0.1rem 0.5rem;
+		border-radius: 999rem;
+		font-family: var(--font-sans);
+		font-weight: 400;
+	}
+
 	img {
-		grid-area: 1 / 1 / 3 / 3;
+		grid-row: 1 / 3;
+		grid-column: 1 / 2;
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
+		z-index: 0;
+	}
+
+	/* Gradient scrim so the bottom text reads clearly over any image */
+	.card::after {
+		content: '';
+		grid-row: 1 / 3;
+		grid-column: 1 / 2;
+		z-index: 1;
+		background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 45%, transparent 70%);
+		pointer-events: none;
 	}
 
 	@media (min-width: 50em) {
@@ -71,6 +122,15 @@ const assetUrl = (p: string) => `${base}${p.replace(/^\//, '')}`;
 
 		.title {
 			border-radius: 0.9375rem;
+		}
+
+		.desc {
+			font-size: var(--text-md);
+			padding: 1rem 1.1rem 0;
+		}
+
+		.tags {
+			padding: 0.75rem 1.1rem 1rem;
 		}
 	}
 </style>
