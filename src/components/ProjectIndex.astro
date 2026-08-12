@@ -1,0 +1,166 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { useTranslations, type Locale } from '../i18n';
+
+interface Props {
+	projects: Array<CollectionEntry<'work'>>;
+	locale: Locale;
+}
+
+const { projects, locale } = Astro.props;
+const t = useTranslations(locale);
+const navUrl = (path: string) => getRelativeLocaleUrl(locale, path.replace(/^\//, ''));
+const statusLabel = (status: CollectionEntry<'work'>['data']['status']) => {
+	if (status === 'operating') return t('work.legendOperating');
+	if (status === 'prototype') return t('work.legendPrototype');
+	return t('work.legendDelivered');
+};
+---
+
+<ol class="project-index">
+	{
+		projects.map((project, index) => {
+			const slug = project.id.split('/').slice(1).join('/');
+			return (
+				<li data-reveal>
+					<a href={navUrl(`/work/${slug}/`)} aria-label={`${t('work.read')}: ${project.data.title}`}>
+						<span class="project-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+						<span class="project-main">
+							<span class="project-meta">
+								<span>{statusLabel(project.data.status)}</span>
+								<span>{project.data.year}</span>
+								<span>{project.data.discipline}</span>
+							</span>
+							<strong>{project.data.title}</strong>
+							<span class="project-description">{project.data.description}</span>
+						</span>
+						<span class="project-outcome">
+							<small>{t('workDetail.outcome')}</small>
+							<span>{project.data.outcome}</span>
+						</span>
+						<span class="project-arrow" aria-hidden="true">↗</span>
+					</a>
+				</li>
+			);
+		})
+	}
+</ol>
+
+<style>
+	.project-index {
+		padding: 0;
+		border-top: 1px solid var(--rule-strong);
+		list-style: none;
+	}
+
+	.project-index li {
+		border-bottom: 1px solid var(--rule);
+	}
+
+	.project-index a {
+		display: grid;
+		grid-template-columns: 3rem minmax(0, 1fr) minmax(13rem, 0.42fr) 2rem;
+		gap: clamp(1rem, 3vw, 3rem);
+		align-items: start;
+		padding-block: clamp(2rem, 4vw, 3.5rem);
+		text-decoration: none;
+		transition:
+			background var(--duration) ease,
+			padding-inline var(--duration) var(--ease-out);
+	}
+
+	.project-index a:hover {
+		padding-inline: 1rem;
+		background: var(--paper-raised);
+	}
+
+	.project-number,
+	.project-meta,
+	.project-outcome small {
+		font-family: var(--font-mono);
+		font-size: 0.68rem;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+	}
+
+	.project-number {
+		color: var(--signal-dark);
+		font-weight: 700;
+	}
+
+	.project-main {
+		display: grid;
+		gap: 1rem;
+	}
+
+	.project-meta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.55rem 1rem;
+		color: var(--ink-faint);
+	}
+
+	.project-meta span:first-child {
+		color: var(--signal-dark);
+	}
+
+	.project-main strong {
+		max-width: 20ch;
+		font-family: var(--font-serif);
+		font-size: var(--step-2);
+		font-weight: 600;
+		letter-spacing: -0.035em;
+		line-height: 1.08;
+		text-wrap: balance;
+	}
+
+	.project-description,
+	.project-outcome {
+		color: var(--ink-soft);
+		font-size: 0.92rem;
+		line-height: 1.6;
+	}
+
+	.project-outcome {
+		display: grid;
+		gap: 0.75rem;
+	}
+
+	.project-outcome small {
+		color: var(--ink-faint);
+	}
+
+	.project-outcome span {
+		color: var(--ink);
+		font-weight: 600;
+	}
+
+	.project-arrow {
+		color: var(--signal-dark);
+		font-family: var(--font-mono);
+		font-size: 1.2rem;
+		transition: transform var(--duration) var(--ease-out);
+	}
+
+	.project-index a:hover .project-arrow {
+		transform: translate(0.25rem, -0.25rem);
+	}
+
+	@media (max-width: 48rem) {
+		.project-index a {
+			grid-template-columns: 2rem minmax(0, 1fr) 1.5rem;
+			gap: 0.8rem;
+		}
+
+		.project-outcome {
+			grid-column: 2 / -1;
+			padding-top: 0.8rem;
+			border-top: 1px solid var(--rule);
+		}
+
+		.project-main strong {
+			font-size: clamp(1.55rem, 8vw, 2.2rem);
+		}
+	}
+</style>

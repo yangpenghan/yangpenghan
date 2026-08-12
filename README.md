@@ -1,30 +1,71 @@
-# Astro Starter Kit: Portfolio
+# Will Yang — Behavioral Intelligence Builder
 
-```sh
-npm create astro@latest -- --template portfolio
+杨朋翰（Will Yang）的双语个人网站。它不是简历模板，而是一套持续更新的专家出版系统：用经过边界审查的案例、方法文章与公开实验，记录行为科学、人因工程、解决方案工程和 Agentic AI 的交叉实践。
+
+线上地址：[yangpenghan.github.io/yangpenghan](https://yangpenghan.github.io/yangpenghan/)
+
+## Information architecture
+
+- `/` 与 `/en/`：中英文首页
+- `/work/`：案例档案；每个案例都有结果、角色、方法与保密边界
+- `/notes/`：原创方法文章
+- `/about/`：职业路径、实践领域与工作原则
+- `/404.html`：GitHub Pages 的双语错误页
+
+## Stack
+
+- Astro 7，静态输出
+- Astro Content Collections + Zod schema
+- 原生 Astro 组件与 CSS，无客户端 UI 框架
+- Astro i18n，中文为默认语言，英文使用 `/en/` 前缀
+- GitHub Actions + GitHub Pages
+
+## Local development
+
+```bash
+npm install
+npx astro dev --background
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/portfolio)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/portfolio)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/portfolio/devcontainer.json)
+开发服务器管理：
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+```bash
+npx astro dev status
+npx astro dev logs
+npx astro dev stop
+```
 
-![portfolio](https://user-images.githubusercontent.com/357379/210779178-a98f0fb7-6b1a-4068-894c-8e1403e26654.jpg)
+完整质量门：
 
-## 🧞 Commands
+```bash
+npm run verify
+```
 
-All commands are run from the root of the project, from a terminal:
+它依次执行 Biome、Astro 类型检查、Vitest 和生产构建。
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+开发服务器运行时，可以复现浏览器、可访问性、坏链和移动端审计：
 
-## 👀 Want to learn more?
+```bash
+npm run audit:browser
+```
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## Editing content
+
+案例位于 `src/content/work/{zh,en}`，文章位于 `src/content/notes/{zh,en}`。中英文内容使用相同 slug；新增字段前先更新 `src/content.config.ts`。
+
+网站只发布可公开验证的信息。客户设备细节、参与者数据、合同、收入和内部绩效不进入此仓库。完整调研、资料边界、设计决策与发布记录保存在独立私有过程库。
+
+## Design direction
+
+视觉语言来自研究档案与现场笔记：暖纸底、墨色正文、朱红信号色、清晰编号和高密度编辑排版。浅色/深色主题遵循系统偏好，也允许手动切换；动效会尊重 `prefers-reduced-motion`。
+
+## Deployment
+
+推送 `main` 后，`.github/workflows/deploy.yml` 构建并发布到 GitHub Pages。生产配置固定使用：
+
+```js
+site: 'https://yangpenghan.github.io'
+base: '/yangpenghan/'
+```
+
+不要在公开仓库提交本地研究材料、过程文档或未确认公开边界的客户信息。

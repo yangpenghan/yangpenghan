@@ -1,32 +1,57 @@
 ---
-locale: 'en'
-title: PsyPhiClaw — Multi-Agent Behavioral Analysis
-publishDate: 2025-01-01
-img: /assets/stock-3.jpg
-img_alt: AI-powered multi-agent system for behavioral data analysis
-description: |
-  A multi-agent PoC platform built on Python + LLM + RAG that compresses weeks of manual behavioral coding into minutes —
-  exploring Agentic AI applied to behavioral science.
+locale: en
+title: "PsyPhiClaw: an open workflow for multimodal behavioral analysis"
+description: A public proof of concept connecting facial expression, gaze, EEG, physiology, fNIRS, and observational coding in a traceable AI workflow.
+publishDate: 2026-03-31
+updatedDate: 2026-08-12
+status: prototype
+year: 2026—building
+order: 4
+discipline: Agentic AI · Open source
+outcome: Published 20+ analysis modules and 18,000+ lines of Python; the next phase is reliability validation on real research data.
+role: Initiator, product and system design, core module development
+externalUrl: https://github.com/psyphiclaw/PsyPhiClaw
 tags:
-  - AI
-  - Multi-Agent
+  - Agentic AI
+  - Multimodal data
   - Python
-  - LLM
-  - RAG
+  - LLM guardrails
+  - Open source
+confidentiality: This is a public prototype, not a production-validated product. The page distinguishes implemented modules from capabilities still awaiting validation.
 ---
 
 ## The problem
 
-Traditional behavioral data analysis is slow — sometimes taking weeks to code and analyze a single dataset. As someone who has spent years doing behavioral coding by hand, I asked: what if we could automate this with multi-agent AI systems?
+The slowest part of multimodal behavioral research often comes before the final statistics. Every instrument arrives with a different format, time base, and cleaning logic. Researchers spend substantial effort converting, aligning, and checking data before they can address the real question.
 
-## Technical architecture
+Language models can explain text, but they do not automatically know whether gaze data was cleaned correctly, an EEG event was aligned, or a correlation has been overstated as causation. Placing a chat model directly on top of the files can generate unreliable conclusions faster.
 
-PsyPhiClaw is built on Python, using LLM APIs as the reasoning engine and RAG over a behavioral-coding knowledge base to constrain output. The system splits work across specialized agents — a movement-tracking agent for video / observation data, a biosignal agent for EEG / GSR and other biosignals, and a pattern-recognition agent for cross-modal fusion — each focused on one dimension, with a coordinator agent assembling the results into structured insight.
+## My role
 
-## Current stage
+I initiated PsyPhiClaw and designed its product boundary and layered workflow. The project comes from more than a decade of behavioral-data work: which steps are suitable for automation, which judgments require domain guardrails, and which results must preserve provenance and human confirmation.
 
-The platform is in proof-of-concept, and the core hypothesis is validated: multi-agent collaboration can compress what used to be hours of manual coding into a fraction of the time. Current limitations are data-source coverage and consistency validation; the roadmap is to ingest more behavioral data types and evolve toward production.
+## The approach
 
-## Conviction
+PsyPhiClaw decomposes the work into inspectable modules:
 
-It carries my conviction: the future of behavioral science lies at the intersection of human expertise and AI capability — AI doesn't replace people, it's a lever that amplifies human analytical power. It's also my core bet on the future value of Noldus's behavioral-data assets.
+- ingest facial expression, gaze, EEG, physiology, fNIRS, Observer coding, and LSL streams;
+- normalize sources and align time using triggers, markers, or explicit rules;
+- run single-modality analysis and cross-modal association;
+- check data integrity, statistical significance, effect size, multiple comparisons, causal wording, and hallucination risk at the AI insight layer;
+- produce traceable figures, structured results, and reports instead of only a natural-language answer.
+
+The natural-language interface is an entry point. The actual product is the repeatable, inspectable chain behind it.
+
+## The current outcome
+
+The public repositories describe and implement more than 20 modules spanning ingestion, analysis, fusion, visualization, reporting, batch processing, and research retrieval, with more than 18,000 lines of related Python. The project uses the MIT License and publishes its roadmap.
+
+Those numbers demonstrate construction effort, not scientific validity. The next phase must benchmark real research data: format compatibility, consistency, error recovery, statistical correctness, human-review cost, and differences from established analysis workflows.
+
+## What I learned
+
+The value of agentic AI is not asking one model to do everything. It is decomposing expert work into bounded, reviewable units of collaboration. High-quality automation should not merely make work faster; it should make every judgment easier to trace.
+
+## Public note
+
+PsyPhiClaw is a proof of concept, not a clinical, regulatory, or production-validated analysis product. The public site does not present roadmap items as completed capabilities.

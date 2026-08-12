@@ -1,252 +1,354 @@
 export const languages = {
-  zh: '中',
-  en: 'EN',
+	zh: '中文',
+	en: 'English',
 } as const;
 
 export type Locale = keyof typeof languages;
-
 export const defaultLocale: Locale = 'zh';
 
-export const ui = {
-  zh: {
-    // Nav
-    'nav.home': '首页',
-    'nav.work': '作品',
-    'nav.about': '关于',
-    'nav.menu': '菜单',
-    'nav.brand': '杨朋翰',
+const zh = {
+	'nav.home': '首页',
+	'nav.work': '工作',
+	'nav.notes': '思考',
+	'nav.about': '关于',
+	'nav.contact': '联系',
+	'nav.brand': '杨朋翰',
+	'nav.brandAlt': 'Will Yang',
+	'nav.language': '切换语言',
+	'nav.skip': '跳到主要内容',
 
-    // Index — Hero
-    'index.heroTitle': '你好，我是杨朋翰',
-    'index.heroTagline':
-      'Noldus 咨询与业务拓展负责人。在中国率先引入 IEC 62366 可用性工程，用行为科学 + AI 为 25+ 家企业解决真实问题。',
-    'index.pill1': '行为科学',
-    'index.pill2': '10+ 年 · 25+ 企业',
-    'index.pill3': 'AI 探索者',
-    'index.portraitAlt': '杨朋翰 — 行为科学与 AI 专家',
+	'theme.toggle': '切换明暗主题',
+	'theme.light': '使用浅色主题',
+	'theme.dark': '使用深色主题',
 
-    // Index — Selected Work
-    'index.selectedWorkTitle': '精选作品',
-    'index.selectedWorkDesc':
-      '四个代表性项目——从在中国率先引入 IEC 62366 可用性工程，到为奔驰交付百万级 HMI/UX 评估框架，再到多智能体 AI 平台 PsyPhiClaw。',
-    'index.viewAll': '查看全部',
+	'index.metaTitle': '杨朋翰 Will Yang — 行为智能构建者',
+	'index.metaDesc': '在行为科学、人因工程与 Agentic AI 的交叉处，把复杂的人类问题变成可工作的系统。',
+	'index.eyebrow': '行为智能构建者 · 北京',
+	'index.heroTitleA': '把人的行为，',
+	'index.heroTitleB': '变成可以工作的系统。',
+	'index.heroIntro':
+		'我是杨朋翰。心理学出身，十余年在行为科学、人因工程与 Agentic AI 的交叉处工作：测量真实行为，把证据写入产品与安全，再把专家方法做成可复制的系统。',
+	'index.heroRole': 'Noldus 中国咨询与业务拓展负责人',
+	'index.heroWork': '查看代表工作',
+	'index.heroContact': '和我讨论一个难题',
+	'index.portraitAlt': '杨朋翰（Will Yang）的肖像',
+	'index.proofLabel': '工作档案 / 2015—现在',
+	'index.stat1Num': '10+',
+	'index.stat1Label': '年行为研究与解决方案经验',
+	'index.stat2Num': '100+',
+	'index.stat2Label': '跨复杂行业的项目与合作',
+	'index.stat3Num': '7',
+	'index.stat3Label': '个行业，从医疗到汽车与科研',
+	'index.stat4Num': '20+',
+	'index.stat4Label': '个 PsyPhiClaw 开源分析模块',
+	'index.workEyebrow': 'Selected systems / 代表工作',
+	'index.workTitle': '不只交付一次研究，\n也构建下一次可以复用的能力。',
+	'index.workIntro':
+		'这些工作跨越安全关键产品、复杂人机交互、组织能力和开源 AI。共同点是：从模糊问题开始，以一个可以持续工作的系统结束。',
+	'index.workAll': '查看全部工作',
+	'index.methodEyebrow': 'How I work / 工作方法',
+	'index.methodTitle': '从看见行为，到放大判断。',
+	'index.method1Title': '看见',
+	'index.method1Body': '用观察、眼动、EEG、表情和生理信号，捕捉问卷与直觉看不到的行为。',
+	'index.method2Title': '解释',
+	'index.method2Body': '把数据组织成任务模型、使用风险、认知负荷和可供决策的证据。',
+	'index.method3Title': '构建',
+	'index.method3Body': '把判断写入评估框架、开发流程、知识库与 AI 工作流。',
+	'index.method4Title': '放大',
+	'index.method4Body': '将一次交付沉淀为团队、模板、产品和可复制的业务能力。',
+	'index.focusEyebrow': 'Current experiment / 当前实验',
+	'index.focusTitle': 'PsyPhiClaw：让多模态行为分析拥有一条开放的 AI 工作流。',
+	'index.focusBody':
+		'这是一个公开的概念验证项目，统一处理表情、眼动、EEG、生理信号、fNIRS 与观察编码。当前已有 20+ 模块；下一步不是增加功能清单，而是用真实研究数据验证可靠性。',
+	'index.focusLink': '查看公开仓库',
+	'index.focusStatus': 'OPEN PROTOTYPE · VALIDATION NEXT',
+	'index.notesEyebrow': 'Field notes / 现场思考',
+	'index.notesTitle': '把方法写下来，才真正变成能力。',
+	'index.notesAll': '查看全部思考',
+	'index.talksEyebrow': 'Selected talks / 公开分享',
+	'index.talksTitle': '在行业发生变化之前，先把问题讲清楚。',
+	'index.talk1Year': '2018',
+	'index.talk1Venue': '第六届中国用户体验峰会',
+	'index.talk1Topic': 'App 测试中的多模态：用户测试的必要性',
+	'index.talk2Year': '2017',
+	'index.talk2Venue': '第二届中国（武汉）智能汽车创新发展论坛',
+	'index.talk2Topic': '驾驶行为与 ADAS：情绪、眼控等技术的开发应用',
+	'index.talk3Year': '2017',
+	'index.talk3Venue': '第十七届国际人-机-环境系统工程大会',
+	'index.talk3Topic': '人-机-环境中的行为测量',
 
-    // Index — Talks
-    'index.talksTitle': '演讲与出席',
-    'index.talksDesc': '在用户体验、智能汽车与人-机-环境工程等行业的会议上分享行为测量与可用性工程实践。',
-    'index.talk1': '第六届中国用户体验峰会',
-    'index.talk1Sub': 'App 测试中的多模态：用户测试的必要性（2018）',
-    'index.talk2': '中国智能汽车创新发展论坛',
-    'index.talk2Sub': '驾驶行为与 ADAS —— 情绪、眼控等技术的开发应用（2017）',
-    'index.talk3': '国际人-机-环境系统工程大会',
-    'index.talk3Sub': '人-机-环境中的行为测量（2017）',
+	'work.metaTitle': '工作档案 | 杨朋翰',
+	'work.metaDesc': '医疗器械人因、汽车 HMI、Solution Engineering 与 Agentic AI 的代表性系统和案例。',
+	'work.eyebrow': 'Work archive / 工作档案',
+	'work.title': '问题、判断，以及留下来的系统。',
+	'work.intro': '这里区分已交付体系、持续运营能力和公开原型。客户项目只展示已公开且不涉及保密信息的部分。',
+	'work.legendDelivered': 'DELIVERED · 已交付',
+	'work.legendOperating': 'OPERATING · 持续运行',
+	'work.legendPrototype': 'PROTOTYPE · 原型',
+	'work.read': '阅读案例',
+	'workDetail.back': '返回工作档案',
+	'workDetail.problem': '问题',
+	'workDetail.role': '我的角色',
+	'workDetail.approach': '方法',
+	'workDetail.outcome': '结果',
+	'workDetail.note': '公开说明',
+	'workDetail.next': '下一项工作',
 
-    // Skills
-    'skills.bsTitle': '行为科学',
-    'skills.bsDesc':
-      '10 余年破译人类行为——从 eye tracking、EEG 到面部表情分析，在研究与真实影响之间搭建桥梁。',
-    'skills.aiTitle': 'AI 驱动分析',
-    'skills.aiDesc':
-      '探索多智能体系统与 LLM 驱动的工具，把数周的人工行为编码工作，压缩到几分钟内自动完成。',
-    'skills.psTitle': '问题解决者',
-    'skills.psDesc':
-      '服务 25+ 企业客户，年增长 243%。从在中国率先引入 IEC 62366 可用性工程流程，到打造百万级的汽车 HMI/UX 评估合作——我用同样的系统性方法应对每一个挑战。',
+	'notes.metaTitle': '思考 | 杨朋翰',
+	'notes.metaDesc': '关于行为智能、人因工程、Agentic AI 和 Solution Engineering 的现场笔记。',
+	'notes.eyebrow': 'Notes / 思考',
+	'notes.title': '从真实工作里长出来的想法。',
+	'notes.intro':
+		'不是追逐热点的内容流，而是对长期问题的阶段性回答：怎样看见行为，怎样把判断变成系统，以及 AI 应该放大什么。',
+	'notes.read': '阅读全文',
+	'notes.back': '返回思考',
+	'notes.updated': '更新于',
+	'notes.minutes': '分钟阅读',
+	'notes.next': '继续阅读',
 
-    // About
-    'about.metaTitle': '关于 | 杨朋翰',
-    'about.metaDesc': '行为科学 × AI × 人因工程 — 问题解决者',
-    'about.heroTitle': '关于',
-    'about.heroTagline': '在行为科学、AI 与人因工程交汇处的问题解决者。',
-    'about.heroImgAlt': '行为分析与可用性测试',
-    'about.backgroundTitle': '背景',
-    'about.statsTitle': '关键数字',
-    'about.stat1Num': '170+',
-    'about.stat1Label': '项目',
-    'about.stat2Num': '100+',
-    'about.stat2Label': '客户',
-    'about.stat3Num': '7',
-    'about.stat3Label': '大行业',
-    'about.stat4Num': '243%',
-    'about.stat4Label': '同比增长（2024）',
-    'about.bgP1':
-      '故事从华东师范大学的心理学实验室开始。我意识到：理解人类行为不能只靠问卷和直觉——它需要可量化的测量、严谨的实验设计，以及对数据的敬畏。2011 年毕业后，我先做了 4 年一线心理与数学教师，然后带着这份对"用数据看见人"的执念进入行为研究行业。',
-    'about.bgP2':
-      '2015 年起，我在 Noldus 从研究经理做起，用 eye tracking、EEG、面部表情分析和电生理仪器为甲方定制人类行为洞察研究——从某金融 APP 跨 6 城测试发现 84 个问题，到用 EEG + eye tracking 评估伊利酸奶包装。期间还曾在猎豹移动负责人-机器人交互（HRI）研究，探索提示音、动作、表情如何塑造人对机器人的感知。',
-    'about.bgP3':
-      '2019 年回到 Noldus 担任 Consulting Manager，从零组建 Solution Engineering 团队，把零散的咨询打包成标准化解决方案，连续开辟医疗器械人因、汽车人因、建筑人因、航空人因等新赛道。这套"咨询驱动增长"模式年均撬动千万级产品订单转化，2024 年实现 243% 同比增长。',
-    'about.bgP4':
-      '当下，我把主要精力放在两件事上：一是用多智能体 AI 重构行为数据分析流程（PsyPhiClaw 平台），把数周的人工编码压缩到几分钟；二是探索 Agentic AI 在可用性工程与咨询交付中的落地。我相信，行为科学与 AI 的交汇处，正是下一个突破发生的地方。',
-    'about.educationTitle': '教育',
-    'about.edu1': '华东师范大学 — 心理学（理学学士，2007–2011）',
-    'about.edu1Sub': '985 / 211 院校 · 国家二级心理咨询师 · UX 研究工程师讲师',
-    'about.expertiseTitle': '核心专长',
-    'about.expMeasurement': '测量方法',
-    'about.expMeasurementItems': 'Eye tracking · EEG · 面部表情 · Biosignals · 行为编码',
-    'about.expStandards': '标准',
-    'about.expStandardsItems': 'IEC 62366 · ANSI/AAMI HE75 · ISO 14971 · NMPA',
-    'about.expResearch': '研究方法',
-    'about.expResearchItems': '可用性测试 · 实验设计 · 跨文化研究',
-    'about.expTech': '技术与 AI',
-    'about.expTechItems': 'Python · LLM API · 多智能体系统 · RAG · n8n 自动化',
-    'about.philosophyTitle': '理念',
-    'about.philosophyQuote': '最好的解决方案，源自跨学科的碰撞。',
-    'about.philosophyDesc':
-      '查理·芒格的思维模型、侯世达的认知哲学、乔布斯对卓越的执着，一直在塑造我的思考方式。始终在学习，始终在构建。',
+	'about.metaTitle': '关于 | 杨朋翰 Will Yang',
+	'about.metaDesc': '心理学、行为研究、人因工程、Solution Engineering 与 Agentic AI：杨朋翰的工作路径。',
+	'about.eyebrow': 'About / 关于',
+	'about.title': '我的工作，是把模糊的人类问题变得可以行动。',
+	'about.intro':
+		'我不把自己定义成某一种工具的专家。更准确地说，我在复杂问题还没有现成答案时，建立测量方法、判断框架和可以持续运行的系统。',
+	'about.storyTitle': '四次转向，同一个问题。',
+	'about.story1Year': '2007—2015',
+	'about.story1Title': '从心理学到一线教学',
+	'about.story1Body':
+		'在华东师范大学学习心理学，随后做了四年心理健康与数学教师。教学让我第一次面对一个事实：知道理论和改变真实行为，是两件不同的事。',
+	'about.story2Year': '2015—2019',
+	'about.story2Title': '让行为可以被测量',
+	'about.story2Body':
+		'进入 Noldus，从眼动、EEG、表情和生理信号出发，为金融、快消、科研和汽车项目设计研究。一次跨 6 城的金融 App 研究识别出 84 个问题与 5 类行为模式。',
+	'about.story3Year': '2019',
+	'about.story3Title': '进入人—机器人交互',
+	'about.story3Body':
+		'在猎豹移动研究提示音、动作与表情如何改变人对机器人的感知和交互效率，也建立了团队可复用的研究流程与文档。',
+	'about.story4Year': '2019—现在',
+	'about.story4Title': '从交付项目到构建能力',
+	'about.story4Body':
+		'回到 Noldus 后组建 Solution Engineering 能力，把零散咨询沉淀为医疗器械、汽车与其他复杂行业的方法、流程和长期合作。现在，我继续用 Agentic AI 让这些专家工作流变得更开放、更可复用。',
+	'about.practiceEyebrow': 'Practice / 能力结构',
+	'about.practiceTitle': '跨学科不是并列技能，\n而是一条完整的问题解决链。',
+	'about.practice1': '行为测量',
+	'about.practice1Body': 'Eye tracking · EEG · Facial expression · Biosignals · Behavioral coding',
+	'about.practice2': '人因与安全',
+	'about.practice2Body': 'IEC 62366 · HE75 · ISO 14971 · Formative / summative evaluation',
+	'about.practice3': '研究与产品',
+	'about.practice3Body': 'Usability testing · Experimental design · HMI evaluation · Cross-cultural research',
+	'about.practice4': 'AI 与系统',
+	'about.practice4Body': 'Python · LLM workflows · Multi-agent systems · RAG · Knowledge engineering',
+	'about.principlesEyebrow': 'Operating principles / 工作原则',
+	'about.principle1': '先测量，再解释。',
+	'about.principle1Body': '不要让一个漂亮故事跑在证据前面。',
+	'about.principle2': '一次交付不算完成。',
+	'about.principle2Body': '真正的结果是团队下一次可以更快、更稳地重复。',
+	'about.principle3': 'AI 放大判断，不替代责任。',
+	'about.principle3Body': '高约束场景里，速度必须和可追溯性一起设计。',
+	'about.education': '教育与资质',
+	'about.educationBody':
+		'华东师范大学 · 心理学理学学士（2007—2011）\n国家二级心理咨询师 · 用户研究工程师师资 · 交互设计工程师师资',
 
-    // Work listing
-    'work.metaTitle': '我的作品 | 杨朋翰',
-    'work.metaDesc': '了解杨朋翰最近的项目与过往经验',
-    'work.heroTitle': '我的作品',
-    'work.heroTagline': '在下方查看我最近的项目，了解我的过往经验。',
+	'cta.eyebrow': 'A useful conversation / 一次有用的对话',
+	'cta.title': '如果你面对的是一个没有标准答案的行为、产品或 AI 问题，我们可以聊聊。',
+	'cta.body': '适合联系我的主题：复杂研究与人因问题、Agentic AI 工作流、Solution Engineering，以及行业演讲。',
+	'cta.button': '发送邮件',
+	'cta.linkedin': '在 LinkedIn 联系',
 
-    // Work detail
-    'workDetail.back': '作品',
+	'footer.tagline': '行为智能：从测量，到判断，再到系统。',
+	'footer.privacy': '本站不使用 Cookie，也不追踪访客。',
+	'footer.github': 'GitHub',
+	'footer.linkedin': 'LinkedIn',
+	'footer.email': 'Email',
+	'footer.copyright': '杨朋翰 / Will Yang',
 
-    // Contact CTA
-    'cta.title': '有兴趣合作吗？',
-    'cta.button': '给我发消息',
-
-    // Footer
-    'footer.tagline': '行为科学 × AI × 人因工程',
-    'footer.copyright': '杨朋翰',
-    'footer.github': 'GitHub',
-    'footer.linkedin': 'LinkedIn',
-    'footer.email': '邮箱',
-
-    // 404
-    '404.metaTitle': '页面未找到',
-    '404.metaDesc': '404 错误——未找到此页面',
-    '404.heroTitle': '页面未找到',
-    '404.heroTagline': '未找到',
-
-    // Meta defaults
-    'meta.defaultTitle': '杨朋翰 — 问题解决者',
-    'meta.defaultDesc': '行为科学 × AI × 人因工程',
-
-    // Theme toggle (sr-only)
-    'theme.dark': '深色主题',
-  },
-
-  en: {
-    // Nav
-    'nav.home': 'Home',
-    'nav.work': 'Work',
-    'nav.about': 'About',
-    'nav.menu': 'Menu',
-    'nav.brand': 'Will Yang',
-
-    // Index — Hero
-    'index.heroTitle': "Hello, I'm Will Yang",
-    'index.heroTagline':
-      'Head of Consulting & Business Development at Noldus. Pioneered IEC 62366 usability engineering in China, solving real problems for 25+ enterprises with behavioral science + AI.',
-    'index.pill1': 'Behavioral Science',
-    'index.pill2': '10+ yrs · 25+ clients',
-    'index.pill3': 'AI Explorer',
-    'index.portraitAlt': 'Will Yang — behavioral science and AI specialist',
-
-    // Index — Selected Work
-    'index.selectedWorkTitle': 'Selected Work',
-    'index.selectedWorkDesc':
-      'Four representative projects — from pioneering IEC 62366 usability engineering in China, to delivering a million-level HMI/UX evaluation framework for Mercedes-Benz, to the multi-agent AI platform PsyPhiClaw.',
-    'index.viewAll': 'View All',
-
-    // Index — Talks
-    'index.talksTitle': 'Talks & Appearances',
-    'index.talksDesc':
-      'Speaking on behavioral measurement and usability engineering at UX, smart-mobility, and human-machine-environment conferences.',
-    'index.talk1': 'China User Experience Summit (6th)',
-    'index.talk1Sub': 'Multimodality in App testing: why user testing matters (2018)',
-    'index.talk2': 'China Smart Vehicle Innovation Forum',
-    'index.talk2Sub': 'Driving behavior & ADAS — emotion, eye-control and beyond (2017)',
-    'index.talk3': 'Intl. Human-Machine-Environment Systems Engineering Conference',
-    'index.talk3Sub': 'Behavioral measurement in human-machine-environment systems (2017)',
-
-    // Skills
-    'skills.bsTitle': 'Behavioral Science',
-    'skills.bsDesc':
-      '10+ years decoding human behavior — from eye tracking and EEG to facial expression analysis. Building bridges between research and real-world impact.',
-    'skills.aiTitle': 'AI-Powered Analysis',
-    'skills.aiDesc':
-      'Exploring multi-agent systems and LLM-powered tools to transform weeks of manual behavioral coding into minute-level automated insights.',
-    'skills.psTitle': 'Problem Solver',
-    'skills.psDesc':
-      '25+ enterprise clients, 243% YoY growth. From pioneering IEC 62366 in China to million-level automotive UX partnerships — every challenge gets the same systematic treatment.',
-
-    // About
-    'about.metaTitle': 'About | Will Yang',
-    'about.metaDesc': 'Behavioral Science × AI × Human Factors — Problem Solver',
-    'about.heroTitle': 'About',
-    'about.heroTagline':
-      'A problem solver at the intersection of behavioral science, AI, and human factors engineering.',
-    'about.heroImgAlt': 'Behavioral analysis and usability testing',
-    'about.backgroundTitle': 'Background',
-    'about.statsTitle': 'Key numbers',
-    'about.stat1Num': '170+',
-    'about.stat1Label': 'Projects',
-    'about.stat2Num': '100+',
-    'about.stat2Label': 'Clients',
-    'about.stat3Num': '7',
-    'about.stat3Label': 'Industries',
-    'about.stat4Num': '243%',
-    'about.stat4Label': 'YoY growth (2024)',
-    'about.bgP1':
-      "My story starts in the psychology labs at East China Normal University. I realized early on that understanding human behavior takes more than surveys and intuition — it demands quantifiable measurement, rigorous experimental design, and respect for the data. After graduating in 2011, I spent four years as a front-line psychology and math teacher before carrying that conviction — seeing people through data — into behavioral research.",
-    'about.bgP2':
-      "From 2015, I built my craft at Noldus as a research manager, running bespoke human-behavior insight studies with eye tracking, EEG, facial-expression analysis, and biophysiological instruments — from a 6-city study that surfaced 84 issues in a financial app, to EEG + eye-tracking evaluations of Yili yogurt packaging. Along the way I also led human-robot interaction (HRI) research at Cheetah Mobile, exploring how sound, motion, and expression shape people's perception of robots.",
-    'about.bgP3':
-      "In 2019 I returned to Noldus as Consulting Manager. I built the Solution Engineering team from scratch, productized scattered consulting into standardized solutions, and opened up entirely new tracks — medical-device human factors, automotive human factors, architectural human factors, aviation human factors. This consulting-led growth engine now drives eight-figure product orders every year, with 243% YoY growth in 2024.",
-    'about.bgP4':
-      "Today I focus on two things: rebuilding behavioral-data analysis with multi-agent AI (the PsyPhiClaw platform), compressing weeks of manual coding into minutes; and operationalizing Agentic AI inside usability engineering and consulting delivery. I believe the next breakthrough lies where behavioral science meets AI.",
-    'about.educationTitle': 'Education',
-    'about.edu1': 'East China Normal University — Psychology (B.Sc., 2007–2011)',
-    'about.edu1Sub': '985 / 211 university · National Level 2 Psychological Counselor · UX Research Engineer Instructor',
-    'about.expertiseTitle': 'Core Expertise',
-    'about.expMeasurement': 'Measurement',
-    'about.expMeasurementItems': 'Eye tracking · EEG · Facial expression · Biosignals · Behavior coding',
-    'about.expStandards': 'Standards',
-    'about.expStandardsItems': 'IEC 62366 · ANSI/AAMI HE75 · ISO 14971 · NMPA',
-    'about.expResearch': 'Research Methods',
-    'about.expResearchItems': 'Usability testing · Experimental design · Cross-cultural studies',
-    'about.expTech': 'Tech & AI',
-    'about.expTechItems': 'Python · LLM APIs · Multi-Agent systems · RAG · n8n automation',
-    'about.philosophyTitle': 'Philosophy',
-    'about.philosophyQuote': 'The best solutions emerge from interdisciplinary collisions.',
-    'about.philosophyDesc':
-      "Mentored by Charlie Munger's mental models, Douglas Hofstadter's cognitive philosophy, and Steve Jobs' obsession with excellence. Always learning, always building.",
-
-    // Work listing
-    'work.metaTitle': 'My Work | Will Yang',
-    'work.metaDesc': "Learn about Will Yang's most recent projects",
-    'work.heroTitle': 'My Work',
-    'work.heroTagline': 'See my most recent projects below to get an idea of my past experience.',
-
-    // Work detail
-    'workDetail.back': 'Work',
-
-    // Contact CTA
-    'cta.title': 'Interested in working together?',
-    'cta.button': 'Send Me a Message',
-
-    // Footer
-    'footer.tagline': 'Behavioral Science × AI × Human Factors',
-    'footer.copyright': 'Will Yang',
-    'footer.github': 'GitHub',
-    'footer.linkedin': 'LinkedIn',
-    'footer.email': 'Email',
-
-    // 404
-    '404.metaTitle': 'Not Found',
-    '404.metaDesc': '404 Error — this page was not found',
-    '404.heroTitle': 'Page Not Found',
-    '404.heroTagline': 'Not found',
-
-    // Meta defaults
-    'meta.defaultTitle': 'Will Yang — Problem Solver',
-    'meta.defaultDesc': 'Behavioral Science × AI × Human Factors',
-
-    // Theme toggle (sr-only)
-    'theme.dark': 'Dark theme',
-  },
+	'404.metaTitle': '页面未找到 | 杨朋翰',
+	'404.metaDesc': '请求的页面不存在。',
+	'404.eyebrow': '404 / Missing field note',
+	'404.title': '这条线索不在档案里。',
+	'404.body': '地址可能已经改变，或者这个页面从未存在。',
+	'404.home': '返回首页',
+	'404.work': '浏览工作档案',
 } as const;
 
-export type UIKey = keyof (typeof ui)['zh'];
+export type UIKey = keyof typeof zh;
+
+const en: Record<UIKey, string> = {
+	'nav.home': 'Home',
+	'nav.work': 'Work',
+	'nav.notes': 'Notes',
+	'nav.about': 'About',
+	'nav.contact': 'Contact',
+	'nav.brand': 'Will Yang',
+	'nav.brandAlt': '杨朋翰',
+	'nav.language': 'Switch language',
+	'nav.skip': 'Skip to main content',
+
+	'theme.toggle': 'Toggle color theme',
+	'theme.light': 'Use light theme',
+	'theme.dark': 'Use dark theme',
+
+	'index.metaTitle': 'Will Yang — Behavioral intelligence builder',
+	'index.metaDesc':
+		'Turning complex human problems into working systems across behavioral science, human factors, and agentic AI.',
+	'index.eyebrow': 'Behavioral intelligence builder · Beijing',
+	'index.heroTitleA': 'Turn human behavior',
+	'index.heroTitleB': 'into working systems.',
+	'index.heroIntro':
+		'I’m Will Yang. Trained in psychology, I have spent more than a decade measuring real behavior, putting evidence into products and safety, and turning expert methods into systems that others can reuse.',
+	'index.heroRole': 'Head of Consulting & Business Development, Noldus China',
+	'index.heroWork': 'Explore selected work',
+	'index.heroContact': 'Discuss a hard problem',
+	'index.portraitAlt': 'Portrait of Will Yang',
+	'index.proofLabel': 'Work archive / 2015—present',
+	'index.stat1Num': '10+',
+	'index.stat1Label': 'years in behavioral research and solutions',
+	'index.stat2Num': '100+',
+	'index.stat2Label': 'engagements across complex industries',
+	'index.stat3Num': '7',
+	'index.stat3Label': 'sectors, from medtech to mobility and research',
+	'index.stat4Num': '20+',
+	'index.stat4Label': 'open PsyPhiClaw analysis modules',
+	'index.workEyebrow': 'Selected systems / Work',
+	'index.workTitle': 'I do not stop at a study.\nI build the capability that follows it.',
+	'index.workIntro':
+		'The work spans safety-critical products, complex interaction, organizational capability, and open AI. Each starts with ambiguity and ends with a system that can keep working.',
+	'index.workAll': 'View all work',
+	'index.methodEyebrow': 'How I work / Method',
+	'index.methodTitle': 'From seeing behavior to scaling judgment.',
+	'index.method1Title': 'Observe',
+	'index.method1Body':
+		'Use observation, eye tracking, EEG, facial expression, and biosignals to see what surveys and intuition miss.',
+	'index.method2Title': 'Model',
+	'index.method2Body':
+		'Turn evidence into task models, use risks, cognitive load, and decisions people can act on.',
+	'index.method3Title': 'Build',
+	'index.method3Body':
+		'Put judgment into evaluation frameworks, product processes, knowledge bases, and AI workflows.',
+	'index.method4Title': 'Scale',
+	'index.method4Body':
+		'Turn one delivery into teams, templates, products, and repeatable business capability.',
+	'index.focusEyebrow': 'Current experiment',
+	'index.focusTitle': 'PsyPhiClaw: an open AI workflow for multimodal behavioral analysis.',
+	'index.focusBody':
+		'This public proof of concept unifies facial expression, eye tracking, EEG, physiology, fNIRS, and observational coding. It now has 20+ modules. The next milestone is not a longer feature list; it is validation on real research data.',
+	'index.focusLink': 'View the public repository',
+	'index.focusStatus': 'OPEN PROTOTYPE · VALIDATION NEXT',
+	'index.notesEyebrow': 'Field notes',
+	'index.notesTitle': 'A method becomes a capability when it is written down.',
+	'index.notesAll': 'View all notes',
+	'index.talksEyebrow': 'Selected talks',
+	'index.talksTitle': 'Clarifying the problem before the industry catches up.',
+	'index.talk1Year': '2018',
+	'index.talk1Venue': '6th China User Experience Summit',
+	'index.talk1Topic': 'Multimodality in app testing: why user testing matters',
+	'index.talk2Year': '2017',
+	'index.talk2Venue': '2nd China Smart Vehicle Innovation Forum',
+	'index.talk2Topic': 'Driving behavior and ADAS: emotion, eye control, and applications',
+	'index.talk3Year': '2017',
+	'index.talk3Venue': '17th International Human–Machine–Environment Systems Conference',
+	'index.talk3Topic': 'Behavioral measurement in human–machine–environment systems',
+
+	'work.metaTitle': 'Work archive | Will Yang',
+	'work.metaDesc':
+		'Selected systems and case studies across medtech human factors, automotive HMI, solution engineering, and agentic AI.',
+	'work.eyebrow': 'Work archive',
+	'work.title': 'Problems, judgment, and the systems left behind.',
+	'work.intro':
+		'This archive distinguishes delivered systems, operating capabilities, and open prototypes. Client work includes only details already cleared for public use.',
+	'work.legendDelivered': 'DELIVERED',
+	'work.legendOperating': 'OPERATING',
+	'work.legendPrototype': 'PROTOTYPE',
+	'work.read': 'Read case study',
+	'workDetail.back': 'Back to work archive',
+	'workDetail.problem': 'Problem',
+	'workDetail.role': 'My role',
+	'workDetail.approach': 'Approach',
+	'workDetail.outcome': 'Outcome',
+	'workDetail.note': 'Public note',
+	'workDetail.next': 'Next project',
+
+	'notes.metaTitle': 'Notes | Will Yang',
+	'notes.metaDesc':
+		'Field notes on behavioral intelligence, human factors, agentic AI, and solution engineering.',
+	'notes.eyebrow': 'Notes',
+	'notes.title': 'Ideas grown from real work.',
+	'notes.intro':
+		'Not a stream of hot takes. These are provisional answers to long-running questions: how to see behavior, how to turn judgment into systems, and what AI should amplify.',
+	'notes.read': 'Read note',
+	'notes.back': 'Back to notes',
+	'notes.updated': 'Updated',
+	'notes.minutes': 'min read',
+	'notes.next': 'Read next',
+
+	'about.metaTitle': 'About | Will Yang',
+	'about.metaDesc':
+		'Psychology, behavioral research, human factors, solution engineering, and agentic AI: the working path of Will Yang.',
+	'about.eyebrow': 'About',
+	'about.title': 'I make ambiguous human problems actionable.',
+	'about.intro':
+		'I do not define myself by a particular tool. More accurately, I build measurement methods, decision frameworks, and working systems when a complex problem has no ready-made answer.',
+	'about.storyTitle': 'Four turns. One enduring question.',
+	'about.story1Year': '2007—2015',
+	'about.story1Title': 'From psychology to the classroom',
+	'about.story1Body':
+		'I studied psychology at East China Normal University, then spent four years teaching psychology and mathematics. Teaching made one thing tangible: knowing a theory and changing real behavior are not the same task.',
+	'about.story2Year': '2015—2019',
+	'about.story2Title': 'Making behavior measurable',
+	'about.story2Body':
+		'At Noldus, I designed studies across finance, consumer goods, research, and mobility using eye tracking, EEG, facial expression, and physiology. One six-city finance-app study surfaced 84 issues and five recurring behavior patterns.',
+	'about.story3Year': '2019',
+	'about.story3Title': 'Entering human–robot interaction',
+	'about.story3Body':
+		'At Cheetah Mobile, I studied how sound, motion, and facial expression shape people’s perception of robots and their interaction efficiency, while creating reusable research processes for the team.',
+	'about.story4Year': '2019—present',
+	'about.story4Title': 'From delivering projects to building capability',
+	'about.story4Body':
+		'Back at Noldus, I built solution engineering capability and turned scattered consulting into methods, processes, and long-term programs in medtech, mobility, and other complex industries. Now I use agentic AI to make those expert workflows more open and reusable.',
+	'about.practiceEyebrow': 'Practice',
+	'about.practiceTitle':
+		'Interdisciplinary work is not a list of skills.\nIt is an end-to-end problem-solving chain.',
+	'about.practice1': 'Behavioral measurement',
+	'about.practice1Body': 'Eye tracking · EEG · Facial expression · Biosignals · Behavioral coding',
+	'about.practice2': 'Human factors & safety',
+	'about.practice2Body': 'IEC 62366 · HE75 · ISO 14971 · Formative / summative evaluation',
+	'about.practice3': 'Research & product',
+	'about.practice3Body': 'Usability testing · Experimental design · HMI evaluation · Cross-cultural research',
+	'about.practice4': 'AI & systems',
+	'about.practice4Body': 'Python · LLM workflows · Multi-agent systems · RAG · Knowledge engineering',
+	'about.principlesEyebrow': 'Operating principles',
+	'about.principle1': 'Measure before explaining.',
+	'about.principle1Body': 'Do not let a good story run ahead of the evidence.',
+	'about.principle2': 'One delivery is not completion.',
+	'about.principle2Body': 'The real result is a team that can repeat the work faster and more reliably.',
+	'about.principle3': 'AI amplifies judgment, not accountability.',
+	'about.principle3Body': 'In high-constraint settings, speed and traceability must be designed together.',
+	'about.education': 'Education & credentials',
+	'about.educationBody':
+		'East China Normal University · BSc Psychology (2007—2011)\nNational Level 2 Psychological Counselor · UX Research instructor · Interaction Design instructor',
+
+	'cta.eyebrow': 'A useful conversation',
+	'cta.title': 'If you are facing a behavioral, product, or AI problem with no standard answer, let’s talk.',
+	'cta.body':
+		'Good reasons to reach out: complex research and human-factors problems, agentic AI workflows, solution engineering, or a talk.',
+	'cta.button': 'Send an email',
+	'cta.linkedin': 'Connect on LinkedIn',
+
+	'footer.tagline': 'Behavioral intelligence: from measurement to judgment to systems.',
+	'footer.privacy': 'No cookies. No visitor tracking.',
+	'footer.github': 'GitHub',
+	'footer.linkedin': 'LinkedIn',
+	'footer.email': 'Email',
+	'footer.copyright': 'Will Yang / 杨朋翰',
+
+	'404.metaTitle': 'Page not found | Will Yang',
+	'404.metaDesc': 'The requested page does not exist.',
+	'404.eyebrow': '404 / Missing field note',
+	'404.title': 'This lead is not in the archive.',
+	'404.body': 'The address may have changed, or the page may never have existed.',
+	'404.home': 'Return home',
+	'404.work': 'Browse the work archive',
+};
+
+export const ui = { zh, en } as const;

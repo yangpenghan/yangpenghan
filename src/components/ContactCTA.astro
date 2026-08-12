@@ -1,53 +1,108 @@
 ---
-import CallToAction from './CallToAction.astro';
-import Icon from './Icon.astro';
 import { useTranslations, type Locale } from '../i18n';
 
 interface Props {
 	locale: Locale;
 }
+
 const { locale } = Astro.props;
 const t = useTranslations(locale);
+const subject = locale === 'zh' ? '想和你讨论一个问题' : 'A hard problem worth discussing';
 ---
 
-<aside>
-	<h2>{t('cta.title')}</h2>
-	<CallToAction href="mailto:yangpenghan1988@gmail.com">
-		{t('cta.button')}
-		<Icon icon="paper-plane-tilt" size="1.2em" />
-	</CallToAction>
+<aside class="contact-section" id="contact" aria-labelledby="contact-title">
+	<div class="page-shell contact-grid" data-reveal>
+		<div>
+			<p class="eyebrow">{t('cta.eyebrow')}</p>
+			<h2 id="contact-title">{t('cta.title')}</h2>
+		</div>
+		<div class="contact-copy">
+			<p>{t('cta.body')}</p>
+			<div class="contact-links">
+				<a class="primary-link" href={`mailto:yangpenghan1988@gmail.com?subject=${encodeURIComponent(subject)}`}>
+					{t('cta.button')} <span aria-hidden="true">↗</span>
+				</a>
+				<a class="secondary-link" href="https://www.linkedin.com/in/thereisawillyang">
+					{t('cta.linkedin')}
+				</a>
+			</div>
+		</div>
+	</div>
 </aside>
 
 <style>
-	aside {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 3rem;
-		border-top: 1px solid var(--gray-800);
-		border-bottom: 1px solid var(--gray-800);
-		padding: 5rem 1.5rem;
-		background-color: var(--gray-999_40);
-		box-shadow: var(--shadow-sm);
+	.contact-section {
+		padding-block: clamp(5rem, 11vw, 10rem);
+		border-top: 1px solid var(--rule);
+	}
+
+	.contact-grid {
+		display: grid;
+		grid-template-columns: minmax(0, 1.45fr) minmax(18rem, 0.55fr);
+		gap: clamp(3rem, 8vw, 8rem);
+		align-items: end;
 	}
 
 	h2 {
-		font-size: var(--text-xl);
-		text-align: center;
-		max-width: 15ch;
+		max-width: 18ch;
+		margin-top: 2rem;
+		font-family: var(--font-serif);
+		font-size: var(--step-3);
+		line-height: 1.08;
 	}
 
-	@media (min-width: 50em) {
-		aside {
-			padding: 7.5rem;
-			flex-direction: row;
-			flex-wrap: wrap;
-			justify-content: space-between;
-		}
+	.contact-copy {
+		display: grid;
+		gap: 2rem;
+		color: var(--ink-soft);
+	}
 
-		h2 {
-			font-size: var(--text-3xl);
-			text-align: left;
+	.contact-links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+	}
+
+	.primary-link,
+	.secondary-link {
+		display: inline-flex;
+		min-height: 3rem;
+		align-items: center;
+		justify-content: center;
+		padding: 0.65rem 1rem;
+		font-size: 0.88rem;
+		font-weight: 700;
+		text-decoration: none;
+		transition:
+			background var(--duration) ease,
+			color var(--duration) ease,
+			transform var(--duration) ease;
+	}
+
+	.primary-link {
+		gap: 0.65rem;
+		background: var(--ink);
+		color: var(--paper);
+	}
+
+	.secondary-link {
+		border: 1px solid var(--rule-strong);
+	}
+
+	.primary-link:hover,
+	.secondary-link:hover {
+		background: var(--signal);
+		color: #fff;
+	}
+
+	.primary-link:active,
+	.secondary-link:active {
+		transform: translateY(1px);
+	}
+
+	@media (max-width: 48rem) {
+		.contact-grid {
+			grid-template-columns: 1fr;
 		}
 	}
 </style>

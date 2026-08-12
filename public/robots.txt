@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://yangpenghan.github.io/yangpenghan/sitemap-index.xml

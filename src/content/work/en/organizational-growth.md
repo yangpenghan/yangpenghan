@@ -1,36 +1,55 @@
 ---
-locale: 'en'
-title: Organizational Growth — From Solo to System
+locale: en
+title: From one-off consulting to solution engineering capability
+description: Turning scattered professional services into reusable methods, teams, and a market-learning system that validates product value.
 publishDate: 2024-01-01
-img: /assets/stock-4.jpg
-img_alt: Building a consulting team and systematic solution framework
-description: |
-  Built the Solution Engineering team and a standardized solution system from scratch, reaching 243% YoY growth in 2024
-  and driving eight-figure product-order conversion every year.
+updatedDate: 2026-08-12
+status: operating
+year: 2019—present
+order: 3
+discipline: Organization · Business development
+outcome: Built a consulting and solution system from zero and opened new applications in medtech, mobility, architecture, and aviation human factors.
+role: Practice and business lead, solution design, key accounts, and delivery governance
 tags:
-  - Business Development
-  - Strategy
-  - Consulting
   - Solution Engineering
-  - Productization
+  - Practice building
+  - Go-to-market
+  - Knowledge systems
+  - Team design
+confidentiality: Revenue, contracts, team performance, and internal company processes are not published.
 ---
 
-## Background
+## The problem
 
-When I took this on in 2019, "behavioral science consulting" barely existed in China's enterprise landscape. The challenge wasn't just doing the work — it was building an entire industry category from scratch and turning it into a repeatable growth engine.
+Professional-service teams can easily repeat the same failure mode: every engagement starts from zero, the most experienced people keep rescuing delivery, solutions do not compound, and new colleagues learn only through long periods of shadowing. Growth and quality begin to work against each other.
 
-## Growth drivers
+A second problem is less visible. Buyers of complex B2B products rarely move from a feature list directly to purchase. They first need evidence that a product can solve their specific problem. When consulting and product operate separately, that chain of trust breaks.
 
-Three engines powered the growth: **methodology productization** — packaging scattered consulting into standardized solutions and delivery templates so delivery no longer depended on solo heroes; **account upgrades** — extending single projects into annual framework partnerships; and **industry expansion** — stretching from medical devices into automotive, consumer research, even architectural and aviation human factors.
+## My role
 
-## Building organizational capability
+From 2019, I built the consulting and solution-engineering capability from the ground up: setting practice direction, designing the flow from discovery to delivery review, creating reusable solution and knowledge assets, developing the team, and leading key relationships and complex engagements.
 
-I built the Solution Engineering team from zero — establishing internal training, a knowledge base, and a delivery-template library that drastically compressed ramp-up time for new hires. The team grew from one into a full consulting, technical, and business-development unit.
+## The approach
 
-## Key insight: consulting as customer acquisition
+I treated the system as four connected parts:
 
-The team's core role isn't billable service — it's being the first touchpoint of Solution Engineering. By validating product capability through expert solutions and building technical trust, consulting naturally drives Noldus product-line procurement. Consulting is the entry point; eight-figure product-order conversion is the destination. This consulting-led growth is the most effective GTM play for high-end technical products.
+1. **Problem discovery** — separate real constraints, business decisions, and measurable questions from the client’s initial language.
+2. **Solution productization** — turn recurring research and human-factors problems into modular, bounded forms of delivery.
+3. **Evidence-led product validation** — prove value in a concrete setting before asking a client to invest in a long-term system.
+4. **Knowledge compounding** — retain decisions, methods, failures, and reusable assets after an engagement, not only the final report.
 
-## Results
+The goal was not to force every problem into a standard package. The repeatable part is the reasoning structure and quality floor; the problem remains specific.
 
-Grew from a one-person operation into a complete consulting business, hitting 243% YoY growth in 2024, driving eight-figure product orders annually, and leaving behind a full library of reusable methodology templates and standardized evaluation processes.
+## The outcome
+
+The practice developed stable lines in consumer research, user experience, and medical-device usability, then entered new applications including automotive, architectural, and aviation human factors. One-off projects could become annual frameworks, and project learning could feed later solution design and team development.
+
+The work supports a more modern B2B model: professional services are not a sales-support appendix. They are a front-line system for discovering demand, building technical trust, validating value, and informing product direction.
+
+## What I learned
+
+Organizational capability is not headcount or the number of templates. It is whether a team can produce sound judgment when it meets a new problem—and whether the new learning is written back into the system.
+
+## Public note
+
+This case describes organizational design and method only. Revenue, client contracts, team performance, and internal systems remain private.

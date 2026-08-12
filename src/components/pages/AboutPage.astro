@@ -1,226 +1,301 @@
 ---
-import { getRelativeLocaleUrl } from 'astro:i18n';
 import ContactCTA from '../ContactCTA.astro';
-import Hero from '../Hero.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { useTranslations, type Locale } from '../../i18n';
+import type { UIKey } from '../../i18n/ui';
 
 interface Props {
 	locale: Locale;
 }
+
 const { locale } = Astro.props;
 const t = useTranslations(locale);
-
 const base = import.meta.env.BASE_URL;
-const assetUrl = (p: string) => `${base}${p.replace(/^\//, '')}`;
+const stories = [1, 2, 3, 4].map((index) => ({
+	year: t(`about.story${index}Year` as UIKey),
+	title: t(`about.story${index}Title` as UIKey),
+	body: t(`about.story${index}Body` as UIKey),
+}));
+const practices = [1, 2, 3, 4].map((index) => ({
+	title: t(`about.practice${index}` as UIKey),
+	body: t(`about.practice${index}Body` as UIKey),
+}));
+const principles = [1, 2, 3].map((index) => ({
+	title: t(`about.principle${index}` as UIKey),
+	body: t(`about.principle${index}Body` as UIKey),
+}));
 ---
 
 <BaseLayout locale={locale} title={t('about.metaTitle')} description={t('about.metaDesc')}>
-	<div class="stack gap-20">
-		<main class="wrapper about">
-			<Hero title={t('about.heroTitle')} tagline={t('about.heroTagline')}>
-				<img
-					width="1553"
-					height="873"
-					src={assetUrl('/assets/at-work.jpg')}
-					alt={t('about.heroImgAlt')}
-				/>
-			</Hero>
+	<main>
+		<header class="about-hero page-shell">
+			<div data-reveal>
+				<p class="eyebrow">{t('about.eyebrow')}</p>
+				<h1>{t('about.title')}</h1>
+			</div>
+			<div class="about-intro" data-reveal>
+				<img src={`${base}assets/portrait.jpg`} alt={t('index.portraitAlt')} width="480" height="620" />
+				<p>{t('about.intro')}</p>
+			</div>
+		</header>
 
-			<section>
-				<h2 class="section-title">{t('about.backgroundTitle')}</h2>
-				<div class="content">
-					<p>{t('about.bgP1')}</p>
-					<p>{t('about.bgP2')}</p>
-					<p>{t('about.bgP3')}</p>
-					<p>{t('about.bgP4')}</p>
+		<section class="story section-rule" aria-labelledby="story-title">
+			<div class="page-shell story-grid">
+				<header data-reveal>
+					<p class="eyebrow">Timeline / 路径</p>
+					<h2 id="story-title">{t('about.storyTitle')}</h2>
+				</header>
+				<ol>
+					{
+						stories.map((item) => (
+							<li data-reveal>
+								<time>{item.year}</time>
+								<div><h3>{item.title}</h3><p>{item.body}</p></div>
+							</li>
+						))
+					}
+				</ol>
+			</div>
+		</section>
+
+		<section class="practice section-rule" aria-labelledby="practice-title">
+			<div class="page-shell">
+				<header data-reveal>
+					<p class="eyebrow">{t('about.practiceEyebrow')}</p>
+					<h2 id="practice-title">{t('about.practiceTitle')}</h2>
+				</header>
+				<div class="practice-grid">
+					{
+						practices.map((item, index) => (
+							<div data-reveal>
+								<span>{String(index + 1).padStart(2, '0')}</span>
+								<h3>{item.title}</h3>
+								<p>{item.body}</p>
+							</div>
+						))
+					}
 				</div>
-			</section>
+			</div>
+		</section>
 
-			<section>
-				<h2 class="section-title">{t('about.statsTitle')}</h2>
-				<div class="content">
-					<div class="stats-grid">
-						<div class="stat">
-							<span class="stat-num">{t('about.stat1Num')}</span>
-							<span class="stat-label">{t('about.stat1Label')}</span>
-						</div>
-						<div class="stat">
-							<span class="stat-num">{t('about.stat2Num')}</span>
-							<span class="stat-label">{t('about.stat2Label')}</span>
-						</div>
-						<div class="stat">
-							<span class="stat-num">{t('about.stat3Num')}</span>
-							<span class="stat-label">{t('about.stat3Label')}</span>
-						</div>
-						<div class="stat">
-							<span class="stat-num">{t('about.stat4Num')}</span>
-							<span class="stat-label">{t('about.stat4Label')}</span>
-						</div>
-					</div>
-				</div>
-			</section>
+		<section class="principles section-rule" aria-labelledby="principles-title">
+			<div class="page-shell principles-grid">
+				<header data-reveal>
+					<p class="eyebrow">{t('about.principlesEyebrow')}</p>
+					<h2 id="principles-title">{locale === 'zh' ? '我用三条原则检查自己的工作。' : 'Three principles I use to check my own work.'}</h2>
+				</header>
+				<ol>
+					{
+						principles.map((item, index) => (
+							<li data-reveal>
+								<span>{String(index + 1).padStart(2, '0')}</span>
+								<div><h3>{item.title}</h3><p>{item.body}</p></div>
+							</li>
+						))
+					}
+				</ol>
+			</div>
+		</section>
 
-			<section>
-				<h2 class="section-title">{t('about.educationTitle')}</h2>
-				<div class="content">
-					<p><strong>{t('about.edu1')}</strong></p>
-					<p style="color:var(--gray-400);margin-top:0.25rem;">{t('about.edu1Sub')}</p>
-				</div>
-			</section>
-
-			<section>
-				<h2 class="section-title">{t('about.expertiseTitle')}</h2>
-				<div class="content">
-					<div class="expertise-grid">
-						<div class="expertise-item">
-							<strong>{t('about.expMeasurement')}</strong>
-							<p>{t('about.expMeasurementItems')}</p>
-						</div>
-						<div class="expertise-item">
-							<strong>{t('about.expStandards')}</strong>
-							<p>{t('about.expStandardsItems')}</p>
-						</div>
-						<div class="expertise-item">
-							<strong>{t('about.expResearch')}</strong>
-							<p>{t('about.expResearchItems')}</p>
-						</div>
-						<div class="expertise-item">
-							<strong>{t('about.expTech')}</strong>
-							<p>{t('about.expTechItems')}</p>
-						</div>
-					</div>
-				</div>
-			</section>
-
-			<section>
-				<h2 class="section-title">{t('about.philosophyTitle')}</h2>
-				<div class="content">
-					<p style="font-size:var(--text-lg);font-style:italic;color:var(--gray-300);">
-						{t('about.philosophyQuote')}
-					</p>
-					<p style="margin-top:0.5rem;color:var(--gray-400);">
-						{t('about.philosophyDesc')}
-					</p>
-				</div>
-			</section>
-		</main>
-
-		<ContactCTA locale={locale} />
-	</div>
+		<section class="education section-rule">
+			<div class="page-shell education-grid" data-reveal>
+				<p class="eyebrow">{t('about.education')}</p>
+				<p>{t('about.educationBody')}</p>
+			</div>
+		</section>
+	</main>
+	<ContactCTA {locale} />
 </BaseLayout>
 
 <style>
-	.about {
-		display: flex;
-		flex-direction: column;
-		gap: 3.5rem;
-	}
-
-	img {
-		margin-top: 1.5rem;
-		border-radius: 1.5rem;
-		box-shadow: var(--shadow-md);
-	}
-
-	section {
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
-		color: var(--gray-200);
-	}
-
-	.section-title {
-		grid-column-start: 1;
-		font-size: var(--text-xl);
-		color: var(--gray-0);
-	}
-
-	.content {
-		grid-column: 2 / 4;
-	}
-
-	.content :global(a) {
-		text-decoration: 1px solid underline transparent;
-		text-underline-offset: 0.25em;
-		transition: text-decoration-color var(--theme-transition);
-	}
-
-	.content :global(a:hover),
-	.content :global(a:focus) {
-		text-decoration-color: currentColor;
-	}
-
-	.expertise-grid {
+	.about-hero {
 		display: grid;
-		grid-template-columns: repeat(2, 1fr);
+		grid-template-columns: minmax(0, 1.5fr) minmax(18rem, 0.5fr);
+		gap: clamp(3rem, 9vw, 9rem);
+		align-items: end;
+		padding-block: clamp(5rem, 11vw, 10rem);
+	}
+
+	.about-hero h1 {
+		max-width: 13ch;
+		margin-top: clamp(3rem, 7vw, 6rem);
+		font-family: var(--font-serif);
+		font-size: var(--step-5);
+		line-height: 0.95;
+	}
+
+	.about-intro {
+		display: grid;
 		gap: 1.5rem;
-		margin-top: 0.75rem;
 	}
 
-	.stats-grid {
+	.about-intro img {
+		width: 9rem;
+		aspect-ratio: 1;
+		border: 1px solid var(--rule-strong);
+		object-fit: cover;
+		object-position: center 25%;
+		filter: grayscale(0.3) contrast(1.05);
+	}
+
+	.about-intro p {
+		color: var(--ink-soft);
+		font-size: var(--step-1);
+	}
+
+	.story,
+	.practice,
+	.principles {
+		padding-block: clamp(6rem, 12vw, 11rem);
+	}
+
+	.story-grid,
+	.principles-grid {
+		display: grid;
+		grid-template-columns: minmax(18rem, 0.7fr) minmax(0, 1.3fr);
+		gap: clamp(4rem, 9vw, 9rem);
+	}
+
+	.story h2,
+	.practice h2,
+	.principles h2 {
+		max-width: 13ch;
+		margin-top: 2rem;
+		font-family: var(--font-serif);
+		font-size: var(--step-3);
+		white-space: pre-line;
+	}
+
+	.story ol,
+	.principles ol {
+		padding: 0;
+		border-top: 1px solid var(--rule-strong);
+		list-style: none;
+	}
+
+	.story li,
+	.principles li {
+		display: grid;
+		grid-template-columns: 7rem 1fr;
+		gap: 2rem;
+		padding-block: 2.25rem;
+		border-bottom: 1px solid var(--rule);
+	}
+
+	.story time,
+	.principles li > span,
+	.practice-grid span {
+		color: var(--signal-dark);
+		font-family: var(--font-mono);
+		font-size: 0.68rem;
+	}
+
+	.story li div,
+	.principles li div {
+		display: grid;
+		gap: 0.85rem;
+	}
+
+	.story h3,
+	.principles h3,
+	.practice h3 {
+		font-family: var(--font-serif);
+		font-size: var(--step-1);
+		line-height: 1.25;
+	}
+
+	.story li p,
+	.principles li p,
+	.practice-grid p {
+		color: var(--ink-soft);
+		font-size: 0.88rem;
+	}
+
+	.practice {
+		background: var(--paper-deep);
+	}
+
+	.practice header {
+		display: grid;
+		grid-template-columns: 1fr 2fr;
+		gap: 3rem;
+		align-items: start;
+		margin-bottom: clamp(4rem, 9vw, 8rem);
+	}
+
+	.practice h2 {
+		max-width: 19ch;
+		margin-top: 0;
+		font-size: var(--step-4);
+	}
+
+	.practice-grid {
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
+		border-top: 1px solid var(--rule-strong);
+		border-left: 1px solid var(--rule-strong);
+	}
+
+	.practice-grid > div {
+		display: grid;
+		grid-template-columns: 3rem 1fr;
 		gap: 1rem;
-		margin-top: 0.75rem;
+		padding: clamp(1.5rem, 4vw, 3rem);
+		border-right: 1px solid var(--rule-strong);
+		border-bottom: 1px solid var(--rule-strong);
 	}
 
-	.stat {
-		display: flex;
-		flex-direction: column;
-		gap: 0.1rem;
-		padding: 1rem 1.25rem;
-		border: 1px solid var(--gray-800);
-		border-radius: 1rem;
-		background: var(--gradient-subtle);
+	.practice-grid h3,
+	.practice-grid p {
+		grid-column: 2;
 	}
 
-	.stat-num {
-		font-family: var(--font-brand);
-		font-size: var(--text-2xl);
-		font-weight: 600;
-		color: var(--accent-regular);
-		line-height: 1.1;
+	.education {
+		padding-block: clamp(3rem, 7vw, 6rem);
+		background: var(--inverse-bg);
+		color: var(--inverse-ink);
 	}
 
-	.stat-label {
-		font-size: var(--text-sm);
-		color: var(--gray-300);
+	.education-grid {
+		display: grid;
+		grid-template-columns: 1fr 2fr;
+		gap: 3rem;
 	}
 
-	@media (min-width: 50em) {
-		.stats-grid {
-			grid-template-columns: repeat(4, 1fr);
+	.education .eyebrow {
+		color: var(--inverse-signal);
+	}
+
+	.education-grid > p:last-child {
+		font-family: var(--font-serif);
+		font-size: var(--step-1);
+		line-height: 1.5;
+		white-space: pre-line;
+	}
+
+	@media (max-width: 52rem) {
+		.about-hero,
+		.story-grid,
+		.principles-grid,
+		.practice header,
+		.education-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.about-hero h1 {
+			font-size: clamp(3.2rem, 15vw, 5.4rem);
+		}
+
+		.practice-grid {
+			grid-template-columns: 1fr;
 		}
 	}
 
-	.expertise-item strong {
-		font-size: var(--text-sm);
-		text-transform: uppercase;
-		letter-spacing: 0.08em;
-		color: var(--gray-100);
-		display: block;
-		margin-bottom: 0.25rem;
-	}
-
-	.expertise-item p {
-		color: var(--gray-400);
-		font-size: var(--text-sm);
-	}
-
-	@media (min-width: 50em) {
-		.about {
-			display: grid;
-			grid-template-columns: 1fr 60% 1fr;
-		}
-
-		.about > :global(:first-child) {
-			grid-column-start: 2;
-		}
-
-		section {
-			display: contents;
-			font-size: var(--text-lg);
+	@media (max-width: 32rem) {
+		.story li,
+		.principles li {
+			grid-template-columns: 1fr;
+			gap: 0.75rem;
 		}
 	}
 </style>

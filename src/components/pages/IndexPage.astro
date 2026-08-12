@@ -1,270 +1,759 @@
 ---
 import { getCollection } from 'astro:content';
 import { getRelativeLocaleUrl } from 'astro:i18n';
-import CallToAction from '../CallToAction.astro';
 import ContactCTA from '../ContactCTA.astro';
-import Grid from '../Grid.astro';
-import Hero from '../Hero.astro';
-import Icon from '../Icon.astro';
-import Pill from '../Pill.astro';
-import PortfolioPreview from '../PortfolioPreview.astro';
-import Skills from '../Skills.astro';
+import NoteList from '../NoteList.astro';
+import ProjectIndex from '../ProjectIndex.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { useTranslations, type Locale } from '../../i18n';
+import type { UIKey } from '../../i18n/ui';
 
 interface Props {
 	locale: Locale;
 }
+
 const { locale } = Astro.props;
 const t = useTranslations(locale);
-
+const navUrl = (path: string) => getRelativeLocaleUrl(locale, path.replace(/^\//, ''));
+const base = import.meta.env.BASE_URL;
 const projects = (await getCollection('work'))
 	.filter((entry) => entry.data.locale === locale)
+	.sort((a, b) => a.data.order - b.data.order);
+const notes = (await getCollection('notes'))
+	.filter((entry) => entry.data.locale === locale && entry.data.featured)
 	.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
-	.slice(0, 4);
-
-const talks = [
-	{ venue: t('index.talk1'), topic: t('index.talk1Sub') },
-	{ venue: t('index.talk2'), topic: t('index.talk2Sub') },
-	{ venue: t('index.talk3'), topic: t('index.talk3Sub') },
-];
-
-// Navigation links are locale-aware; static /public assets keep the plain base prefix.
-const navUrl = (p: string) => getRelativeLocaleUrl(locale, p.replace(/^\//, ''));
-const base = import.meta.env.BASE_URL;
-const assetUrl = (p: string) => `${base}${p.replace(/^\//, '')}`;
+	.slice(0, 3);
+const stats = [1, 2, 3, 4].map((index) => ({
+	num: t(`index.stat${index}Num` as UIKey),
+	label: t(`index.stat${index}Label` as UIKey),
+}));
+const methods = [1, 2, 3, 4].map((index) => ({
+	title: t(`index.method${index}Title` as UIKey),
+	body: t(`index.method${index}Body` as UIKey),
+}));
+const talks = [1, 2, 3].map((index) => ({
+	year: t(`index.talk${index}Year` as UIKey),
+	venue: t(`index.talk${index}Venue` as UIKey),
+	topic: t(`index.talk${index}Topic` as UIKey),
+}));
 ---
 
-<BaseLayout locale={locale}>
-	<div class="stack gap-20 lg:gap-48">
-		<div class="wrapper stack gap-8 lg:gap-20">
-			<header class="hero">
-				<Hero
-					title={t('index.heroTitle')}
-					tagline={t('index.heroTagline')}
-					align="start"
-				>
-					<div class="roles">
-						<Pill><Icon icon="beaker" size="1.33em" /> {t('index.pill1')}</Pill>
-						<Pill><Icon icon="lightning" size="1.33em" /> {t('index.pill2')}</Pill>
-						<Pill><Icon icon="cpu" size="1.33em" /> {t('index.pill3')}</Pill>
+<BaseLayout locale={locale} title={t('index.metaTitle')} description={t('index.metaDesc')}>
+	<main>
+		<section class="hero page-shell" aria-labelledby="hero-title">
+			<div class="hero-copy" data-reveal>
+				<p class="eyebrow">{t('index.eyebrow')}</p>
+				<h1 id="hero-title">
+					<span>{t('index.heroTitleA')}</span>
+					<span>{t('index.heroTitleB')}</span>
+				</h1>
+				<div class="hero-intro">
+					<p>{t('index.heroIntro')}</p>
+					<div class="hero-actions">
+						<a class="text-link internal" href={navUrl('/work/')}>{t('index.heroWork')}</a>
+						<a class="quiet-link" href="#contact">{t('index.heroContact')} <span aria-hidden="true">↓</span></a>
 					</div>
-				</Hero>
+				</div>
+			</div>
 
-				<img
-					alt={t('index.portraitAlt')}
-					width="480"
-					height="620"
-					src={assetUrl('/assets/portrait.jpg')}
-				/>
+			<aside class="identity" aria-label={t('nav.brand')} data-reveal>
+				<div class="portrait-frame">
+					<img
+						src={`${base}assets/portrait.jpg`}
+						alt={t('index.portraitAlt')}
+						width="480"
+						height="620"
+						fetchpriority="high"
+					/>
+					<span class="signal-square" aria-hidden="true"></span>
+				</div>
+				<div class="identity-copy">
+					<strong>{locale === 'zh' ? '杨朋翰' : 'Will Yang'}</strong>
+					<span>{locale === 'zh' ? 'Will Yang' : '杨朋翰'}</span>
+					<p>{t('index.heroRole')}</p>
+				</div>
+			</aside>
+		</section>
+
+		<section class="proof section-rule" aria-labelledby="proof-title">
+			<div class="page-shell">
+				<h2 id="proof-title" class="meta-label">{t('index.proofLabel')}</h2>
+				<div class="proof-grid">
+					{
+						stats.map((stat) => (
+							<div class="proof-item" data-reveal>
+								<strong>{stat.num}</strong>
+								<span>{stat.label}</span>
+							</div>
+						))
+					}
+				</div>
+			</div>
+		</section>
+
+		<section class="work-section page-shell" aria-labelledby="selected-work-title">
+			<header class="section-heading" data-reveal>
+				<div>
+					<p class="eyebrow">{t('index.workEyebrow')}</p>
+					<h2 id="selected-work-title">{t('index.workTitle')}</h2>
+				</div>
+				<div class="section-intro">
+					<p>{t('index.workIntro')}</p>
+					<a class="text-link internal" href={navUrl('/work/')}>{t('index.workAll')}</a>
+				</div>
 			</header>
+			<ProjectIndex {projects} {locale} />
+		</section>
 
-			<Skills locale={locale} />
-		</div>
-
-		<main class="wrapper stack gap-20 lg:gap-48">
-			<section class="section with-background with-cta">
-				<header class="section-header stack gap-2 lg:gap-4">
-					<h3>{t('index.selectedWorkTitle')}</h3>
-					<p>{t('index.selectedWorkDesc')}</p>
+		<section class="method-section section-rule" aria-labelledby="method-title">
+			<div class="page-shell">
+				<header class="method-heading" data-reveal>
+					<p class="eyebrow">{t('index.methodEyebrow')}</p>
+					<h2 id="method-title">{t('index.methodTitle')}</h2>
 				</header>
+				<ol class="method-line">
+					{
+						methods.map((method, index) => (
+							<li data-reveal>
+								<span class="method-number">{String(index + 1).padStart(2, '0')}</span>
+								<h3>{method.title}</h3>
+								<p>{method.body}</p>
+							</li>
+						))
+					}
+				</ol>
+			</div>
+		</section>
 
-				<div class="gallery">
-					<Grid variant="offset">
-						{
-							projects.map((project) => (
-								<li>
-									<PortfolioPreview project={project} locale={locale} />
-								</li>
-							))
-						}
-					</Grid>
+		<section class="focus-section section-rule" aria-labelledby="focus-title">
+			<div class="page-shell focus-grid">
+				<div class="focus-copy" data-reveal>
+					<p class="eyebrow">{t('index.focusEyebrow')}</p>
+					<h2 id="focus-title">{t('index.focusTitle')}</h2>
+					<p>{t('index.focusBody')}</p>
+					<a class="text-link" href="https://github.com/psyphiclaw/PsyPhiClaw">{t('index.focusLink')}</a>
 				</div>
-
-				<div class="cta">
-					<CallToAction href={navUrl('/work/')}>
-						{t('index.viewAll')}
-						<Icon icon="arrow-right" size="1.2em" />
-					</CallToAction>
+				<div class="signal-map" role="img" aria-label="PsyPhiClaw multimodal analysis workflow" data-reveal>
+					<span class="map-status">{t('index.focusStatus')}</span>
+					<div class="map-inputs">
+						<span>FACE</span><span>GAZE</span><span>EEG</span><span>PHYSIO</span><span>fNIRS</span><span>EVENTS</span>
+					</div>
+					<div class="map-core">
+						<span aria-hidden="true">Ψ</span>
+						<strong>PsyPhiClaw</strong>
+						<small>MULTIMODAL WORKFLOW</small>
+					</div>
+					<div class="map-output"><span>ALIGN</span><span>ANALYZE</span><span>GUARD</span><span>EXPLAIN</span></div>
 				</div>
-			</section>
+			</div>
+		</section>
 
-			<section class="section with-background bg-variant">
-				<header class="section-header stack gap-2 lg:gap-4">
-					<h3>{t('index.talksTitle')}</h3>
-					<p>{t('index.talksDesc')}</p>
+		<section class="notes-section page-shell" aria-labelledby="notes-title">
+			<header class="section-heading compact" data-reveal>
+				<div>
+					<p class="eyebrow">{t('index.notesEyebrow')}</p>
+					<h2 id="notes-title">{t('index.notesTitle')}</h2>
+				</div>
+				<a class="text-link internal" href={navUrl('/notes/')}>{t('index.notesAll')}</a>
+			</header>
+			<NoteList {notes} {locale} />
+		</section>
+
+		<section class="talks-section section-rule" aria-labelledby="talks-title">
+			<div class="page-shell talks-grid">
+				<header data-reveal>
+					<p class="eyebrow">{t('index.talksEyebrow')}</p>
+					<h2 id="talks-title">{t('index.talksTitle')}</h2>
 				</header>
+				<ol>
+					{
+						talks.map((talk) => (
+							<li data-reveal>
+								<time>{talk.year}</time>
+								<div><strong>{talk.topic}</strong><span>{talk.venue}</span></div>
+							</li>
+						))
+					}
+				</ol>
+			</div>
+		</section>
+	</main>
 
-				<div class="gallery">
-					<Grid variant="small">
-						{
-							talks.map((talk) => (
-								<li class="mention-card">
-									<p class="talk-venue">{talk.venue}</p>
-									<p class="talk-topic">{talk.topic}</p>
-								</li>
-							))
-						}
-					</Grid>
-				</div>
-			</section>
-		</main>
-
-		<ContactCTA locale={locale} />
-	</div>
+	<ContactCTA {locale} />
 </BaseLayout>
 
 <style>
 	.hero {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 2rem;
-	}
-
-	.roles {
-		display: none;
-	}
-
-	.hero img {
-		aspect-ratio: 5 / 4;
-		object-fit: cover;
-		object-position: top;
-		border-radius: 1.5rem;
-		box-shadow: var(--shadow-md);
-	}
-
-	@media (min-width: 50em) {
-		.hero {
-			display: grid;
-			grid-template-columns: 6fr 4fr;
-			padding-inline: 2.5rem;
-			gap: 3.75rem;
-		}
-
-		.roles {
-			margin-top: 0.5rem;
-			display: flex;
-			gap: 0.5rem;
-		}
-
-		.hero img {
-			aspect-ratio: 3 / 4;
-			border-radius: 4.5rem;
-			object-fit: cover;
-		}
-	}
-
-	.section {
 		display: grid;
-		gap: 2rem;
+		grid-template-columns: minmax(0, 1.55fr) minmax(18rem, 0.45fr);
+		gap: clamp(3rem, 8vw, 8rem);
+		align-items: end;
+		min-height: calc(100dvh - var(--header-height));
+		padding-block: clamp(4rem, 9vw, 9rem) clamp(4rem, 7vw, 7rem);
 	}
 
-	.with-background {
+	.hero-copy {
+		display: grid;
+		gap: clamp(2.5rem, 6vw, 5rem);
+	}
+
+	.hero h1 {
 		position: relative;
+		z-index: 1;
+		font-family: var(--font-serif);
+		font-size: var(--step-5);
+		font-weight: 600;
+		letter-spacing: -0.065em;
+		line-height: 0.93;
 	}
 
-	.with-background::before {
-		--hero-bg: var(--bg-image-subtle-2);
-
-		content: '';
-		position: absolute;
-		pointer-events: none;
-		left: 50%;
-		width: 100vw;
-		aspect-ratio: calc(2.25 / var(--bg-scale));
-		top: 0;
-		transform: translateY(-75%) translateX(-50%);
-		background:
-			url('../../assets/backgrounds/noise.png') top center/220px repeat,
-			var(--hero-bg) center center / var(--bg-gradient-size) no-repeat,
-			var(--gray-999);
-		background-blend-mode: overlay, normal, normal, normal;
-		mix-blend-mode: var(--bg-blend-mode);
-		z-index: -1;
+	.hero h1 span {
+		display: block;
 	}
 
-	.with-background.bg-variant::before {
-		--hero-bg: var(--bg-image-subtle-1);
+	.hero h1 span:last-child {
+		margin-left: clamp(0rem, 8vw, 7rem);
+		color: var(--signal-dark);
 	}
 
-	.section-header {
-		justify-self: center;
-		text-align: center;
-		max-width: 50ch;
-		font-size: var(--text-md);
-		color: var(--gray-300);
+	.hero-intro {
+		display: grid;
+		grid-template-columns: minmax(0, 34rem) auto;
+		gap: clamp(2rem, 6vw, 6rem);
+		align-items: end;
+		margin-left: clamp(0rem, 8vw, 7rem);
 	}
 
-	.section-header h3 {
-		font-size: var(--text-2xl);
+	.hero-intro > p {
+		color: var(--ink-soft);
+		font-size: var(--step-1);
+		line-height: 1.6;
 	}
 
-	@media (min-width: 50em) {
-		.section {
-			grid-template-columns: repeat(4, 1fr);
-			grid-template-areas: 'header header header header' 'gallery gallery gallery gallery';
-			gap: 5rem;
-		}
-
-		.section.with-cta {
-			grid-template-areas: 'header header header cta' 'gallery gallery gallery gallery';
-		}
-
-		.section-header {
-			grid-area: header;
-			font-size: var(--text-lg);
-		}
-
-		.section-header h3 {
-			font-size: var(--text-4xl);
-		}
-
-		.with-cta .section-header {
-			justify-self: flex-start;
-			text-align: left;
-		}
-
-		.gallery {
-			grid-area: gallery;
-		}
-
-		.cta {
-			grid-area: cta;
-		}
-	}
-
-	.mention-card {
+	.hero-actions {
 		display: flex;
 		flex-direction: column;
-		gap: 0.4rem;
-		height: 9rem;
-		padding: 1.25rem 1.5rem;
-		justify-content: center;
-		text-align: left;
-		border: 1px solid var(--gray-800);
-		border-radius: 1.5rem;
-		color: var(--gray-300);
-		background: var(--gradient-subtle);
-		box-shadow: var(--shadow-sm);
+		align-items: flex-start;
+		gap: 1rem;
 	}
 
-	.talk-venue {
-		font-size: var(--text-md);
-		font-weight: 600;
-		color: var(--gray-0);
+	.quiet-link {
+		color: var(--ink-soft);
+		font-size: 0.82rem;
+		font-weight: 650;
+		text-decoration: none;
+	}
+
+	.quiet-link:hover {
+		color: var(--signal-dark);
+	}
+
+	.identity {
+		display: grid;
+		gap: 1.25rem;
+	}
+
+	.portrait-frame {
+		position: relative;
+		border: 1px solid var(--rule-strong);
+		background: var(--paper-deep);
+	}
+
+	.portrait-frame::before {
+		position: absolute;
+		inset: 0.65rem;
+		z-index: 1;
+		border: 1px solid color-mix(in srgb, var(--paper-raised) 50%, transparent);
+		content: "";
+		pointer-events: none;
+	}
+
+	.portrait-frame img {
+		width: 100%;
+		aspect-ratio: 4 / 5;
+		object-fit: cover;
+		filter: saturate(0.72) contrast(1.03);
+	}
+
+	.signal-square {
+		position: absolute;
+		right: -0.7rem;
+		bottom: -0.7rem;
+		width: 1.4rem;
+		height: 1.4rem;
+		background: var(--signal);
+	}
+
+	.identity-copy {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		gap: 0.1rem 0.75rem;
 		line-height: 1.3;
 	}
 
-	.talk-topic {
-		font-size: var(--text-sm);
-		color: var(--gray-300);
-		line-height: 1.4;
+	.identity-copy strong {
+		font-size: 0.95rem;
 	}
 
-	@media (min-width: 50em) {
-		.mention-card {
-			height: 10rem;
+	.identity-copy > span {
+		color: var(--ink-faint);
+		font-family: var(--font-mono);
+		font-size: 0.7rem;
+	}
+
+	.identity-copy p {
+		grid-column: 1 / -1;
+		margin-top: 0.45rem;
+		color: var(--ink-soft);
+		font-size: 0.78rem;
+		line-height: 1.5;
+	}
+
+	.proof {
+		padding-block: 2.25rem 4rem;
+	}
+
+	.proof h2 {
+		margin-bottom: 2.25rem;
+		color: var(--ink-faint);
+		font-weight: 500;
+	}
+
+	.proof-grid {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		border-top: 1px solid var(--rule-strong);
+	}
+
+	.proof-item {
+		display: grid;
+		gap: 0.75rem;
+		padding: 1.5rem 1.5rem 0 0;
+		border-right: 1px solid var(--rule);
+	}
+
+	.proof-item:not(:first-child) {
+		padding-left: 1.5rem;
+	}
+
+	.proof-item:last-child {
+		border-right: 0;
+	}
+
+	.proof-item strong {
+		font-family: var(--font-serif);
+		font-size: var(--step-3);
+		font-variant-numeric: tabular-nums;
+		letter-spacing: -0.05em;
+		line-height: 1;
+	}
+
+	.proof-item span {
+		max-width: 18rem;
+		color: var(--ink-soft);
+		font-size: 0.78rem;
+		line-height: 1.5;
+	}
+
+	.work-section,
+	.notes-section {
+		padding-block: clamp(6rem, 12vw, 12rem);
+	}
+
+	.section-heading {
+		display: grid;
+		grid-template-columns: minmax(0, 1.5fr) minmax(18rem, 0.5fr);
+		gap: clamp(3rem, 8vw, 8rem);
+		align-items: end;
+		margin-bottom: clamp(3rem, 7vw, 6rem);
+	}
+
+	.section-heading h2,
+	.method-heading h2,
+	.focus-copy h2,
+	.talks-section h2 {
+		margin-top: 2rem;
+		font-family: var(--font-serif);
+		font-size: var(--step-4);
+		white-space: pre-line;
+	}
+
+	.section-intro {
+		display: grid;
+		gap: 1.75rem;
+		justify-items: start;
+		color: var(--ink-soft);
+	}
+
+	.section-heading.compact {
+		align-items: end;
+	}
+
+	.section-heading.compact > .text-link {
+		justify-self: end;
+	}
+
+	.method-section {
+		padding-block: clamp(6rem, 12vw, 11rem);
+		background: var(--paper-deep);
+	}
+
+	.method-heading {
+		display: grid;
+		grid-template-columns: 1fr 2fr;
+		gap: 3rem;
+		align-items: start;
+		margin-bottom: clamp(4rem, 8vw, 7rem);
+	}
+
+	.method-heading h2 {
+		max-width: 15ch;
+		margin-top: 0;
+	}
+
+	.method-line {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		padding: 0;
+		border-top: 1px solid var(--rule-strong);
+		list-style: none;
+	}
+
+	.method-line li {
+		position: relative;
+		display: grid;
+		gap: 1.25rem;
+		padding: 2rem 2rem 0 0;
+		border-right: 1px solid var(--rule);
+	}
+
+	.method-line li:not(:first-child) {
+		padding-left: 2rem;
+	}
+
+	.method-line li:last-child {
+		border-right: 0;
+	}
+
+	.method-line li::before {
+		position: absolute;
+		top: -0.35rem;
+		left: 0;
+		width: 0.65rem;
+		height: 0.65rem;
+		border: 1px solid var(--signal);
+		background: var(--paper-deep);
+		content: "";
+	}
+
+	.method-line li:not(:first-child)::before {
+		left: 2rem;
+	}
+
+	.method-number {
+		color: var(--signal-dark);
+		font-family: var(--font-mono);
+		font-size: 0.68rem;
+	}
+
+	.method-line h3 {
+		font-family: var(--font-serif);
+		font-size: var(--step-2);
+	}
+
+	.method-line p {
+		color: var(--ink-soft);
+		font-size: 0.86rem;
+	}
+
+	.focus-section {
+		padding-block: clamp(6rem, 12vw, 11rem);
+	}
+
+	.focus-grid {
+		display: grid;
+		grid-template-columns: minmax(0, 0.85fr) minmax(26rem, 1.15fr);
+		gap: clamp(4rem, 9vw, 9rem);
+		align-items: center;
+	}
+
+	.focus-copy {
+		display: grid;
+		justify-items: start;
+		gap: 2rem;
+	}
+
+	.focus-copy h2 {
+		margin-top: 0;
+		font-size: var(--step-3);
+		line-height: 1.08;
+	}
+
+	.focus-copy > p:not(.eyebrow) {
+		color: var(--ink-soft);
+	}
+
+	.signal-map {
+		position: relative;
+		display: grid;
+		grid-template-columns: 1fr 1.15fr 1fr;
+		align-items: center;
+		min-height: 28rem;
+		padding: 3.5rem 2rem 2rem;
+		border: 1px solid var(--rule-strong);
+		background:
+			linear-gradient(var(--rule) 1px, transparent 1px),
+			linear-gradient(90deg, var(--rule) 1px, transparent 1px),
+			var(--paper-raised);
+		background-size: 3rem 3rem;
+	}
+
+	.map-status {
+		position: absolute;
+		top: 1.25rem;
+		left: 1.25rem;
+		padding: 0.35rem 0.5rem;
+		background: var(--ink);
+		color: var(--paper);
+		font-family: var(--font-mono);
+		font-size: 0.58rem;
+		letter-spacing: 0.06em;
+	}
+
+	.map-inputs,
+	.map-output {
+		display: grid;
+		gap: 0.7rem;
+	}
+
+	.map-inputs span,
+	.map-output span {
+		padding: 0.45rem 0.65rem;
+		border: 1px solid var(--rule-strong);
+		background: var(--paper);
+		font-family: var(--font-mono);
+		font-size: 0.62rem;
+		letter-spacing: 0.04em;
+		text-align: center;
+	}
+
+	.map-core {
+		position: relative;
+		display: grid;
+		place-items: center;
+		aspect-ratio: 1;
+		margin-inline: 1.5rem;
+		border: 1px solid var(--signal);
+		background: var(--paper);
+		box-shadow: 0 0 0 0.5rem color-mix(in srgb, var(--signal) 10%, transparent);
+		text-align: center;
+	}
+
+	.map-core::before,
+	.map-core::after {
+		position: absolute;
+		top: 50%;
+		width: 1.5rem;
+		height: 1px;
+		background: var(--signal);
+		content: "";
+	}
+
+	.map-core::before { right: 100%; }
+	.map-core::after { left: 100%; }
+
+	.map-core > span {
+		color: var(--signal-dark);
+		font-family: var(--font-serif);
+		font-size: 3rem;
+		line-height: 1;
+	}
+
+	.map-core strong {
+		font-size: 0.9rem;
+	}
+
+	.map-core small {
+		font-family: var(--font-mono);
+		font-size: 0.48rem;
+		letter-spacing: 0.06em;
+	}
+
+	.talks-section {
+		padding-block: clamp(6rem, 12vw, 10rem);
+		background: var(--inverse-bg);
+		color: var(--inverse-ink);
+	}
+
+	.talks-section :global(.eyebrow) {
+		color: var(--inverse-signal);
+	}
+
+	.talks-grid {
+		display: grid;
+		grid-template-columns: minmax(0, 0.8fr) minmax(26rem, 1.2fr);
+		gap: clamp(4rem, 9vw, 9rem);
+	}
+
+	.talks-section h2 {
+		max-width: 12ch;
+		font-size: var(--step-3);
+	}
+
+	.talks-section ol {
+		padding: 0;
+		border-top: 1px solid color-mix(in srgb, var(--inverse-ink) 35%, transparent);
+		list-style: none;
+	}
+
+	.talks-section li {
+		display: grid;
+		grid-template-columns: 4rem 1fr;
+		gap: 1.5rem;
+		padding-block: 1.75rem;
+		border-bottom: 1px solid color-mix(in srgb, var(--inverse-ink) 22%, transparent);
+	}
+
+	.talks-section time {
+		color: var(--inverse-signal);
+		font-family: var(--font-mono);
+		font-size: 0.72rem;
+	}
+
+	.talks-section li div {
+		display: grid;
+		gap: 0.45rem;
+	}
+
+	.talks-section li strong {
+		font-family: var(--font-serif);
+		font-size: var(--step-1);
+		font-weight: 600;
+		line-height: 1.3;
+	}
+
+	.talks-section li span {
+		color: var(--inverse-soft);
+		font-size: 0.78rem;
+	}
+
+	@media (max-width: 64rem) {
+		.hero {
+			grid-template-columns: minmax(0, 1fr) 15rem;
+		}
+
+		.hero-intro {
+			grid-template-columns: 1fr;
+		}
+
+		.focus-grid,
+		.talks-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	@media (max-width: 48rem) {
+		.hero {
+			grid-template-columns: 1fr;
+			align-items: start;
+			min-height: 0;
+		}
+
+		.hero h1 {
+			min-width: 0;
+			font-size: clamp(3rem, 14vw, 5.5rem);
+			overflow-wrap: anywhere;
+		}
+
+		.hero h1 span:last-child,
+		.hero-intro {
+			margin-left: 0;
+		}
+
+		.identity {
+			grid-template-columns: 8rem 1fr;
+			align-items: end;
+		}
+
+		.proof-grid,
+		.method-line {
+			grid-template-columns: 1fr 1fr;
+		}
+
+		.proof-item:nth-child(2),
+		.method-line li:nth-child(2) {
+			border-right: 0;
+		}
+
+		.proof-item:nth-child(n + 3),
+		.method-line li:nth-child(n + 3) {
+			border-top: 1px solid var(--rule);
+		}
+
+		.proof-item:nth-child(3),
+		.method-line li:nth-child(3) {
+			padding-left: 0;
+		}
+
+		.method-line li:nth-child(3)::before {
+			left: 0;
+		}
+
+		.section-heading,
+		.method-heading {
+			grid-template-columns: 1fr;
+		}
+
+		.section-heading.compact > .text-link {
+			justify-self: start;
+		}
+
+		.section-heading h2,
+		.method-heading h2 {
+			font-size: clamp(2.65rem, 12vw, 4.2rem);
+		}
+
+		.signal-map {
+			grid-template-columns: 1fr;
+			gap: 1.5rem;
+			min-height: auto;
+			padding-top: 4.5rem;
+		}
+
+		.map-inputs,
+		.map-output {
+			grid-template-columns: repeat(3, 1fr);
+		}
+
+		.map-core {
+			width: min(11rem, 65vw);
+			margin-inline: auto;
+		}
+
+		.map-core::before,
+		.map-core::after {
+			display: none;
+		}
+	}
+
+	@media (max-width: 24rem) {
+		.proof-grid,
+		.method-line {
+			grid-template-columns: 1fr;
+		}
+
+		.proof-item,
+		.proof-item:not(:first-child),
+		.method-line li,
+		.method-line li:not(:first-child) {
+			padding-left: 0;
+			border-right: 0;
+			border-top: 1px solid var(--rule);
+		}
+
+		.method-line li::before,
+		.method-line li:not(:first-child)::before {
+			left: 0;
 		}
 	}
 </style>

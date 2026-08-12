@@ -1,36 +1,52 @@
 ---
-locale: 'en'
-title: Automotive HMI/UX Evaluation Framework
+locale: en
+title: Turning automotive HMI feedback into a comparable system
+description: A unified framework connecting eye tracking, behavioral coding, driving tasks, and cognitive load across product iterations.
 publishDate: 2023-06-01
-img: /assets/stock-1.jpg
-img_alt: Automotive HMI evaluation with eye tracking and behavioral analysis
-description: |
-  Designed and delivered a comprehensive HMI/UX evaluation framework for Mercedes-Benz,
-  evolving from a single project into a million-level (RMB) annual framework partnership.
+updatedDate: 2026-08-12
+status: delivered
+year: 2017—2024
+order: 2
+discipline: Automotive · HMI/UX
+outcome: A one-off study grew into a long-term framework used in ongoing product development and team capability building.
+role: Evaluation framework design, key research delivery, and cross-team coordination
 tags:
-  - Automotive
-  - HMI/UX
-  - Eye Tracking
-  - Cognitive Load
-  - Driving Simulator
+  - Automotive HMI
+  - Eye tracking
+  - Driver behavior
+  - Cognitive load
+  - Behavioral coding
+confidentiality: Vehicle programs, prototypes, thresholds, and findings remain confidential. This page covers the method structure and aggregate impact only.
 ---
 
-## Background & challenge
+## The problem
 
-Mercedes-Benz needed more than ad-hoc UX testing — they needed a systematic, repeatable evaluation framework that could scale across product lines and model years. As cockpit interaction grows more complex, traditional subjective rating is no longer enough to support product decisions.
+Modern cockpits ask displays, HUDs, infotainment, voice, and multimodal controls to compete for a driver’s limited attention. A conventional usability study can identify issues, but it struggles with the more important question: can different concepts, vehicle programs, and iterations be compared with the same instrument?
 
-## Scope of evaluation
+The client did not need another set of isolated comments. They needed an evaluation system that could fit the rhythm of product development.
 
-HMI modules covered: in-vehicle infotainment (IVI), digital clusters, heads-up displays (HUD), and voice / multimodal interaction. The framework spans the full interaction lifecycle — from initial visual-hierarchy analysis to cognitive-load and situational-awareness measurement during driving tasks.
+## My role
 
-## Methodology & tooling
+I designed the framework and helped turn it from one project into an ongoing program: defining tasks and measures, combining behavioral and subjective evidence, selecting instrumentation, coordinating delivery and analysis, and translating results into decisions engineering and product teams could use.
 
-I designed the methodology from the ground up, integrating eye tracking, behavioral coding, and cognitive-load analysis into a unified evaluation system. The toolchain is built on the Noldus ecosystem: The Observer XT for behavioral coding and use-error identification, FaceReader for facial-expression / emotion analysis, paired with driving simulators and standard tasks such as ISO 26022 (also used for driving-behavior research benches delivered to OEMs like Changan Automobile).
+## The approach
 
-## Results
+The framework operated at three levels:
 
-What started as a single project evolved into a million-level (RMB) annual framework partnership. The brand now uses our evaluation system as a standard part of their product-development pipeline. The methodology has since been reused across multiple OEMs — Li Auto, BYD, Volkswagen — and in evaluation-capability training for teams such as GAC R&D Center.
+1. **Interface** — visual hierarchy, discoverability, information density, and action paths.
+2. **Task** — completion, errors, eyes-off-road behavior, and recovery in representative driving contexts.
+3. **System** — cross-version consistency, cognitive load, situational awareness, and multimodal coordination.
 
-## Key insight
+More data is not automatically better. Eye tracking describes allocation of attention. Behavioral coding preserves action sequences and the context of errors. Driving tasks supply constraints. Interviews expose the strategies people use. Only when these sources share a timeline can a team move from what users say to why a system behaves the way it does.
 
-It proves one thing: behavioral science can deliver quantifiable ROI in the automotive industry — not just "test feedback," but an engineering-grade, reusable, benchmarkable evaluation capability that fits straight into the development pipeline.
+## The outcome
+
+The initial study developed into an annual framework program. Elements of the method were also used to build evaluation capability with other manufacturers and research teams. UX became less of a one-time acceptance exercise and more of a reusable, comparable engineering capability.
+
+## What I learned
+
+The value of a complex HMI is not the number of functions on screen. It is the amount of attention the system demands at the moment that attention matters elsewhere. A serious framework puts human limits into the metrics instead of collecting satisfaction after the product is complete.
+
+## Public note
+
+Vehicle programs, interface prototypes, thresholds, raw recordings, and issue lists are omitted under client confidentiality requirements.

@@ -1,15 +1,74 @@
 ---
-import Hero from '../Hero.astro';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { useTranslations, type Locale } from '../../i18n';
 
-interface Props {
-	locale: Locale;
-}
+interface Props { locale: Locale; }
 const { locale } = Astro.props;
 const t = useTranslations(locale);
+const navUrl = (path: string) => getRelativeLocaleUrl(locale, path.replace(/^\//, ''));
 ---
 
 <BaseLayout locale={locale} title={t('404.metaTitle')} description={t('404.metaDesc')}>
-	<Hero title={t('404.heroTitle')} tagline={t('404.heroTagline')} />
+	<main class="missing page-shell">
+		<div data-reveal>
+			<p class="eyebrow">{t('404.eyebrow')}</p>
+			<h1>{t('404.title')}</h1>
+			<p>{t('404.body')}</p>
+			<div class="missing-links">
+				<a class="text-link internal" href={navUrl('/')}>{t('404.home')}</a>
+				<a class="text-link internal" href={navUrl('/work/')}>{t('404.work')}</a>
+			</div>
+		</div>
+		<strong aria-hidden="true">404</strong>
+	</main>
 </BaseLayout>
+
+<style>
+	.missing {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto;
+		gap: 3rem;
+		align-items: center;
+		min-height: calc(100dvh - var(--header-height));
+		padding-block: 5rem;
+	}
+
+	.missing > div {
+		display: grid;
+		justify-items: start;
+		gap: 2rem;
+	}
+
+	h1 {
+		max-width: 12ch;
+		font-family: var(--font-serif);
+		font-size: var(--step-4);
+	}
+
+	.missing > div > p:not(.eyebrow) {
+		color: var(--ink-soft);
+	}
+
+	.missing-links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1.5rem;
+	}
+
+	.missing > strong {
+		color: var(--signal);
+		font-family: var(--font-serif);
+		font-size: clamp(8rem, 28vw, 28rem);
+		font-weight: 600;
+		letter-spacing: -0.1em;
+		line-height: 0.7;
+		opacity: 0.16;
+	}
+
+	@media (max-width: 48rem) {
+		.missing {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

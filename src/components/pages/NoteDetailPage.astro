@@ -1,0 +1,230 @@
+---
+import { getCollection, type CollectionEntry, render } from 'astro:content';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import ContactCTA from '../ContactCTA.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { useTranslations, type Locale } from '../../i18n';
+
+interface Props {
+	entry: CollectionEntry<'notes'>;
+	locale: Locale;
+}
+
+const { entry, locale } = Astro.props;
+const { Content } = await render(entry);
+const t = useTranslations(locale);
+const navUrl = (path: string) => getRelativeLocaleUrl(locale, path.replace(/^\//, ''));
+const formatter = new Intl.DateTimeFormat(locale === 'zh' ? 'zh-CN' : 'en-GB', {
+	year: 'numeric', month: locale === 'zh' ? 'long' : 'long', day: 'numeric',
+});
+const allNotes = (await getCollection('notes'))
+	.filter((note) => note.data.locale === locale)
+	.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
+const currentIndex = allNotes.findIndex((note) => note.id === entry.id);
+const nextNote = allNotes[(currentIndex + 1) % allNotes.length];
+const nextSlug = nextNote.id.split('/').slice(1).join('/');
+const modifiedDate = entry.data.updatedDate ?? entry.data.publishDate;
+const structuredData: Record<string, unknown> = {
+	'@context': 'https://schema.org',
+	'@type': 'Article',
+	headline: entry.data.title,
+	description: entry.data.description,
+	datePublished: entry.data.publishDate.toISOString(),
+	dateModified: modifiedDate.toISOString(),
+	inLanguage: locale === 'zh' ? 'zh-CN' : 'en',
+	author: {
+		'@type': 'Person',
+		name: locale === 'zh' ? '杨朋翰' : 'Will Yang',
+		url: 'https://yangpenghan.github.io/yangpenghan/',
+	},
+};
+---
+
+<BaseLayout
+	{locale}
+	title={`${entry.data.title} | ${locale === 'zh' ? '杨朋翰' : 'Will Yang'}`}
+	description={entry.data.description}
+	type="article"
+	publishedTime={entry.data.publishDate}
+	{structuredData}
+>
+	<main>
+		<header class="note-hero page-shell">
+			<a class="back-link" href={navUrl('/notes/')} data-reveal><span aria-hidden="true">←</span> {t('notes.back')}</a>
+			<div class="note-title" data-reveal>
+				<div class="note-meta">
+					<span>{entry.data.categoryLabel}</span>
+					<time datetime={entry.data.publishDate.toISOString()}>{formatter.format(entry.data.publishDate)}</time>
+					<span>{entry.data.readingMinutes} {t('notes.minutes')}</span>
+				</div>
+				<h1>{entry.data.title}</h1>
+				<p>{entry.data.description}</p>
+			</div>
+		</header>
+
+		<div class="note-body page-shell section-rule">
+			<aside data-reveal>
+				<span class="author-mark">WY</span>
+				<div>
+					<strong>{locale === 'zh' ? '杨朋翰' : 'Will Yang'}</strong>
+					<p>{t('index.heroRole')}</p>
+				</div>
+				<div class="update">
+					<small>{t('notes.updated')}</small>
+					<time datetime={modifiedDate.toISOString()}>{formatter.format(modifiedDate)}</time>
+				</div>
+			</aside>
+			<article class="prose" data-reveal>
+				<Content />
+			</article>
+		</div>
+
+		<nav class="next-note section-rule" aria-label={t('notes.next')}>
+			<a class="page-shell" href={navUrl(`/notes/${nextSlug}/`)}>
+				<span>{t('notes.next')}</span>
+				<strong>{nextNote.data.title}</strong>
+				<span aria-hidden="true">→</span>
+			</a>
+		</nav>
+	</main>
+	<ContactCTA {locale} />
+</BaseLayout>
+
+<style>
+	.note-hero {
+		padding-block: clamp(3rem, 7vw, 6rem) clamp(5rem, 11vw, 10rem);
+	}
+
+	.back-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.6rem;
+		color: var(--ink-soft);
+		font-size: 0.78rem;
+		font-weight: 650;
+		text-decoration: none;
+	}
+
+	.back-link:hover { color: var(--signal-dark); }
+
+	.note-title {
+		width: min(100%, 68rem);
+		margin-top: clamp(4rem, 9vw, 8rem);
+		margin-inline: auto;
+	}
+
+	.note-meta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.6rem 1.2rem;
+		margin-bottom: 2rem;
+		color: var(--ink-faint);
+		font-family: var(--font-mono);
+		font-size: 0.68rem;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+	}
+
+	.note-meta span:first-child { color: var(--signal-dark); }
+
+	h1 {
+		max-width: 16ch;
+		font-family: var(--font-serif);
+		font-size: var(--step-4);
+		line-height: 1;
+	}
+
+	.note-title > p {
+		max-width: 44rem;
+		margin-top: 2.5rem;
+		color: var(--ink-soft);
+		font-size: var(--step-1);
+	}
+
+	.note-body {
+		display: grid;
+		grid-template-columns: minmax(12rem, 0.42fr) minmax(0, 1fr) minmax(8rem, 0.2fr);
+		gap: clamp(2rem, 6vw, 6rem);
+		padding-block: clamp(5rem, 11vw, 10rem);
+	}
+
+	.note-body aside {
+		display: grid;
+		align-content: start;
+		gap: 1rem;
+		color: var(--ink-soft);
+		font-size: 0.72rem;
+		line-height: 1.5;
+	}
+
+	.author-mark {
+		display: grid;
+		width: 3rem;
+		height: 3rem;
+		place-items: center;
+		border: 1px solid var(--ink);
+		color: var(--ink);
+		font-family: var(--font-mono);
+		font-size: 0.72rem;
+		font-weight: 700;
+	}
+
+	.note-body aside strong { color: var(--ink); }
+
+	.update {
+		display: grid;
+		gap: 0.15rem;
+		margin-top: 1rem;
+		padding-top: 1rem;
+		border-top: 1px solid var(--rule);
+		font-family: var(--font-mono);
+		font-size: 0.62rem;
+		text-transform: uppercase;
+	}
+
+	.note-body article { max-width: 44rem; }
+
+	.next-note a {
+		display: grid;
+		grid-template-columns: 10rem 1fr auto;
+		gap: 2rem;
+		align-items: center;
+		padding-block: clamp(3rem, 7vw, 6rem);
+		text-decoration: none;
+	}
+
+	.next-note a > span:first-child {
+		color: var(--signal-dark);
+		font-family: var(--font-mono);
+		font-size: 0.68rem;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+	}
+
+	.next-note strong {
+		font-family: var(--font-serif);
+		font-size: var(--step-2);
+		font-weight: 600;
+		letter-spacing: -0.035em;
+	}
+
+	.next-note a > span:last-child {
+		color: var(--signal-dark);
+		font-size: 2rem;
+		transition: transform var(--duration) var(--ease-out);
+	}
+
+	.next-note a:hover > span:last-child { transform: translateX(0.5rem); }
+
+	@media (max-width: 56rem) {
+		.note-body { grid-template-columns: 1fr; }
+		.note-body aside { grid-template-columns: auto 1fr; }
+		.update { grid-column: 1 / -1; }
+	}
+
+	@media (max-width: 42rem) {
+		h1 { font-size: clamp(2.8rem, 13vw, 4.5rem); }
+		.next-note a { grid-template-columns: 1fr auto; }
+		.next-note a > span:first-child { grid-column: 1 / -1; }
+	}
+</style>

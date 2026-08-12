@@ -1,95 +1,83 @@
 ---
-import Icon from './Icon.astro';
+import { useTranslations, type Locale } from '../i18n';
+
+interface Props {
+	locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
 ---
 
 <theme-toggle>
-	<button>
-		<span class="sr-only">Dark theme</span>
-		<span class="icon light"><Icon icon="sun" /></span>
-		<span class="icon dark"><Icon icon="moon-stars" /></span>
+	<button type="button" aria-label={t('theme.toggle')} title={t('theme.toggle')}>
+		<svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18">
+			<circle cx="12" cy="12" r="4.25"></circle>
+			<path d="M12 2v2.2M12 19.8V22M4.93 4.93l1.56 1.56M17.51 17.51l1.56 1.56M2 12h2.2M19.8 12H22M4.93 19.07l1.56-1.56M17.51 6.49l1.56-1.56"></path>
+		</svg>
+		<span class="sr-only theme-state">{t('theme.dark')}</span>
 	</button>
 </theme-toggle>
 
-<style>
-	button {
-		display: flex;
-		border: 0;
-		border-radius: 999rem;
-		padding: 0;
-		background-color: var(--gray-999);
-		box-shadow: inset 0 0 0 1px var(--accent-overlay);
-		cursor: pointer;
-	}
+<script is:inline define:vars={{ lightLabel: t('theme.light'), darkLabel: t('theme.dark') }}>
+	class ThemeToggleElement extends HTMLElement {
+		connectedCallback() {
+			const button = this.querySelector('button');
+			const state = this.querySelector('.theme-state');
+			if (!(button instanceof HTMLButtonElement) || !(state instanceof HTMLElement)) return;
 
-	.icon {
-		z-index: 1;
-		position: relative;
-		display: flex;
-		padding: 0.5rem;
-		width: 2rem;
-		height: 2rem;
-		font-size: 1rem;
-		color: var(--accent-overlay);
-	}
-
-	.icon.light::before {
-		content: '';
-		z-index: -1;
-		position: absolute;
-		inset: 0;
-		background-color: var(--accent-regular);
-		border-radius: 999rem;
-	}
-
-	:global(.theme-dark) .icon.light::before {
-		transform: translateX(100%);
-	}
-
-	:global(.theme-dark) .icon.dark,
-	:global(html:not(.theme-dark)) .icon.light,
-	button[aria-pressed='false'] .icon.light {
-		color: var(--accent-text-over);
-	}
-
-	@media (prefers-reduced-motion: no-preference) {
-		.icon,
-		.icon.light::before {
-			transition:
-				transform var(--theme-transition),
-				color var(--theme-transition);
-		}
-	}
-
-	@media (forced-colors: active) {
-		.icon.light::before {
-			background-color: SelectedItem;
-		}
-	}
-</style>
-
-<script>
-	class ThemeToggle extends HTMLElement {
-		constructor() {
-			super();
-
-			const button = this.querySelector('button')!;
-
-			/** Set the theme to dark/light mode. */
-			const setTheme = (dark: boolean) => {
-				document.documentElement.classList[dark ? 'add' : 'remove']('theme-dark');
+			const update = (dark) => {
+				document.documentElement.classList.toggle('theme-dark', dark);
 				button.setAttribute('aria-pressed', String(dark));
+				state.textContent = dark ? lightLabel : darkLabel;
+				localStorage.setItem('theme', dark ? 'dark' : 'light');
 			};
 
-			// Toggle the theme when a user clicks the button.
-			button.addEventListener('click', () => setTheme(!this.isDark()));
+			button.addEventListener('click', () => {
+				update(!document.documentElement.classList.contains('theme-dark'));
+			});
 
-			// Initialize button state to reflect current theme.
-			setTheme(this.isDark());
-		}
-
-		isDark() {
-			return document.documentElement.classList.contains('theme-dark');
+			update(document.documentElement.classList.contains('theme-dark'));
 		}
 	}
-	customElements.define('theme-toggle', ThemeToggle);
+
+	if (!customElements.get('theme-toggle')) customElements.define('theme-toggle', ThemeToggleElement);
 </script>
+
+<style>
+	button {
+		display: grid;
+		width: 2.75rem;
+		height: 2.75rem;
+		place-items: center;
+		padding: 0;
+		border: 1px solid var(--rule);
+		border-radius: 0;
+		background: transparent;
+		color: var(--ink);
+		cursor: pointer;
+		transition:
+			background var(--duration) ease,
+			color var(--duration) ease;
+	}
+
+	button:hover {
+		background: var(--ink);
+		color: var(--paper);
+	}
+
+	svg {
+		fill: none;
+		stroke: currentColor;
+		stroke-linecap: square;
+		stroke-width: 1.5;
+	}
+
+	:global(.theme-dark) svg circle {
+		fill: currentColor;
+	}
+
+	:global(.theme-dark) svg path {
+		display: none;
+	}
+</style>
