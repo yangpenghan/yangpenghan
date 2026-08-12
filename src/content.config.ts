@@ -13,6 +13,8 @@ export const collections = {
 			status: z.enum(['delivered', 'operating', 'prototype']),
 			year: z.string(),
 			order: z.number(),
+			kind: z.enum(['system', 'study']),
+			featured: z.boolean().default(false),
 			discipline: z.string(),
 			outcome: z.string(),
 			role: z.string(),
@@ -34,6 +36,7 @@ export const collections = {
 			categoryLabel: z.string(),
 			readingMinutes: z.number().int().positive(),
 			featured: z.boolean().default(false),
+			relatedWork: z.string().optional(),
 		}),
 	}),
 };

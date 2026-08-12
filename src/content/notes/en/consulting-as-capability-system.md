@@ -7,11 +7,14 @@ category: solution-engineering
 categoryLabel: Solution Engineering
 readingMinutes: 5
 featured: true
+relatedWork: organizational-growth
 ---
 
 Many consulting projects look successful on their final day. The report is complete, the charts are clear, and the recommendations are sensible. Return a few months later, however, and the team may still be working in the old way. When a similar problem appears, they start again from zero.
 
 The project delivered an answer, but it did not leave a capability.
+
+That was the problem I faced when I began building consulting and solution-engineering capability in 2019. Medical-device work needs a stable connection between risk, research, and regulatory evidence. Automotive HMI needs comparison across versions. Architecture and aviation human factors introduce different environments again. If every new sector depends on one senior person reinventing the solution, growth is only rescue work at a larger scale. What can transfer is the structure for framing problems, preserving evidence, governing delivery, and learning afterward.
 
 I prefer to think of consulting as a capability system. Its purpose is not to make the consultant indispensable. It is to help the client team become better at framing questions, choosing evidence, and turning insight into action after the engagement ends.
 
@@ -40,5 +43,7 @@ I use three questions:
 3. Can the team revise the method when new evidence appears?
 
 If the answer to all three is no, the contract may be complete but the change is not.
+
+This is why I now separate project learning into two layers. The client layer records decisions and unresolved risk in the current engagement. The system layer asks which steps belong in a template, knowledge base, training path, or tool. The first preserves the difference between projects. The second lets experience compound. Standardize everything and judgment disappears; standardize nothing and the organization remains dependent on memory.
 
 Good consulting eventually reduces dependence on the consultant while increasing the organization's ability to handle difficult problems. What remains is not a static conclusion, but a learning mechanism that continues to work.

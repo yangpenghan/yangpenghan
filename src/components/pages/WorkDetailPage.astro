@@ -25,6 +25,11 @@ const allProjects = (await getCollection('work'))
 const currentIndex = allProjects.findIndex((project) => project.id === entry.id);
 const nextProject = allProjects[(currentIndex + 1) % allProjects.length];
 const nextSlug = nextProject.id.split('/').slice(1).join('/');
+const entrySlug = entry.id.split('/').slice(1).join('/');
+const relatedNotes = (await getCollection('notes'))
+	.filter((note) => note.data.locale === locale && note.data.relatedWork === entrySlug)
+	.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
+	.slice(0, 3);
 const structuredData: Record<string, unknown> = {
 	'@context': 'https://schema.org',
 	'@type': 'CreativeWork',
@@ -86,6 +91,20 @@ const structuredData: Record<string, unknown> = {
 				<Content />
 			</article>
 		</div>
+
+		{relatedNotes.length > 0 && (
+			<section class="related-thinking section-rule" aria-labelledby="related-title">
+				<div class="page-shell related-grid">
+					<header data-reveal><p class="eyebrow">Notes / Thinking</p><h2 id="related-title">{t('workDetail.related')}</h2></header>
+					<ul>
+						{relatedNotes.map((note) => {
+							const slug = note.id.split('/').slice(1).join('/');
+							return <li data-reveal><a href={navUrl(`/notes/${slug}/`)}><span>{note.data.categoryLabel} · {note.data.readingMinutes} min</span><strong>{note.data.title}</strong><span aria-hidden="true">→</span></a></li>;
+						})}
+					</ul>
+				</div>
+			</section>
+		)}
 
 		<nav class="next-project section-rule" aria-label={t('workDetail.next')}>
 			<a class="page-shell" href={navUrl(`/work/${nextSlug}/`)}>
@@ -256,6 +275,59 @@ const structuredData: Record<string, unknown> = {
 		text-decoration: none;
 	}
 
+	.related-thinking {
+		padding-block: clamp(4rem, 9vw, 8rem);
+		background: var(--paper-deep);
+	}
+
+	.related-grid {
+		display: grid;
+		grid-template-columns: minmax(14rem, 0.45fr) minmax(0, 1fr);
+		gap: clamp(3rem, 8vw, 8rem);
+	}
+
+	.related-grid h2 {
+		margin-top: 1.5rem;
+		font-family: var(--font-serif);
+		font-size: var(--step-3);
+	}
+
+	.related-grid ul {
+		padding: 0;
+		border-top: 1px solid var(--rule-strong);
+		list-style: none;
+	}
+
+	.related-grid li {
+		border-bottom: 1px solid var(--rule);
+	}
+
+	.related-grid a {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		gap: 0.75rem 2rem;
+		padding-block: 1.5rem;
+		text-decoration: none;
+	}
+
+	.related-grid a > span:first-child {
+		grid-column: 1 / -1;
+		color: var(--signal-dark);
+		font-family: var(--font-mono);
+		font-size: 0.64rem;
+		text-transform: uppercase;
+	}
+
+	.related-grid strong {
+		font-family: var(--font-serif);
+		font-size: var(--step-1);
+		line-height: 1.2;
+	}
+
+	.related-grid a > span:last-child {
+		color: var(--signal-dark);
+	}
+
 	.next-project a > span:first-child {
 		color: var(--signal-dark);
 		font-family: var(--font-mono);
@@ -283,7 +355,8 @@ const structuredData: Record<string, unknown> = {
 
 	@media (max-width: 56rem) {
 		.case-title-grid,
-		.case-body {
+		.case-body,
+		.related-grid {
 			grid-template-columns: 1fr;
 		}
 

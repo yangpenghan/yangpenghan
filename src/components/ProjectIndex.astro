@@ -20,12 +20,12 @@ const statusLabel = (status: CollectionEntry<'work'>['data']['status']) => {
 
 <ol class="project-index">
 	{
-		projects.map((project, index) => {
+		projects.map((project) => {
 			const slug = project.id.split('/').slice(1).join('/');
 			return (
 				<li data-reveal>
 					<a href={navUrl(`/work/${slug}/`)} aria-label={`${t('work.read')}: ${project.data.title}`}>
-						<span class="project-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+						<span class="project-number" aria-hidden="true">{String(project.data.order).padStart(2, '0')}</span>
 						<span class="project-main">
 							<span class="project-meta">
 								<span>{statusLabel(project.data.status)}</span>

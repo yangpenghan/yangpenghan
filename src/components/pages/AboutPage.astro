@@ -1,6 +1,7 @@
 ---
 import ContactCTA from '../ContactCTA.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 import { useTranslations, type Locale } from '../../i18n';
 import type { UIKey } from '../../i18n/ui';
 
@@ -11,6 +12,7 @@ interface Props {
 const { locale } = Astro.props;
 const t = useTranslations(locale);
 const base = import.meta.env.BASE_URL;
+const navUrl = (path: string) => getRelativeLocaleUrl(locale, path.replace(/^\//, ''));
 const stories = [1, 2, 3, 4].map((index) => ({
 	year: t(`about.story${index}Year` as UIKey),
 	title: t(`about.story${index}Title` as UIKey),
@@ -24,6 +26,50 @@ const principles = [1, 2, 3].map((index) => ({
 	title: t(`about.principle${index}` as UIKey),
 	body: t(`about.principle${index}Body` as UIKey),
 }));
+const records = locale === 'zh'
+	? [
+		{ year: '2018', metric: '254GB → 86', title: '六城金融 App 研究', body: '24 天、7,488 公里、60 次测试与访谈；把 3,600 分钟记录整理成可排序的问题。', slug: 'financial-behavior-model' },
+		{ year: '2017', metric: '3 signals', title: '包装的完整使用动作', body: '让 EEG、眼动与自然行为分别回答早期反应、视觉路径和真实动作。', slug: 'multimodal-packaging' },
+		{ year: '2019', metric: '4 stages', title: '服务机器人交互', body: '从吸引、初始化、目的性交互到结束，并用 Wizard-of-Oz 在开发前验证假设。', slug: 'human-robot-interaction' },
+		{ year: '2017—24', metric: '4 decisions', title: '汽车产品生命周期', body: '让研究分别进入预研、概念、量产前和量产后，而不是只做一次车机测试。', slug: 'automotive-hmi' },
+		{ year: '2019—', metric: '25+ orgs', title: '医疗器械人因工程', body: '把使用情境、风险、形成性评价、根因与总结性证据连成可追溯过程。', slug: 'medical-devices' },
+		{ year: '2026—', metric: '18 modules', title: 'PsyPhiClaw', body: '公开多模态行为分析模块；构建已发生，真实数据验证仍是下一步。', slug: 'psyphiclaw' },
+	]
+	: [
+		{ year: '2018', metric: '254GB → 86', title: 'Six-city finance-app study', body: 'Twenty-four days, 7,488 kilometres, and 60 tests and interviews; 3,600 recorded minutes became prioritized issues.', slug: 'financial-behavior-model' },
+		{ year: '2017', metric: '3 signals', title: 'The full action of using packaging', body: 'Give EEG, gaze, and natural behavior separate responsibility for early response, visual path, and real action.', slug: 'multimodal-packaging' },
+		{ year: '2019', metric: '4 stages', title: 'Service-robot interaction', body: 'From attraction and initialization to purposeful interaction and ending, with Wizard-of-Oz before engineering.', slug: 'human-robot-interaction' },
+		{ year: '2017—24', metric: '4 decisions', title: 'Automotive product lifecycle', body: 'Put research into discovery, concept, pre-production, and post-launch instead of one cockpit test.', slug: 'automotive-hmi' },
+		{ year: '2019—', metric: '25+ orgs', title: 'Medical-device human factors', body: 'Connect context, risk, formative evaluation, root cause, and summative evidence in a traceable process.', slug: 'medical-devices' },
+		{ year: '2026—', metric: '18 modules', title: 'PsyPhiClaw', body: 'Public multimodal-analysis modules: construction is visible; validation on real data remains next.', slug: 'psyphiclaw' },
+	];
+const scope = locale === 'zh'
+	? {
+		title: '我适合进入什么问题，也明确不承诺什么。',
+		solve: [
+			['没有现成方法的问题', '当团队知道问题重要，却还不知道该观察什么、怎样形成证据。'],
+			['高约束的人机系统', '当产品涉及注意、错误、安全、跨角色协作或真实使用环境。'],
+			['需要沉淀的专家工作', '当一次研究已经不够，需要把判断写进流程、知识库、课程或 Agent 工作流。'],
+		],
+		boundary: [
+			['不出售一个万能指标', '眼动、EEG、表情、问卷和 AI 都只能回答有边界的问题。'],
+			['不把原型写成已验证产品', '公开区分已经交付、持续运行与仍待真实数据验证的能力。'],
+			['不以客户机密证明自己', '不公开合同、原始发现、参与者信息和未获授权的产品细节。'],
+		],
+	}
+	: {
+		title: 'Where I am useful—and what I do not promise.',
+		solve: [
+			['Problems without a ready-made method', 'When a team knows a question matters but not what to observe or how to build evidence.'],
+			['High-constraint human systems', 'When attention, error, safety, multiple roles, or real-use environments shape the product.'],
+			['Expert work that needs to compound', 'When one study is not enough and judgment must enter a process, knowledge base, course, or agent workflow.'],
+		],
+		boundary: [
+			['No universal metric', 'Gaze, EEG, expression, surveys, and AI all answer bounded questions.'],
+			['No prototype presented as a validated product', 'I distinguish delivered, operating, and still-to-be-validated capability.'],
+			['No client confidentiality used as proof', 'Contracts, raw findings, participant information, and unauthorized product details stay private.'],
+		],
+	};
 ---
 
 <BaseLayout locale={locale} title={t('about.metaTitle')} description={t('about.metaDesc')}>
@@ -78,6 +124,24 @@ const principles = [1, 2, 3].map((index) => ({
 			</div>
 		</section>
 
+		<section class="field-record section-rule" aria-labelledby="record-title">
+			<div class="page-shell">
+				<header data-reveal><p class="eyebrow">Field record / 现场记录</p><h2 id="record-title">{locale === 'zh' ? '职业路径最终要落回真实工作。' : 'A working path has to return to real work.'}</h2></header>
+				<ol>
+					{records.map((item) => (
+						<li data-reveal>
+							<a href={navUrl(`/work/${item.slug}/`)}>
+								<div><time>{item.year}</time><strong>{item.metric}</strong></div>
+								<h3>{item.title}</h3>
+								<p>{item.body}</p>
+								<span aria-hidden="true">↗</span>
+							</a>
+						</li>
+					))}
+				</ol>
+			</div>
+		</section>
+
 		<section class="principles section-rule" aria-labelledby="principles-title">
 			<div class="page-shell principles-grid">
 				<header data-reveal>
@@ -94,6 +158,16 @@ const principles = [1, 2, 3].map((index) => ({
 						))
 					}
 				</ol>
+			</div>
+		</section>
+
+		<section class="scope section-rule" aria-labelledby="scope-title">
+			<div class="page-shell scope-grid">
+				<header data-reveal><p class="eyebrow">Working boundary / 合作边界</p><h2 id="scope-title">{scope.title}</h2></header>
+				<div class="scope-columns">
+					<div data-reveal><small>{locale === 'zh' ? '适合解决' : 'Useful for'}</small><ol>{scope.solve.map(([title, body]) => <li><h3>{title}</h3><p>{body}</p></li>)}</ol></div>
+					<div data-reveal><small>{locale === 'zh' ? '明确边界' : 'Explicit boundary'}</small><ol>{scope.boundary.map(([title, body]) => <li><h3>{title}</h3><p>{body}</p></li>)}</ol></div>
+				</div>
 			</div>
 		</section>
 
@@ -145,7 +219,9 @@ const principles = [1, 2, 3].map((index) => ({
 
 	.story,
 	.practice,
-	.principles {
+	.principles,
+	.field-record,
+	.scope {
 		padding-block: clamp(6rem, 12vw, 11rem);
 	}
 
@@ -215,6 +291,122 @@ const principles = [1, 2, 3].map((index) => ({
 		background: var(--paper-deep);
 	}
 
+	.field-record header {
+		display: grid;
+		grid-template-columns: 1fr 2fr;
+		gap: 3rem;
+		align-items: start;
+		margin-bottom: clamp(4rem, 8vw, 7rem);
+	}
+
+	.field-record h2,
+	.scope h2 {
+		max-width: 16ch;
+		font-family: var(--font-serif);
+		font-size: var(--step-3);
+	}
+
+	.field-record ol {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		padding: 0;
+		border-top: 1px solid var(--rule-strong);
+		border-left: 1px solid var(--rule-strong);
+		list-style: none;
+	}
+
+	.field-record li {
+		border-right: 1px solid var(--rule-strong);
+		border-bottom: 1px solid var(--rule-strong);
+	}
+
+	.field-record a {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		gap: 1.1rem 2rem;
+		height: 100%;
+		padding: clamp(1.5rem, 4vw, 3rem);
+		text-decoration: none;
+	}
+
+	.field-record a > div,
+	.field-record h3,
+	.field-record p {
+		grid-column: 1;
+	}
+
+	.field-record a > div {
+		display: flex;
+		justify-content: space-between;
+		gap: 1rem;
+		color: var(--signal-dark);
+		font-family: var(--font-mono);
+		font-size: 0.66rem;
+		text-transform: uppercase;
+	}
+
+	.field-record h3,
+	.scope h3 {
+		font-family: var(--font-serif);
+		font-size: var(--step-1);
+		line-height: 1.2;
+	}
+
+	.field-record p,
+	.scope p {
+		color: var(--ink-soft);
+		font-size: 0.84rem;
+	}
+
+	.field-record a > span {
+		grid-column: 2;
+		grid-row: 1 / 4;
+		color: var(--signal-dark);
+	}
+
+	.scope {
+		background: var(--paper-deep);
+	}
+
+	.scope-grid {
+		display: grid;
+		grid-template-columns: minmax(17rem, 0.6fr) minmax(0, 1.4fr);
+		gap: clamp(4rem, 9vw, 9rem);
+	}
+
+	.scope header {
+		display: grid;
+		align-content: start;
+		gap: 2rem;
+	}
+
+	.scope-columns {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 3rem;
+	}
+
+	.scope-columns small {
+		color: var(--signal-dark);
+		font-family: var(--font-mono);
+		font-size: 0.66rem;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+	}
+
+	.scope-columns ol {
+		padding: 0;
+		border-top: 1px solid var(--rule-strong);
+		list-style: none;
+	}
+
+	.scope-columns li {
+		display: grid;
+		gap: 0.65rem;
+		padding-block: 1.5rem;
+		border-bottom: 1px solid var(--rule);
+	}
+
 	.practice header {
 		display: grid;
 		grid-template-columns: 1fr 2fr;
@@ -278,7 +470,9 @@ const principles = [1, 2, 3].map((index) => ({
 		.story-grid,
 		.principles-grid,
 		.practice header,
-		.education-grid {
+		.education-grid,
+		.field-record header,
+		.scope-grid {
 			grid-template-columns: 1fr;
 		}
 
@@ -287,6 +481,15 @@ const principles = [1, 2, 3].map((index) => ({
 		}
 
 		.practice-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.practice h2 {
+			font-size: clamp(2.4rem, 12vw, 5rem);
+		}
+
+		.field-record ol,
+		.scope-columns {
 			grid-template-columns: 1fr;
 		}
 	}

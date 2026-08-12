@@ -7,6 +7,7 @@ category: human-factors
 categoryLabel: Human Factors
 readingMinutes: 6
 featured: true
+relatedWork: medical-devices
 ---
 
 When teams discuss medical-device usability, the first picture is often a late-stage study: recruit users, ask them to complete tasks on a nearly finished device, record errors, and produce a report.
@@ -14,6 +15,8 @@ When teams discuss medical-device usability, the first picture is often a late-s
 That study matters, but it is only one checkpoint in a longer engineering chain. Useful human-factors work begins with users, environments, and risk. It continues through requirements, design, formative evaluation, risk control, and final validation.
 
 If the first observation of real users happens near the end, the team may not discover an isolated interface issue. It may discover a system of problems already embedded in hardware, software, labeling, and training materials.
+
+I have seen this timing problem recur across ventilators, monitoring systems, surgical devices, and IVD products. After work spanning more than 25 medical-device companies, the most durable lesson is not simply to run more tests. Each evaluation round has a different job: expose risk assumptions early, compare design controls in the middle, and validate the complete use system only when it is ready. I now also organize standards, methods, and anonymized experience in an internal search index of more than 6,000 passages. Its purpose is to retrieve evidence faster, not to make risk judgments for the team.
 
 ## Risk is not an error count
 

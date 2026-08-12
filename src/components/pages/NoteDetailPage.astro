@@ -23,6 +23,12 @@ const allNotes = (await getCollection('notes'))
 const currentIndex = allNotes.findIndex((note) => note.id === entry.id);
 const nextNote = allNotes[(currentIndex + 1) % allNotes.length];
 const nextSlug = nextNote.id.split('/').slice(1).join('/');
+const relatedProject = entry.data.relatedWork
+	? (await getCollection('work')).find((project) => {
+		const slug = project.id.split('/').slice(1).join('/');
+		return project.data.locale === locale && slug === entry.data.relatedWork;
+	})
+	: undefined;
 const modifiedDate = entry.data.updatedDate ?? entry.data.publishDate;
 const structuredData: Record<string, unknown> = {
 	'@context': 'https://schema.org',
@@ -78,6 +84,17 @@ const structuredData: Record<string, unknown> = {
 				<Content />
 			</article>
 		</div>
+
+		{relatedProject && (
+			<section class="related-work section-rule">
+				<a class="page-shell" href={navUrl(`/work/${entry.data.relatedWork}/`)} data-reveal>
+					<span>{t('notes.relatedWork')}</span>
+					<strong>{relatedProject.data.title}</strong>
+					<p>{relatedProject.data.description}</p>
+					<span aria-hidden="true">↗</span>
+				</a>
+			</section>
+		)}
 
 		<nav class="next-note section-rule" aria-label={t('notes.next')}>
 			<a class="page-shell" href={navUrl(`/notes/${nextSlug}/`)}>
@@ -193,6 +210,43 @@ const structuredData: Record<string, unknown> = {
 		text-decoration: none;
 	}
 
+	.related-work {
+		background: var(--paper-deep);
+	}
+
+	.related-work a {
+		display: grid;
+		grid-template-columns: 10rem minmax(0, 1fr) minmax(14rem, 0.55fr) auto;
+		gap: 2rem;
+		align-items: center;
+		padding-block: clamp(2.5rem, 6vw, 4.5rem);
+		text-decoration: none;
+	}
+
+	.related-work a > span:first-child {
+		color: var(--signal-dark);
+		font-family: var(--font-mono);
+		font-size: 0.65rem;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+	}
+
+	.related-work strong {
+		font-family: var(--font-serif);
+		font-size: var(--step-2);
+		line-height: 1.15;
+	}
+
+	.related-work p {
+		color: var(--ink-soft);
+		font-size: 0.82rem;
+	}
+
+	.related-work a > span:last-child {
+		color: var(--signal-dark);
+		font-size: 1.4rem;
+	}
+
 	.next-note a > span:first-child {
 		color: var(--signal-dark);
 		font-family: var(--font-mono);
@@ -220,6 +274,9 @@ const structuredData: Record<string, unknown> = {
 		.note-body { grid-template-columns: 1fr; }
 		.note-body aside { grid-template-columns: auto 1fr; }
 		.update { grid-column: 1 / -1; }
+		.related-work a { grid-template-columns: 1fr auto; }
+		.related-work a > span:first-child,
+		.related-work p { grid-column: 1 / -1; }
 	}
 
 	@media (max-width: 42rem) {

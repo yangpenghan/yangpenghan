@@ -7,6 +7,7 @@ category: agentic-ai
 categoryLabel: Agentic AI
 readingMinutes: 6
 featured: true
+relatedWork: psyphiclaw
 ---
 
 The default story about behavioral data has become deceptively simple: give a sufficiently capable model the video, eye tracking, physiological signals, and event logs, and an answer will emerge.
@@ -39,6 +40,8 @@ I therefore think of the system as four layers:
 4. Logs make the entire process traceable.
 
 This is the direction I am exploring with PsyPhiClaw. It is not yet a fully validated product. It is an open experiment: turn recurring steps in multimodal behavioral research into modules, then learn which steps benefit from automation and which ones need deliberate human checkpoints.
+
+The public implementation currently contains 18 `psyphiclaw-*` modules: importing gaze, EEG, physiology, facial-expression, and fNIRS data; normalizing files; aligning events; running single-modality analysis; then moving into fusion, visualization, and guarded insight. This shows that the workflow can be decomposed, inspected, and recombined. It does not show that the analysis is reliable on real research data. The next work is comparison against established processes for consistency, error detection, statistical correctness, and human-review cost—not using module count as a substitute for validation.
 
 ## A bigger model is not the finish line
 

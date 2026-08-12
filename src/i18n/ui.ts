@@ -9,6 +9,7 @@ export const defaultLocale: Locale = 'zh';
 const zh = {
 	'nav.home': '首页',
 	'nav.work': '工作',
+	'nav.method': '方法',
 	'nav.notes': '思考',
 	'nav.about': '关于',
 	'nav.contact': '联系',
@@ -39,8 +40,8 @@ const zh = {
 	'index.stat2Label': '跨复杂行业的项目与合作',
 	'index.stat3Num': '7',
 	'index.stat3Label': '个行业，从医疗到汽车与科研',
-	'index.stat4Num': '20+',
-	'index.stat4Label': '个 PsyPhiClaw 开源分析模块',
+	'index.stat4Num': '18',
+	'index.stat4Label': '个 PsyPhiClaw 公开行为分析模块',
 	'index.workEyebrow': 'Selected systems / 代表工作',
 	'index.workTitle': '不只交付一次研究，\n也构建下一次可以复用的能力。',
 	'index.workIntro':
@@ -56,10 +57,11 @@ const zh = {
 	'index.method3Body': '把判断写入评估框架、开发流程、知识库与 AI 工作流。',
 	'index.method4Title': '放大',
 	'index.method4Body': '将一次交付沉淀为团队、模板、产品和可复制的业务能力。',
+	'index.methodMore': '查看完整工作方法',
 	'index.focusEyebrow': 'Current experiment / 当前实验',
 	'index.focusTitle': 'PsyPhiClaw：让多模态行为分析拥有一条开放的 AI 工作流。',
 	'index.focusBody':
-		'这是一个公开的概念验证项目，统一处理表情、眼动、EEG、生理信号、fNIRS 与观察编码。当前已有 20+ 模块；下一步不是增加功能清单，而是用真实研究数据验证可靠性。',
+		'这是一个公开的概念验证项目，统一处理表情、眼动、EEG、生理信号、fNIRS 与观察编码。当前有 18 个可核查模块；下一步不是增加功能清单，而是用真实研究数据验证可靠性。',
 	'index.focusLink': '查看公开仓库',
 	'index.focusStatus': 'OPEN PROTOTYPE · VALIDATION NEXT',
 	'index.notesEyebrow': 'Field notes / 现场思考',
@@ -76,6 +78,15 @@ const zh = {
 	'index.talk3Year': '2017',
 	'index.talk3Venue': '第十七届国际人-机-环境系统工程大会',
 	'index.talk3Topic': '人-机-环境中的行为测量',
+	'index.talk4Year': '2019',
+	'index.talk4Venue': '第七届中国用户体验峰会',
+	'index.talk4Topic': '从用户小数据中寻找洞察',
+	'index.talk5Year': '2020',
+	'index.talk5Venue': '中国用户体验峰会',
+	'index.talk5Topic': '医疗器械人因工程中的安全考量',
+	'index.talk6Year': '2025',
+	'index.talk6Venue': '医疗器械监管科学与法规论坛',
+	'index.talk6Topic': '医疗器械可用性工程：尽早发现不可预知的操作错误',
 
 	'work.metaTitle': '工作档案 | 杨朋翰',
 	'work.metaDesc': '医疗器械人因、汽车 HMI、Solution Engineering 与 Agentic AI 的代表性系统和案例。',
@@ -86,6 +97,10 @@ const zh = {
 	'work.legendOperating': 'OPERATING · 持续运行',
 	'work.legendPrototype': 'PROTOTYPE · 原型',
 	'work.read': '阅读案例',
+	'work.systemsEyebrow': 'Systems / 系统与能力',
+	'work.systemsTitle': '把一次判断变成持续工作的系统。',
+	'work.studiesEyebrow': 'Field studies / 一线研究',
+	'work.studiesTitle': '回到现场，看见决定真正发生的地方。',
 	'workDetail.back': '返回工作档案',
 	'workDetail.problem': '问题',
 	'workDetail.role': '我的角色',
@@ -93,6 +108,7 @@ const zh = {
 	'workDetail.outcome': '结果',
 	'workDetail.note': '公开说明',
 	'workDetail.next': '下一项工作',
+	'workDetail.related': '相关思考',
 
 	'notes.metaTitle': '思考 | 杨朋翰',
 	'notes.metaDesc': '关于行为智能、人因工程、Agentic AI 和 Solution Engineering 的现场笔记。',
@@ -105,13 +121,14 @@ const zh = {
 	'notes.updated': '更新于',
 	'notes.minutes': '分钟阅读',
 	'notes.next': '继续阅读',
+	'notes.relatedWork': '这篇思考来自一项真实工作',
 
 	'about.metaTitle': '关于 | 杨朋翰 Will Yang',
 	'about.metaDesc': '心理学、行为研究、人因工程、Solution Engineering 与 Agentic AI：杨朋翰的工作路径。',
 	'about.eyebrow': 'About / 关于',
 	'about.title': '我的工作，是把模糊的人类问题变得可以行动。',
 	'about.intro':
-		'我不把自己定义成某一种工具的专家。更准确地说，我在复杂问题还没有现成答案时，建立测量方法、判断框架和可以持续运行的系统。',
+		'我从 2015 年开始把心理学与行为测量用于真实产品：走过 6 城研究金融 App，在包装、机器人与汽车里观察注意和行动，在医疗器械里让证据承担安全责任，现在再把这些方法写进开放的 AI 工作流。',
 	'about.storyTitle': '四次转向，同一个问题。',
 	'about.story1Year': '2007—2015',
 	'about.story1Title': '从心理学到一线教学',
@@ -120,15 +137,15 @@ const zh = {
 	'about.story2Year': '2015—2019',
 	'about.story2Title': '让行为可以被测量',
 	'about.story2Body':
-		'进入 Noldus，从眼动、EEG、表情和生理信号出发，为金融、快消、科研和汽车项目设计研究。一次跨 6 城的金融 App 研究识别出 84 个问题与 5 类行为模式。',
+		'进入 Noldus，从眼动、EEG、表情和生理信号出发，为金融、快消、科研和汽车项目设计研究。一次历时 24 天的金融 App 研究跨越 6 城与 7,488 公里，把 254GB 记录整理成 86 个可决策问题。',
 	'about.story3Year': '2019',
 	'about.story3Title': '进入人—机器人交互',
 	'about.story3Body':
-		'在猎豹移动研究提示音、动作与表情如何改变人对机器人的感知和交互效率，也建立了团队可复用的研究流程与文档。',
+		'研究提示音、动作与表情如何改变人对服务机器人的感知和交互效率；把一次互动拆成吸引、初始化、目的性交互和结束四个阶段，并用 Wizard-of-Oz 在开发前验证功能假设。',
 	'about.story4Year': '2019—现在',
 	'about.story4Title': '从交付项目到构建能力',
 	'about.story4Body':
-		'回到 Noldus 后组建 Solution Engineering 能力，把零散咨询沉淀为医疗器械、汽车与其他复杂行业的方法、流程和长期合作。现在，我继续用 Agentic AI 让这些专家工作流变得更开放、更可复用。',
+		'把经历内部试验、商业验证和方法沉淀的研究服务，逐渐聚焦成医疗人因、用户体验与消费者研究能力，再把项目经验写入框架、课程、知识库与工具。现在继续用 Agentic AI 放大这些专家工作流。',
 	'about.practiceEyebrow': 'Practice / 能力结构',
 	'about.practiceTitle': '跨学科不是并列技能，\n而是一条完整的问题解决链。',
 	'about.practice1': '行为测量',
@@ -177,6 +194,7 @@ export type UIKey = keyof typeof zh;
 const en: Record<UIKey, string> = {
 	'nav.home': 'Home',
 	'nav.work': 'Work',
+	'nav.method': 'Method',
 	'nav.notes': 'Notes',
 	'nav.about': 'About',
 	'nav.contact': 'Contact',
@@ -208,8 +226,8 @@ const en: Record<UIKey, string> = {
 	'index.stat2Label': 'engagements across complex industries',
 	'index.stat3Num': '7',
 	'index.stat3Label': 'sectors, from medtech to mobility and research',
-	'index.stat4Num': '20+',
-	'index.stat4Label': 'open PsyPhiClaw analysis modules',
+	'index.stat4Num': '18',
+	'index.stat4Label': 'public PsyPhiClaw behavioral-analysis modules',
 	'index.workEyebrow': 'Selected systems / Work',
 	'index.workTitle': 'I do not stop at a study.\nI build the capability that follows it.',
 	'index.workIntro':
@@ -229,10 +247,11 @@ const en: Record<UIKey, string> = {
 	'index.method4Title': 'Scale',
 	'index.method4Body':
 		'Turn one delivery into teams, templates, products, and repeatable business capability.',
+	'index.methodMore': 'Read the full working method',
 	'index.focusEyebrow': 'Current experiment',
 	'index.focusTitle': 'PsyPhiClaw: an open AI workflow for multimodal behavioral analysis.',
 	'index.focusBody':
-		'This public proof of concept unifies facial expression, eye tracking, EEG, physiology, fNIRS, and observational coding. It now has 20+ modules. The next milestone is not a longer feature list; it is validation on real research data.',
+		'This public proof of concept unifies facial expression, eye tracking, EEG, physiology, fNIRS, and observational coding. It has 18 verifiable modules. The next milestone is not a longer feature list; it is validation on real research data.',
 	'index.focusLink': 'View the public repository',
 	'index.focusStatus': 'OPEN PROTOTYPE · VALIDATION NEXT',
 	'index.notesEyebrow': 'Field notes',
@@ -249,6 +268,15 @@ const en: Record<UIKey, string> = {
 	'index.talk3Year': '2017',
 	'index.talk3Venue': '17th International Human–Machine–Environment Systems Conference',
 	'index.talk3Topic': 'Behavioral measurement in human–machine–environment systems',
+	'index.talk4Year': '2019',
+	'index.talk4Venue': '7th China User Experience Summit',
+	'index.talk4Topic': 'Finding insight in small user data',
+	'index.talk5Year': '2020',
+	'index.talk5Venue': 'China User Experience Summit',
+	'index.talk5Topic': 'Safety in medical-device human factors engineering',
+	'index.talk6Year': '2025',
+	'index.talk6Venue': 'Medical Device Regulatory Science & Regulation Forum',
+	'index.talk6Topic': 'Medical-device usability engineering: finding unpredictable use errors earlier',
 
 	'work.metaTitle': 'Work archive | Will Yang',
 	'work.metaDesc':
@@ -261,6 +289,10 @@ const en: Record<UIKey, string> = {
 	'work.legendOperating': 'OPERATING',
 	'work.legendPrototype': 'PROTOTYPE',
 	'work.read': 'Read case study',
+	'work.systemsEyebrow': 'Systems & capabilities',
+	'work.systemsTitle': 'Turn one judgment into a system that keeps working.',
+	'work.studiesEyebrow': 'Field studies',
+	'work.studiesTitle': 'Return to the field, where decisions actually happen.',
 	'workDetail.back': 'Back to work archive',
 	'workDetail.problem': 'Problem',
 	'workDetail.role': 'My role',
@@ -268,6 +300,7 @@ const en: Record<UIKey, string> = {
 	'workDetail.outcome': 'Outcome',
 	'workDetail.note': 'Public note',
 	'workDetail.next': 'Next project',
+	'workDetail.related': 'Related thinking',
 
 	'notes.metaTitle': 'Notes | Will Yang',
 	'notes.metaDesc':
@@ -281,6 +314,7 @@ const en: Record<UIKey, string> = {
 	'notes.updated': 'Updated',
 	'notes.minutes': 'min read',
 	'notes.next': 'Read next',
+	'notes.relatedWork': 'This thinking grew from a real project',
 
 	'about.metaTitle': 'About | Will Yang',
 	'about.metaDesc':
@@ -288,7 +322,7 @@ const en: Record<UIKey, string> = {
 	'about.eyebrow': 'About',
 	'about.title': 'I make ambiguous human problems actionable.',
 	'about.intro':
-		'I do not define myself by a particular tool. More accurately, I build measurement methods, decision frameworks, and working systems when a complex problem has no ready-made answer.',
+		'Since 2015, I have used psychology and behavioral measurement in real products: crossing six cities for a finance app, observing attention and action in packaging, robots, and vehicles, making evidence carry safety responsibility in medical devices, and now putting those methods into open AI workflows.',
 	'about.storyTitle': 'Four turns. One enduring question.',
 	'about.story1Year': '2007—2015',
 	'about.story1Title': 'From psychology to the classroom',
@@ -297,15 +331,15 @@ const en: Record<UIKey, string> = {
 	'about.story2Year': '2015—2019',
 	'about.story2Title': 'Making behavior measurable',
 	'about.story2Body':
-		'At Noldus, I designed studies across finance, consumer goods, research, and mobility using eye tracking, EEG, facial expression, and physiology. One six-city finance-app study surfaced 84 issues and five recurring behavior patterns.',
+		'At Noldus, I designed studies across finance, consumer goods, research, and mobility using gaze, EEG, facial expression, and physiology. One 24-day finance-app study crossed six cities and 7,488 kilometres, turning 254GB of records into 86 decision-ready issues.',
 	'about.story3Year': '2019',
 	'about.story3Title': 'Entering human–robot interaction',
 	'about.story3Body':
-		'At Cheetah Mobile, I studied how sound, motion, and facial expression shape people’s perception of robots and their interaction efficiency, while creating reusable research processes for the team.',
+		'I studied how sound, motion, and expression shape perception of service robots and interaction efficiency; divided an encounter into attraction, initialization, purposeful interaction, and ending; and used Wizard-of-Oz to test capabilities before engineering them.',
 	'about.story4Year': '2019—present',
 	'about.story4Title': 'From delivering projects to building capability',
 	'about.story4Body':
-		'Back at Noldus, I built solution engineering capability and turned scattered consulting into methods, processes, and long-term programs in medtech, mobility, and other complex industries. Now I use agentic AI to make those expert workflows more open and reusable.',
+		'I moved research services through internal experimentation, commercial validation, and method capture, then focused capability across medical human factors, user experience, and consumer research. Project knowledge now enters frameworks, courses, knowledge bases, and tools—and agentic AI is the next layer of leverage.',
 	'about.practiceEyebrow': 'Practice',
 	'about.practiceTitle':
 		'Interdisciplinary work is not a list of skills.\nIt is an end-to-end problem-solving chain.',

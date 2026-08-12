@@ -7,8 +7,10 @@ updatedDate: 2026-08-12
 status: prototype
 year: 2026—在建
 order: 4
+kind: system
+featured: true
 discipline: Agentic AI · 开源
-outcome: 已公开 20+ 个分析模块和 18,000+ 行 Python；下一阶段是用真实研究数据验证一致性与可靠性。
+outcome: 已公开 18 个行为分析模块；下一阶段是用真实研究数据验证一致性与可靠性。
 role: 发起人、产品与系统设计、核心模块构建
 externalUrl: https://github.com/psyphiclaw/PsyPhiClaw
 tags:
@@ -44,7 +46,7 @@ PsyPhiClaw 把工作拆成可检查的模块：
 
 ## 当前结果
 
-公开仓库已经描述并实现 20+ 个模块，覆盖输入、分析、融合、可视化、报告、批处理与研究检索，相关 Python 代码超过 18,000 行。项目使用 MIT License，并公开路线图。
+公开实现目前包含 18 个 `psyphiclaw-*` 模块，覆盖输入、分析、融合、可视化、报告、批处理与研究检索。项目使用 MIT License，并公开路线图。项目说明位于 PsyPhiClaw 主仓库，正在开发的模块代码位于公开的 OpenClaw fork；两处都可以独立核查。
 
 这些数字只能证明构建规模，不能证明科学有效性。下一阶段需要使用真实研究数据建立基准：格式兼容、一致性、错误恢复、统计正确性、人工复核成本，以及与成熟分析流程的差异。
 

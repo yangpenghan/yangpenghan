@@ -7,8 +7,10 @@ updatedDate: 2026-08-12
 status: prototype
 year: 2026—building
 order: 4
+kind: system
+featured: true
 discipline: Agentic AI · Open source
-outcome: Published 20+ analysis modules and 18,000+ lines of Python; the next phase is reliability validation on real research data.
+outcome: Published 18 behavioral-analysis modules; the next phase is reliability validation on real research data.
 role: Initiator, product and system design, core module development
 externalUrl: https://github.com/psyphiclaw/PsyPhiClaw
 tags:
@@ -44,7 +46,7 @@ The natural-language interface is an entry point. The actual product is the repe
 
 ## The current outcome
 
-The public repositories describe and implement more than 20 modules spanning ingestion, analysis, fusion, visualization, reporting, batch processing, and research retrieval, with more than 18,000 lines of related Python. The project uses the MIT License and publishes its roadmap.
+The public implementation currently contains 18 `psyphiclaw-*` modules spanning ingestion, analysis, fusion, visualization, reporting, batch processing, and research retrieval. The project uses the MIT License and publishes its roadmap. The main PsyPhiClaw repository holds the product description; active modules live in the public OpenClaw fork, so both the intent and implementation can be inspected directly.
 
 Those numbers demonstrate construction effort, not scientific validity. The next phase must benchmark real research data: format compatibility, consistency, error recovery, statistical correctness, human-review cost, and differences from established analysis workflows.
 

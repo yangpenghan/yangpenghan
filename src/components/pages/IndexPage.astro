@@ -17,7 +17,7 @@ const t = useTranslations(locale);
 const navUrl = (path: string) => getRelativeLocaleUrl(locale, path.replace(/^\//, ''));
 const base = import.meta.env.BASE_URL;
 const projects = (await getCollection('work'))
-	.filter((entry) => entry.data.locale === locale)
+	.filter((entry) => entry.data.locale === locale && entry.data.featured)
 	.sort((a, b) => a.data.order - b.data.order);
 const notes = (await getCollection('notes'))
 	.filter((entry) => entry.data.locale === locale && entry.data.featured)
@@ -31,7 +31,7 @@ const methods = [1, 2, 3, 4].map((index) => ({
 	title: t(`index.method${index}Title` as UIKey),
 	body: t(`index.method${index}Body` as UIKey),
 }));
-const talks = [1, 2, 3].map((index) => ({
+const talks = [1, 2, 3, 4, 5, 6].map((index) => ({
 	year: t(`index.talk${index}Year` as UIKey),
 	venue: t(`index.talk${index}Venue` as UIKey),
 	topic: t(`index.talk${index}Topic` as UIKey),
@@ -122,6 +122,7 @@ const talks = [1, 2, 3].map((index) => ({
 						))
 					}
 				</ol>
+				<a class="text-link internal method-more" href={navUrl('/method/')}>{t('index.methodMore')}</a>
 			</div>
 		</section>
 
@@ -417,6 +418,10 @@ const talks = [1, 2, 3].map((index) => ({
 		padding: 0;
 		border-top: 1px solid var(--rule-strong);
 		list-style: none;
+	}
+
+	.method-more {
+		margin-top: 3rem;
 	}
 
 	.method-line li {

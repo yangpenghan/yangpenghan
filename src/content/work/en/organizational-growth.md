@@ -7,6 +7,8 @@ updatedDate: 2026-08-12
 status: operating
 year: 2019—present
 order: 3
+kind: system
+featured: true
 discipline: Organization · Business development
 outcome: Built a consulting and solution system from zero and opened new applications in medtech, mobility, architecture, and aviation human factors.
 role: Practice and business lead, solution design, key accounts, and delivery governance
@@ -27,7 +29,17 @@ A second problem is less visible. Buyers of complex B2B products rarely move fro
 
 ## My role
 
-From 2019, I built the consulting and solution-engineering capability from the ground up: setting practice direction, designing the flow from discovery to delivery review, creating reusable solution and knowledge assets, developing the team, and leading key relationships and complex engagements.
+From 2019, I built the consulting and solution-engineering capability: setting practice direction, designing the flow from discovery to delivery review, creating reusable solution and knowledge assets, developing the team, and leading key relationships and complex engagements. Earlier records show that the capability did not appear fully formed on one date. It moved through internal experiments, commercial validation, method capture, practice focus, and productization.
+
+## What changed across seven years
+
+- **2017** — research services incubated inside the engineering team to solve real product-application and early solution problems.
+- **2018** — early commercial consulting work validated external need and independent delivery.
+- **2019** — methods, processes, and continuing service relationships began to be captured systematically.
+- **2020–2021** — medical-device usability became a focus, alongside stable work in user experience and consumer research.
+- **2024** — emphasis shifted from continuously accepting projects toward workflow capture, service productization, and new-market exploration.
+
+The real turning point was not a larger project count. It was the first time experience became reusable by the next person.
 
 ## The approach
 
@@ -37,12 +49,13 @@ I treated the system as four connected parts:
 2. **Solution productization** — turn recurring research and human-factors problems into modular, bounded forms of delivery.
 3. **Evidence-led product validation** — prove value in a concrete setting before asking a client to invest in a long-term system.
 4. **Knowledge compounding** — retain decisions, methods, failures, and reusable assets after an engagement, not only the final report.
+5. **Role decoupling** — make responsibility for client communication, study design, instrumentation, execution, analysis, and presentation explicit, rather than concentrating every step permanently in one senior person.
 
-The goal was not to force every problem into a standard package. The repeatable part is the reasoning structure and quality floor; the problem remains specific.
+The goal was not to force every problem into a standard package. Problem framing, evidence structure, the quality floor, and retrospectives are repeatable; users, tasks, environments, and project judgment remain specific.
 
 ## The outcome
 
-The practice developed stable lines in consumer research, user experience, and medical-device usability, then entered new applications including automotive, architectural, and aviation human factors. One-off projects could become annual frameworks, and project learning could feed later solution design and team development.
+The practice developed stable lines in consumer research, user experience, and medical-device usability, then entered new applications including automotive, architectural, and aviation human factors. Project learning entered later solution design, team development, courses, and knowledge systems.
 
 The work supports a more modern B2B model: professional services are not a sales-support appendix. They are a front-line system for discovering demand, building technical trust, validating value, and informing product direction.
 

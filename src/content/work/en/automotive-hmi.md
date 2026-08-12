@@ -7,8 +7,10 @@ updatedDate: 2026-08-12
 status: delivered
 year: 2017—2024
 order: 2
+kind: system
+featured: true
 discipline: Automotive · HMI/UX
-outcome: A one-off study grew into a long-term framework used in ongoing product development and team capability building.
+outcome: Placed behavioral research at four decision points—discovery, concept, pre-production, and post-launch—and turned it into a reusable evaluation framework.
 role: Evaluation framework design, key research delivery, and cross-team coordination
 tags:
   - Automotive HMI
@@ -27,7 +29,9 @@ The client did not need another set of isolated comments. They needed an evaluat
 
 ## My role
 
-I designed the framework and helped turn it from one project into an ongoing program: defining tasks and measures, combining behavioral and subjective evidence, selecting instrumentation, coordinating delivery and analysis, and translating results into decisions engineering and product teams could use.
+I designed the method framework: defining tasks and measures, combining behavioral and subjective evidence, selecting instrumentation, coordinating delivery and analysis, and translating results into decisions engineering and product teams could use.
+
+By 2017, I was already speaking publicly about driving behavior, ADAS, emotion, and gaze. Later projects gradually changed my question from “which instrument should we use?” to “at which product decision point should research enter?”
 
 ## The approach
 
@@ -39,9 +43,26 @@ The framework operated at three levels:
 
 More data is not automatically better. Eye tracking describes allocation of attention. Behavioral coding preserves action sequences and the context of errors. Driving tasks supply constraints. Interviews expose the strategies people use. Only when these sources share a timeline can a team move from what users say to why a system behaves the way it does.
 
+## Four product decision points
+
+The same research capability performs different jobs across a lifecycle:
+
+- **Market and discovery** — observe real behavior and logs to identify questions worth putting on the product roadmap.
+- **Concept** — use fast task studies to compare directions before engineering cost rises.
+- **Pre-production** — check whether critical tasks, acceptance, and behavioral evidence support the intended experience.
+- **Post-launch** — return to context through interviews, field observation, and service journeys to understand sustained use.
+
+These points should not share one fixed set of measures. Early work is designed to learn; later work is designed to confirm. Concept work may use low-fidelity representations. Post-launch research has to face real environments, habits, and system constraints.
+
+## How one multi-evidence study worked
+
+In one anonymized automotive-design study, we connected visual attention, facial action, interviews, surveys, and differences between user groups. Gaze compared attention allocation. Facial action located moments worth examining. Interviews and surveys explored preference and strategy. No single signal was translated directly into liking or load.
+
+In a separate driving-research-system training program, the completion criterion was concrete: the team had to perform at least one end-to-end acquisition independently and know when the resulting data was not trustworthy. Capability building ends not when somebody has heard an instrument explained, but when they can produce dependable evidence themselves.
+
 ## The outcome
 
-The initial study developed into an annual framework program. Elements of the method were also used to build evaluation capability with other manufacturers and research teams. UX became less of a one-time acceptance exercise and more of a reusable, comparable engineering capability.
+Project experience gradually formed a framework covering different product stages, and elements of the method were used to build evaluation capability with research teams. UX became less of a one-time acceptance exercise and more of a reusable, comparable engineering capability.
 
 ## What I learned
 

@@ -14,6 +14,8 @@ const t = useTranslations(locale);
 const projects = (await getCollection('work'))
 	.filter((entry) => entry.data.locale === locale)
 	.sort((a, b) => a.data.order - b.data.order);
+const systems = projects.filter((project) => project.data.kind === 'system');
+const studies = projects.filter((project) => project.data.kind === 'study');
 ---
 
 <BaseLayout locale={locale} title={t('work.metaTitle')} description={t('work.metaDesc')}>
@@ -33,8 +35,20 @@ const projects = (await getCollection('work'))
 			</div>
 		</header>
 
-		<section class="archive-list page-shell" aria-label={t('work.eyebrow')}>
-			<ProjectIndex {projects} {locale} />
+		<section class="archive-list page-shell" aria-labelledby="systems-title">
+			<header class="archive-section-heading" data-reveal>
+				<p class="eyebrow">{t('work.systemsEyebrow')}</p>
+				<h2 id="systems-title">{t('work.systemsTitle')}</h2>
+			</header>
+			<ProjectIndex projects={systems} {locale} />
+		</section>
+
+		<section class="archive-list studies page-shell" aria-labelledby="studies-title">
+			<header class="archive-section-heading" data-reveal>
+				<p class="eyebrow">{t('work.studiesEyebrow')}</p>
+				<h2 id="studies-title">{t('work.studiesTitle')}</h2>
+			</header>
+			<ProjectIndex projects={studies} {locale} />
 		</section>
 	</main>
 	<ContactCTA {locale} />
@@ -90,11 +104,32 @@ const projects = (await getCollection('work'))
 	}
 
 	.archive-list {
-		padding-bottom: clamp(6rem, 12vw, 12rem);
+		padding-bottom: clamp(5rem, 10vw, 9rem);
+	}
+
+	.archive-list.studies {
+		padding-top: clamp(2rem, 5vw, 4rem);
+		padding-bottom: clamp(7rem, 13vw, 12rem);
+	}
+
+	.archive-section-heading {
+		display: grid;
+		grid-template-columns: minmax(16rem, 0.55fr) minmax(0, 1.45fr);
+		gap: 3rem;
+		align-items: end;
+		margin-bottom: clamp(2.5rem, 6vw, 5rem);
+	}
+
+	.archive-section-heading h2 {
+		max-width: 18ch;
+		font-family: var(--font-serif);
+		font-size: var(--step-3);
+		line-height: 1.05;
 	}
 
 	@media (max-width: 48rem) {
-		.archive-grid {
+		.archive-grid,
+		.archive-section-heading {
 			grid-template-columns: 1fr;
 		}
 

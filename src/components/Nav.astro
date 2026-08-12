@@ -11,6 +11,7 @@ const { locale } = Astro.props;
 const t = useTranslations(locale);
 const items: Array<{ key: UIKey; path: string }> = [
 	{ key: 'nav.work', path: '/work/' },
+	{ key: 'nav.method', path: '/method/' },
 	{ key: 'nav.notes', path: '/notes/' },
 	{ key: 'nav.about', path: '/about/' },
 ];
@@ -214,7 +215,8 @@ const isCurrent = (path: string) => normalizedPath === path || normalizedPath.st
 
 	@media (max-width: 23rem) {
 		.nav-links a {
-			padding-inline: 0.68rem;
+			padding-inline: 0.52rem;
+			font-size: 0.72rem;
 		}
 	}
 </style>

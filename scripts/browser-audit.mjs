@@ -55,15 +55,19 @@ const accessibilityTargets = [
 	['', 1440, 'light'],
 	['work/', 1440, 'light'],
 	['work/medical-devices/', 1440, 'light'],
+	['work/financial-behavior-model/', 1440, 'light'],
+	['method/', 1440, 'light'],
 	['notes/', 1440, 'light'],
-	['notes/agents-need-workflows/', 1440, 'light'],
+	['notes/issue-lists-expire/', 1440, 'light'],
 	['about/', 1440, 'light'],
 	['en/', 1440, 'dark'],
 	['en/work/medical-devices/', 1440, 'dark'],
+	['en/method/', 1440, 'dark'],
 	['en/notes/agents-need-workflows/', 1440, 'dark'],
 	['en/about/', 1440, 'dark'],
 	['', 390, 'light'],
 	['work/medical-devices/', 390, 'light'],
+	['method/', 390, 'light'],
 	['notes/agents-need-workflows/', 390, 'light'],
 	['en/about/', 390, 'dark'],
 ];
@@ -119,7 +123,7 @@ const mobileResult = await mobilePage.evaluate(() => {
 assert.equal(mobileResult.dark, true);
 assert.equal(mobileResult.savedTheme, 'dark');
 assert.equal(mobileResult.navBottom, 12);
-assert.equal(mobileResult.navLinks, 3);
+assert.equal(mobileResult.navLinks, 4);
 await mobilePage.reload({ waitUntil: 'networkidle' });
 assert.equal(
 	await mobilePage.evaluate(() => document.documentElement.classList.contains('theme-dark')),
@@ -129,12 +133,16 @@ await mobileContext.close();
 
 const narrowContext = await browser.newContext({ viewport: { width: 320, height: 700 } });
 const narrowPage = await narrowContext.newPage();
-await narrowPage.goto(siteUrl.href, { waitUntil: 'networkidle' });
-const narrowWidth = await narrowPage.evaluate(() => ({
-	client: document.documentElement.clientWidth,
-	scroll: document.documentElement.scrollWidth,
-}));
-assert.equal(narrowWidth.scroll, narrowWidth.client, 'The 320px layout must not overflow horizontally');
+const narrowOverflows = [];
+for (const url of seen) {
+	await narrowPage.goto(url, { waitUntil: 'domcontentloaded' });
+	const width = await narrowPage.evaluate(() => ({
+		client: document.documentElement.clientWidth,
+		scroll: document.documentElement.scrollWidth,
+	}));
+	if (width.scroll > width.client) narrowOverflows.push({ url, ...width });
+}
+assert.deepEqual(narrowOverflows, [], 'No crawled route may overflow horizontally at 320px');
 await narrowContext.close();
 
 const noScriptContext = await browser.newContext({
@@ -162,7 +170,8 @@ console.log(
 			accessibilityTargets: accessibilityTargets.length,
 			accessibilityViolations: accessibilityViolations.length,
 			mobile: mobileResult,
-			narrowWidth,
+			narrowRoutesChecked: seen.size,
+			narrowOverflows: narrowOverflows.length,
 			noScriptOpacity,
 		},
 		null,
