@@ -31,10 +31,13 @@ const methods = [1, 2, 3, 4].map((index) => ({
 	title: t(`index.method${index}Title` as UIKey),
 	body: t(`index.method${index}Body` as UIKey),
 }));
+const talkSlides: Record<number, string> = { 5: `${import.meta.env.BASE_URL}talks/2020-medical-device-hf-safety.pdf` };
 const talks = [1, 2, 3, 4, 5, 6].map((index) => ({
 	year: t(`index.talk${index}Year` as UIKey),
 	venue: t(`index.talk${index}Venue` as UIKey),
 	topic: t(`index.talk${index}Topic` as UIKey),
+	summary: t(`index.talk${index}Summary` as UIKey),
+	slides: talkSlides[index],
 }));
 ---
 
@@ -56,7 +59,7 @@ const talks = [1, 2, 3, 4, 5, 6].map((index) => ({
 				</div>
 			</div>
 
-			<aside class="identity" aria-label={t('nav.brand')} data-reveal>
+			<aside class="identity" aria-label={t('nav.brand')}>
 				<div class="portrait-frame">
 					<img
 						src={`${base}assets/portrait.jpg`}
@@ -81,7 +84,7 @@ const talks = [1, 2, 3, 4, 5, 6].map((index) => ({
 				<div class="proof-grid">
 					{
 						stats.map((stat) => (
-							<div class="proof-item" data-reveal>
+							<div class="proof-item">
 								<strong>{stat.num}</strong>
 								<span>{stat.label}</span>
 							</div>
@@ -92,7 +95,7 @@ const talks = [1, 2, 3, 4, 5, 6].map((index) => ({
 		</section>
 
 		<section class="work-section page-shell" aria-labelledby="selected-work-title">
-			<header class="section-heading" data-reveal>
+			<header class="section-heading">
 				<div>
 					<p class="eyebrow">{t('index.workEyebrow')}</p>
 					<h2 id="selected-work-title">{t('index.workTitle')}</h2>
@@ -107,14 +110,14 @@ const talks = [1, 2, 3, 4, 5, 6].map((index) => ({
 
 		<section class="method-section section-rule" aria-labelledby="method-title">
 			<div class="page-shell">
-				<header class="method-heading" data-reveal>
+				<header class="method-heading">
 					<p class="eyebrow">{t('index.methodEyebrow')}</p>
 					<h2 id="method-title">{t('index.methodTitle')}</h2>
 				</header>
 				<ol class="method-line">
 					{
 						methods.map((method, index) => (
-							<li data-reveal>
+							<li>
 								<span class="method-number">{String(index + 1).padStart(2, '0')}</span>
 								<h3>{method.title}</h3>
 								<p>{method.body}</p>
@@ -128,13 +131,18 @@ const talks = [1, 2, 3, 4, 5, 6].map((index) => ({
 
 		<section class="focus-section section-rule" aria-labelledby="focus-title">
 			<div class="page-shell focus-grid">
-				<div class="focus-copy" data-reveal>
+				<div class="focus-copy">
 					<p class="eyebrow">{t('index.focusEyebrow')}</p>
 					<h2 id="focus-title">{t('index.focusTitle')}</h2>
 					<p>{t('index.focusBody')}</p>
-					<a class="text-link" href="https://github.com/psyphiclaw/PsyPhiClaw">{t('index.focusLink')}</a>
+					<a class="text-link" href="https://github.com/psyphiclaw/openclaw">{t('index.focusLink')}</a>
 				</div>
-				<div class="signal-map" role="img" aria-label="PsyPhiClaw multimodal analysis workflow" data-reveal>
+				<a
+					class="signal-map"
+					href="https://github.com/psyphiclaw/openclaw"
+					aria-label="PsyPhiClaw pipeline: import, normalize, fuse, report"
+					data-reveal
+				>
 					<span class="map-status">{t('index.focusStatus')}</span>
 					<div class="map-inputs">
 						<span>FACE</span><span>GAZE</span><span>EEG</span><span>PHYSIO</span><span>fNIRS</span><span>EVENTS</span>
@@ -142,15 +150,15 @@ const talks = [1, 2, 3, 4, 5, 6].map((index) => ({
 					<div class="map-core">
 						<span aria-hidden="true">Ψ</span>
 						<strong>PsyPhiClaw</strong>
-						<small>MULTIMODAL WORKFLOW</small>
+						<small>OPEN PIPELINE</small>
 					</div>
-					<div class="map-output"><span>ALIGN</span><span>ANALYZE</span><span>GUARD</span><span>EXPLAIN</span></div>
-				</div>
+					<div class="map-output"><span>IMPORT</span><span>NORMALIZE</span><span>FUSE</span><span>REPORT</span></div>
+				</a>
 			</div>
 		</section>
 
 		<section class="notes-section page-shell" aria-labelledby="notes-title">
-			<header class="section-heading compact" data-reveal>
+			<header class="section-heading compact">
 				<div>
 					<p class="eyebrow">{t('index.notesEyebrow')}</p>
 					<h2 id="notes-title">{t('index.notesTitle')}</h2>
@@ -162,16 +170,21 @@ const talks = [1, 2, 3, 4, 5, 6].map((index) => ({
 
 		<section class="talks-section section-rule" aria-labelledby="talks-title">
 			<div class="page-shell talks-grid">
-				<header data-reveal>
+				<header>
 					<p class="eyebrow">{t('index.talksEyebrow')}</p>
 					<h2 id="talks-title">{t('index.talksTitle')}</h2>
 				</header>
 				<ol>
 					{
 						talks.map((talk) => (
-							<li data-reveal>
+							<li>
 								<time>{talk.year}</time>
-								<div><strong>{talk.topic}</strong><span>{talk.venue}</span></div>
+								<div>
+									<strong>{talk.topic}</strong>
+									<span>{talk.venue}</span>
+									<p class="talk-summary">{talk.summary}</p>
+									{talk.slides && <a class="talk-slides" href={talk.slides} target="_blank" rel="noopener">{t('index.talkSlides')} <span aria-hidden="true">↗</span></a>}
+								</div>
 							</li>
 						))
 					}
@@ -505,6 +518,7 @@ const talks = [1, 2, 3, 4, 5, 6].map((index) => ({
 		align-items: center;
 		min-height: 28rem;
 		padding: 3.5rem 2rem 2rem;
+		text-decoration: none;
 		border: 1px solid var(--rule-strong);
 		background:
 			linear-gradient(var(--rule) 1px, transparent 1px),
@@ -552,6 +566,11 @@ const talks = [1, 2, 3, 4, 5, 6].map((index) => ({
 		background: var(--paper);
 		box-shadow: 0 0 0 0.5rem color-mix(in srgb, var(--signal) 10%, transparent);
 		text-align: center;
+		transition: box-shadow var(--duration) ease;
+	}
+
+	.signal-map:hover .map-core {
+		box-shadow: 0 0 0 0.75rem color-mix(in srgb, var(--signal) 18%, transparent);
 	}
 
 	.map-core::before,
@@ -642,6 +661,28 @@ const talks = [1, 2, 3, 4, 5, 6].map((index) => ({
 		font-size: 0.78rem;
 	}
 
+	.talk-slides {
+		display: inline-block;
+		margin-top: 0.6rem;
+		color: var(--inverse-signal);
+		font-size: 0.78rem;
+		font-weight: 650;
+		text-decoration: none;
+		border-bottom: 1px solid color-mix(in srgb, var(--inverse-signal) 45%, transparent);
+	}
+
+	.talk-slides:hover {
+		border-bottom-color: var(--inverse-signal);
+	}
+
+	.talk-summary {
+		margin-top: 0.35rem;
+		max-width: 42rem;
+		color: var(--inverse-soft);
+		font-size: 0.8rem;
+		line-height: 1.55;
+	}
+
 	@media (max-width: 64rem) {
 		.hero {
 			grid-template-columns: minmax(0, 1fr) 15rem;
@@ -680,22 +721,35 @@ const talks = [1, 2, 3, 4, 5, 6].map((index) => ({
 			align-items: end;
 		}
 
-		.proof-grid,
+		.proof-grid {
+			grid-template-columns: 1fr;
+		}
+
 		.method-line {
 			grid-template-columns: 1fr 1fr;
 		}
 
-		.proof-item:nth-child(2),
+		.proof-item,
+		.proof-item:not(:first-child) {
+			padding-left: 0;
+			border-right: 0;
+			border-top: 1px solid var(--rule);
+			padding-top: 1.5rem;
+		}
+
+		.proof-item:first-child {
+			border-top: 0;
+			padding-top: 0;
+		}
+
 		.method-line li:nth-child(2) {
 			border-right: 0;
 		}
 
-		.proof-item:nth-child(n + 3),
 		.method-line li:nth-child(n + 3) {
 			border-top: 1px solid var(--rule);
 		}
 
-		.proof-item:nth-child(3),
 		.method-line li:nth-child(3) {
 			padding-left: 0;
 		}

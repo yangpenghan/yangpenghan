@@ -33,8 +33,8 @@ describe('bilingual content archive', () => {
 
 		expect(zhWork).toEqual(enWork);
 		expect(zhNotes).toEqual(enNotes);
-		expect(zhWork).toHaveLength(8);
-		expect(zhNotes).toHaveLength(7);
+		expect(zhWork).toHaveLength(10);
+		expect(zhNotes).toHaveLength(11);
 	});
 
 	it('does not regress corrected public facts', async () => {

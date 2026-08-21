@@ -6,7 +6,7 @@ publishDate: 2019-05-01
 updatedDate: 2026-08-12
 status: delivered
 year: "2019"
-order: 7
+order: 9
 kind: study
 featured: false
 discipline: Intelligent hardware · HRI
@@ -61,11 +61,13 @@ Robot teams easily reach for words such as natural, friendly, or intelligent. Re
 
 This translation matters more than selecting a rating scale. It turns an aesthetic debate into hypotheses a product team can test. It also gives sound, motion, visual expression, and interaction logic a shared task around which to coordinate.
 
-## The capability left behind
+## What stayed
 
-The work generated product evidence, but it also strengthened research operations: when to use each method, how to record variables, how to preserve unexpected field events, and how to distinguish observation from interpretation in a conclusion. For rapidly changing AI hardware, that infrastructure lasts longer than any single result.
+Beyond its product findings, the project strengthened research operations: when to use each method, how to record variables, how to preserve unexpected field events, and how to keep observation separate from interpretation in a conclusion. For rapidly changing AI hardware, that infrastructure outlasts any single result.
 
-The project also left me with a question that has become more important as AI systems act with greater autonomy. A service robot must act enough like a social participant for people to understand its intent, while exposing its limits clearly enough that people do not apply human expectations to it. Evaluation must address not only efficiency, but also how people understand a system's intent, boundary, and responsibility.
+## A judgment I still hold
+
+A robot has to make its intent readable while stating its limits plainly. Once people expect it to behave like a person, disappointment is almost inevitable. As systems act more and more like agents, the researcher's job expands beyond efficiency: it includes checking how people understand the system's intent, boundaries, and responsibility.
 
 ## Public boundary
 

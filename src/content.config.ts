@@ -20,6 +20,7 @@ export const collections = {
 			role: z.string(),
 			tags: z.array(z.string()),
 			externalUrl: z.url().optional(),
+			sourceUrl: z.url().optional(),
 			confidentiality: z.string().optional(),
 			locale: z.enum(['zh', 'en']),
 		}),

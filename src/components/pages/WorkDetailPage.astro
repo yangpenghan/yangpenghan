@@ -61,7 +61,8 @@ const structuredData: Record<string, unknown> = {
 				</div>
 				<div class="case-dek" data-reveal>
 					<p>{entry.data.description}</p>
-					{entry.data.externalUrl && <a class="text-link" href={entry.data.externalUrl}>GitHub / Public source</a>}
+					{entry.data.externalUrl && <a class="text-link" href={entry.data.externalUrl}>{t('workDetail.sourceLabel')}</a>}
+					{entry.data.sourceUrl && <a class="text-link" href={entry.data.sourceUrl}>{t('workDetail.sourceCodeLabel')}</a>}
 				</div>
 			</div>
 		</header>
@@ -70,7 +71,7 @@ const structuredData: Record<string, unknown> = {
 			<div class="page-shell facts-grid">
 				<div data-reveal><small>{t('workDetail.role')}</small><p>{entry.data.role}</p></div>
 				<div data-reveal><small>{t('workDetail.outcome')}</small><p>{entry.data.outcome}</p></div>
-				<div data-reveal><small>METHODS / SIGNALS</small><p>{entry.data.tags.join(' · ')}</p></div>
+				<div data-reveal><small>{t('workDetail.tagsLabel')}</small><p>{entry.data.tags.join(' · ')}</p></div>
 			</div>
 		</section>
 

@@ -6,7 +6,7 @@ publishDate: 2023-06-01
 updatedDate: 2026-08-12
 status: delivered
 year: 2017—2024
-order: 2
+order: 5
 kind: system
 featured: true
 discipline: Automotive · HMI/UX
@@ -25,7 +25,7 @@ confidentiality: Vehicle programs, prototypes, thresholds, and findings remain c
 
 Modern cockpits ask displays, HUDs, infotainment, voice, and multimodal controls to compete for a driver’s limited attention. A conventional usability study can identify issues, but it struggles with the more important question: can different concepts, vehicle programs, and iterations be compared with the same instrument?
 
-The client did not need another set of isolated comments. They needed an evaluation system that could fit the rhythm of product development.
+What the client needed went beyond isolated comments: an evaluation system that could fit the rhythm of product development.
 
 ## My role
 
@@ -38,7 +38,7 @@ By 2017, I was already speaking publicly about driving behavior, ADAS, emotion, 
 The framework operated at three levels:
 
 1. **Interface** — visual hierarchy, discoverability, information density, and action paths.
-2. **Task** — completion, errors, eyes-off-road behavior, and recovery in representative driving contexts.
+2. **Task** — completion time, errors, eyes-off-road behavior, and recovery in representative driving contexts.
 3. **System** — cross-version consistency, cognitive load, situational awareness, and multimodal coordination.
 
 More data is not automatically better. Eye tracking describes allocation of attention. Behavioral coding preserves action sequences and the context of errors. Driving tasks supply constraints. Interviews expose the strategies people use. Only when these sources share a timeline can a team move from what users say to why a system behaves the way it does.
@@ -64,9 +64,9 @@ In a separate driving-research-system training program, the completion criterion
 
 Project experience gradually formed a framework covering different product stages, and elements of the method were used to build evaluation capability with research teams. UX became less of a one-time acceptance exercise and more of a reusable, comparable engineering capability.
 
-## What I learned
+## My view
 
-The value of a complex HMI is not the number of functions on screen. It is the amount of attention the system demands at the moment that attention matters elsewhere. A serious framework puts human limits into the metrics instead of collecting satisfaction after the product is complete.
+When I judge an HMI, the first thing I look at is how much attention it demands from the driver at critical moments; feature count comes later. An evaluation framework should write human limits into the system metrics. Collecting satisfaction data after the product is finished is too late.
 
 ## Public note
 

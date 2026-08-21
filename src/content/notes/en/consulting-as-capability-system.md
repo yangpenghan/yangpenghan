@@ -5,7 +5,7 @@ publishDate: 2026-07-28
 locale: en
 category: solution-engineering
 categoryLabel: Solution Engineering
-readingMinutes: 5
+readingMinutes: 6
 featured: true
 relatedWork: organizational-growth
 ---
@@ -40,10 +40,8 @@ I use three questions:
 
 1. When a similar problem appears, can the team recognize it without external help?
 2. Has the new method entered routine work, rather than remaining in training material?
-3. Can the team revise the method when new evidence appears?
-
-If the answer to all three is no, the contract may be complete but the change is not.
+3. Can the team revise the method when new evidence appears, without waiting again for an external answer?
 
 This is why I now separate project learning into two layers. The client layer records decisions and unresolved risk in the current engagement. The system layer asks which steps belong in a template, knowledge base, training path, or tool. The first preserves the difference between projects. The second lets experience compound. Standardize everything and judgment disappears; standardize nothing and the organization remains dependent on memory.
 
-Good consulting eventually reduces dependence on the consultant while increasing the organization's ability to handle difficult problems. What remains is not a static conclusion, but a learning mechanism that continues to work.
+Good consulting eventually reduces dependence on the consultant while increasing the organization's ability to handle difficult problems. What stays in the organization after the project ends is a learning mechanism that keeps working.

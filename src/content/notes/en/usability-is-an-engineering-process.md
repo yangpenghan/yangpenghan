@@ -5,14 +5,14 @@ publishDate: 2026-07-10
 locale: en
 category: human-factors
 categoryLabel: Human Factors
-readingMinutes: 6
+readingMinutes: 7
 featured: true
 relatedWork: medical-devices
 ---
 
 When teams discuss medical-device usability, the first picture is often a late-stage study: recruit users, ask them to complete tasks on a nearly finished device, record errors, and produce a report.
 
-That study matters, but it is only one checkpoint in a longer engineering chain. Useful human-factors work begins with users, environments, and risk. It continues through requirements, design, formative evaluation, risk control, and final validation.
+That study matters, but it is only one checkpoint in a longer engineering chain. Useful human-factors work begins with users, environments, and risk. It continues through requirements, design, formative evaluation, risk control, and final validation. This chain is what standards such as IEC 62366 formalize, and regulators elsewhere expect the same evidence: the EU MDR requires usability-engineering documentation as part of conformity assessment, and the FDA reviews human-factors validation for safety-critical devices.
 
 If the first observation of real users happens near the end, the team may not discover an isolated interface issue. It may discover a system of problems already embedded in hardware, software, labeling, and training materials.
 

@@ -6,7 +6,7 @@ publishDate: 2018-06-01
 updatedDate: 2026-08-12
 status: delivered
 year: "2018"
-order: 5
+order: 7
 kind: study
 featured: false
 discipline: Fintech · User research
@@ -45,7 +45,7 @@ The third was the **product implication**. An issue was useful only if it could 
 
 The study produced 86 issues organized into six families: navigation, feedback, visual design, consistency, terminology, and software defects. The taxonomy was not an exercise in report formatting. It helped different product roles locate responsibility, compare recurring mechanisms, and set priorities.
 
-## What the project left behind
+## The deliverable was more than a report
 
 Each issue connected a task, observed behavior, evidence segment, participant explanation, and priority. The deliverable therefore worked at three levels: traceable events, a structure spanning events, and an explanation connecting that structure to product decisions. Remove any one and the result weakens. Categories without events become an elegant but untestable story. Events without structure leave a team chasing one list after another.
 

@@ -7,7 +7,11 @@ interface Props {
 
 const { locale } = Astro.props;
 const t = useTranslations(locale);
-const subject = locale === 'zh' ? '想和你讨论一个问题' : 'A hard problem worth discussing';
+// TODO(will): 替换为真实 Noldus 企业邮箱
+const noldusEmail = 'penghan.yang@noldus.com';
+const gmail = 'yangpenghan1988@gmail.com';
+const consultingSubject = locale === 'zh' ? '咨询合作咨询' : 'Consulting inquiry';
+const personalSubject = locale === 'zh' ? '想和你讨论一个问题' : 'A hard problem worth discussing';
 ---
 
 <aside class="contact-section" id="contact" aria-labelledby="contact-title">
@@ -19,8 +23,11 @@ const subject = locale === 'zh' ? '想和你讨论一个问题' : 'A hard proble
 		<div class="contact-copy">
 			<p>{t('cta.body')}</p>
 			<div class="contact-links">
-				<a class="primary-link" href={`mailto:yangpenghan1988@gmail.com?subject=${encodeURIComponent(subject)}`}>
+				<a class="primary-link" href={`mailto:${noldusEmail}?subject=${encodeURIComponent(consultingSubject)}`}>
 					{t('cta.button')} <span aria-hidden="true">↗</span>
+				</a>
+				<a class="secondary-link" href={`mailto:${gmail}?subject=${encodeURIComponent(personalSubject)}`}>
+					{t('cta.personal')}
 				</a>
 				<a class="secondary-link" href="https://www.linkedin.com/in/thereisawillyang">
 					{t('cta.linkedin')}

@@ -40,7 +40,7 @@ Fourth, **how will we know the measurement failed?** Poor signal quality, clock 
 
 **Facial expression** can help locate visible response patterns in time. It does not read a person's true emotion, and it cannot produce a certain interpretation outside cultural, contextual, and individual variation.
 
-These boundaries are not defects in the methods. Multiple sources become useful precisely because each one is limited.
+These boundaries are what make multi-source evidence meaningful in the first place: precisely because each signal is limited, other evidence is needed to cover what it cannot see.
 
 ## Multimodality is not a vote
 
@@ -66,6 +66,6 @@ I tend to remove a signal when:
 - the team wants it to prove a psychological label it already believes;
 - the sensitivity of the data exceeds the decision value it adds.
 
-Measuring less is not intellectually simpler. It requires a clearer judgment about the question, the evidence, and the boundary.
+Removing a signal demands the same clarity from the researcher about the question, the evidence, and the boundary.
 
-The strongest behavioral study is rarely the one with the most equipment. It is the one in which every column of data has a job and every conclusion knows where it must stop.
+The most mature behavioral study plans I have seen often use few instruments. What they share is that every column of data has a clear responsibility, and every conclusion knows where it must stop.

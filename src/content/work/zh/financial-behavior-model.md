@@ -1,12 +1,12 @@
 ---
 locale: zh
 title: 24 天、6 座城市、254GB 记录，怎样变成 86 个可决策问题
-description: 60 次测试与访谈、3,600 分钟记录和约 600 页材料不是结果；真正的工作是把现场行为压缩成可以判断优先级的产品问题。
+description: 60 次测试与访谈、3,600 分钟记录和约 600 页材料是原材料；后续工作是把现场行为压缩成可以判断优先级的产品问题。
 publishDate: 2018-06-01
 updatedDate: 2026-08-12
 status: delivered
 year: "2018"
-order: 5
+order: 7
 kind: study
 featured: false
 discipline: 金融科技 · 用户研究

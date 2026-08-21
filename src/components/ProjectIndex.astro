@@ -31,6 +31,11 @@ const statusLabel = (status: CollectionEntry<'work'>['data']['status']) => {
 								<span>{statusLabel(project.data.status)}</span>
 								<span>{project.data.year}</span>
 								<span>{project.data.discipline}</span>
+								{project.data.externalUrl && (
+									<span class="project-src" aria-label="open source">
+										SRC <span aria-hidden="true">↗↗</span>
+									</span>
+								)}
 							</span>
 							<strong>{project.data.title}</strong>
 							<span class="project-description">{project.data.description}</span>
@@ -103,6 +108,11 @@ const statusLabel = (status: CollectionEntry<'work'>['data']['status']) => {
 
 	.project-meta span:first-child {
 		color: var(--signal-dark);
+	}
+
+	.project-src {
+		color: var(--signal-dark);
+		font-weight: 700;
 	}
 
 	.project-main strong {

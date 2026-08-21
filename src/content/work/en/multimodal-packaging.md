@@ -6,7 +6,7 @@ publishDate: 2017-10-01
 updatedDate: 2026-08-12
 status: delivered
 year: "2017"
-order: 6
+order: 8
 kind: study
 featured: false
 discipline: Consumer research · Multimodal behavior
@@ -43,15 +43,15 @@ We separated the decision into three levels:
 
 Each method was allowed to answer only the question it could support. Gaze does not prove preference. EEG does not directly explain why a packaging structure is difficult to use. An interview does not replace an observed action. Integration happened at shared task moments: only when a visual pattern, signal change, and behavioral difficulty converged at the same point did we examine a design implication.
 
-## From evidence to a design change
+## How the findings entered design
 
-The recommendations were not written as “one metric was higher.” They were expressed as changes that packaging, information, or the use sequence could carry. One example preserved in my public résumé was clearer guidance for using a fruit cup. The underlying question was not simply whether people noticed an element; it was whether the package made the intended action intelligible.
+The recommendations were written as concrete changes that packaging, information, or the use sequence could carry; research language such as “one metric was higher” appeared only as supporting evidence. One example preserved in my public résumé was clearer guidance for using a fruit cup. The underlying question was whether the package made the intended action intelligible.
 
 It is a small example, but it shows how multimodal research should end. A design team does not need every signal visualized. It needs to know which evidence changed which judgment, and what behavior should be checked after the design changes.
 
-## What stayed with me
+## What this project taught me
 
-Multimodality does not mean that more instruments create better research. It means giving different evidence sources bounded responsibilities, then bringing them together at the same time, task, and decision point.
+The job of multimodal research is to give each source of evidence a bounded responsibility, then bring them together at the same time, task, and decision point. The number of instruments says nothing about how advanced a study is.
 
 If a signal cannot change the design of the study, rule out an alternative explanation, or support a concrete decision, it is probably not worth collecting. That principle now guides how I select gaze, physiology, facial expression, and AI-analysis tools.
 

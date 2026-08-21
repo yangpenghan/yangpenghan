@@ -60,8 +60,10 @@ The execution should also leave a machine-readable record. Otherwise a team sees
 
 ## What an open prototype can prove today
 
-The public PsyPhiClaw implementation contains 18 behavioral-analysis modules spanning ingestion, normalization, single-modality analysis, fusion, visualization, reporting, and insight guardrails. That demonstrates that an expert process can be decomposed into modules. It does not establish scientific or production reliability.
+The public PsyPhiClaw implementation contains 18 behavioral-analysis modules spanning ingestion, normalization, single-modality analysis, fusion, visualization, reporting, and insight guardrails. That demonstrates that the process can be decomposed into modules. It does not establish scientific or production reliability.
 
-The meaningful next metrics are not merely minutes to generate a report. Can identical input produce consistent output? Does the system identify invalid input? Do statistical implementations agree with established tools? Does human review become more focused? Does the workflow stop correctly when evidence is insufficient?
+The questions for the next stage are concrete: does identical input produce consistent output; does the system detect invalid input; do the statistical implementations agree with established tools; does human review become more focused; does the system stop correctly when evidence is insufficient. How many minutes it takes to generate a report is not on that list.
 
-AI can amplify analytical capability, and it can amplify errors that were previously hidden in the evidence chain. Speed should be designed after the guardrails. Otherwise we are using a more advanced mechanism to move an unchecked interpretation to more people, faster.
+Which of these five will be hardest to reach, I do not yet have a definite answer. The last one—stopping correctly when evidence is insufficient—may take repeated runs on real research data to find out; it may also end up exposing the limits of the guardrail design itself. That is worth clarifying before generation speed.
+
+AI can amplify analytical capability, and it can amplify errors that were previously hidden in the evidence chain. That is why I design for speed after the guardrails.

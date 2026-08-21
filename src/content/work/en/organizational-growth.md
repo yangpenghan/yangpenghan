@@ -6,7 +6,7 @@ publishDate: 2024-01-01
 updatedDate: 2026-08-12
 status: operating
 year: 2019—present
-order: 3
+order: 6
 kind: system
 featured: true
 discipline: Organization · Business development
@@ -57,9 +57,11 @@ The goal was not to force every problem into a standard package. Problem framing
 
 The practice developed stable lines in consumer research, user experience, and medical-device usability, then entered new applications including automotive, architectural, and aviation human factors. Project learning entered later solution design, team development, courses, and knowledge systems.
 
-The work supports a more modern B2B model: professional services are not a sales-support appendix. They are a front-line system for discovering demand, building technical trust, validating value, and informing product direction.
+Viewed across the whole period, the trajectory looks like this: in 2019 it was one person handling scattered requests in a single setting; human-factors work in medtech, mobility, architecture, and aviation then entered the service scope one after another; by 2026 it had become a continuously operating consulting capability rather than a portfolio of ad-hoc projects dependent on one person's presence.
 
-## What I learned
+The work also validated a B2B path: professional services can run ahead of product sales, doing the work of discovering demand, building technical trust, validating value, and informing the product roadmap.
+
+## How I see it now
 
 Organizational capability is not headcount or the number of templates. It is whether a team can produce sound judgment when it meets a new problem—and whether the new learning is written back into the system.
 

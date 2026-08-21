@@ -5,7 +5,7 @@ publishDate: 2026-08-12
 locale: en
 category: agentic-ai
 categoryLabel: Agentic AI
-readingMinutes: 6
+readingMinutes: 7
 featured: true
 relatedWork: psyphiclaw
 ---
@@ -26,7 +26,7 @@ The first is **maintaining context**. The system must know which participant, ta
 
 The second is **calling deterministic tools**. Timestamp alignment, signal filtering, missing-data checks, and statistical tests should be performed by repeatable programs wherever possible. The useful role for an agent is to decide which tool is appropriate, call it with explicit inputs, inspect the result, and carry that result into the next step.
 
-The third is **preserving an evidence trail**. An analysis should be able to show its inputs, operations, human-set thresholds, excluded anomalies, and the data behind each claim. Automation that cannot be audited merely hides uncertainty more efficiently.
+The third is **preserving an evidence trail**. An analysis should be able to show its inputs, operations, human-set thresholds, excluded anomalies, and the data behind each claim.
 
 ## People still own the boundary
 

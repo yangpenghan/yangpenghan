@@ -5,14 +5,15 @@ description: A public proof of concept connecting facial expression, gaze, EEG, 
 publishDate: 2026-03-31
 updatedDate: 2026-08-12
 status: prototype
-year: 2026—building
-order: 4
+year: '2026 (prototype public, validation paused)'
+order: 3
 kind: system
 featured: true
 discipline: Agentic AI · Open source
-outcome: Published 18 behavioral-analysis modules; the next phase is reliability validation on real research data.
+outcome: Published 18 behavioral-analysis modules; the validation phase is currently paused, and reliability testing on real research data will come first once it resumes.
 role: Initiator, product and system design, core module development
 externalUrl: https://github.com/psyphiclaw/PsyPhiClaw
+sourceUrl: https://github.com/psyphiclaw/openclaw
 tags:
   - Agentic AI
   - Multimodal data
@@ -39,20 +40,28 @@ PsyPhiClaw decomposes the work into inspectable modules:
 - ingest facial expression, gaze, EEG, physiology, fNIRS, Observer coding, and LSL streams;
 - normalize sources and align time using triggers, markers, or explicit rules;
 - run single-modality analysis and cross-modal association;
-- check data integrity, statistical significance, effect size, multiple comparisons, causal wording, and hallucination risk at the AI insight layer;
+- at the AI insight layer, guardrail rules flag uncorrected multiple comparisons, causal wording, and conclusions that lack a data source, and output is released only after human confirmation;
 - produce traceable figures, structured results, and reports instead of only a natural-language answer.
 
 The natural-language interface is an entry point. The actual product is the repeatable, inspectable chain behind it.
 
-## The current outcome
+## Architectural decision: why separate modules
 
-The public implementation currently contains 18 `psyphiclaw-*` modules spanning ingestion, analysis, fusion, visualization, reporting, batch processing, and research retrieval. The project uses the MIT License and publishes its roadmap. The main PsyPhiClaw repository holds the product description; active modules live in the public OpenClaw fork, so both the intent and implementation can be inspected directly.
+PsyPhiClaw is decomposed into 18 behavioral-analysis modules rather than a single monolithic system. The choice follows one engineering judgment: the module boundary is the inspection boundary.
 
-Those numbers demonstrate construction effort, not scientific validity. The next phase must benchmark real research data: format compatibility, consistency, error recovery, statistical correctness, human-review cost, and differences from established analysis workflows.
+Each module owns one describable piece of work—parsing one data format, performing one alignment step, running one class of analysis, producing one version of a report—and can be tested and replaced independently. Modules connect through standardized data interfaces: inputs and outputs follow explicit structural contracts, and intermediate results can be written to disk and examined. When a conclusion goes wrong, the failure can be located in a specific step, and reviewing that one module is enough—no need to debug the entire pipeline.
 
-## What I learned
+This architecture matches the project's design philosophy: decompose expert work into bounded, reviewable units of collaboration. The cost of modularity is more assembly work; the benefit is that every automated judgment keeps a place where it can be examined.
 
-The value of agentic AI is not asking one model to do everything. It is decomposing expert work into bounded, reviewable units of collaboration. High-quality automation should not merely make work faster; it should make every judgment easier to trace.
+## Public status
+
+The public implementation contains 18 `psyphiclaw-*` modules spanning ingestion, analysis, fusion, visualization, reporting, batch processing, and research retrieval. The project uses the MIT License and publishes its roadmap. The main PsyPhiClaw repository holds the project description; the module code lives in the public OpenClaw fork. Both were last updated in March 2026 and can be verified independently.
+
+Those numbers demonstrate construction effort, not scientific validity. The validation phase is currently paused; once it resumes, the first priority is benchmarking against real research data: format compatibility, consistency, error recovery, statistical correctness, human-review cost, and differences from established analysis workflows.
+
+## What stayed
+
+The project reinforced a conviction: decomposing expert work into bounded, reviewable units of collaboration is more reliable than asking one model to do everything. The goal of automation is to make every judgment easier to trace; speed is a side benefit.
 
 ## Public note
 
