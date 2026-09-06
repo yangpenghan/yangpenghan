@@ -33,6 +33,17 @@ try {
 				'Claim and explanation must remain on the first screen',
 			);
 			assert.equal(await page.locator('.project-index.illustrated .case-diagram').count(), 3);
+			await page.screenshot({
+				animations: 'disabled',
+				path: `artifacts/visual-refresh/visual-home-${locale}-${width}.png`,
+			});
+			if (width === 1440)
+				await page.locator('.work-section').screenshot({
+					animations: 'disabled',
+					style: 'astro-dev-toolbar, .masthead, .skip-link { visibility: hidden !important; }',
+					path: `artifacts/visual-refresh/visual-cases-${locale}.png`,
+				});
+			await page.goto(new URL(`${prefix}method/`, siteUrl).href, { waitUntil: 'networkidle' });
 			assert.equal(await page.locator('#toolbox .instrument').count(), 4);
 			const explorer = page.locator('reframe-explorer');
 			const tabs = explorer.getByRole('tab');
@@ -65,17 +76,7 @@ try {
 				style: 'astro-dev-toolbar, .masthead, .skip-link { visibility: hidden !important; }',
 				path: `artifacts/visual-refresh/visual-explorer-${locale}-${width}.png`,
 			});
-			await page.evaluate(() => window.scrollTo(0, 0));
-			await page.screenshot({
-				animations: 'disabled',
-				path: `artifacts/visual-refresh/visual-home-${locale}-${width}.png`,
-			});
 			if (width === 1440) {
-				await page.locator('.work-section').screenshot({
-					animations: 'disabled',
-					style: 'astro-dev-toolbar, .masthead, .skip-link { visibility: hidden !important; }',
-					path: `artifacts/visual-refresh/visual-cases-${locale}.png`,
-				});
 				await page.locator('#toolbox').screenshot({
 					animations: 'disabled',
 					style: 'astro-dev-toolbar, .masthead, .skip-link { visibility: hidden !important; }',
@@ -83,11 +84,13 @@ try {
 				});
 			}
 			await page.goto(new URL(`${prefix}notes/`, siteUrl).href, { waitUntil: 'networkidle' });
-			for (const link of await page.locator('.topic-map a').all()) {
+			assert.equal(await page.locator('.topic-section').count(), 4);
+			for (const link of await page.locator('.topic-links a').all()) {
 				const href = await link.getAttribute('href');
 				assert.ok(href?.startsWith('#'));
 				assert.equal(await page.locator(href).count(), 1, 'Every topic link needs a destination');
 			}
+			await page.locator('.guided-reading > summary').click();
 			await page.locator('.foundation').screenshot({
 				animations: 'disabled',
 				style: 'astro-dev-toolbar, .masthead, .skip-link { visibility: hidden !important; }',
@@ -126,8 +129,9 @@ try {
 		viewport: { width: 390, height: 844 },
 	});
 	const page = await noScript.newPage();
-	await page.goto(siteUrl, { waitUntil: 'load' });
+	await page.goto(new URL('method/', siteUrl).href, { waitUntil: 'load' });
 	assert.equal(await page.locator('.explorer-controls').isVisible(), false);
+	assert.equal(await page.locator('reframe-explorer [data-panel]').count(), 3);
 	for (const panel of await page.locator('reframe-explorer [data-panel]').all())
 		assert.equal(await panel.isVisible(), true);
 	await noScript.close();

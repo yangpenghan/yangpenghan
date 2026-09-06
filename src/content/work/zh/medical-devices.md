@@ -5,6 +5,7 @@ description: "从“完成测试”到“在还能改时检验设计”：把关
 publishDate: 2022-03-01
 updatedDate: 2026-09-05
 status: operating
+statusText: "持续开展的咨询方向"
 year: 2019—现在
 order: 2
 kind: system

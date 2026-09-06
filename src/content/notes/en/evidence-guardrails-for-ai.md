@@ -4,6 +4,7 @@ description: "Six kinds of checks in the PsyPhiClaw design, from wrong inputs to
 publishDate: 2026-08-02
 updatedDate: 2026-09-05
 locale: en
+kind: practice
 category: agentic-ai
 categoryLabel: Agentic AI
 readingMinutes: 2

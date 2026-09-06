@@ -4,6 +4,7 @@ description: "How I assigned EEG, gaze, and observation different jobs in a pack
 publishDate: 2026-08-06
 updatedDate: 2026-09-05
 locale: en
+kind: practice
 category: behavioral-intelligence
 categoryLabel: Behavioral intelligence
 readingMinutes: 2

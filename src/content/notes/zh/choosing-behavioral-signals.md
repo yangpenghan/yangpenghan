@@ -4,6 +4,7 @@ description: "一次乳品包装研究里，EEG、眼动和观察分别承担什
 publishDate: 2026-08-06
 updatedDate: 2026-09-05
 locale: zh
+kind: practice
 category: behavioral-intelligence
 categoryLabel: 行为智能
 readingMinutes: 2

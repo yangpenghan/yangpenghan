@@ -64,6 +64,14 @@ class ReframeExplorer extends HTMLElement {
     controls.setAttribute('role', 'tablist');
     select(0);
     controls.hidden = false;
+    const followHash = () => {
+      const index = panels.findIndex((panel, i) => `#${panel.id}` === window.location.hash || `#${buttons[i].id}` === window.location.hash);
+      if (index < 0) return;
+      select(index);
+      panels[index].scrollIntoView({block: 'start'});
+    };
+    window.addEventListener('hashchange', followHash, {signal: this.controller.signal});
+    followHash();
   }
   disconnectedCallback() { this.controller?.abort(); }
 }

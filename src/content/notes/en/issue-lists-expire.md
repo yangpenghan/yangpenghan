@@ -4,6 +4,7 @@ description: "A lesson from the six-city finance-app study: preserve the action 
 publishDate: 2026-08-10
 updatedDate: 2026-09-05
 locale: en
+kind: practice
 category: behavioral-intelligence
 categoryLabel: Behavioral intelligence
 readingMinutes: 2

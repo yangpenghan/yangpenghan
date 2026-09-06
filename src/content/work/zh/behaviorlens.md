@@ -5,6 +5,7 @@ description: "行为视频编码耗时，也需要理解情境。我设计分三
 publishDate: 2026-05-01
 updatedDate: 2026-09-05
 status: prototype
+statusText: "原型 · 效果尚待验证"
 year: 2026—现在
 order: 10
 kind: system

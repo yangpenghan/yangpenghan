@@ -4,6 +4,7 @@ description: "Participant identity, clocks, missing segments, and quality checks
 publishDate: 2026-08-12
 updatedDate: 2026-09-05
 locale: en
+kind: practice
 category: agentic-ai
 categoryLabel: Agentic AI
 readingMinutes: 2

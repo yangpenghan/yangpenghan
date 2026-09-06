@@ -4,6 +4,7 @@ description: "文件归属、时钟、缺失片段与质控没确认，模型就
 publishDate: 2026-08-12
 updatedDate: 2026-09-05
 locale: zh
+kind: practice
 category: agentic-ai
 categoryLabel: Agentic AI
 readingMinutes: 2

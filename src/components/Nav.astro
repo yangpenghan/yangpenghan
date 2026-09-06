@@ -42,6 +42,7 @@ const isCurrent = (path: string) => normalizedPath === path || normalizedPath.st
 		</div>
 
 		<div class="nav-tools">
+			<a class="contact-link" href={normalizedPath.includes('404') ? `${navUrl('/')}#contact` : '#contact'}>{t('nav.contact')}</a>
 			<a class="language" href={switchUrl} aria-label={t('nav.language')} lang={switchLocale === 'zh' ? 'zh-CN' : 'en'}>
 				{switchLocale === 'zh' ? '中' : 'EN'}
 			</a>
@@ -62,7 +63,7 @@ const isCurrent = (path: string) => normalizedPath === path || normalizedPath.st
 
 	nav {
 		display: grid;
-		grid-template-columns: minmax(15rem, 1fr) auto minmax(6rem, .6fr);
+		grid-template-columns: minmax(12rem, 1fr) auto minmax(10rem, .6fr);
 		align-items: center;
 		height: var(--header-height);
 	}
@@ -75,7 +76,7 @@ const isCurrent = (path: string) => normalizedPath === path || normalizedPath.st
 		text-decoration: none;
 	}
 
- .brand-signature { width: 15rem; }
+ .brand-signature { width: 13rem; }
  .brand-mobile { display: none; align-items: center; gap: .6rem; font-size: .95rem; font-weight: 500; }
  .mobile-mark { width: 2.5rem; }
 
@@ -138,6 +139,9 @@ const isCurrent = (path: string) => normalizedPath === path || normalizedPath.st
 	.language:hover {
 		color: var(--signal-dark);
 	}
+	.contact-link { display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding-inline: .65rem; font-size: .875rem; color: var(--signal-dark); text-decoration: none; }
+	.contact-link:hover { text-decoration: underline; text-underline-offset: .25em; }
+	@media (max-width: 23rem) { .language { padding-inline: .5rem; } .brand-mobile { gap: .35rem; font-size: .875rem; } .mobile-mark { width: 2rem; } }
 
 	@media (max-width: 56rem) {
 		.masthead {

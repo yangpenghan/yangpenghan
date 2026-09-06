@@ -5,6 +5,7 @@ description: "I use OpenClaw, Claude Code, and existing retrieval tools for emai
 publishDate: 2026-03-01
 updatedDate: 2026-09-05
 status: operating
+statusText: "Personal daily use · Evolving"
 year: 2026—present
 order: 8
 kind: system

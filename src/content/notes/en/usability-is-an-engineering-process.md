@@ -4,6 +4,7 @@ description: "How I distinguish early learning from later validation when planni
 publishDate: 2026-07-10
 updatedDate: 2026-09-05
 locale: en
+kind: practice
 category: human-factors
 categoryLabel: Human Factors
 readingMinutes: 2

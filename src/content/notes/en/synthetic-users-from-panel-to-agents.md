@@ -4,6 +4,7 @@ description: "Moving from plausible responses to testable expectations: defining
 publishDate: 2026-08-21
 updatedDate: 2026-09-06
 locale: en
+kind: proposal
 category: human-factors
 categoryLabel: Simulation, experience & validation
 readingMinutes: 6

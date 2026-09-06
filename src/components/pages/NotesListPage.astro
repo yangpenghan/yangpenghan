@@ -4,114 +4,122 @@ import { getRelativeLocaleUrl } from 'astro:i18n';
 import ContactCTA from '../ContactCTA.astro';
 import NoteList from '../NoteList.astro';
 import ReadingPaths from '../ReadingPaths.astro';
-import TopicMap from '../visuals/TopicMap.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { useTranslations, type Locale } from '../../i18n';
 
 interface Props { locale: Locale; }
 const { locale } = Astro.props;
 const t = useTranslations(locale);
+const zh = locale === 'zh';
 const notes = (await getCollection('notes'))
-	.filter((entry) => entry.data.locale === locale)
-	.sort((a, b) => Number(b.data.featured) - Number(a.data.featured) || (b.data.updatedDate ?? b.data.publishDate).valueOf() - (a.data.updatedDate ?? a.data.publishDate).valueOf() || a.id.localeCompare(b.id));
+    .filter((entry) => entry.data.locale === locale)
+    .sort((a, b) => (b.data.updatedDate ?? b.data.publishDate).valueOf() - (a.data.updatedDate ?? a.data.publishDate).valueOf() || a.id.localeCompare(b.id));
 const foundation = notes.find((note) => note.id === `${locale}/every-problem-is-technical`);
 const topics = ['solution-engineering', 'agentic-ai', 'behavioral-intelligence', 'human-factors'] as const;
 const groups = topics.map((topic) => ({
-	topic,
-	title: t(`notes.topic.${topic}.title`),
-	body: t(`notes.topic.${topic}.body`),
-	notes: notes.filter((note) => note.data.category === topic && note.id !== foundation?.id),
+    topic, title: t(`notes.topic.${topic}.title`),
+    notes: notes.filter((note) => note.data.category === topic),
 })).filter((group) => group.notes.length > 0);
 ---
-
 <BaseLayout locale={locale} title={t('notes.metaTitle')} description={t('notes.metaDesc')}>
-	<main>
-		<header class="notes-hero page-shell" data-reveal>
-			<p class="eyebrow">{t('notes.eyebrow')}</p>
-			<div class="notes-heading">
-				<h1>{t('notes.title')}</h1>
-				<div>
-					<p>{t('notes.intro')}</p>
-					<a class="text-link" href="#reading-paths">{t('notes.readingPaths')}</a>
-				</div>
-			</div>
-		</header>
-
-		<div class="notes-archive page-shell">
-      {foundation && <section class="foundation" id="core-argument" aria-labelledby="foundation-title">
-        <p class="eyebrow">{locale === 'zh' ? '先读这一篇 / 核心主张' : 'Start here / Core argument'}</p>
-        <div class="foundation-copy"><h2 id="foundation-title"><a href={getRelativeLocaleUrl(locale, 'notes/every-problem-is-technical/')}>{foundation.data.title}<span aria-hidden="true"> ↗</span></a></h2>
-        <p>{foundation.data.description}</p></div>
-        <TopicMap {locale} />
-      </section>}
-			<ReadingPaths {notes} {locale} />
-			<p class="archive-label eyebrow">{locale === 'zh' ? `全部 ${notes.length} 篇 / 按议题浏览` : `All ${notes.length} essays / Browse by subject`}</p>
-			{groups.map((group) => (
-				<section class="topic-section" id={group.topic} aria-labelledby={`${group.topic}-title`}>
-					<header class="topic-heading"><h2 id={`${group.topic}-title`}>{group.title}</h2><p>{group.body}</p></header>
-					<NoteList notes={group.notes} {locale} />
-				</section>
-			))}
-		</div>
-	</main>
-	<ContactCTA {locale} />
+    <main>
+        <header class="notes-hero page-shell">
+            <h1>{t('notes.title')}</h1>
+            <p>{zh ? '行为研究、人因工程与 AI 工作：实践反思、观点分析和待验证的方法。' : 'Behavioral research, human factors, and AI at work: practice, analysis, and methods to be tested.'}</p>
+            <nav class="topic-links" aria-label={zh ? '文章索引' : 'Essay index'}>
+                <a href="#all-notes">{zh ? '全部文章' : 'All essays'}</a>
+                {groups.map((group) => <a href={`#${group.topic}`}>{group.title}</a>)}
+                <a href="#reading-paths">{zh ? '阅读路径' : 'Reading paths'}</a>
+            </nav>
+        </header>
+        <div class="notes-archive page-shell">
+            <note-search data-locale={locale}>
+                <div class="archive-heading" id="all-notes">
+                    <h2>{zh ? `全部 ${notes.length} 篇` : `All ${notes.length} essays`}</h2>
+                    <p>{zh ? '按议题分组 · 组内最近更新优先' : 'Grouped by subject · Most recently updated first within each subject'}</p>
+                </div>
+                <div class="search-controls" hidden>
+                    <label for="note-query">{zh ? '搜索标题或关键词' : 'Search titles or keywords'}</label>
+                    <div class="search-row"><input id="note-query" type="search" autocomplete="off" /><button type="button">{zh ? '清除搜索' : 'Clear search'}</button></div>
+                    <p class="search-status" role="status" aria-live="polite"></p>
+                </div>
+                {groups.map((group) => <section class="topic-section" id={group.topic} aria-labelledby={`${group.topic}-title`}>
+                    <h2 id={`${group.topic}-title`}>{group.title}</h2>
+                    <NoteList notes={group.notes} {locale} compact />
+                </section>)}
+            </note-search>
+            <details class="guided-reading">
+                <summary>{zh ? '想连续读？展开四条阅读路径' : 'Want a sequence? Explore four reading paths'}</summary>
+            {foundation && <aside class="foundation" id="core-argument" aria-labelledby="foundation-title">
+                <span>{zh ? '核心主张' : 'Central argument'}</span>
+                <h2 id="foundation-title"><a href={getRelativeLocaleUrl(locale, 'notes/every-problem-is-technical/')}>{foundation.data.title}<span aria-hidden="true"> →</span></a></h2>
+            </aside>}
+                <ReadingPaths {notes} {locale} />
+            </details>
+        </div>
+    </main>
+    <ContactCTA {locale} />
 </BaseLayout>
-
+<script>
+    class NoteSearch extends HTMLElement {
+        connectedCallback() {
+            const controls = this.querySelector<HTMLElement>('.search-controls');
+            const input = this.querySelector('input');
+            const reset = this.querySelector('button');
+            const status = this.querySelector('[role="status"]');
+            if (!controls || !input || !reset || !status) return;
+            const entries = [...this.querySelectorAll<HTMLElement>('[data-note-search]')];
+            const groups = [...this.querySelectorAll<HTMLElement>('.topic-section')];
+            const update = () => {
+                const terms = input.value.normalize('NFKC').toLocaleLowerCase().trim().split(/\s+/).filter(Boolean);
+                let count = 0;
+                for (const entry of entries) {
+                    const text = (entry.dataset.noteSearch ?? '').normalize('NFKC').toLocaleLowerCase();
+                    entry.hidden = !terms.every((term) => text.includes(term));
+                    if (!entry.hidden) count++;
+                }
+                for (const group of groups) group.hidden = !group.querySelector('[data-note-search]:not([hidden])');
+                const zh = this.dataset.locale === 'zh';
+                status.textContent = count ? (zh ? `显示 ${count} 篇文章` : `${count} essays shown`) : (zh ? '没有匹配的文章。试试更短的关键词，或清除搜索。' : 'No matching essays. Try a shorter keyword or clear the search.');
+                reset.disabled = !input.value;
+            };
+            input.addEventListener('input', update);
+            reset.addEventListener('click', () => { input.value = ''; update(); input.focus(); });
+            for (const link of document.querySelectorAll<HTMLAnchorElement>('.topic-links a')) {
+                link.addEventListener('click', () => { input.value = ''; update(); });
+            }
+            controls.hidden = false;
+            update();
+        }
+    }
+    if (!customElements.get('note-search')) customElements.define('note-search', NoteSearch);
+</script>
 <style>
-	.archive-label { margin-bottom: 2.5rem; }
-  .foundation { padding: clamp(1.5rem, 4vw, 3rem); margin-bottom: 4rem; background: var(--paper-deep); border-top: 2px solid var(--author); scroll-margin-top: calc(var(--header-height) + 2rem); }
-  .foundation h2 { margin-block: 1.5rem; font-size: var(--step-3); font-weight: 500; line-height: 1.35; }
-  .foundation h2 a { text-decoration: none; }
-  .foundation h2 a:hover { text-decoration: underline; text-underline-offset: .15em; }
-  .foundation-copy > p:last-child { max-width: 48rem; color: var(--ink-soft); }
-	.notes-hero {
-		padding-block: clamp(5rem, 11vw, 10rem) clamp(4rem, 9vw, 8rem);
-	}
-
-	.notes-heading {
-		display: grid;
-		grid-template-columns: minmax(0, 1.5fr) minmax(18rem, 0.5fr);
-		gap: clamp(3rem, 8vw, 8rem);
-		align-items: end;
-		margin-top: clamp(3rem, 7vw, 6rem);
-	}
-
-	h1 {
-		max-width: 100%;
-		font-family: var(--font-display);
-		font-size: clamp(3rem, 5vw, 5rem);
-		line-height: 1.12;
-	}
-
-	.notes-heading > div {
-		display: grid;
-		gap: 2rem;
-		color: var(--ink-soft);
-	}
-
-	.topic-links { display: grid; gap: .75rem; }
-	.topic-links a { display: flex; justify-content: space-between; gap: 1rem; padding-block: .5rem; border-bottom: 1px solid var(--rule); font-size: .88rem; text-decoration: none; }
-	.topic-links span { color: var(--ink-soft); font-family: var(--font-mono); }
-	.topic-section { scroll-margin-top: calc(var(--header-height) + 2rem); margin-bottom: clamp(4rem, 8vw, 7rem); }
-	.topic-heading { display: grid; gap: 1.5rem; margin-bottom: 2.5rem; }
-	.topic-heading h2 { font-family: var(--font-display); font-size: var(--step-2); line-height: 1.2; }
-	.topic-heading p { max-width: 45rem; color: var(--ink-soft); }
-
-	.notes-archive {
-		padding-bottom: clamp(6rem, 12vw, 12rem);
-	}
-
-	@media (max-width: 48rem) {
-		.notes-heading {
-			grid-template-columns: 1fr;
-		}
-
-		h1 {
-			font-size: clamp(2.4rem, 10vw, 3.5rem);
-		}
-	}
-
- .foundation { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 2rem 3rem; align-items: center; }
- .foundation > .eyebrow { grid-column: 1 / -1; }
- @media(max-width:48rem) { .foundation { grid-template-columns: minmax(0,1fr); } }
+    .notes-hero { padding-block: clamp(2rem,4vw,3.5rem) 1.5rem; }
+    h1 { font-size: clamp(2.2rem,4vw,3.5rem); line-height: 1.25; }
+    .notes-hero > p { max-width: 48rem; margin-top: 1rem; color: var(--ink-soft); }
+    .topic-links { display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; margin-top: 1rem; }
+    .topic-links a { display: inline-flex; align-items: center; min-height: 2.75rem; font-size: .875rem; text-underline-offset: .25em; }
+    .foundation { display: flex; align-items: baseline; flex-wrap: wrap; gap: .5rem 1.25rem; padding: 1rem 1.25rem; border-left: 2px solid var(--author); background: var(--paper-deep); margin-bottom: 2rem; }
+    .foundation > span { color: var(--ink-soft); font-size: .875rem; }
+    .foundation h2 { font-size: 1.1rem; line-height: 1.5; }
+    .foundation a { display: inline-block; padding-block: .25rem; text-decoration: none; }
+    .foundation a:hover { color: var(--signal-dark); }
+    note-search { display: block; }
+    .archive-heading { display: flex; flex-wrap: wrap; align-items: baseline; gap: .25rem 1rem; }
+    .archive-heading h2 { font-size: 1.4rem; }
+    .archive-heading > p { font-size: .875rem; color: var(--ink-soft); margin-top: .5rem; }
+    .search-controls { margin-block: 1rem 1.5rem; max-width: 45rem; }
+    label { display: block; font-size: .875rem; margin-bottom: .5rem; }
+    .search-row { display: flex; gap: .5rem; }
+    input { width: 100%; min-width: 0; min-height: 2.75rem; padding: .5rem .75rem; border: 1px solid var(--rule-strong); border-radius: 0; color: var(--ink); background: var(--paper-raised); font-size: 1rem; }
+    button { flex-shrink: 0; min-height: 2.75rem; padding: .5rem .75rem; border: 1px solid var(--rule-strong); background: transparent; color: var(--ink); font-size: .875rem; cursor: pointer; }
+    button:disabled { color: var(--ink-soft); cursor: default; }
+    .search-status { margin-top: .5rem; font-size: .875rem; color: var(--ink-soft); }
+    .topic-section { margin-block: 2rem 3rem; }
+    .topic-section > h2 { font-size: 1.15rem; line-height: 1.5; margin-bottom: 1rem; }
+    .notes-archive { padding-bottom: 4rem; }
+    .guided-reading { border-top: 1px solid var(--rule-strong); padding-top: 1rem; }
+    summary { padding-block: .75rem; min-height: 2.75rem; cursor: pointer; }
+    .guided-reading[open] > summary { margin-bottom: 2rem; }
 </style>

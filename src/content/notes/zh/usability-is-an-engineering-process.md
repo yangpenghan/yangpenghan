@@ -4,6 +4,7 @@ description: "我在医疗器械项目中把早期发现问题与后期验证区
 publishDate: 2026-07-10
 updatedDate: 2026-09-05
 locale: zh
+kind: practice
 category: human-factors
 categoryLabel: 人因工程
 readingMinutes: 2

@@ -31,7 +31,7 @@
 	--page-max: 86rem;
 	--content-max: 68rem;
 	--reading-max: 48rem;
-	--header-height: 6rem;
+	--header-height: 5rem;
 	--ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 	--duration: 220ms;
 	--z-header: 20;
@@ -114,6 +114,8 @@ a {
 }
 
 a:focus-visible,
+input:focus-visible,
+select:focus-visible,
 button:focus-visible {
 	outline: 2px solid var(--signal);
 	outline-offset: 4px;
@@ -354,7 +356,10 @@ p {
 	}
 }
 
-@media (max-width: 42rem) {
+@media (max-width: 56rem) {
+	html {
+		scroll-padding-bottom: calc(4.5rem + env(safe-area-inset-bottom));
+	}
 	:root {
 		--header-height: 4.35rem;
 	}
@@ -385,7 +390,19 @@ summary:focus-visible,
 	*,
 	*::before,
 	*::after {
-		transition-duration: 0s;
-		animation-duration: 0s;
+		/* biome-ignore lint/complexity/noImportantStyles: user motion preference must override component specificity */
+		transition: none !important;
+		/* biome-ignore lint/complexity/noImportantStyles: user motion preference must override component specificity */
+		animation: none !important;
+		/* biome-ignore lint/complexity/noImportantStyles: includes component smooth scrolling */
+		scroll-behavior: auto !important;
 	}
+}
+
+[hidden] {
+	/* biome-ignore lint/complexity/noImportantStyles: preserve native hidden semantics in grid/flex components */
+	display: none !important;
+}
+.prose > :first-child {
+	margin-top: 0;
 }

@@ -4,6 +4,7 @@ description: "除了报告，还要留下为什么这样做、哪里出过错，
 publishDate: 2026-07-28
 updatedDate: 2026-09-05
 locale: zh
+kind: practice
 category: solution-engineering
 categoryLabel: 解决方案工程
 readingMinutes: 2

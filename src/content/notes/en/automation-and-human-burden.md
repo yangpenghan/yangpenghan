@@ -3,6 +3,7 @@ title: "What has an agent automated if someone must keep watching it?"
 description: "Background execution is a beginning. Configuration, supervision, recovery, and interruptions must count when evaluating whether automation makes work easier."
 publishDate: 2026-09-06
 locale: en
+kind: proposal
 category: agentic-ai
 categoryLabel: AI systems & human collaboration
 readingMinutes: 6

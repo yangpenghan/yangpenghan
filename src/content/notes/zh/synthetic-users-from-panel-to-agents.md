@@ -4,6 +4,7 @@ description: "从模拟回答走向可检验的行为预期：怎样定义验证
 publishDate: 2026-08-21
 updatedDate: 2026-09-06
 locale: zh
+kind: proposal
 category: human-factors
 categoryLabel: 模拟、体验与验证
 readingMinutes: 8

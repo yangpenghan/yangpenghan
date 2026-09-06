@@ -4,6 +4,7 @@ description: "Frequent briefings and business analysis need different context, w
 publishDate: 2026-08-21
 updatedDate: 2026-09-05
 locale: en
+kind: practice
 category: agentic-ai
 categoryLabel: Agentic AI
 readingMinutes: 2

@@ -5,6 +5,7 @@ description: "From completing a test to checking design while change is possible
 publishDate: 2022-03-01
 updatedDate: 2026-09-05
 status: operating
+statusText: "Ongoing consulting practice"
 year: 2019—present
 order: 2
 kind: system

@@ -1,0 +1,36 @@
+---
+interface Props { value: string; locale: 'zh' | 'en'; }
+const { value, locale } = Astro.props;
+---
+<copy-text data-value={value} data-success={locale === 'zh' ? '已复制邮箱地址' : 'Email address copied'} data-error={locale === 'zh' ? '复制未成功，请选择上方邮箱地址手动复制。' : 'Copy failed. Select the email address above and copy it manually.'}>
+	<button type="button" hidden>{locale === 'zh' ? '复制邮箱' : 'Copy email'}</button>
+	<span class="copy-status" role="status"></span>
+</copy-text>
+<script>
+	class CopyText extends HTMLElement {
+		connectedCallback() {
+			const button = this.querySelector('button');
+			const status = this.querySelector('[role="status"]');
+			if (!button || !status || !navigator.clipboard?.writeText) return;
+			button.hidden = false;
+			button.onclick = async () => {
+				button.disabled = true;
+				status.textContent = '';
+				try {
+					await navigator.clipboard.writeText(this.dataset.value ?? '');
+					status.textContent = this.dataset.success ?? '';
+				} catch {
+					status.textContent = this.dataset.error ?? '';
+				} finally { button.disabled = false; }
+			};
+		}
+	}
+	if (!customElements.get('copy-text')) customElements.define('copy-text', CopyText);
+</script>
+<style>
+	copy-text { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; }
+	button { min-height: 2.75rem; padding: .4rem .75rem; border: 1px solid var(--rule-strong); background: transparent; color: var(--ink); font-size: .875rem; cursor: pointer; }
+	button:hover { background: var(--paper-deep); }
+	button:disabled { cursor: wait; }
+	.copy-status { color: var(--ink-soft); font-size: .875rem; }
+</style>

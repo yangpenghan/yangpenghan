@@ -4,6 +4,7 @@ description: "From the classroom to field research, I learned to ask where someo
 publishDate: 2026-07-20
 updatedDate: 2026-09-05
 locale: en
+kind: practice
 category: behavioral-intelligence
 categoryLabel: Working path
 readingMinutes: 2

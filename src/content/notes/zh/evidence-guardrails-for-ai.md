@@ -4,6 +4,7 @@ description: "从错误文件到过度解释：PsyPhiClaw 中需要检查的六�
 publishDate: 2026-08-02
 updatedDate: 2026-09-05
 locale: zh
+kind: practice
 category: agentic-ai
 categoryLabel: Agentic AI
 readingMinutes: 2

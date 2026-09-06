@@ -1,0 +1,34 @@
+---
+import type { Locale } from '../i18n';
+import { resources, type ResourceId } from '../i18n/resources';
+interface Props { locale: Locale; ids: ResourceId[]; }
+const { locale, ids } = Astro.props;
+const zh = locale === 'zh';
+const base = `${import.meta.env.BASE_URL}resources/${locale}/`;
+---
+<section class="resources" id="materials" aria-labelledby="materials-title">
+    <h2 id="materials-title">{zh ? '可以带走的材料' : 'Materials to use in your own work'}</h2>
+    <p>{zh ? '以下材料为本站整理的空白模板或指令示例，可下载后按任务改写。它们不包含客户数据，也不是上述项目的原始交付物或效果证明。' : 'These blank templates and instruction examples were prepared for this website. Download and adapt them to your task. They contain no client data and are not original project deliverables or evidence of results.'}</p>
+    <ul>{ids.map((id) => {
+        const resource = resources[id];
+        return <li>
+            <span class="resource-status">{resource.status === 'example' ? (zh ? '指令示例 · 尚待任务验证' : 'Instruction example · Awaiting task validation') : (zh ? '空白模板' : 'Blank template')}</span>
+            <h3>{resource.title[locale]}</h3>
+            <p>{resource.description[locale]}</p>
+            <div class="resource-downloads"><a href={`${base}${id}.md`} download>{zh ? '下载 Markdown 文本' : 'Download Markdown text'}<span class="sr-only"> · {resource.title[locale]}</span></a>
+            {'csv' in resource && resource.csv && <a href={`${base}${id}.csv`} download>{zh ? '下载 CSV 表格' : 'Download CSV worksheet'}</a>}</div>
+        </li>;
+    })}</ul>
+</section>
+<style>
+    .resources { padding-block: 2rem 3rem; border-top: 1px solid var(--rule-strong); }
+    h2 { font-size: var(--step-2); line-height: 1.35; margin-bottom: 1rem; }
+    .resources > p { max-width: 48rem; color: var(--ink-soft); font-size: .95rem; }
+    ul { list-style: none; padding: 0; margin-top: 1.5rem; display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit,minmax(min(100%,22rem),1fr)); }
+    li { border-top: 1px solid var(--rule); padding-top: 1rem; }
+    .resource-status { font-size: .875rem; color: var(--ink-soft); }
+    h3 { font-size: 1.15rem; margin-block: .5rem; line-height: 1.4; }
+    li p { color: var(--ink-soft); font-size: .95rem; }
+    .resource-downloads { display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; margin-top: .75rem; }
+    a { display: inline-flex; align-items: center; min-height: 2.75rem; color: var(--signal-dark); font-size: .875rem; text-underline-offset: .25em; }
+</style>

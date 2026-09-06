@@ -11,8 +11,9 @@
 - `/` 与 `/en/`：中英文首页
 - `/work/`：代表案例、更多项目经验、AI 工作与实验；说明角色、方法、交付与验证进度
 - `/method/`：元思维、问题重构对照、实际工具箱，以及合作的起点与交接内容
-- `/notes/`：技术与思考；22 篇文章、双语共 44 个文章页面，包含四条专题阅读路径，以及问题重构、AI 协作、行为解释、模拟验证四个议题
-- `/about/`：经历、工作习惯、公开分享与资质
+- `/notes/`：技术与思考；每种语言 22 篇文章，支持搜索、按议题浏览和折叠阅读路径，区分观点分析、实践反思与待验证的方法
+- `/about/`：经历、工作习惯、专业简介与肖像下载、公开分享与资质
+- `/resources/{zh,en}/`：案例和方法页链接的双语空白模板、研究简报 Skill 示例、CSV 与专业简介
 - `/404.html`：GitHub Pages 的双语错误页
 
 ## Stack
@@ -51,9 +52,12 @@ npm run verify
 ```bash
 npm run audit:browser
 npm run audit:visuals
+npm run audit:optimization
 ```
 
 `audit:visuals` 检查双语桌面/手机的案例推演、键盘切换、图形 ID、议题入口、演讲图片加载与无 JavaScript 降级，并保存截图。服务不在默认端口时设置 `SITE_URL`。
+
+`audit:optimization` 检查联系入口、搜索与空结果、邮箱复制成功/失败、手机阅读位置、减少动态效果、旧锚点与无 JavaScript 阅读。所有检查的本地截图和日志保存在 Git 忽略的目录中。
 
 ## Editing content
 

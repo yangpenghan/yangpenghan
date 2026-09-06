@@ -4,6 +4,7 @@ description: "Beyond the report: reasons for choices, mistakes, and enough instr
 publishDate: 2026-07-28
 updatedDate: 2026-09-05
 locale: en
+kind: practice
 category: solution-engineering
 categoryLabel: Solution Engineering
 readingMinutes: 2

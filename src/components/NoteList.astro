@@ -2,13 +2,15 @@
 import type { CollectionEntry } from 'astro:content';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { useTranslations, type Locale } from '../i18n';
+import { noteKindLabels } from '../i18n/resources';
 
 interface Props {
 	notes: Array<CollectionEntry<'notes'>>;
 	locale: Locale;
+	compact?: boolean;
 }
 
-const { notes, locale } = Astro.props;
+const { notes, locale, compact = false } = Astro.props;
 const t = useTranslations(locale);
 const navUrl = (path: string) => getRelativeLocaleUrl(locale, path.replace(/^\//, ''));
 const formatter = new Intl.DateTimeFormat(locale === 'zh' ? 'zh-CN' : 'en-GB', {
@@ -18,17 +20,18 @@ const formatter = new Intl.DateTimeFormat(locale === 'zh' ? 'zh-CN' : 'en-GB', {
 });
 ---
 
-<ol class="note-list">
+<ol class:list={["note-list", { compact }]}>
 	{
 		notes.map((note) => {
 			const slug = note.id.split('/').slice(1).join('/');
 			return (
-				<li data-reveal>
+				<li data-reveal data-note-search={`${note.data.title} ${note.data.description} ${note.data.categoryLabel}`}>
 					<a href={navUrl(`/notes/${slug}/`)}>
 						<span class="note-meta">
 							<span>{note.data.categoryLabel}</span>
-							<time datetime={note.data.publishDate.toISOString()}>{formatter.format(note.data.publishDate)}</time>
-							<span>{note.data.readingMinutes} {t('notes.minutes')}</span>
+							<time datetime={(note.data.updatedDate ?? note.data.publishDate).toISOString()}>{note.data.updatedDate && `${t('notes.updated')} `}{formatter.format(note.data.updatedDate ?? note.data.publishDate)}</time>
+							<span>{noteKindLabels[note.data.kind][locale]}</span>
+                            <span>{note.data.readingMinutes} {t('notes.minutes')}</span>
 						</span>
 						<strong>{note.data.title}</strong>
 						<span class="note-description">{note.data.description}</span>
@@ -78,7 +81,7 @@ const formatter = new Intl.DateTimeFormat(locale === 'zh' ? 'zh-CN' : 'en-GB', {
 		gap: 0.5rem 0.9rem;
 		color: var(--ink-faint);
 		font-family: var(--font-mono);
-		font-size: 0.66rem;
+		font-size: 0.875rem;
 		letter-spacing: 0.03em;
 		text-transform: uppercase;
 	}
@@ -129,4 +132,13 @@ const formatter = new Intl.DateTimeFormat(locale === 'zh' ? 'zh-CN' : 'en-GB', {
 			border-right: 0;
 		}
 	}
+.compact { grid-template-columns: 1fr; }
+    .compact li { border-right: 0; }
+    .compact a { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: .5rem 1.5rem; padding: 1.25rem .5rem; }
+    .compact .note-meta { grid-column: 1 / -1; font-size: .875rem; }
+    .compact .note-meta > span:first-child { display: none; }
+    .compact strong { font-size: clamp(1.15rem, 1.1rem + .3vw, 1.4rem); line-height: 1.45; text-wrap: pretty; }
+    .compact .note-description { grid-column: 1; }
+    .compact .note-action { grid-column: 2; grid-row: 2; padding: 0; align-self: center; }
+    @media (max-width:48rem) { .compact a { grid-template-columns: minmax(0,1fr); gap: .5rem; } .compact .note-action { display: none; } }
 </style>

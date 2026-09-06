@@ -5,6 +5,7 @@ description: "资深人员反复救火、新项目从头准备。我把研究设
 publishDate: 2024-01-01
 updatedDate: 2026-09-05
 status: operating
+statusText: "持续开展的团队建设"
 year: 2019—现在
 order: 7
 kind: system

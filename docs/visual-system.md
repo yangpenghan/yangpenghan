@@ -22,7 +22,7 @@ Dark mode is a site adaptation, using the upstream white identity assets. `Brand
 
 `public/assets/brand/provenance.json` records the exact upstream revision and SHA-256 of the imported assets. `fonts/technical/sources.json`, `derived.json` and the two OFL files retain upstream font attribution. Full source WOFF2 hashes were checked against upstream `derived.json`.
 
-IBM Plex Sans uses `Will Display`; Noto Sans SC uses `Will Text`. After the 2026-09-06 essay expansion, the Chinese subset is 343,460 bytes (about 335 KiB). The unmodified full Chinese font is a fallback (`Will Text Complete`), downloaded only if newly added text needs characters missing from the subset. Both are served locally. Subsetting changes glyph coverage, not the design of the letters.
+IBM Plex Sans uses `Will Display`; Noto Sans SC uses `Will Text`. After the 2026-09-06 visitor and content optimization, the Chinese subset is 344,076 bytes (about 336 KiB). The unmodified full Chinese font is a fallback (`Will Text Complete`), downloaded only if newly added text needs characters missing from the subset. Both are served locally. Subsetting changes glyph coverage, not the design of the letters.
 
 To refresh the subset after a major content update (requires fontTools with Brotli and `pyftsubset`):
 
@@ -47,8 +47,16 @@ Screenshots and the browser report are stored locally under `artifacts/visual-re
 
 ## Visual storytelling extension · 2026-09-06
 
-The site now uses native SVG relationship diagrams, three distinct case diagrams, a keyboard-operable reframing explorer, tool workflow illustrations, and a linked topic map. These illustrate existing arguments and cases; their geometry does not encode measured distributions. Observation glyphs come from the same pinned upstream revision and are recorded in `provenance.json`.
+The site uses native SVG relationship diagrams, three distinct case diagrams, a keyboard-operable reframing explorer, and tool workflow illustrations. The full explorer and toolbox live on the method page; the home page links to them. The essay index uses compact searchable rows, subject links, and optional reading paths. Narrow screens use readable HTML steps for the case diagrams instead of shrinking SVG text. These illustrate existing arguments and cases; their geometry does not encode measured distributions. Observation glyphs come from the same pinned upstream revision and are recorded in `provenance.json`.
 
 A full-page image of slide 20 from the already published 2020 talk appears with bilingual context and a PDF page link. Its original historical presentation style is retained. Asset provenance is in `public/assets/visuals/provenance.json`; the page-by-page decisions are in `visual-storytelling-audit.md`.
 
 Run `npm run audit:visuals` for the new interaction and visual checks, with `SITE_URL` if the server uses a non-default port.
+
+## Visitor and content optimization · 2026-09-06
+
+[DESIGN.md](../DESIGN.md) records the website design contract, seven visitor groups and page responsibilities.
+
+The site keeps the V2 identity while prioritizing contact, readable prose, a complete essay index and inspectable materials. Blank templates are explicitly separate from historical project evidence. Professional biographies and all new templates have Chinese and English versions. Existing page URLs and meaningful home toolbox/explorer anchors remain usable.
+
+Run `npm run audit:optimization` for contact, copy success/failure, search/empty/reset states, narrow-screen reading, reduced motion, legacy anchors, linked explorer panels and no-JavaScript checks. Download integrity is also covered by the browser audit and resource unit tests.

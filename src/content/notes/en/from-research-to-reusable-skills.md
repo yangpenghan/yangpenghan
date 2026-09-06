@@ -3,6 +3,7 @@ title: "From one study to a reusable skill: retaining the professional method"
 description: "A good answer does not establish a repeatable process. Extracting inputs, search strategy, evidence, judgment, exceptions, and acceptance from research work."
 publishDate: 2026-09-06
 locale: en
+kind: proposal
 category: agentic-ai
 categoryLabel: AI systems & human collaboration
 readingMinutes: 6

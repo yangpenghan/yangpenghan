@@ -4,6 +4,7 @@ description: "BehaviorLens 原型的一项取舍：中间步骤便于复核，�
 publishDate: 2026-08-21
 updatedDate: 2026-09-05
 locale: zh
+kind: practice
 category: behavioral-intelligence
 categoryLabel: 行为智能
 readingMinutes: 2

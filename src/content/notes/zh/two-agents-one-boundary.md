@@ -4,6 +4,7 @@ description: "高频简报和业务分析需要不同上下文；对关键记录
 publishDate: 2026-08-21
 updatedDate: 2026-09-05
 locale: zh
+kind: practice
 category: agentic-ai
 categoryLabel: Agentic AI
 readingMinutes: 2

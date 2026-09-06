@@ -4,6 +4,7 @@ description: "从六城金融 App 研究谈起：先保留动作和情境，再�
 publishDate: 2026-08-10
 updatedDate: 2026-09-05
 locale: zh
+kind: practice
 category: behavioral-intelligence
 categoryLabel: 行为智能
 readingMinutes: 2

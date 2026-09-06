@@ -5,6 +5,7 @@ description: "Video coding takes time and requires context. I designed a three-p
 publishDate: 2026-05-01
 updatedDate: 2026-09-05
 status: prototype
+statusText: "Prototype · Performance validation pending"
 year: 2026—present
 order: 10
 kind: system

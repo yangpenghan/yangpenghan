@@ -10,6 +10,11 @@ const copy = {
  interaction: { icon: 'experiment', label: zh?'交互原型的前台与后台':'PROTOTYPE / TWO LAYERS', title: zh?'先体验，再实现':'Experience before implementation', desc: zh?'前台保留用户体验的发起、执行与结束；后台由人员模拟尚未实现的响应。先验证交互能否被理解，再确定开发方式。':'The frontstage preserves the start, task, and end of the user experience. A researcher simulates unfinished responses backstage. Test understanding before choosing implementation.', foot: zh?'前台观察理解 · 后台模拟响应':'Observe understanding · Simulate the response' },
 } as const;
 const c = copy[kind];
+const steps = {
+ evidence: zh ? [['原始记录', '保留任务与情境'], ['任务与观察', '区分动作和解释'], ['可追溯问题', '每个判断都有出处']] : [['Source records', 'Keep tasks and context'], ['Tasks & observations', 'Separate actions and interpretations'], ['Traceable issues', 'Each finding has a source']],
+ iteration: zh ? [['洞察', '明确要检查的假设'], ['设计 ⇄ 观察', '反馈回到仍可修改的设计'], ['确认', '再检查是否回答了问题']] : [['Insight', 'Define the assumption to examine'], ['Design ⇄ Observe', 'Return feedback while changes are possible'], ['Confirmation', 'Check whether the question was answered']],
+ interaction: zh ? [['前台 · 用户体验', '发起、执行任务、结束'], ['后台 · 人工模拟', '按规则模拟尚未完成的响应'], ['观察与判断', '先检验理解，再讨论开发']] : [['Frontstage · Experience', 'Start, perform the task, end'], ['Backstage · Simulation', 'A person follows response rules'], ['Observe & decide', 'Test understanding before implementation']],
+}[kind];
 ---
 <div class={`case-diagram ${kind}`}>
   <div class="diagram-heading"><span class="diagram-kicker">{c.label}</span><LibraryIcon name={c.icon} /></div>
@@ -51,6 +56,7 @@ const c = copy[kind];
       <text class="micro" x="34" y="172">{zh?'发起 · 执行 · 结束':'START · TASK · END'}</text><text class="micro" x="281" y="246">Wizard-of-Oz</text>
     </>}
   </svg>
+  <ol class="diagram-mobile" aria-label={c.title}>{steps.map(([title, detail]) => <li><strong>{title}</strong><span>{detail}</span></li>)}</ol>
   <p class="diagram-foot"><span>{c.foot}</span><small>{zh?'方法示意':'Conceptual model'}</small></p>
 </div>
 <style>
@@ -64,4 +70,13 @@ svg { display: block; width: 100%; height: auto; margin-block: .5rem; }text { fi
 .layer-guide { stroke: var(--rule-strong); stroke-dasharray: 2 5; fill: none; }.layer-back { fill: var(--paper-deep); stroke: var(--rule-strong); }.layer-front { fill: var(--paper-raised); stroke: var(--rule-strong); }.layer-edge { fill: var(--paper-deep); stroke: var(--rule-strong); stroke-width: .7; }.interaction-route { fill: none; stroke: var(--signal); stroke-width: 2; }.node-halo { fill: var(--signal); opacity: .12; }.simulation-link { fill: none; stroke: var(--signal); stroke-dasharray: 4 4; stroke-width: 1.4; }
 .diagram-foot { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .5rem; margin: 0; border-top: 1px solid var(--rule); padding-top: .85rem; color: var(--ink-soft); font-size: .67rem; line-height: 1.6; }.diagram-foot small { font-size: .6rem; }
 @media(max-width:32rem) { .case-diagram { padding: 1rem .75rem .85rem; } }
+.diagram-mobile { display: none; }
+@media(max-width:48rem) {
+ .case-diagram > svg { display: none; }
+ .diagram-mobile { display: grid; list-style: none; padding: .75rem 0; margin: 0; gap: .75rem; }
+ .diagram-mobile li { position: relative; display: grid; gap: .15rem; padding-left: 1rem; border-left: 2px solid var(--signal); }
+ .diagram-mobile strong { font-size: 1rem; font-weight: 500; line-height: 1.5; }
+ .diagram-mobile span { color: var(--ink-soft); font-size: .875rem; line-height: 1.5; }
+ .diagram-kicker, .diagram-foot, .diagram-foot small { font-size: .875rem; letter-spacing: 0; }
+}
 </style>

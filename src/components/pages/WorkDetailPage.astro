@@ -1,8 +1,9 @@
 ---
 import { getCollection, type CollectionEntry, render } from 'astro:content';
 import { getRelativeLocaleUrl } from 'astro:i18n';
-import BrandIdentity from '../BrandIdentity.astro';
 import ContactCTA from '../ContactCTA.astro';
+import ResourceLinks from '../ResourceLinks.astro';
+import { workResources } from '../../i18n/resources';
 import CaseDiagram from '../visuals/CaseDiagram.astro';
 import PublicSlide from '../visuals/PublicSlide.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
@@ -22,6 +23,7 @@ const statusLabel = entry.data.status === 'prototype'
 	: entry.data.status === 'operating'
 		? t('work.legendOperating')
 		: t('work.legendDelivered');
+const displayStatus = entry.data.statusText ?? statusLabel;
 const allProjects = (await getCollection('work'))
 	.filter((project) => project.data.locale === locale)
 	.sort((a, b) => a.data.order - b.data.order);
@@ -60,32 +62,27 @@ const structuredData: Record<string, unknown> = {
 			<div class="case-title-grid">
 				<div data-reveal>
 					<div class="case-meta">
-						<span>{statusLabel}</span><span>{entry.data.year}</span><span>{entry.data.discipline}</span>
+						<span>{displayStatus}</span><span>{entry.data.year}</span><span>{entry.data.discipline}</span>
 					</div>
 					<h1>{entry.data.title}</h1>
 				</div>
 				<div class="case-dek" data-reveal>
 					<p>{entry.data.description}</p>
+                    <p class="role-summary">{t('workDetail.role')} · {entry.data.role}</p>
+                    {workResources[entrySlug]?.length > 0 && <a class="text-link internal" href="#materials">{locale === 'zh' ? '取用方法模板' : 'Get the method templates'}</a>}
 					{entry.data.externalUrl && <a class="text-link" href={entry.data.externalUrl}>{t('workDetail.sourceLabel')}</a>}
 					{entry.data.sourceUrl && <a class="text-link" href={entry.data.sourceUrl}>{t('workDetail.sourceCodeLabel')}</a>}
 				</div>
 			</div>
 		</header>
 
-		<section class="case-facts section-rule">
-			<div class="page-shell facts-grid">
-				<div data-reveal><small>{t('workDetail.role')}</small><p>{entry.data.role}</p></div>
-				<div data-reveal><small>{t('workDetail.outcome')}</small><p>{entry.data.outcome}</p></div>
-				<div data-reveal><small>{t('workDetail.tagsLabel')}</small><p>{entry.data.tags.join(' · ')}</p></div>
-			</div>
-		</section>
-
 		<div class="case-body page-shell">
 			<aside class="case-aside" data-reveal>
-				<div class="case-mark" aria-hidden="true">
-					<span>{String(entry.data.order).padStart(2, '0')}</span>
-					<strong><BrandIdentity /></strong>
-				</div>
+                <div class="facts-grid">
+                    <div><small>{t('workDetail.role')}</small><p>{entry.data.role}</p></div>
+                    <div><small>{t('workDetail.outcome')}</small><p>{entry.data.outcome}</p></div>
+                    <div><small>{t('workDetail.tagsLabel')}</small><p>{entry.data.tags.join(' · ')}</p></div>
+                </div>
 				{entry.data.confidentiality && (
 					<div class="confidentiality">
 						<small>{t('workDetail.note')}</small>
@@ -94,10 +91,12 @@ const structuredData: Record<string, unknown> = {
 				)}
 			</aside>
 			<article class="prose" data-reveal>
-				{diagramKind && <div class="inline-visual"><CaseDiagram {locale} kind={diagramKind} id={`detail-${entrySlug}`} /></div>}
 				<Content />
+                {diagramKind && <div class="inline-visual"><CaseDiagram {locale} kind={diagramKind} id={`detail-${entrySlug}`} /></div>}
 			</article>
 		</div>
+
+        {workResources[entrySlug]?.length > 0 && <div class="page-shell"><ResourceLinks {locale} ids={workResources[entrySlug]} /></div>}
 
 		{entrySlug === 'medical-devices' && <section class="source-section page-shell section-rule" aria-label={locale === 'zh' ? '公开演讲材料' : 'Public presentation material'}><PublicSlide {locale} /></section>}
 
@@ -127,10 +126,11 @@ const structuredData: Record<string, unknown> = {
 </BaseLayout>
 
 <style>
- .inline-visual { margin-bottom: 3rem; }
+ .inline-visual { margin-top: 3rem; }
+ .role-summary { font-size: .875rem; }
  .source-section { padding-block: 4rem; }
 	.case-hero {
-		padding-block: clamp(3rem, 7vw, 6rem) clamp(5rem, 11vw, 10rem);
+		padding-block: clamp(1.5rem, 3vw, 2.5rem) clamp(2rem, 4vw, 3rem);
 	}
 
 	.back-link {
@@ -150,9 +150,9 @@ const structuredData: Record<string, unknown> = {
 	.case-title-grid {
 		display: grid;
 		grid-template-columns: minmax(0, 1.5fr) minmax(18rem, 0.5fr);
-		gap: clamp(3rem, 8vw, 8rem);
+		gap: clamp(1.5rem, 4vw, 4rem);
 		align-items: end;
-		margin-top: clamp(4rem, 9vw, 8rem);
+		margin-top: 1.5rem;
 	}
 
 	.case-meta {
@@ -162,7 +162,7 @@ const structuredData: Record<string, unknown> = {
 		margin-bottom: 1.75rem;
 		color: var(--ink-faint);
 		font-family: var(--font-mono);
-		font-size: 0.68rem;
+		font-size: 0.875rem;
 		letter-spacing: 0.05em;
 		text-transform: uppercase;
 	}
@@ -172,36 +172,32 @@ const structuredData: Record<string, unknown> = {
 	}
 
 	h1 {
-		max-width: 14ch;
+		max-width: 24ch;
 		overflow-wrap: anywhere;
 		font-family: var(--font-display);
-		font-size: var(--step-5);
+		font-size: clamp(2.1rem,3.5vw,3.5rem);
 		line-height: 1.15;
 	}
 
 	.case-dek {
 		display: grid;
 		justify-items: start;
-		gap: 2rem;
+		gap: 1rem;
 		color: var(--ink-soft);
-		font-size: var(--step-1);
-	}
-
-	.case-facts {
-		padding-block: 2.5rem;
-		background: var(--paper-deep);
+		font-size: var(--step-0);
 	}
 
 	.facts-grid {
 		display: grid;
-		grid-template-columns: repeat(3, minmax(0, 1fr));
+		grid-template-columns: 1fr;
+        gap: 1.5rem;
 	}
 
 	.facts-grid > div {
 		display: grid;
 		gap: 0.85rem;
-		padding-inline: clamp(1rem, 3vw, 2.5rem);
-		border-right: 1px solid var(--rule);
+		padding-bottom: 1rem;
+		border-bottom: 1px solid var(--rule);
 	}
 
 	.facts-grid > div:first-child { padding-left: 0; }
@@ -211,21 +207,21 @@ const structuredData: Record<string, unknown> = {
 	.confidentiality small {
 		color: var(--signal-dark);
 		font-family: var(--font-mono);
-		font-size: 0.65rem;
+		font-size: 0.875rem;
 		letter-spacing: 0.05em;
 		text-transform: uppercase;
 	}
 
 	.facts-grid p {
-		font-size: 0.84rem;
+		font-size: 0.95rem;
 		line-height: 1.55;
 	}
 
 	.case-body {
 		display: grid;
-		grid-template-columns: minmax(12rem, 0.42fr) minmax(0, 1fr) minmax(8rem, 0.2fr);
+		grid-template-columns: minmax(12rem, .35fr) minmax(0, 1fr);
 		gap: clamp(2rem, 6vw, 6rem);
-		padding-block: clamp(5rem, 11vw, 10rem);
+		padding-block: 2rem 3rem;
 	}
 
 	.case-aside {
@@ -234,44 +230,13 @@ const structuredData: Record<string, unknown> = {
 		gap: 3rem;
 	}
 
-	.case-mark {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		width: 8rem;
-		aspect-ratio: 1;
-		border: 1px solid var(--rule-strong);
-		background:
-			linear-gradient(90deg, transparent calc(50% - 0.5px), var(--rule) 0, var(--rule) calc(50% + 0.5px), transparent 0),
-			linear-gradient(transparent calc(50% - 0.5px), var(--rule) 0, var(--rule) calc(50% + 0.5px), transparent 0),
-			var(--paper-raised);
-	}
-
-	.case-mark span,
-	.case-mark strong {
-		display: grid;
-		place-items: center;
-		font-family: var(--font-mono);
-	}
-
-	.case-mark span {
-		color: var(--signal-dark);
-		font-size: 0.72rem;
-	}
-
-	.case-mark strong {
-		grid-column: 2;
-		grid-row: 2;
-		font-size: 0.82rem;
-  padding: .65rem;
-	}
-
 	.confidentiality {
 		display: grid;
 		gap: 0.8rem;
 		padding-top: 1rem;
 		border-top: 1px solid var(--rule-strong);
 		color: var(--ink-soft);
-		font-size: 0.72rem;
+		font-size: 0.875rem;
 		line-height: 1.55;
 	}
 
@@ -296,7 +261,7 @@ const structuredData: Record<string, unknown> = {
 	.related-grid {
 		display: grid;
 		grid-template-columns: minmax(14rem, 0.45fr) minmax(0, 1fr);
-		gap: clamp(3rem, 8vw, 8rem);
+		gap: clamp(1.5rem, 4vw, 4rem);
 	}
 
 	.related-grid h2 {
@@ -344,7 +309,7 @@ const structuredData: Record<string, unknown> = {
 	.next-project a > span:first-child {
 		color: var(--signal-dark);
 		font-family: var(--font-mono);
-		font-size: 0.68rem;
+		font-size: 0.875rem;
 		letter-spacing: 0.05em;
 		text-transform: uppercase;
 	}
@@ -374,6 +339,7 @@ const structuredData: Record<string, unknown> = {
 		}
 
 		.case-aside {
+            order: 2;
 			display: grid;
 			grid-template-columns: auto 1fr;
 			align-items: start;
@@ -400,7 +366,7 @@ const structuredData: Record<string, unknown> = {
 
 	@media (max-width: 42rem) {
 		h1 {
-			font-size: clamp(3.2rem, 15vw, 5.3rem);
+			font-size: clamp(1.9rem, 7vw, 2.7rem);
 		}
 
 		.case-aside {

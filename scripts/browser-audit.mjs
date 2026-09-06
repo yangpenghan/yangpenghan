@@ -62,6 +62,22 @@ while (queue.length > 0) {
 			}
 			continue;
 		}
+		if (/\.(md|csv|jpg)$/i.test(candidate.pathname)) {
+			if (!checkedDocuments.has(candidate.href)) {
+				checkedDocuments.add(candidate.href);
+				const document = await crawlContext.request.get(candidate.href);
+				assert.equal(document.status(), 200, `Download must load: ${candidate.href}`);
+				assert.ok(
+					!document.headers()['content-type']?.includes('text/html'),
+					'Download must not be an HTML fallback',
+				);
+				const body = await document.body();
+				assert.ok(body.length > 0, 'Download must not be empty');
+				if (candidate.pathname.endsWith('.jpg')) assert.equal(body.subarray(0, 2).toString('hex'), 'ffd8');
+				else assert.ok(!body.toString().trimStart().toLowerCase().startsWith('<!doctype html'));
+			}
+			continue;
+		}
 		if (fragment) {
 			fragmentTargets.push({ from: url, to: candidate.href, id: decodeURIComponent(fragment.slice(1)) });
 		}

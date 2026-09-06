@@ -28,11 +28,12 @@ const studies = projects.filter((project) => !project.data.featured && !experime
 				<h1>{t('work.title')}</h1>
 				<div>
 					<p>{t('work.intro')}</p>
-					<ul class="legend" aria-label="Project status legend">
+					<ul class="legend" aria-label={locale === 'zh' ? '项目状态说明' : 'Project status legend'}>
 						<li>{t('work.legendDelivered')}</li>
 						<li>{t('work.legendOperating')}</li>
 						<li>{t('work.legendPrototype')}</li>
 					</ul>
+                    <nav class="work-jumps" aria-label={locale === 'zh' ? '案例分类' : 'Case categories'}><a href="#systems-title">{locale === 'zh' ? '精选案例' : 'Selected cases'}</a><a href="#studies-title">{locale === 'zh' ? '更多研究' : 'More studies'}</a><a href="#experiments-title">{locale === 'zh' ? 'AI 与工具实验' : 'AI & tool experiments'}</a></nav>
 				</div>
 			</div>
 		</header>
@@ -66,21 +67,21 @@ const studies = projects.filter((project) => !project.data.featured && !experime
 
 <style>
 	.archive-hero {
-		padding-block: clamp(5rem, 11vw, 10rem) clamp(4rem, 9vw, 8rem);
+		padding-block: clamp(2.5rem, 5vw, 4.5rem) 3rem;
 	}
 
 	.archive-grid {
 		display: grid;
 		grid-template-columns: minmax(0, 1.5fr) minmax(18rem, 0.5fr);
-		gap: clamp(3rem, 8vw, 8rem);
+		gap: clamp(2rem, 5vw, 5rem);
 		align-items: end;
-		margin-top: clamp(3rem, 7vw, 6rem);
+		margin-top: 1.5rem;
 	}
 
 	h1 {
 		max-width: 13ch;
 		font-family: var(--font-display);
-		font-size: var(--step-5);
+		font-size: clamp(2.3rem, 4vw, 4rem);
 		line-height: 1.15;
 	}
 
@@ -102,7 +103,7 @@ const studies = projects.filter((project) => !project.data.featured && !experime
 		align-items: center;
 		gap: 0.6rem;
 		font-family: var(--font-mono);
-		font-size: 0.65rem;
+		font-size: 0.875rem;
 		letter-spacing: 0.05em;
 	}
 
@@ -114,12 +115,12 @@ const studies = projects.filter((project) => !project.data.featured && !experime
 	}
 
 	.archive-list {
-		padding-bottom: clamp(5rem, 10vw, 9rem);
+		padding-bottom: 4rem;
 	}
 
 	.archive-list.studies {
 		padding-top: clamp(2rem, 5vw, 4rem);
-		padding-bottom: clamp(7rem, 13vw, 12rem);
+		padding-bottom: 4rem;
 	}
 
 	.archive-section-heading {
@@ -127,7 +128,7 @@ const studies = projects.filter((project) => !project.data.featured && !experime
 		grid-template-columns: minmax(16rem, 0.55fr) minmax(0, 1.45fr);
 		gap: 3rem;
 		align-items: end;
-		margin-bottom: clamp(2.5rem, 6vw, 5rem);
+		margin-bottom: 2rem;
 	}
 
 	.archive-section-heading h2 {
@@ -144,7 +145,8 @@ const studies = projects.filter((project) => !project.data.featured && !experime
 		}
 
 		h1 {
-			font-size: clamp(3.4rem, 16vw, 5.5rem);
+			font-size: clamp(2.3rem, 9vw, 3.5rem);
 		}
 	}
+.work-jumps { display: flex; flex-wrap: wrap; gap: .25rem 1rem; } .work-jumps a { display: inline-flex; align-items: center; min-height: 2.75rem; color: var(--signal-dark); font-size: .875rem; text-underline-offset: .25em; }
 </style>

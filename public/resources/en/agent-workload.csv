@@ -1,0 +1,1 @@
+task_id,task_description,acceptance_criteria,baseline_human_minutes,setup_human_minutes,supervision_human_minutes,correction_human_minutes,recovery_human_minutes,agent_elapsed_minutes,interruptions_count,accepted,notes

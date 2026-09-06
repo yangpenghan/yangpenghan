@@ -49,7 +49,7 @@ const zh = {
 	'index.heroTitleA': '所有问题',
 	'index.heroTitleB': '都是技术性问题。',
 	'index.heroIntro':
-		'我说的技术，是把一件难事拆清楚、重新组织、找到办法的能力。目标是什么？卡在哪个条件？哪些关系可以改变？我从这些地方重新定义问题，再用研究、实验、代码或 AI，把办法做出来，检验它是否有用。',
+		'我负责 Noldus 中国的咨询与业务拓展，把研究用于产品决策，也探索 AI 怎样减少专业工作中的重复劳动。对我来说，“技术”是把难事拆清楚、做出办法，再检验它是否有用。',
 	'index.heroRole': 'Noldus 中国咨询与业务拓展负责人',
 	'index.heroWork': '看我是怎样理解这句话的',
 	'index.heroContact': '看具体问题如何被重构',
@@ -57,7 +57,7 @@ const zh = {
 	'index.workEyebrow': '把主张放进真实工作',
 	'index.workTitle': '换一个问题，\n才能找到下一步。',
 	'index.workIntro':
-		'把“整理大量记录”改问成“什么观察能支持改动”；把“完成测试”改问成“何时测试还有机会改”；把“等功能开发好”改问成“现在能模拟什么”。下面三个案例，展示这些判断怎样落到具体工作里。',
+		'三个案例分别展示：怎样组织产品决策的证据、把验证提前，以及在功能完成前模拟交互。每篇说明我的职责、工作过程与结果边界。',
 	'index.workAll': '查看全部案例与实验',
 	'index.methodEyebrow': '元思维 / 我怎样检查问题本身',
 	'index.methodTitle': '先检查题目，\n再寻找解法。',
@@ -77,7 +77,7 @@ const zh = {
 	'index.notesTitle': '我为什么这样想，\n又如何继续追问。',
 	'index.notesAll': '浏览技术与思考',
 	'index.talksEyebrow': '公开分享',
-	'index.talkSlides': '查看幻灯片',
+	'index.talkSlides': '查看幻灯片（PDF）',
 	'index.talksTitle': '公开分享过的问题。',
 	'index.talk1Year': '2018',
 	'index.talk1Venue': '第六届中国用户体验峰会',
@@ -105,7 +105,7 @@ const zh = {
 	'work.intro':
 		'我怎样从原来的提问找到一个能动手的切口？每个案例先交代重构的问题，再展开方法、个人贡献与结果。先看三个代表案例，再按你的议题深入；日常 AI 系统和待验证的原型在后半部分。',
 	'work.legendDelivered': 'DELIVERED · 已交付',
-	'work.legendOperating': 'OPERATING · 持续运行',
+	'work.legendOperating': 'ONGOING · 持续实践',
 	'work.legendPrototype': 'PROTOTYPE · 原型',
 	'work.read': '阅读案例',
 	'work.systemsEyebrow': '从这里开始',
@@ -158,9 +158,9 @@ const zh = {
 	'about.metaDesc':
 		'杨朋翰的经历与工作习惯：心理学、四年教学、一线用户研究、咨询团队，以及自己动手做工具的实践。',
 	'about.eyebrow': '关于我',
-	'about.title': '我是杨朋翰。\n喜欢把没想清楚的事弄明白。',
+	'about.title': '我是杨朋翰。\n研究人，也动手做工具。',
 	'about.intro':
-		'我学心理学，做过四年教师，2015 年起从事行为研究与解决方案工作，目前负责 Noldus 中国的咨询与业务拓展。我相信，所有问题都值得从技术角度重新拆解：先看目标、条件和人与系统的关系，再决定该学什么、找谁、用什么工具。独立思考，对我来说也包括检查自己的第一反应。',
+		'我学心理学，做过四年教师，2015 年起从事行为研究与解决方案工作，目前负责 Noldus 中国咨询与业务拓展。我习惯先看人实际怎样做，再检查自己的解释；也自己写代码、做工具，尝试改进反复卡住的工作。',
 	'about.storyTitle': '这些经历改变了我问问题的方式。',
 	'about.story1Year': '2007—2015',
 	'about.story1Title': '教得明白，学生也未必用得上',
@@ -275,7 +275,7 @@ const en: Record<UIKey, string> = {
 	'index.heroTitleA': 'Every problem',
 	'index.heroTitleB': 'is a technical problem.',
 	'index.heroIntro':
-		'By technical, I mean the ability to take a difficulty apart, reorganize it, and find a workable approach. What is the goal? Which conditions get in the way? What relationships can change? I reframe the question, then use research, experiments, code, or AI to build and test a response.',
+		'I lead Consulting and Business Development at Noldus China, use research to inform product decisions, and explore how AI can reduce repetitive professional work. By technical, I mean taking a difficulty apart, building an approach, and checking whether it helps.',
 	'index.heroRole': 'Head of Consulting & Business Development, Noldus China',
 	'index.heroWork': 'Read what I mean',
 	'index.heroContact': 'See the reframing in practice',
@@ -283,7 +283,7 @@ const en: Record<UIKey, string> = {
 	'index.workEyebrow': 'The claim in practice',
 	'index.workTitle': 'A different question.\nA practical next step.',
 	'index.workIntro':
-		'From organizing recordings to finding grounds for a product change. From completing a test to testing while changes are still possible. From waiting for a feature to simulating it now. These three cases show how reframing changes the work.',
+		'Three cases on organizing evidence, testing earlier, and simulating an unfinished interaction. Each explains my role, the work, and the limits of the results.',
 	'index.workAll': 'See all cases and experiments',
 	'index.methodEyebrow': 'Thinking about the question',
 	'index.methodTitle': 'Examine the question\nbefore looking for an answer.',
@@ -304,7 +304,7 @@ const en: Record<UIKey, string> = {
 	'index.notesTitle': 'Why I think this way.\nWhat I question next.',
 	'index.notesAll': 'Explore ideas',
 	'index.talksEyebrow': 'Selected talks',
-	'index.talkSlides': 'View slides',
+	'index.talkSlides': 'View slides (Chinese PDF)',
 	'index.talksTitle': 'Questions I have discussed in public.',
 	'index.talk1Year': '2018',
 	'index.talk1Venue': '6th China User Experience Summit',
@@ -332,7 +332,7 @@ const en: Record<UIKey, string> = {
 	'work.intro':
 		'How did I find a question we could act on? Each case starts with the reframing, then explains the approach, my contribution, and the result. Start with three representative cases; personal AI systems and prototypes follow below.',
 	'work.legendDelivered': 'DELIVERED',
-	'work.legendOperating': 'OPERATING',
+	'work.legendOperating': 'ONGOING PRACTICE',
 	'work.legendPrototype': 'PROTOTYPE',
 	'work.read': 'Read case study',
 	'work.systemsEyebrow': 'Start here',
@@ -385,9 +385,9 @@ const en: Record<UIKey, string> = {
 	'about.metaDesc':
 		'Will Yang’s background and working habits: psychology, four years of teaching, field research, consulting, and building tools.',
 	'about.eyebrow': 'About me',
-	'about.title': 'I’m Will Yang.\nI like figuring things out.',
+	'about.title': 'I’m Will Yang.\nI study people and build tools.',
 	'about.intro':
-		'I studied psychology, taught for four years, and began working in behavioral research and solutions in 2015. I now lead Consulting and Business Development at Noldus China. I believe every problem deserves a technical examination: start with goals, conditions, and the relationships between people and systems, then decide what to learn, whom to involve, and which tools to use. Independent thinking includes questioning my first reaction.',
+		'I studied psychology, taught for four years, and have worked in behavioral research and solutions since 2015. I now lead Consulting and Business Development at Noldus China. I look at what people actually do, question my own explanations, and build tools to improve work that repeatedly gets stuck.',
 	'about.storyTitle': 'Experiences that changed the questions I ask.',
 	'about.story1Year': '2007—2015',
 	'about.story1Title': 'A clear lesson did not always transfer',

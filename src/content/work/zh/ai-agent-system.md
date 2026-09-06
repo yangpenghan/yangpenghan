@@ -5,6 +5,7 @@ description: "用 OpenClaw、编码助手和现有检索工具，处理邮件信
 publishDate: 2026-03-01
 updatedDate: 2026-09-05
 status: operating
+statusText: "个人日常使用 · 持续调整"
 year: 2026—现在
 order: 8
 kind: system

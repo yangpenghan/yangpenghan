@@ -3,7 +3,8 @@ import { getCollection, type CollectionEntry, render } from 'astro:content';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import BrandIdentity from '../BrandIdentity.astro';
 import ContactCTA from '../ContactCTA.astro';
-import ProblemMap from '../visuals/ProblemMap.astro';
+import ResourceLinks from '../ResourceLinks.astro';
+import { noteResources, noteKindLabels } from '../../i18n/resources';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { useTranslations, type Locale } from '../../i18n';
 import { getRelatedNoteSlugs, readingPaths } from '../../i18n/reading-paths';
@@ -69,6 +70,7 @@ const structuredData: Record<string, unknown> = {
 			<div class="note-title" data-reveal>
 				<div class="note-meta">
 					<span>{entry.data.categoryLabel}</span>
+                    <span>{noteKindLabels[entry.data.kind][locale]}</span>
 					<time datetime={entry.data.publishDate.toISOString()}>{formatter.format(entry.data.publishDate)}</time>
 					<span>{entry.data.readingMinutes} {t('notes.minutes')}</span>
 				</div>
@@ -89,7 +91,7 @@ const structuredData: Record<string, unknown> = {
 					<time datetime={modifiedDate.toISOString()}>{formatter.format(modifiedDate)}</time>
 				</div>
 				{contents.length >= 3 && (
-					<details class="note-toc" open>
+					<details class="note-toc">
 						<summary>{t('notes.contents')}</summary>
 						<nav aria-label={t('notes.contents')}>
 							<ol>{contents.map((heading) => <li><a href={`#${heading.slug}`}>{heading.text}</a></li>)}</ol>
@@ -98,10 +100,10 @@ const structuredData: Record<string, unknown> = {
 				)}
 			</aside>
 			<article class="prose" data-reveal>
-				{entry.id.endsWith('/every-problem-is-technical') && <div class="argument-visual"><ProblemMap {locale} /></div>}
 				<Content />
 			</article>
 		</div>
+        {noteResources[currentSlug]?.length > 0 && <div class="page-shell"><ResourceLinks {locale} ids={noteResources[currentSlug]} /></div>}
 		{readingPath && relatedNotes.length > 1 && (
 			<section class="related-ideas page-shell" aria-labelledby="related-ideas-title">
 				<p class="eyebrow">{t('notes.relatedIdeas')}</p>
@@ -136,12 +138,18 @@ const structuredData: Record<string, unknown> = {
 	<ContactCTA {locale} />
 </BaseLayout>
 
+<script>
+    // Native disclosure stays usable without JS; wide screens can spare an open contents list.
+    for (const toc of document.querySelectorAll<HTMLDetailsElement>('.note-toc')) {
+        toc.open = window.matchMedia('(min-width: 56.01rem)').matches;
+    }
+</script>
 <style>
 	.note-sidebar { position: sticky; top: calc(var(--header-height) + 2rem); align-self: start; max-height: calc(100dvh - var(--header-height) - 4rem); overflow-y: auto; padding: .3rem; }
 	.note-toc { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--rule); }
-	.note-toc summary { cursor: pointer; color: var(--ink); font-weight: 650; }
+	.note-toc summary { min-height: 2.75rem; padding-block: .5rem; cursor: pointer; color: var(--ink); font-weight: 650; }
 	.note-toc ol { padding-left: 1.25rem; margin-top: 1rem; display: grid; gap: .75rem; }
-	.note-toc a { text-decoration: none; display: block; overflow-wrap: anywhere; }
+	.note-toc a { text-decoration: none; display: block; min-height: 2.5rem; padding-block: .4rem; overflow-wrap: anywhere; }
 	.note-toc a:hover { color: var(--signal-dark); text-decoration: underline; text-underline-offset: .2em; }
 	.related-ideas { padding-bottom: clamp(3rem, 7vw, 5rem); }
 	.related-ideas h2 { font-family: var(--font-display); font-size: var(--step-2); line-height: 1.3; margin-block: 1rem; }
@@ -150,7 +158,7 @@ const structuredData: Record<string, unknown> = {
 	.related-ideas li a { color: var(--ink); text-underline-offset: .2em; }
  .argument-visual { max-width: 32rem; margin: 0 auto 3rem; }
 	.note-hero {
-		padding-block: clamp(3rem, 7vw, 6rem) clamp(5rem, 11vw, 10rem);
+		padding-block: clamp(1.5rem, 3vw, 2.5rem) clamp(2rem, 4vw, 3rem);
 	}
 
 	.back-link {
@@ -167,7 +175,7 @@ const structuredData: Record<string, unknown> = {
 
 	.note-title {
 		width: min(100%, 68rem);
-		margin-top: clamp(4rem, 9vw, 8rem);
+		margin-top: 1.5rem;
 		margin-inline: auto;
 	}
 
@@ -175,10 +183,10 @@ const structuredData: Record<string, unknown> = {
 		display: flex;
 		flex-wrap: wrap;
 		gap: 0.6rem 1.2rem;
-		margin-bottom: 2rem;
+		margin-bottom: 1rem;
 		color: var(--ink-faint);
 		font-family: var(--font-mono);
-		font-size: 0.68rem;
+		font-size: 0.875rem;
 		letter-spacing: 0.04em;
 		text-transform: uppercase;
 	}
@@ -188,15 +196,15 @@ const structuredData: Record<string, unknown> = {
 	h1 {
 		max-width: 24ch;
 		font-family: var(--font-display);
-		font-size: clamp(2.8rem, 5.2vw, 4.9rem);
+		font-size: clamp(2rem, 3.6vw, 3.5rem);
 		line-height: 1.15;
 	}
 
 	.note-title > p {
 		max-width: 44rem;
-		margin-top: 2.5rem;
+		margin-top: 1.25rem;
 		color: var(--ink-soft);
-		font-size: var(--step-1);
+		font-size: var(--step-0);
 	}
 
 	.note-body {
@@ -204,7 +212,7 @@ const structuredData: Record<string, unknown> = {
 		grid-template-columns: minmax(10rem, 14rem) minmax(0, 48rem);
 		justify-content: center;
 		gap: clamp(2rem, 6vw, 6rem);
-		padding-block: clamp(5rem, 11vw, 10rem);
+		padding-block: clamp(2rem, 4vw, 3rem);
 	}
 
 	.note-body aside {
@@ -212,7 +220,7 @@ const structuredData: Record<string, unknown> = {
 		align-content: start;
 		gap: 1rem;
 		color: var(--ink-soft);
-		font-size: 0.72rem;
+		font-size: 0.875rem;
 		line-height: 1.5;
 	}
 
@@ -224,7 +232,7 @@ const structuredData: Record<string, unknown> = {
 		padding: .2rem;
 		color: var(--ink);
 		font-family: var(--font-mono);
-		font-size: 0.72rem;
+		font-size: 0.875rem;
 		font-weight: 700;
 	}
 
@@ -237,7 +245,7 @@ const structuredData: Record<string, unknown> = {
 		padding-top: 1rem;
 		border-top: 1px solid var(--rule);
 		font-family: var(--font-mono);
-		font-size: 0.62rem;
+		font-size: 0.875rem;
 		text-transform: uppercase;
 	}
 
@@ -292,7 +300,7 @@ const structuredData: Record<string, unknown> = {
 	.next-note a > span:first-child {
 		color: var(--signal-dark);
 		font-family: var(--font-mono);
-		font-size: 0.68rem;
+		font-size: 0.875rem;
 		letter-spacing: 0.05em;
 		text-transform: uppercase;
 	}
@@ -313,18 +321,20 @@ const structuredData: Record<string, unknown> = {
 	.next-note a:hover > span:last-child { transform: translateX(0.5rem); }
 
 	@media (max-width: 56rem) {
-		.note-body { grid-template-columns: 1fr; }
+		.note-body { grid-template-columns: 1fr; gap: 1.25rem; padding-top: 1.25rem; }
 		.note-sidebar { position: static; max-height: none; overflow: visible; }
 		.note-toc { grid-column: 1 / -1; }
 		.note-body aside { grid-template-columns: auto 1fr; }
-		.update { grid-column: 1 / -1; }
+		.update { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem; border: 0; padding: 0; margin: 0; }
+        .note-toc { margin: 0; padding: 0; }
+        .note-body aside { gap: .5rem 1rem; }
 		.related-work a { grid-template-columns: minmax(0, 1fr) auto; }
 		.related-work a > span:first-child,
 		.related-work p { grid-column: 1 / -1; }
 	}
 
 	@media (max-width: 42rem) {
-		h1 { font-size: clamp(2.1rem, 9vw, 3.5rem); }
+		h1 { font-size: clamp(1.9rem, 7vw, 2.7rem); }
 		.next-note a { grid-template-columns: minmax(0, 1fr) auto; }
 		.next-note a > span:first-child { grid-column: 1 / -1; }
 	}

@@ -4,6 +4,7 @@ description: "A tradeoff in the BehaviorLens prototype: intermediate steps aid r
 publishDate: 2026-08-21
 updatedDate: 2026-09-05
 locale: en
+kind: practice
 category: behavioral-intelligence
 categoryLabel: Behavioral intelligence
 readingMinutes: 2

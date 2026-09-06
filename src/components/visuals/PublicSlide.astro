@@ -6,11 +6,11 @@ const zh=locale==='zh';
 const base=import.meta.env.BASE_URL;
 ---
 <figure class="public-slide">
-  <a class="slide-preview" href={`${base}talks/2020-medical-device-hf-safety.pdf#page=20`} aria-label={zh?'打开 2020 年演讲第 20 页原文（PDF）':'Open page 20 of the 2020 talk (PDF)'}>
+  <a class="slide-preview" href={`${base}talks/2020-medical-device-hf-safety.pdf#page=20`} aria-label={zh?'打开 2020 年演讲第 20 页原文（PDF）':'Open page 20 of the 2020 talk (Chinese PDF)'}>
     <img src={`${base}assets/visuals/human-factors-process-2020.png`} width="1440" height="810" loading="lazy" decoding="async" alt={zh?'公开演讲原页：需求分析、设计、实现、验证与确认之间的迭代关系，分为洞察、迭代和确认三个阶段。':'Original Chinese presentation slide showing requirements, design, implementation, verification, and confirmation within insight, iteration, and confirmation stages.'} />
-    <span>{zh?'查看原文 · 第 20 页':'View source · Page 20'} ↗</span>
+    <span>{zh?'查看原文 · 第 20 页':'View Chinese PDF · Page 20'} ↗</span>
   </a>
-  <figcaption><span class="eyebrow">{zh?'来自我的公开演讲 / 2020':'From my public talk / 2020'}</span><h3>{zh?'把研究放回开发过程。':'Place research within development.'}</h3><p>{zh?'这张演讲原页把洞察、迭代和确认放在同一条过程中。它说明我为什么关心“什么时候检查”：观察要有机会影响后面的设计。':'This original slide connects insight, iteration, and confirmation. It explains my interest in when a check happens: observations need a chance to shape the design that follows.'}</p><small>{zh?'《医疗器械人因工程中的安全考量》· 杨朋翰 · 历史演讲材料':'Safety considerations in medical-device human factors · Will Yang · Historical presentation'}</small></figcaption>
+  <figcaption><span class="eyebrow">{zh?'来自我的公开演讲 / 2020':'From my public talk / 2020'}</span><h3>{zh?'把研究放回开发过程。':'Place research within development.'}</h3><p>{zh?'这张演讲原页把洞察、迭代和确认放在同一条过程中。它说明我为什么关心“什么时候检查”：观察要有机会影响后面的设计。':'This original slide connects insight, iteration, and confirmation. It explains my interest in when a check happens: observations need a chance to shape the design that follows.'}</p><small>{zh?'《医疗器械人因工程中的安全考量》· 杨朋翰 · 历史演讲材料':'Safety considerations in medical-device human factors · Will Yang · Historical presentation · Original in Chinese'}</small></figcaption>
 </figure>
 <style>
 .public-slide { margin: 0; display: grid; grid-template-columns: minmax(0,1.3fr) minmax(0,.7fr); gap: clamp(1.5rem,4vw,4rem); align-items: center; }

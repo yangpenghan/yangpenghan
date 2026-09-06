@@ -5,6 +5,7 @@ description: "Experienced staff repeatedly had to start from scratch. I brought 
 publishDate: 2024-01-01
 updatedDate: 2026-09-05
 status: operating
+statusText: "Ongoing team development"
 year: 2019—present
 order: 7
 kind: system

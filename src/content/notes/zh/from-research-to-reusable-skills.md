@@ -3,6 +3,7 @@ title: "从一次研究到一个 Skill：把专业方法留下来"
 description: "一次好答案不能说明流程可重复。用研究简报这个例子，拆出输入、检索策略、证据记录、判断节点、异常路径与质量验收。"
 publishDate: 2026-09-06
 locale: zh
+kind: proposal
 category: agentic-ai
 categoryLabel: AI 系统与人机协作
 readingMinutes: 7

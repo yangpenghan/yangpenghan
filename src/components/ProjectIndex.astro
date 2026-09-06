@@ -34,7 +34,7 @@ const statusLabel = (status: CollectionEntry<'work'>['data']['status']) => {
 						<span class="project-number" aria-hidden="true">{String(project.data.order).padStart(2, '0')}</span>
 						<span class="project-main">
 							<span class="project-meta">
-								<span>{statusLabel(project.data.status)}</span>
+								<span>{project.data.statusText ?? statusLabel(project.data.status)}</span>
 								<span>{project.data.year}</span>
 								<span>{project.data.discipline}</span>
 								{project.data.externalUrl && (
@@ -76,13 +76,10 @@ const statusLabel = (status: CollectionEntry<'work'>['data']['status']) => {
 		align-items: start;
 		padding-block: clamp(2rem, 4vw, 3.5rem);
 		text-decoration: none;
-		transition:
-			background var(--duration) ease,
-			padding-inline var(--duration) var(--ease-out);
+		transition: background var(--duration) ease;
 	}
 
 	.project-index a:hover {
-		padding-inline: 1rem;
 		background: var(--paper-raised);
 	}
 
@@ -90,7 +87,7 @@ const statusLabel = (status: CollectionEntry<'work'>['data']['status']) => {
 	.project-meta,
 	.project-outcome small {
 		font-family: var(--font-mono);
-		font-size: 0.68rem;
+		font-size: 0.875rem;
 		letter-spacing: 0.04em;
 		text-transform: uppercase;
 	}
@@ -127,7 +124,7 @@ const statusLabel = (status: CollectionEntry<'work'>['data']['status']) => {
 		font-size: var(--step-2);
 		font-weight: 600;
 		letter-spacing: -0.025em;
-		line-height: 1.08;
+		line-height: 1.3;
 		text-wrap: balance;
 	}
 
@@ -188,4 +185,5 @@ const statusLabel = (status: CollectionEntry<'work'>['data']['status']) => {
  .illustrated .project-number { display: none; }
  @media(min-width: 60rem) { .illustrated li:nth-child(even) .project-visual { grid-column: 2; }.illustrated li:nth-child(even) :is(.project-main,.project-outcome,.project-arrow) { grid-column: 1; } }
  @media(max-width: 48rem) { .project-index.illustrated a { grid-template-columns: minmax(0,1fr); gap: 1.5rem; }.illustrated .project-visual, .illustrated .project-main, .illustrated .project-outcome, .illustrated .project-arrow { grid-column: 1; grid-row: auto; } }
+@media(max-width:48rem) { .illustrated .project-main { grid-row: 1; } .illustrated .project-visual { grid-row: 2; } .illustrated .project-outcome { grid-row: 3; } .illustrated .project-arrow { grid-row: 4; } }
 </style>

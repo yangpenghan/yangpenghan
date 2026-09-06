@@ -5,6 +5,7 @@ description: "把文件导入、时间对齐、分析与报告拆成模块，尝
 publishDate: 2026-03-31
 updatedDate: 2026-09-05
 status: prototype
+statusText: "原型 · 端到端验证尚未完成"
 year: 2026（原型公开，验证暂停推进）
 order: 9
 kind: system

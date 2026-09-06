@@ -39,12 +39,30 @@ const talks = [6, 5, 4, 1, 2, 3].map((index) => ({
 			<div data-reveal>
 				<p class="eyebrow">{t('about.eyebrow')}</p>
 				<h1>{t('about.title')}</h1>
+                <nav class="profile-links" aria-label={locale === 'zh' ? '了解我' : 'Explore my background'}>
+                    <a href="#professional-profile">{locale === 'zh' ? '简介与合作' : 'Profile & collaboration'}</a>
+                    <a href="#story-title">{locale === 'zh' ? '工作经历' : 'Background'}</a>
+                    <a href="#talks-title">{locale === 'zh' ? '演讲与资料' : 'Talks & materials'}</a>
+                </nav>
 			</div>
 			<div class="about-intro" data-reveal>
 				<img src={`${base}assets/portrait.jpg`} alt={t('index.portraitAlt')} width="480" height="620" />
 				<p>{t('about.intro')}</p>
 			</div>
 		</header>
+
+        <section class="professional-profile page-shell" id="professional-profile" aria-labelledby="profile-title">
+            <h2 id="profile-title">{locale === 'zh' ? '给合作方的一页简介' : 'A profile for collaborators'}</h2>
+            <div class="profile-grid">
+                <div><p>{locale === 'zh' ? '我目前负责 Noldus 中国咨询与业务拓展，参与方法设计、关键项目交付与团队能力建设。研究经验涉及金融、包装、汽车、医疗器械与服务机器人；个人工具实践围绕 AI 工作流、知识检索与行为数据处理。' : 'I lead Consulting and Business Development at Noldus China, contributing to method design, key project delivery, and team capability. My research spans finance, packaging, automotive, medical devices, and service robots. My personal tool experiments focus on AI workflows, knowledge retrieval, and behavioral data.'}</p>
+                <p>{locale === 'zh' ? '企业咨询通过 Noldus 开展。案例页分别说明我的职责、团队成果与可公开的范围。' : 'Enterprise consulting is conducted through Noldus. Each case distinguishes my role, collective outcomes, and what can be shared publicly.'}</p></div>
+                <div class="profile-materials">
+                    <a href={`${base}resources/${locale}/will-yang-bio.md`} download>{locale === 'zh' ? '下载专业简介（Markdown）' : 'Download professional bio (Markdown)'}</a>
+                    <a href={`${base}assets/portrait.jpg`} download>{locale === 'zh' ? '下载肖像（JPG）' : 'Download portrait (JPG)'}</a>
+                    <a href="#contact">{locale === 'zh' ? '联系我讨论合作或交流' : 'Contact me about collaboration or a talk'}</a>
+                </div>
+            </div>
+        </section>
 
 		<section class="story section-rule" aria-labelledby="story-title">
 			<div class="page-shell story-grid">
@@ -89,6 +107,11 @@ const talks = [6, 5, 4, 1, 2, 3].map((index) => ({
 			<div class="page-shell">
 				<p class="eyebrow">{t('index.talksEyebrow')}</p>
 				<h2 id="talks-title">{t('index.talksTitle')}</h2>
+                <div class="organizer-note">
+                    <h3>{locale === 'zh' ? '如果你在策划一次交流' : 'If you are organizing a conversation'}</h3>
+                    <p>{locale === 'zh' ? '可以从这三个议题开始：研究怎样及时影响设计、观察怎样变成可追溯的判断、Agent 是否真的减少人工负担。它们分别适合产品与设计团队、研究同行，以及探索 AI 工作方式的团队。' : 'Three starting points: bringing research into design decisions, turning observations into traceable judgments, and testing whether agents reduce human workload. These suit product and design teams, research peers, and teams exploring AI at work, respectively.'}</p>
+                    <p>{locale === 'zh' ? '来信时写明听众、希望讨论的问题与活动时间；形式和范围再一起确定。简介和肖像可从上方下载，以下保留已有公开分享与原始材料。' : 'Include the audience, the question you want to explore, and the event date. We can agree on scope and format from there. Download the bio and portrait above; past public talks and original material follow.'}</p>
+                </div>
 				<div class="talk-evidence"><PublicSlide {locale} /></div>
 				<ol>{talks.map((talk) => (
 					<li><time>{talk.year}</time><div><h3>{talk.topic}</h3><p>{talk.venue}</p>{talk.slides && <a class="text-link" href={talk.slides}>{t('index.talkSlides')}</a>}</div></li>
@@ -130,18 +153,18 @@ const talks = [6, 5, 4, 1, 2, 3].map((index) => ({
  .talk-evidence { margin-block: 3rem; }
 	.about-hero {
 		display: grid;
-		grid-template-columns: minmax(0, 1.5fr) minmax(18rem, 0.5fr);
-		gap: clamp(3rem, 9vw, 9rem);
-		align-items: end;
-		padding-block: clamp(5rem, 11vw, 10rem);
+		grid-template-columns: minmax(0, 1.2fr) minmax(18rem, 0.8fr);
+		gap: clamp(2rem, 5vw, 5rem);
+		align-items: start;
+		padding-block: clamp(2.5rem, 5vw, 4.5rem);
 	}
 
 	.about-hero h1 {
 		max-width: 100%;
-		margin-top: clamp(3rem, 7vw, 6rem);
+		margin-top: 1.5rem;
 		font-family: var(--font-display);
-		font-size: clamp(3rem, 5vw, 5rem);
-		line-height: 1.12;
+		font-size: clamp(2.5rem, 4vw, 4rem);
+		line-height: 1.3;
 		white-space: pre-line;
 	}
 
@@ -162,14 +185,14 @@ const talks = [6, 5, 4, 1, 2, 3].map((index) => ({
 
 	.about-intro p {
 		color: var(--ink-soft);
-		font-size: var(--step-1);
+		font-size: var(--step-0);
 	}
 
 	.story,
 	.practice,
 	.principles,
 	.talks {
-		padding-block: clamp(6rem, 12vw, 11rem);
+		padding-block: clamp(3rem, 6vw, 5rem);
 	}
 
 	.story-grid,
@@ -333,4 +356,16 @@ const talks = [6, 5, 4, 1, 2, 3].map((index) => ({
 			gap: 0.75rem;
 		}
 	}
+.profile-links { display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; margin-top: 1.5rem; }
+    .profile-links a, .profile-materials a { display: inline-flex; align-items: center; min-height: 2.75rem; font-size: .95rem; color: var(--signal-dark); text-underline-offset: .25em; }
+    .professional-profile { padding-block: 2rem 3rem; }
+    .professional-profile h2 { font-size: var(--step-2); margin-bottom: 1.5rem; }
+    .profile-grid { display: grid; grid-template-columns: minmax(0,1.2fr) minmax(0,.8fr); gap: 2rem; border-top: 1px solid var(--rule-strong); padding-top: 1.5rem; }
+    .profile-grid p { max-width: 48rem; color: var(--ink-soft); }
+    .profile-grid p + p { margin-top: 1rem; font-size: .95rem; }
+    .profile-materials { display: flex; flex-direction: column; align-items: start; gap: .5rem; }
+    .organizer-note { max-width: 50rem; margin-top: 2rem; }
+    .organizer-note h3 { font-size: 1.2rem; }
+    .organizer-note p { margin-top: 1rem; color: var(--ink-soft); }
+    @media(max-width:48rem) { .profile-grid { grid-template-columns: 1fr; } }
 </style>

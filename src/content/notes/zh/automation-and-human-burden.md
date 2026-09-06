@@ -3,6 +3,7 @@ title: "需要人一直照看的 Agent，究竟自动化了什么"
 description: "后台运行只是起点。把配置、监督、恢复和注意力中断纳入评价，才能判断自动化是否让使用者真正少操心。"
 publishDate: 2026-09-06
 locale: zh
+kind: proposal
 category: agentic-ai
 categoryLabel: AI 系统与人机协作
 readingMinutes: 7

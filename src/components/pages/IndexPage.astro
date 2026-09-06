@@ -2,10 +2,8 @@
 import { getCollection } from 'astro:content';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import ProblemMap from '../visuals/ProblemMap.astro';
-import ReframeExplorer from '../visuals/ReframeExplorer.astro';
 import ContactCTA from '../ContactCTA.astro';
 import NoteList from '../NoteList.astro';
-import Toolbox from '../Toolbox.astro';
 import ProjectIndex from '../ProjectIndex.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { useTranslations, type Locale } from '../../i18n';
@@ -32,7 +30,7 @@ const notes = (await getCollection('notes'))
 	<main>
 		<section class="hero page-shell" aria-labelledby="hero-title">
 			<div class="hero-copy" data-reveal>
-				<p class="eyebrow">{t('index.eyebrow')}</p>
+				<p class="eyebrow">{locale === 'zh' ? '杨朋翰 · 行为研究 / 人因工程 / AI 工作流' : 'Will Yang · Behavioral research / Human factors / AI workflows'}</p>
 				<h1 id="hero-title">
 					<span>{t('index.heroTitleA')}</span>
 					<span>{t('index.heroTitleB')}</span>
@@ -40,20 +38,30 @@ const notes = (await getCollection('notes'))
 				<div class="hero-intro">
 					<p>{t('index.heroIntro')}</p>
 					<div class="hero-actions">
-						<a class="text-link internal" href={navUrl('/notes/every-problem-is-technical/')}>{t('index.heroWork')}</a>
-						<a class="quiet-link" href="#selected-work-title">{t('index.heroContact')} <span aria-hidden="true">↓</span></a>
+						<a class="text-link internal" href="#selected-work-title">{locale === 'zh' ? '看相关案例' : 'Explore the cases'}</a>
+						<a class="quiet-link" href="#contact">{locale === 'zh' ? '讨论你的问题' : 'Discuss your project'} <span aria-hidden="true">↓</span></a>
 					</div>
 				</div>
 			</div>
 
 			<aside class="identity" aria-label={t('nav.brand')}>
-    <ProblemMap {locale} />
+    <div class="hero-diagram"><ProblemMap {locale} /></div>
     <div class="identity-person">
      <img src={`${base}assets/portrait.jpg`} alt={t('index.portraitAlt')} width="80" height="100" fetchpriority="high" />
      <div><strong>{locale === 'zh' ? '杨朋翰 / Will Yang' : 'Will Yang / 杨朋翰'}</strong><p>{t('index.heroRole')}</p><a href={navUrl('/about/')}>{t('nav.about')} <span aria-hidden="true">↗</span></a></div>
     </div>
    </aside>
 		</section>
+
+        <nav class="visitor-paths page-shell" aria-label={locale === 'zh' ? '按你的问题开始' : 'Start with your question'}>
+            <p>{locale === 'zh' ? '你现在想解决什么？' : 'What are you working on?'}</p>
+            <ul>
+                <li><a href={navUrl('/work/medical-devices/')}>{locale === 'zh' ? '让研究及时影响设计' : 'Bring research into design'}<span aria-hidden="true">→</span></a></li>
+                <li><a href={navUrl('/work/financial-behavior-model/')}>{locale === 'zh' ? '把复杂记录变成决策依据' : 'Turn records into decision evidence'}<span aria-hidden="true">→</span></a></li>
+                <li><a href={navUrl('/work/ai-agent-system/')}>{locale === 'zh' ? '检查 AI 是否真的减少工作' : 'Check whether AI reduces the work'}<span aria-hidden="true">→</span></a></li>
+                <li><a href={`${navUrl('/about/')}#professional-profile`}>{locale === 'zh' ? '了解经历或邀请交流' : 'Explore my background or invite a talk'}<span aria-hidden="true">→</span></a></li>
+            </ul>
+        </nav>
 
 		<section class="work-section page-shell" aria-labelledby="selected-work-title">
 			<header class="section-heading">
@@ -69,18 +77,24 @@ const notes = (await getCollection('notes'))
 			<ProjectIndex {projects} {locale} illustrated />
 		</section>
 
-		<section class="method-section section-rule" aria-labelledby="method-title">
+		<section class="method-section section-rule" id="toolbox" aria-labelledby="method-title">
 			<div class="page-shell">
 				<header class="method-heading">
 					<p class="eyebrow">{t('index.methodEyebrow')}</p>
 					<h2 id="method-title">{t('index.methodTitle')}</h2>
 				</header>
-				<ReframeExplorer {locale} id="home-reframe" />
+				<div class="method-preview" id="toolbox-title"><p>{locale === 'zh' ? '先分开目标与方案，再把观察、解释和建议分开。用一次研究、一段模拟或一个工具原型，检查下一步是否值得做。完整方法页展开提问步骤、案例推演和工具选择。' : 'Separate the goal from the proposed solution, and observations from interpretations. Use a study, a simulation, or a tool prototype to check the next step. The approach page covers the questions, worked examples, and tools.'}</p></div>
+                <a class="argument-link" href={`${navUrl('/method/')}#toolbox`}>{locale === 'zh' ? '查看完整工具箱' : 'Explore the full toolbox'}</a>
+                <div class="reframe-links">{[
+                    locale === 'zh' ? '服务机器人的模拟交互' : 'Simulating a robot interaction',
+                    locale === 'zh' ? '金融研究的提问方式' : 'Reframing a finance study',
+                    locale === 'zh' ? '医疗器械的验证时机' : 'Timing a medical-device study',
+                ].map((label, index) => <div id={`home-reframe-panel-${index}`}><a id={`home-reframe-tab-${index}`} href={`${navUrl('/method/')}#method-reframe-panel-${index}`}>{label}<span aria-hidden="true"> →</span></a></div>)}</div>
+                <a class="argument-link" href={navUrl('/notes/every-problem-is-technical/')}>{locale === 'zh' ? '阅读核心主张：我所说的“技术”是什么' : 'Read the central argument: what I mean by “technical”'}</a>
 				<a class="text-link internal method-more" href={navUrl('/method/')}>{t('index.methodMore')}</a>
 			</div>
 		</section>
 
-		<Toolbox {locale} />
 
 		<section class="about-section page-shell section-rule" aria-labelledby="about-title">
 			<div class="section-heading">
@@ -106,13 +120,13 @@ const notes = (await getCollection('notes'))
 </BaseLayout>
 
 <style>
- .hero { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(19rem, .8fr); gap: clamp(3rem, 6vw, 6rem); align-items: center; padding-block: clamp(4rem, 7vw, 7rem); }
- .hero-copy { display: grid; gap: 2.5rem; }
+ .hero { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(19rem, .8fr); gap: clamp(3rem, 6vw, 6rem); align-items: center; padding-block: clamp(2.5rem, 5vw, 4.5rem); }
+ .hero-copy { display: grid; gap: 1.5rem; }
  .hero .eyebrow { max-width: 32rem; font-weight: 500; letter-spacing: .03em; }
  h1 { font-size: clamp(2.7rem, 4.5vw, 4.5rem); font-weight: 500; letter-spacing: -.025em; line-height: 1.3; }
  h1 span { display: block; }
  h1 span:last-child { color: var(--author); }
- .hero-intro { display: grid; gap: 2.25rem; max-width: 35rem; }
+ .hero-intro { display: grid; gap: 1.5rem; max-width: 35rem; }
  .hero-intro > p { color: var(--ink-soft); font-size: var(--step-0); line-height: 1.9; }
  .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1.5rem; }
  .hero-actions .text-link { min-height: 3.25rem; padding: .7rem 1.25rem; background: var(--signal); color: var(--paper-raised); border: 0; font-size: .95rem; }
@@ -125,17 +139,25 @@ const notes = (await getCollection('notes'))
  .identity-person { display: flex; align-items: center; gap: 1rem; padding: 1.25rem 1.5rem; background: var(--paper-raised); }
  .identity-person img { width: 4rem; height: 5rem; object-fit: cover; object-position: center 25%; }
  .identity-person strong { font-size: .88rem; font-weight: 500; }
- .identity-person p { color: var(--ink-soft); font-size: .75rem; line-height: 1.5; margin-block: .2rem; }
- .identity-person a { font-size: .75rem; color: var(--signal-dark); text-decoration: none; }
- .work-section, .notes-section, .about-section { padding-block: clamp(4rem, 7vw, 7rem); }
- .section-heading { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(16rem, .8fr); gap: clamp(2rem, 6vw, 6rem); align-items: end; margin-bottom: 3.5rem; }
+ .identity-person p { color: var(--ink-soft); font-size: .875rem; line-height: 1.5; margin-block: .2rem; }
+ .identity-person a { font-size: .875rem; color: var(--signal-dark); text-decoration: none; }
+ .work-section, .notes-section, .about-section { padding-block: clamp(2.5rem, 5vw, 4.5rem); }
+ .section-heading { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(16rem, .8fr); gap: clamp(2rem, 6vw, 6rem); align-items: end; margin-bottom: 2rem; }
  .section-heading h2, .method-heading h2 { margin-top: 1.5rem; font-size: var(--step-3); font-weight: 500; white-space: pre-line; line-height: 1.35; }
  .section-intro { display: grid; gap: 1.5rem; justify-items: start; color: var(--ink-soft); }
  .section-heading.compact > .text-link { justify-self: end; }
- .method-section { padding-block: clamp(4rem, 7vw, 7rem); background: var(--paper-deep); }
- .method-heading { display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; margin-bottom: 3.5rem; }
+ .method-section { padding-block: clamp(2.5rem, 5vw, 4.5rem); background: var(--paper-deep); }
+ .method-heading { display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; margin-bottom: 2rem; }
  .method-heading h2 { margin-top: 0; }
- .method-more { margin-top: 3rem; }
+ .method-more { margin-top: 1.5rem; }
+ .reframe-links { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: .5rem 1.5rem; margin-top: 1rem; } .reframe-links a { display: inline-block; padding-block: .5rem; min-height: 2.75rem; font-size: .95rem; text-underline-offset: .25em; }
+ .method-preview { max-width: 50rem; color: var(--ink-soft); }
+ .argument-link { display: block; width: fit-content; margin-top: 1rem; padding-block: .5rem; color: var(--signal-dark); font-size: .95rem; text-underline-offset: .25em; }
+ .visitor-paths { padding-bottom: 1rem; }
+ .visitor-paths > p { font-size: .95rem; font-weight: 600; margin-bottom: .75rem; }
+ .visitor-paths ul { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 0 2rem; padding: 0; list-style: none; border-top: 1px solid var(--rule-strong); }
+ .visitor-paths a { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 3.5rem; padding-block: .75rem; border-bottom: 1px solid var(--rule); text-decoration: none; font-size: .95rem; }
+ .visitor-paths a:hover { color: var(--signal-dark); }
  .about-section .section-heading { margin-bottom: 0; }
  @media (max-width: 62rem) {
   .hero { grid-template-columns: minmax(0, 1.2fr) minmax(17rem, .8fr); gap: 2rem; }
@@ -143,9 +165,12 @@ const notes = (await getCollection('notes'))
  }
  @media (max-width: 48rem) {
   .hero, .section-heading, .method-heading { grid-template-columns: 1fr; }
-  .hero { gap: 3rem; }
+  .hero { gap: 1.5rem; padding-block: 2rem; }
+  .hero-diagram { display: none; }
+  .identity-person { padding: 1rem; }
+  .visitor-paths ul, .reframe-links { grid-template-columns: 1fr; }
   h1 { font-size: clamp(2rem, 7.7vw, 3.5rem); overflow-wrap: anywhere; }
-  .hero-copy { gap: 2rem; }
+  .hero-copy { gap: 1.25rem; }
   .section-heading.compact > .text-link { justify-self: start; }
  }
 </style>

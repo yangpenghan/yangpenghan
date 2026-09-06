@@ -4,6 +4,7 @@ description: "从课堂到研究现场，我逐渐把注意力从“解释清楚
 publishDate: 2026-07-20
 updatedDate: 2026-09-05
 locale: zh
+kind: practice
 category: behavioral-intelligence
 categoryLabel: 职业方法
 readingMinutes: 2

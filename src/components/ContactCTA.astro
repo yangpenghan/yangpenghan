@@ -1,5 +1,6 @@
 ---
 import { useTranslations, type Locale } from '../i18n';
+import CopyText from './CopyText.astro';
 
 interface Props {
 	locale: Locale;
@@ -7,7 +8,6 @@ interface Props {
 
 const { locale } = Astro.props;
 const t = useTranslations(locale);
-// TODO(will): 替换为真实 Noldus 企业邮箱
 const noldusEmail = 'penghan.yang@noldus.com';
 const gmail = 'yangpenghan1988@gmail.com';
 const consultingSubject = locale === 'zh' ? '项目合作讨论' : 'Consulting inquiry';
@@ -26,9 +26,11 @@ const personalSubject = locale === 'zh' ? '想和你讨论一个问题' : 'A har
 				<a class="primary-link" href={`mailto:${noldusEmail}?subject=${encodeURIComponent(consultingSubject)}`}>
 					{t('cta.button')} <span aria-hidden="true">↗</span>
 				</a>
+				<div class="email-address"><span>{noldusEmail}</span><CopyText value={noldusEmail} {locale} /></div>
 				<a class="secondary-link" href={`mailto:${gmail}?subject=${encodeURIComponent(personalSubject)}`}>
 					{t('cta.personal')}
 				</a>
+				<div class="email-address"><span>{gmail}</span><CopyText value={gmail} {locale} /></div>
 				<a class="secondary-link" href="https://www.linkedin.com/in/thereisawillyang">
 					{t('cta.linkedin')}
 				</a>
@@ -39,14 +41,14 @@ const personalSubject = locale === 'zh' ? '想和你讨论一个问题' : 'A har
 
 <style>
 	.contact-section {
-		padding-block: clamp(5rem, 11vw, 10rem);
+		padding-block: clamp(3rem, 6vw, 5rem);
 		border-top: 1px solid var(--rule);
 	}
 
 	.contact-grid {
 		display: grid;
-		grid-template-columns: minmax(0, 1.45fr) minmax(18rem, 0.55fr);
-		gap: clamp(3rem, 8vw, 8rem);
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+		gap: clamp(2rem, 5vw, 5rem);
 		align-items: end;
 	}
 
@@ -55,7 +57,7 @@ const personalSubject = locale === 'zh' ? '想和你讨论一个问题' : 'A har
 		margin-top: 2rem;
 		font-family: var(--font-display);
 		font-size: var(--step-3);
-		line-height: 1.08;
+		line-height: 1.3;
 	}
 
 	.contact-copy {
@@ -65,10 +67,11 @@ const personalSubject = locale === 'zh' ? '想和你讨论一个问题' : 'A har
 	}
 
 	.contact-links {
-		display: flex;
-		flex-wrap: wrap;
+		display: grid;
+		justify-items: start;
 		gap: 0.75rem;
 	}
+	.email-address { display: grid; gap: .25rem; margin-bottom: .75rem; min-width: 0; font-size: .875rem; overflow-wrap: anywhere; }
 
 	.primary-link,
 	.secondary-link {

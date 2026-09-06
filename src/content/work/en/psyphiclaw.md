@@ -5,6 +5,7 @@ description: "I split import, time alignment, analysis, and reporting into modul
 publishDate: 2026-03-31
 updatedDate: 2026-09-05
 status: prototype
+statusText: "Prototype · End-to-end validation pending"
 year: '2026 (prototype public, validation paused)'
 order: 9
 kind: system
