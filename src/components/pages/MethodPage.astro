@@ -1,318 +1,118 @@
 ---
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import ContactCTA from '../ContactCTA.astro';
+import Toolbox from '../Toolbox.astro';
+import ReframeExplorer from '../visuals/ReframeExplorer.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import type { Locale } from '../../i18n';
+import { useTranslations, type Locale } from '../../i18n';
+import type { UIKey } from '../../i18n/ui';
 
-interface Props {
-	locale: Locale;
-}
-
-interface Stage {
-	verb: string;
-	title: string;
-	body: string;
-	artifact: string;
-	example: string;
-}
-
-interface SignalRow {
-	question: string;
-	minimum: string;
-	add: string;
-	boundary: string;
-}
-
-interface DomainRow {
-	domain: string;
-	decision: string;
-	evidence: string;
-	output: string;
-}
-
+interface Props { locale: Locale; }
 const { locale } = Astro.props;
+const t = useTranslations(locale);
 const navUrl = (path: string) => getRelativeLocaleUrl(locale, path.replace(/^\//, ''));
-
-const zh = {
-	metaTitle: '方法 | 杨朋翰',
-	metaDesc: '杨朋翰用于行为研究、人因工程与 Agentic AI 的完整工作方法：从问题定义、信号选择和解释建模，到决策、系统化与验证。',
-	eyebrow: 'Method / 工作方法',
-	title: '不是收集更多数据，\n而是建立一条能承担决定的证据链。',
-	intro: '我处理的问题横跨金融 App、消费包装、机器人、汽车座舱、医疗器械和 AI 工作流。工具会变化，但工作骨架相对稳定：先把模糊问题改写成可观察的问题，再让证据进入决定，最后把一次判断变成团队可以复用的能力。',
-	principle: '方法的最小单位不是一次访谈、一台眼动仪或一个 Agent，而是“一个决定需要什么证据”。',
-	stagesTitle: '六步不是瀑布流程，而是六个必须回答的问题。',
-	stagesIntro: '项目可以从任何一步开始，也会反复回退。结构的价值，是让团队知道当前缺的是观察、解释、决定，还是验证。',
-	stages: [
-		{
-			verb: 'Frame / 定义',
-			title: '把业务语言改写成可观察的问题',
-			body: '先明确谁将在什么情境中做什么决定，什么行为变化会改变这个决定。把“体验不好”“负荷太高”“AI 是否可信”拆成任务、环境、后果与可证伪假设。',
-			artifact: '问题契约 · 决策人 · 适用范围 · 停止条件',
-			example: '金融 App：不问“用户信不信任”，而是观察关键后果出现在哪里、何时回退、怎样恢复可控感。',
-		},
-		{
-			verb: 'Observe / 观察',
-			title: '选择最小但足够的行为信号',
-			body: '从决定倒推证据。访谈解释人的叙述，行为编码保留行动序列，眼动描述视觉注意；EEG、生理与表情只在能排除替代解释或支持具体判断时加入。',
-			artifact: '任务模型 · 事件字典 · 采集与同步方案 · 数据边界',
-			example: '包装研究：分别用 EEG、眼动和自然行为回答早期反应、视觉路径与真实动作。',
-		},
-		{
-			verb: 'Model / 建模',
-			title: '从事件走到机制，不急着讲故事',
-			body: '先保护可复核的观察，再比较跨任务、参与者和环境反复出现的结构。显式区分观察、解释和决定，并主动寻找与当前解释冲突的证据。',
-			artifact: '事件记录 · 竞争解释 · 行为模式 · 风险链',
-			example: '六城研究：把 254GB 记录整理成 86 个问题，并用六类问题结构连接责任与优先级。',
-		},
-		{
-			verb: 'Decide / 决定',
-			title: '把证据翻译成产品与风险选择',
-			body: '研究输出必须说明哪个证据改变哪个判断、由谁承担、下一次怎样验证。高约束场景还要连接危害、使用错误、风险控制与残余不确定性。',
-			artifact: '决策记录 · 优先级 · 风险控制 · 验证计划',
-			example: '医疗器械：把关键任务、潜在使用错误、控制措施和评价证据写进同一条可追溯工程链。',
-		},
-		{
-			verb: 'Build / 构建',
-			title: '让一次判断变成可重复的能力',
-			body: '项目结束后，把可以迁移的部分写进模板、指标、知识库、培训和工具；保留项目差异，不把专家判断压缩成僵化套餐。',
-			artifact: '评估框架 · 交付模板 · 知识索引 · 工作流',
-			example: '汽车 HMI：把单次反馈发展为跨版本可比较的评估框架；Solution Engineering：把项目经验重新写回团队系统。',
-		},
-		{
-			verb: 'Validate / 验证',
-			title: '明确什么已知、什么未知、何时停止',
-			body: '检查结论能否追溯、方法能否复现、改变是否真的发生。原型、已交付体系和持续运行能力使用不同的证据标准，不用构建规模替代有效性。',
-			artifact: '复核记录 · 一致性基准 · 失败案例 · 下一轮问题',
-			example: 'PsyPhiClaw：18 个公开模块证明流程可拆分；真实数据的一致性、错误发现与人工复核仍需验证。',
-		},
-	] satisfies Stage[],
-	signalEyebrow: 'Signal selection / 信号选择',
-	signalTitle: '先问要区分什么，再问用什么测。',
-	signalIntro: '一种信号的价值，不在于它显得先进，而在于它能否改变决定、排除替代解释，并在项目条件下可靠采集。',
-	signalHeaders: ['研究问题', '最小证据', '何时增加信号', '不能越过的边界'],
-	signals: [
-		{ question: '人做了什么，哪里失败或恢复？', minimum: '任务结果 + 行为编码 + 视频', add: '需要解释视觉搜索时增加眼动；需要精确同步时增加事件 marker', boundary: '行为说明发生了什么，不自动说明动机' },
-		{ question: '人看到了什么、怎样分配视觉注意？', minimum: '眼动 + 明确兴趣区 + 任务事件', add: '需要理解策略时增加访谈；需要连接动作时增加行为编码', boundary: '注视不等于理解、喜欢或认知负荷' },
-		{ question: '状态是否随任务或条件变化？', minimum: 'EEG 或生理信号 + 基线 + 预定义指标', add: '需要定位原因时连接事件、行为和自述', boundary: '单一指标不能直接命名复杂心理状态' },
-		{ question: '系统是否在真实情境中可用？', minimum: '代表性用户、任务、环境与结果', add: '高风险场景增加多视角记录、风险链与专家复核', boundary: '实验室成功不能自动外推到现场' },
-		{ question: 'AI 分析是否值得信任？', minimum: '输入校验 + 可重复工具 + 来源日志', add: '加入统计、因果、多重比较与人工确认护栏', boundary: '流畅解释不能替代科学有效性与责任主体' },
-	] satisfies SignalRow[],
-	chainEyebrow: 'Evidence chain / 证据链',
-	chainTitle: '一条结论必须能向下找到记录，向上找到决定。',
-	chainItems: ['原始记录', '可复现事件', '分析与竞争解释', '可边界化的结论', '产品 / 风险决定', '下一轮行为验证'],
-	chainBody: '如果结论找不到原始记录，它不能被复核；如果结论找不到对应决定，它只是信息；如果决定没有下一轮验证，团队就不知道改变是否真的发生。',
-	domainEyebrow: 'Same spine, different stakes / 同一骨架，不同约束',
-	domainTitle: '方法可以迁移，证据标准不能偷懒。',
-	domainHeaders: ['场景', '核心决定', '关键证据', '留下的产物'],
-	domains: [
-		{ domain: '消费与金融', decision: '设计怎样降低理解、记忆与控制负担', evidence: '任务、行为、访谈与必要的多模态信号', output: '问题记录 + 行为模式 + 设计验证' },
-		{ domain: '汽车 HMI', decision: '座舱在驾驶约束下怎样分配注意', evidence: '驾驶任务、眼动、行为编码、主观与情境指标', output: '跨版本评估框架 + 对标基线' },
-		{ domain: '医疗器械', decision: '界面相关风险是否被充分识别与控制', evidence: '使用规范、关键任务、使用错误、根因与评价记录', output: '风险可追溯的可用性工程文件' },
-		{ domain: 'Agentic AI', decision: '哪些步骤可以自动化，哪些必须人工确认', evidence: '确定性工具结果、来源、护栏状态与失败案例', output: '可检查工作流 + 验证基准' },
-	] satisfies DomainRow[],
-	contractEyebrow: 'Evidence contract / 证据契约',
-	contractTitle: '我用五条规则约束交付。',
-	contract: [
-		['事实、判断、假设分开', '观察到的事实可以追溯；解释允许竞争；未来假设明确写成待验证。'],
-		['数字有来源，也有公开权限', '能在本地看到，不代表可以在网页公开。客户、参与者和内部经营信息按更高边界处理。'],
-		['方法服从问题', '不为了展示工具增加信号，也不让 AI 决定研究问题。'],
-		['高影响结论有人负责', '风险分级、数据排除、因果与安全判断保留明确的人工确认点。'],
-		['失败进入系统', '异常、反例与没有得到支持的假设同样被记录，用于修正下一版方法。'],
-	] as Array<[string, string]>,
-	workLink: '查看这些方法怎样进入真实项目',
-	noteLink: '阅读方法背后的现场思考',
+const stages = [1, 2, 3, 4].map((index) => ({
+	title: t(`index.method${index}Title` as UIKey),
+ icon: ['question', 'reframe', 'experiment', 'evidence'][index - 1],
+	body: t(`index.method${index}Body` as UIKey),
+}));
+const copy = locale === 'zh' ? {
+	title: '解题之前，\n先检查题目。',
+	description: '杨朋翰的元思维与工具箱：分开目标和方案，拆解条件与关系，设计能区分解释的试验，检验自己的判断。',
+	intro: '“所有问题都是技术性问题”，落实到我的工作里，首先是检查问题怎么被定义。这里展开我怎样提问、怎样判断自己的解释，以及用哪些工具把想法变成可以检查的东西。',
+	startTitle: '开始时，我需要了解三件事。',
+	start: [
+		['你要做成什么', '谁会使用结果？接下来要做哪个决定？做到什么程度才算有用？'],
+		['你已经试过什么', '已有的方案、观察、数据或原型，比一份精修的介绍更能帮助我理解问题。'],
+		['我们有哪些条件', '时间、预算、能接触的用户、可用工具，以及哪些人需要参与判断。'],
+	],
+	stepsTitle: '元思维：连提问方式也要检查。',
+	outputs: [
+		'留下：双方能确认的问题描述、范围和判断标准。',
+		'留下：已有观察、可能原因，以及最需要补的证据。',
+		'留下：可以检查的研究方案、模拟体验或工具原型。',
+		'留下：结果、使用方法、未解决问题和后续验证安排。',
+	],
+	toolsTitle: '重构一次问题，行动就会不同。',
+	toolsIntro: '下面是我从实践中归纳的几种转换。新的问法需要继续服务于原目标；不能因为它更容易回答，就把原来的问题丢掉。',
+	checkTitle: '决定继续之前，先检查办法有没有用。',
+	checkBody: '研究需要回到原始记录，设计建议需要后续验证，工具需要放进真实任务中试用。如果证据不足，我会说明缺在哪里。一次小范围检查已经回答问题，就可以在这里结束；仍有值得解决的部分，再讨论下一步投入。',
+	workLink: '看具体案例',
+} : {
+	title: 'Before the answer,\nexamine the question.',
+	description: 'Working with Will Yang: clarify the goal and constraints, revisit the question, try available tools, then check and hand over the result.',
+	intro: '“Every problem is a technical problem” begins, in my work, with examining how the question is defined. Here is how I ask questions, test my own explanations, and choose tools to make an idea inspectable.',
+	startTitle: 'Three things help us start.',
+	start: [
+		['What you want to achieve', 'Who will use the result? What decision comes next? What would make this useful?'],
+		['What you have already tried', 'Existing plans, observations, data, or a prototype help me understand the problem.'],
+		['What we can work with', 'Time, budget, access to users, available tools, and the people who need to take part.'],
+	],
+	stepsTitle: 'Metacognition: examine how the question is framed.',
+	outputs: [
+		'Output: an agreed question, scope, and criteria for judging the result.',
+		'Output: observations, possible causes, and the evidence we most need next.',
+		'Output: a study plan, simulated experience, or tool prototype we can inspect.',
+		'Output: results, instructions, open issues, and a plan for further checks.',
+	],
+	toolsTitle: 'Reframing changes what we can do next.',
+	toolsIntro: 'These are shifts I draw from my practice. A new question must still serve the original goal. Being easier to answer is not enough.',
+	checkTitle: 'Check whether the approach helped before investing further.',
+	checkBody: 'Research needs its source records, design recommendations need a follow-up check, and tools need real tasks. If evidence is missing, I explain the gap. A small check may be enough to answer the question; further investment follows from what remains worth solving.',
+	workLink: 'Read the cases',
 };
-
-const en = {
-	metaTitle: 'Method | Will Yang',
-	metaDesc: 'Will Yang’s end-to-end method for behavioral research, human factors, and agentic AI: framing, signal selection, modeling, decision, capability building, and validation.',
-	eyebrow: 'Method',
-	title: 'Do not collect more data.\nBuild an evidence chain that can carry a decision.',
-	intro: 'My work spans finance apps, consumer packaging, robots, vehicle cockpits, medical devices, and AI workflows. The tools change, but the spine remains stable: rewrite ambiguity as an observable question, put evidence into a decision, then turn one judgment into a capability others can reuse.',
-	principle: 'The smallest unit of method is not an interview, an eye tracker, or an agent. It is the evidence required for one decision.',
-	stagesTitle: 'Six stages, but not a waterfall.',
-	stagesIntro: 'A project may begin anywhere and move backward repeatedly. The structure tells the team whether it currently lacks observation, interpretation, decision, or validation.',
-	stages: [
-		{ verb: 'Frame', title: 'Rewrite business language as an observable question', body: 'Define who needs to decide what, in which situation, and which behavioral change would alter that decision. Turn “poor experience,” “high load,” or “trustworthy AI” into tasks, environments, consequences, and falsifiable assumptions.', artifact: 'Question contract · decision owner · scope · stopping rule', example: 'Finance app: replace “do users trust it?” with where consequences appear, when people backtrack, and how they recover a sense of control.' },
-		{ verb: 'Observe', title: 'Select the smallest sufficient behavioral signal', body: 'Work backward from the decision. Interviews explain accounts, coding preserves action sequences, and gaze describes visual attention. Add EEG, physiology, or expression only when it rules out an alternative or supports a concrete judgment.', artifact: 'Task model · event dictionary · acquisition and synchronization plan · data boundary', example: 'Packaging: give EEG, gaze, and natural behavior separate jobs—early response, visual path, and real action.' },
-		{ verb: 'Model', title: 'Move from events to mechanisms without rushing the story', body: 'Protect inspectable observations first, then compare structures recurring across tasks, people, and environments. Separate observation, interpretation, and decision, and actively seek evidence that conflicts with the current explanation.', artifact: 'Event record · competing explanations · behavior pattern · risk chain', example: 'Six-city study: turn 254GB of records into 86 issues, then use six issue families to connect ownership and priority.' },
-		{ verb: 'Decide', title: 'Translate evidence into product and risk choices', body: 'An output should state which evidence changes which judgment, who owns it, and how it will be validated. High-constraint work must also connect hazards, use errors, risk controls, and residual uncertainty.', artifact: 'Decision record · priority · risk control · validation plan', example: 'Medical devices: connect critical tasks, potential use errors, controls, and evaluation evidence in one traceable engineering chain.' },
-		{ verb: 'Build', title: 'Turn one judgment into repeatable capability', body: 'After delivery, write transferable parts into templates, measures, knowledge bases, training, and tools. Preserve project differences rather than compressing expert judgment into a rigid package.', artifact: 'Evaluation framework · delivery template · knowledge index · workflow', example: 'Automotive HMI: develop one study into a cross-version framework. Solution engineering: write project learning back into the team system.' },
-		{ verb: 'Validate', title: 'State what is known, unknown, and when to stop', body: 'Check whether claims are traceable, methods reproducible, and behavior actually changed. A prototype, delivered system, and operating capability need different standards. Construction scale is not evidence of validity.', artifact: 'Review record · consistency benchmark · failure cases · next question', example: 'PsyPhiClaw: 18 public modules demonstrate decomposition; consistency, error detection, and review cost on real data still require validation.' },
-	] satisfies Stage[],
-	signalEyebrow: 'Signal selection',
-	signalTitle: 'Ask what must be distinguished before asking what to measure.',
-	signalIntro: 'A signal earns its place when it can change a decision, rule out an alternative, and be collected reliably under the project constraints.',
-	signalHeaders: ['Research question', 'Minimum evidence', 'When to add a signal', 'Boundary'],
-	signals: [
-		{ question: 'What did people do, fail, or recover from?', minimum: 'Task result + behavioral coding + video', add: 'Add gaze for visual search; event markers for precise synchronization', boundary: 'Behavior describes what happened, not motive by itself' },
-		{ question: 'What was seen and how was visual attention allocated?', minimum: 'Gaze + defined areas of interest + task events', add: 'Add interview for strategy; coding to connect gaze with action', boundary: 'Fixation is not comprehension, preference, or cognitive load' },
-		{ question: 'Did state change across tasks or conditions?', minimum: 'EEG or physiology + baseline + pre-defined measure', add: 'Connect events, behavior, and self-report to examine cause', boundary: 'One metric cannot name a complex mental state directly' },
-		{ question: 'Does the system work in its real context?', minimum: 'Representative users, tasks, environments, and outcomes', add: 'For high risk, add multi-view records, risk traceability, and expert review', boundary: 'Laboratory success does not automatically generalize to field use' },
-		{ question: 'Can an AI analysis be trusted?', minimum: 'Input validation + repeatable tools + provenance logs', add: 'Add statistical, causal, multiple-comparison, and human-review guardrails', boundary: 'Fluent explanation is not scientific validity or accountable judgment' },
-	] satisfies SignalRow[],
-	chainEyebrow: 'Evidence chain',
-	chainTitle: 'A claim must point down to a record and up to a decision.',
-	chainItems: ['Source record', 'Reproducible event', 'Analysis + alternatives', 'Bounded claim', 'Product / risk decision', 'Next behavioral validation'],
-	chainBody: 'A claim without a source cannot be reviewed. A claim without a decision is information only. A decision without another validation leaves the team unable to tell whether change occurred.',
-	domainEyebrow: 'Same spine, different stakes',
-	domainTitle: 'The method can transfer. The standard of evidence cannot be relaxed.',
-	domainHeaders: ['Domain', 'Core decision', 'Key evidence', 'Capability left behind'],
-	domains: [
-		{ domain: 'Consumer & finance', decision: 'How design reduces demands on comprehension, memory, and control', evidence: 'Tasks, behavior, interviews, and only necessary multimodal signals', output: 'Issue records + behavior models + design validation' },
-		{ domain: 'Automotive HMI', decision: 'How a cockpit allocates attention under driving constraints', evidence: 'Driving tasks, gaze, coding, subjective and contextual measures', output: 'Cross-version evaluation framework + baseline' },
-		{ domain: 'Medical devices', decision: 'Whether interface-related risk is identified and controlled', evidence: 'Use specification, critical tasks, use errors, root cause, and evaluation records', output: 'Risk-traceable usability-engineering file' },
-		{ domain: 'Agentic AI', decision: 'Which steps can be automated and which require confirmation', evidence: 'Deterministic tool results, provenance, guardrail state, and failure cases', output: 'Inspectable workflow + validation benchmarks' },
-	] satisfies DomainRow[],
-	contractEyebrow: 'Evidence contract',
-	contractTitle: 'Five rules constrain my delivery.',
-	contract: [
-		['Separate fact, judgment, and hypothesis', 'Observed facts remain traceable, interpretations remain challengeable, and future ideas are labeled for validation.'],
-		['A number needs a source and permission', 'Local access does not grant publication rights. Client, participant, and internal commercial information receives a higher boundary.'],
-		['The method serves the question', 'Do not add signals to display tools, and do not allow AI to decide the research question.'],
-		['A person owns high-impact claims', 'Risk classification, data exclusion, causality, and safety judgments retain explicit human confirmation.'],
-		['Failure enters the system', 'Anomalies, counterexamples, and unsupported assumptions are recorded to improve the next method.'],
-	] as Array<[string, string]>,
-	workLink: 'See how the method enters real projects',
-	noteLink: 'Read the field thinking behind the method',
-};
-
-const copy = locale === 'zh' ? zh : en;
 ---
 
-<BaseLayout locale={locale} title={copy.metaTitle} description={copy.metaDesc}>
+<BaseLayout {locale} title={`${t('nav.method')} | ${t('nav.brand')}`} description={copy.description}>
 	<main>
 		<header class="method-hero page-shell">
-			<div data-reveal>
-				<p class="eyebrow">{copy.eyebrow}</p>
-				<h1>{copy.title}</h1>
-			</div>
-			<div class="method-intro" data-reveal>
-				<p>{copy.intro}</p>
-				<blockquote>{copy.principle}</blockquote>
-			</div>
+			<div><p class="eyebrow">{t('nav.method')}</p><h1>{copy.title}</h1></div>
+			<p>{copy.intro}</p>
 		</header>
 
-		<section class="stages section-rule" aria-labelledby="stages-title">
+		<section class="section-rule" aria-labelledby="reframe-title"><div class="page-shell"><h2 id="reframe-title">{copy.toolsTitle}</h2><p class="section-intro">{copy.toolsIntro}</p><ReframeExplorer {locale} id="method-reframe" /></div></section>
+		<section class="stages section-rule" aria-labelledby="steps-title">
 			<div class="page-shell">
-				<header class="section-heading" data-reveal>
-					<h2 id="stages-title">{copy.stagesTitle}</h2>
-					<p>{copy.stagesIntro}</p>
-				</header>
-				<ol class="stage-list">
-					{copy.stages.map((stage, index) => (
-						<li data-reveal>
-							<div class="stage-index"><span>{String(index + 1).padStart(2, '0')}</span><small>{stage.verb}</small></div>
-							<div class="stage-main"><h3>{stage.title}</h3><p>{stage.body}</p></div>
-							<div class="stage-proof"><small>OUTPUT / ARTIFACT</small><p>{stage.artifact}</p><small>FIELD EXAMPLE</small><p>{stage.example}</p></div>
-						</li>
-					))}
-				</ol>
+				<h2 id="steps-title">{copy.stepsTitle}</h2>
+				<ol class="stage-list">{stages.map((stage, index) => (
+					<li><span class="stage-number"><img src={`${import.meta.env.BASE_URL}assets/brand/icons/${stage.icon}.svg`} alt="" width="40" height="40" loading="lazy" />{String(index + 1).padStart(2, '0')}</span><div><h3>{stage.title}</h3><p>{stage.body}</p><p class="output">{copy.outputs[index]}</p></div></li>
+				))}</ol>
 			</div>
 		</section>
 
-		<section class="signal-section section-rule" aria-labelledby="signal-title">
+		<Toolbox {locale} />
+		<section class="section-rule" aria-labelledby="start-title">
 			<div class="page-shell">
-				<header class="split-heading" data-reveal>
-					<div><p class="eyebrow">{copy.signalEyebrow}</p><h2 id="signal-title">{copy.signalTitle}</h2></div>
-					<p>{copy.signalIntro}</p>
-				</header>
-				<div class="table-wrap" role="region" aria-label={`${copy.signalTitle} — ${locale === 'zh' ? '对照表' : 'comparison table'}`} tabindex="0" data-reveal>
-					<table>
-						<thead><tr>{copy.signalHeaders.map((header) => <th scope="col">{header}</th>)}</tr></thead>
-						<tbody>{copy.signals.map((row) => <tr><th scope="row">{row.question}</th><td>{row.minimum}</td><td>{row.add}</td><td>{row.boundary}</td></tr>)}</tbody>
-					</table>
-				</div>
+				<h2 id="start-title">{copy.startTitle}</h2>
+				<ul class="start-list">{copy.start.map(([title, body]) => <li><h3>{title}</h3><p>{body}</p></li>)}</ul>
 			</div>
 		</section>
-
-		<section class="chain section-rule" aria-labelledby="chain-title">
-			<div class="page-shell chain-grid">
-				<header data-reveal><p class="eyebrow">{copy.chainEyebrow}</p><h2 id="chain-title">{copy.chainTitle}</h2><p>{copy.chainBody}</p></header>
-				<ol aria-label={copy.chainTitle}>
-					{copy.chainItems.map((item, index) => <li data-reveal><span>{String(index + 1).padStart(2, '0')}</span><strong>{item}</strong></li>)}
-				</ol>
-			</div>
-		</section>
-
-		<section class="domains section-rule" aria-labelledby="domain-title">
-			<div class="page-shell">
-				<header class="split-heading" data-reveal>
-					<div><p class="eyebrow">{copy.domainEyebrow}</p><h2 id="domain-title">{copy.domainTitle}</h2></div>
-				</header>
-				<div class="table-wrap" role="region" aria-label={`${copy.domainTitle} — ${locale === 'zh' ? '场景表' : 'domain table'}`} tabindex="0" data-reveal>
-					<table>
-						<thead><tr>{copy.domainHeaders.map((header) => <th scope="col">{header}</th>)}</tr></thead>
-						<tbody>{copy.domains.map((row) => <tr><th scope="row">{row.domain}</th><td>{row.decision}</td><td>{row.evidence}</td><td>{row.output}</td></tr>)}</tbody>
-					</table>
-				</div>
-			</div>
-		</section>
-
-		<section class="contract section-rule" aria-labelledby="contract-title">
-			<div class="page-shell contract-grid">
-				<header data-reveal><p class="eyebrow">{copy.contractEyebrow}</p><h2 id="contract-title">{copy.contractTitle}</h2></header>
-				<ol>
-					{copy.contract.map(([title, body], index) => <li data-reveal><span>{String(index + 1).padStart(2, '0')}</span><div><h3>{title}</h3><p>{body}</p></div></li>)}
-				</ol>
-			</div>
-			<div class="page-shell method-links" data-reveal>
-				<a class="text-link internal" href={navUrl('/work/')}>{copy.workLink}</a>
-				<a class="text-link internal" href={navUrl('/notes/')}>{copy.noteLink}</a>
-			</div>
+		<section class="section-rule" aria-labelledby="check-title">
+			<div class="page-shell"><h2 id="check-title">{copy.checkTitle}</h2><p class="section-intro">{copy.checkBody}</p><a class="text-link internal" href={navUrl('/work/')}>{copy.workLink}</a></div>
 		</section>
 	</main>
 	<ContactCTA {locale} />
 </BaseLayout>
 
 <style>
-	.method-hero { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(20rem, .55fr); gap: clamp(3rem, 9vw, 9rem); align-items: end; padding-block: clamp(5rem, 11vw, 10rem); }
-	.method-hero h1 { max-width: 15ch; margin-top: clamp(3rem, 7vw, 6rem); font-family: var(--font-serif); font-size: var(--step-5); line-height: .95; white-space: pre-line; }
-	.method-intro { display: grid; gap: 2.5rem; color: var(--ink-soft); font-size: var(--step-1); }
-	.method-intro blockquote { margin: 0; padding: 1.25rem 0 0 1.25rem; border-top: 1px solid var(--rule-strong); border-left: 3px solid var(--signal); color: var(--ink); font-family: var(--font-serif); font-size: 1.05rem; }
-	.stages, .signal-section, .chain, .domains, .contract { padding-block: clamp(6rem, 12vw, 11rem); }
+	.method-hero { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(18rem, .6fr); gap: clamp(3rem, 8vw, 8rem); align-items: end; padding-block: clamp(5rem, 10vw, 9rem); }
+	h1 { margin-top: 3rem; font-family: var(--font-display); font-size: var(--step-5); line-height: 1.05; white-space: pre-line; }
+	.method-hero > p { color: var(--ink-soft); font-size: var(--step-1); }
+	section { padding-block: clamp(4rem, 8vw, 7rem); }
+	h2 { max-width: 26ch; margin-bottom: 3rem; font-family: var(--font-display); font-size: var(--step-3); line-height: 1.2; }
+	h3 { margin-bottom: 1rem; font-family: var(--font-display); font-size: var(--step-1); }
+	li p, .section-intro { color: var(--ink-soft); }
+	.section-intro { max-width: 48rem; margin-block: 0 2rem; }
+	.start-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3rem; padding: 0; list-style: none; }
+	.start-list li { padding-top: 1.5rem; border-top: 1px solid var(--rule-strong); }
 	.stages { background: var(--paper-deep); }
-	.section-heading, .split-heading { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(18rem, .65fr); gap: clamp(3rem, 8vw, 8rem); align-items: end; margin-bottom: clamp(4rem, 8vw, 7rem); }
-	.section-heading h2, .split-heading h2, .chain h2, .contract h2 { max-width: 16ch; font-family: var(--font-serif); font-size: var(--step-3); line-height: 1.05; }
-	.section-heading > p, .split-heading > p, .chain header > p:last-child { color: var(--ink-soft); }
-	.stage-list { padding: 0; border-top: 1px solid var(--rule-strong); list-style: none; }
-	.stage-list li { display: grid; grid-template-columns: 9rem minmax(0, 1.05fr) minmax(18rem, .65fr); gap: clamp(1.5rem, 5vw, 5rem); padding-block: clamp(2.5rem, 5vw, 4rem); border-bottom: 1px solid var(--rule); }
-	.stage-index { display: grid; align-content: start; gap: .55rem; font-family: var(--font-mono); }
-	.stage-index span { color: var(--signal-dark); font-size: .72rem; }
-	.stage-index small, .stage-proof small { color: var(--ink-soft); font-size: .63rem; font-weight: 650; letter-spacing: .05em; text-transform: uppercase; }
-	.stage-main { display: grid; align-content: start; gap: 1rem; }
-	.stage-main h3 { font-family: var(--font-serif); font-size: var(--step-2); line-height: 1.1; }
-	.stage-main p, .stage-proof p { color: var(--ink-soft); font-size: .9rem; }
-	.stage-proof { display: grid; align-content: start; gap: .6rem; }
-	.stage-proof small:not(:first-child) { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--rule); }
-	.signal-section { background: var(--paper); }
-	.split-heading h2 { margin-top: 2rem; }
-	.table-wrap { overflow-x: auto; border-top: 1px solid var(--rule-strong); }
-	table { width: 100%; min-width: 56rem; border-collapse: collapse; text-align: left; }
-	th, td { width: 25%; padding: 1.4rem 1.2rem 1.4rem 0; border-bottom: 1px solid var(--rule); vertical-align: top; font-size: .84rem; line-height: 1.55; }
-	thead th { color: var(--signal-dark); font-family: var(--font-mono); font-size: .62rem; letter-spacing: .05em; text-transform: uppercase; }
-	tbody th { color: var(--ink); font-family: var(--font-serif); font-size: 1rem; font-weight: 600; }
-	td { color: var(--ink-soft); }
-	.chain { background: var(--inverse-bg); color: var(--inverse-ink); }
-	.chain :global(.eyebrow) { color: var(--inverse-signal); }
-	.chain-grid { display: grid; grid-template-columns: minmax(18rem, .65fr) minmax(0, 1.35fr); gap: clamp(4rem, 9vw, 9rem); }
-	.chain header { display: grid; align-content: start; gap: 2rem; }
-	.chain header > p:last-child { color: var(--inverse-soft); }
-	.chain ol { padding: 0; border-top: 1px solid color-mix(in srgb, var(--inverse-ink) 35%, transparent); list-style: none; }
-	.chain li { display: grid; grid-template-columns: 4rem 1fr auto; gap: 1rem; align-items: center; padding-block: 1.5rem; border-bottom: 1px solid color-mix(in srgb, var(--inverse-ink) 22%, transparent); }
-	.chain li::after { color: var(--inverse-signal); content: "↓"; }
-	.chain li:last-child::after { content: "↺"; }
-	.chain li span { color: var(--inverse-signal); font-family: var(--font-mono); font-size: .68rem; }
-	.chain li strong { font-family: var(--font-serif); font-size: var(--step-1); }
-	.domains { background: var(--paper-deep); }
-	.contract-grid { display: grid; grid-template-columns: minmax(18rem, .7fr) minmax(0, 1.3fr); gap: clamp(4rem, 9vw, 9rem); }
-	.contract ol { padding: 0; border-top: 1px solid var(--rule-strong); list-style: none; }
-	.contract li { display: grid; grid-template-columns: 3rem 1fr; gap: 1.5rem; padding-block: 1.75rem; border-bottom: 1px solid var(--rule); }
-	.contract li > span { color: var(--signal-dark); font-family: var(--font-mono); font-size: .68rem; }
-	.contract li div { display: grid; gap: .65rem; }
-	.contract h3 { font-family: var(--font-serif); font-size: var(--step-1); }
-	.contract li p { color: var(--ink-soft); font-size: .88rem; }
-	.method-links { display: flex; flex-wrap: wrap; gap: 2rem 4rem; margin-top: clamp(4rem, 8vw, 7rem); padding-top: 2rem; border-top: 1px solid var(--rule-strong); }
-	@media (max-width: 58rem) { .method-hero, .section-heading, .split-heading, .chain-grid, .contract-grid { grid-template-columns: 1fr; } .stage-list li { grid-template-columns: 6rem 1fr; } .stage-proof { grid-column: 2; } }
-	@media (max-width: 38rem) { .method-hero h1 { font-size: clamp(3rem, 14vw, 5.1rem); } .stage-list li { grid-template-columns: 1fr; } .stage-proof { grid-column: 1; } .chain li { grid-template-columns: 2.5rem 1fr auto; } }
+	.stage-list { padding: 0; list-style: none; }
+	.stage-list li { display: grid; grid-template-columns: 4rem minmax(0, 1fr); gap: 2rem; padding-block: 2rem; border-top: 1px solid var(--rule-strong); }
+	.stage-number { color: var(--signal-dark); font-family: var(--font-mono); }
+	.stage-list p { max-width: 48rem; }
+	.output { margin-top: 1.25rem; font-size: .9rem; }
+	@media (max-width: 52rem) { .method-hero, .start-list { grid-template-columns: 1fr; } h1 { font-size: clamp(3rem, 13vw, 5rem); } }
+	@media (max-width: 32rem) { .stage-list li { grid-template-columns: 1fr; gap: 1rem; } }
+.stage-number { display: flex; flex-direction: column; gap: 1rem; align-items: flex-start; }
+ :global(.theme-dark) .stage-number img { filter: brightness(0) invert(1); }
 </style>

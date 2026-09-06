@@ -1,0 +1,26 @@
+---
+import type { Locale } from '../i18n';
+
+interface Props {
+	kind?: 'mark' | 'signature';
+	locale?: Locale;
+}
+const { kind = 'mark', locale = 'zh' } = Astro.props;
+const root = `${import.meta.env.BASE_URL}assets/brand/logos/`;
+const signature = locale === 'zh' ? 'will-yang-chinese-led' : 'will-yang-bilingual';
+const light = kind === 'mark' ? 'open-inference' : `${signature}-mulberry`;
+const dark = kind === 'mark' ? 'open-inference-white' : `${signature}-white`;
+---
+
+<span class:list={['brand-identity', kind]} aria-hidden="true">
+	<img class="light" src={`${root}${light}.svg`} alt="" width={kind === 'mark' ? 96 : 439.296} height={kind === 'mark' ? 96 : 142} />
+	<img class="dark" src={`${root}${dark}.svg`} alt="" width={kind === 'mark' ? 96 : 439.296} height={kind === 'mark' ? 96 : 142} />
+</span>
+
+<style>
+	.brand-identity { display: block; width: 100%; }
+	img { width: 100%; height: auto; }
+	.dark { display: none; }
+	:global(.theme-dark) .light { display: none; }
+	:global(.theme-dark) .dark { display: block; }
+</style>

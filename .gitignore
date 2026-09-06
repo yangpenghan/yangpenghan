@@ -36,3 +36,7 @@ research/
 
 HANDOFF-*.md
 drafts/
+
+# Local visual verification artifacts
+artifacts/visual-refresh/
+artifacts/thinking-expansion/

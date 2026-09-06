@@ -1,0 +1,67 @@
+---
+import type { Locale } from '../../i18n';
+import LibraryIcon from './LibraryIcon.astro';
+interface Props { locale: Locale; kind: 'evidence' | 'iteration' | 'interaction'; id: string; }
+const {locale, kind, id} = Astro.props;
+const zh = locale === 'zh';
+const copy = {
+ evidence: { icon: 'evidence', label: zh?'证据的组织方式':'EVIDENCE ARCHITECTURE', title: zh?'让判断有出处':'A route back to the evidence', desc: zh?'254GB 研究记录，按任务和观察整理，形成六类共 86 个可追溯问题。连线只表达整理关系，不表示数据分布。':'254GB of research records organized by tasks and observations into 86 traceable issues in six categories. Lines show relationships, not data distribution.', foot: zh?'记录 → 任务与观察 → 可追溯问题':'Records → Tasks & observations → Traceable issues' },
+ iteration: { icon: 'iterate', label: zh?'验证进入设计的时机':'DESIGN WITH FEEDBACK', title: zh?'把检查放进过程':'Build the check into the process', desc: zh?'洞察进入设计，设计与观察之间反复迭代，之后再安排确认。图中的轨道表示反馈关系，不表示轮次、时长或项目进度。':'Insight informs design, design and observation iterate, and confirmation follows. Tracks show feedback relationships, not iteration counts, durations, or project progress.', foot: zh?'洞察 → 设计与观察反复迭代 → 确认':'Insight → Design & observation in a loop → Confirmation' },
+ interaction: { icon: 'experiment', label: zh?'交互原型的前台与后台':'PROTOTYPE / TWO LAYERS', title: zh?'先体验，再实现':'Experience before implementation', desc: zh?'前台保留用户体验的发起、执行与结束；后台由人员模拟尚未实现的响应。先验证交互能否被理解，再确定开发方式。':'The frontstage preserves the start, task, and end of the user experience. A researcher simulates unfinished responses backstage. Test understanding before choosing implementation.', foot: zh?'前台观察理解 · 后台模拟响应':'Observe understanding · Simulate the response' },
+} as const;
+const c = copy[kind];
+---
+<div class={`case-diagram ${kind}`}>
+  <div class="diagram-heading"><span class="diagram-kicker">{c.label}</span><LibraryIcon name={c.icon} /></div>
+  <svg viewBox="0 0 520 330" role="img" aria-labelledby={`${id}-title ${id}-desc`}>
+    <title id={`${id}-title`}>{c.title}</title><desc id={`${id}-desc`}>{c.desc}</desc>
+    <defs>
+      <linearGradient id={`${id}-panel`} x1="0" y1="0" x2=".8" y2="1"><stop class="surface-start"/><stop class="surface-end" offset="1"/></linearGradient>
+      <linearGradient id={`${id}-route`}><stop class="route-start"/><stop class="route-end" offset="1"/></linearGradient>
+      <pattern id={`${id}-dots`} width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".65" class="grid-dot"/></pattern>
+    </defs>
+    <rect width="520" height="330" fill={`url(#${id}-dots)`}/>
+    {kind === 'evidence' && <>
+      <g class="threads" fill="none">
+        {[0,1,2,3,4,5,6,7].map(i=><path d={`M${71+i*8} ${103+i*15}C235 ${103+i*15} 207 ${112+i*11} 291 ${112+i*11}`} stroke={`url(#${id}-route)`}/>)}
+      </g>
+      <g transform="translate(29 46) rotate(-8 80 100)"><rect class="sheet-back" x="-6" y="10" width="145" height="190" rx="7"/><rect class="sheet" width="145" height="190" rx="7" fill={`url(#${id}-panel)`}/><path class="hairline" d="M20 34h105M20 145h105"/><text class="micro" x="20" y="24">{zh?'研究记录':'RESEARCH RECORDS'}</text><text class="metric" x="20" y="95">254<tspan class="unit"> GB</tspan></text><text class="small" x="20" y="123">{zh?'访谈 · 测试 · 行为':'Interviews · Tests'}</text><text class="micro" x="20" y="167">{zh?'保留原始上下文':'ORIGINAL CONTEXT'}</text></g>
+      <g transform="translate(283 59)"><rect class="sheet-shadow" x="4" y="9" width="208" height="225" rx="8"/><rect class="sheet" width="208" height="225" rx="8" fill={`url(#${id}-panel)`}/><text class="micro" x="20" y="29">{zh?'问题索引':'ISSUE INDEX'}</text><circle class="accent-fill" cx="185" cy="25" r="3"/><path class="hairline" d="M0 44h208"/><text class="result-number" x="18" y="115">86</text><text class="small" x="105" y="100">{zh?'个问题':'issues'}</text><text class="micro" x="105" y="119">{zh?'归入六类':'SIX CATEGORIES'}</text><path class="hairline" d="M20 139h168"/>{(zh?['任务情境','观察片段','原始出处']:['Task context','Observation','Source record']).map((t,i)=><g><circle class="index-dot" cx="25" cy={161+i*22} r="2"/><text class="small" x="38" y={165+i*22}>{t}</text><path class="hairline" d={`M177 ${159+i*22}l4 4-4 4`}/></g>)}</g>
+      <path class="trace-line" d="M310 290H194Q184 290 184 280V262"/><text class="micro" x="30" y="312">{zh?'每个判断，都能沿线回看':'EVERY FINDING HAS A SOURCE'}</text>
+    </>}
+    {kind === 'iteration' && <>
+      <g fill="none" class="iteration-tracks">
+        {[0,1,2,3,4,5,6].map(i=><path d={`M${135-i*5} ${135-i*6}C${135-i*5} ${87-i*6} ${354+i*5} ${87-i*6} ${354+i*5} ${135-i*6}V${185+i*6}C${354+i*5} ${232+i*6} ${135-i*5} ${232+i*6} ${135-i*5} ${185+i*6}Z`}/>)}
+      </g>
+      <path class="active-track" d="M125 123C125 75 364 75 364 123V197C364 244 125 244 125 197V158"/><path class="active-track" d="m119 166 6-8 6 8"/>
+      <g transform="translate(171 112)"><rect class="sheet-shadow" x="3" y="6" width="146" height="99" rx="7"/><rect class="sheet" width="146" height="99" rx="7" fill={`url(#${id}-panel)`}/><text class="micro" x="73" y="28" text-anchor="middle">{zh?'设计 ⇄ 观察':'DESIGN ⇄ OBSERVE'}</text><text class="focus-label" x="73" y="57" text-anchor="middle">{zh?'仍然可以修改':'STILL CHANGEABLE'}</text><path class="accent-line" d="M55 77h36"/></g>
+      <path class="hairline" d="M38 164h55M397 164h83"/><circle class="endpoint" cx="38" cy="164" r="5"/><circle class="endpoint" cx="480" cy="164" r="5"/>
+      <text class="small" x="38" y="197" text-anchor="middle">{zh?'洞察':'Insight'}</text><text class="small" x="474" y="197" text-anchor="middle">{zh?'确认':'Confirm'}</text>
+      <text class="micro" x="260" y="307" text-anchor="middle">{zh?'反馈回到设计，之后再检查':'FEEDBACK RETURNS TO DESIGN'}</text>
+    </>}
+    {kind === 'interaction' && <>
+      <path class="layer-guide" d="M70 73v156M436 67v169M263 139v152"/>
+      <g transform="translate(94 174)"><path class="sheet-shadow" d="M0 26 213-49 369 1 156 77Z"/><path class="layer-back" d="M0 17 213-58 369-8 156 68Z"/><path class="layer-edge" d="m0 17 156 51 213-76v12L156 80 0 29Z"/></g>
+      <g transform="translate(48 86)"><path class="sheet-shadow" d="M0 32 213-49 369 1 156 82Z"/><path class="layer-front" d="M0 17 213-64 369-14 156 67Z"/><path class="layer-edge" d="m0 17 156 50 213-81v12L156 79 0 29Z"/>
+        <path class="interaction-route" d="m71 17 72-26 68 22 79-29"/>
+        {[[71,17],[143,-9],[211,13],[290,-16]].map(([x,y])=><><ellipse class="node-halo" cx={x} cy={y} rx="12" ry="5"/><ellipse class="accent-fill" cx={x} cy={y} rx="4" ry="2"/></>)}
+      </g>
+      <path class="simulation-link" d="M259 99v113l63-22"/><circle class="accent-fill" cx="259" cy="212" r="4"/>
+      <g class="callout"><path class="hairline" d="M58 61V33h75"/><text class="small" x="140" y="38">{zh?'前台 / 用户体验':'FRONTSTAGE / EXPERIENCE'}</text><path class="hairline" d="M361 244v40h-90"/><text class="small" x="42" y="289">{zh?'后台 / 人工模拟':'BACKSTAGE / SIMULATION'}</text></g>
+      <text class="micro" x="34" y="172">{zh?'发起 · 执行 · 结束':'START · TASK · END'}</text><text class="micro" x="281" y="246">Wizard-of-Oz</text>
+    </>}
+  </svg>
+  <p class="diagram-foot"><span>{c.foot}</span><small>{zh?'方法示意':'Conceptual model'}</small></p>
+</div>
+<style>
+.case-diagram { padding: 1.3rem 1.3rem 1rem; color: var(--ink); background: linear-gradient(145deg,var(--paper-raised),var(--paper-deep)); border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; box-shadow: inset 0 1px 0 color-mix(in srgb,var(--paper-raised) 80%, transparent); }
+.diagram-heading { display: flex; align-items: center; justify-content: space-between; color: var(--ink-soft); }.diagram-kicker { font-size: .65rem; letter-spacing: .08em; }
+svg { display: block; width: 100%; height: auto; margin-block: .5rem; }text { fill: var(--ink); font-family: var(--font-sans); }.micro { font-size: 12px; letter-spacing: .035em; fill: var(--ink-soft); }.small { font-size: 14px; fill: var(--ink-soft); }.metric { font-size: 42px; font-weight: 500; letter-spacing: -.04em; }.unit { font-size: 16px; }.result-number { font-size: 75px; font-weight: 500; letter-spacing: -.06em; }.focus-label { font-size: 15px; font-weight: 500; }
+.surface-start { stop-color: var(--paper-raised); }.surface-end { stop-color: var(--paper); }.route-start { stop-color: var(--rule); }.route-end { stop-color: var(--signal); }.grid-dot { fill: var(--rule-strong); opacity: .38; }
+.sheet { stroke: var(--rule); }.sheet-back { fill: var(--paper-deep); stroke: var(--rule); }.sheet-shadow { fill: var(--ink); opacity: .05; }.hairline { fill: none; stroke: var(--rule); stroke-width: 1; }.threads { stroke-width: 1; opacity: .65; }.accent-fill { fill: var(--signal); }.index-dot { fill: var(--ink-soft); }.trace-line { fill: none; stroke: var(--signal); stroke-width: 1; stroke-dasharray: 3 4; opacity: .6; }
+.iteration-tracks { stroke: var(--rule-strong); stroke-width: .7; opacity: .45; }.active-track,.accent-line { fill: none; stroke: var(--signal); stroke-width: 1.6; }.endpoint { fill: var(--paper-raised); stroke: var(--ink-soft); }
+.callout .small { font-size: 17px; }.interaction .micro { font-size: 14px; }
+.layer-guide { stroke: var(--rule-strong); stroke-dasharray: 2 5; fill: none; }.layer-back { fill: var(--paper-deep); stroke: var(--rule-strong); }.layer-front { fill: var(--paper-raised); stroke: var(--rule-strong); }.layer-edge { fill: var(--paper-deep); stroke: var(--rule-strong); stroke-width: .7; }.interaction-route { fill: none; stroke: var(--signal); stroke-width: 2; }.node-halo { fill: var(--signal); opacity: .12; }.simulation-link { fill: none; stroke: var(--signal); stroke-dasharray: 4 4; stroke-width: 1.4; }
+.diagram-foot { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .5rem; margin: 0; border-top: 1px solid var(--rule); padding-top: .85rem; color: var(--ink-soft); font-size: .67rem; line-height: 1.6; }.diagram-foot small { font-size: .6rem; }
+@media(max-width:32rem) { .case-diagram { padding: 1rem .75rem .85rem; } }
+</style>

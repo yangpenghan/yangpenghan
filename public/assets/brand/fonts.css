@@ -1,0 +1,25 @@
+@font-face {
+ font-family: "Will Display";
+ src: url("fonts/technical/IBMPlexSans.woff2") format("woff2");
+ font-weight: 100 700;
+ font-style: normal;
+ font-display: swap;
+}
+
+@font-face {
+ font-family: "Will Text";
+ src: url("fonts/technical/NotoSansSC-site.woff2") format("woff2");
+ font-weight: 100 900;
+ font-style: normal;
+ font-display: swap;
+}
+
+
+/* Newly published characters outside the site subset still have a local font. */
+@font-face {
+ font-family: "Will Text Complete";
+ src: url("fonts/technical/NotoSansSC.woff2") format("woff2");
+ font-weight: 100 900;
+ font-style: normal;
+ font-display: swap;
+}

@@ -1,0 +1,207 @@
+{
+  "repository": "https://github.com/yangpenghan/will-noldus-visual-system",
+  "revision": "acea2b2d43b6bf9fe2f1ab745a076b6b3bd11df7",
+  "version": "Personal V2, 2026-09-05",
+  "adaptations": [
+    "fonts.css: site subset with complete local fallback",
+    "fonts/technical/NotoSansSC-site.woff2: subset of verified upstream NotoSansSC.woff2, fontTools, site characters including the 2026-09-06 essay expansion"
+  ],
+  "files": [
+    {
+      "path": "fonts/technical/IBMPlexSans-OFL.txt",
+      "bytes": 4363,
+      "sha256": "37784b44044a4ffd9256702b7c0982c37e5c8887ba90c6dca0479aea93dc898d"
+    },
+    {
+      "path": "fonts/technical/IBMPlexSans.woff2",
+      "bytes": 230404,
+      "sha256": "e69427cdfe81d4d038f4dc94446f52e777fee3af722dba5b22acdd47cfd2f9b7"
+    },
+    {
+      "path": "fonts/technical/NotoSansSC-OFL.txt",
+      "bytes": 4388,
+      "sha256": "1c05c68c34f9708415aada51f17e1b0092d2cea709bf4a94cd38114f9e73d7d9"
+    },
+    {
+      "path": "fonts/technical/NotoSansSC-site.woff2",
+      "bytes": 343460,
+      "sha256": "448b8a4cd0231f9c34e89ee14a6b18206155fb05669004ad36ea5595b44f6da1"
+    },
+    {
+      "path": "fonts/technical/NotoSansSC.woff2",
+      "bytes": 7782012,
+      "sha256": "3ddfdcc1d677923ee082f69686fae864ef34f5e5b4fdd8b3be82e4d69f573617"
+    },
+    {
+      "path": "fonts/technical/derived.json",
+      "bytes": 691,
+      "sha256": "8dfb4687eb17cb35b40ebf3b6cf53948dd54f5df9654e7d13d269a9ec3d26d69"
+    },
+    {
+      "path": "fonts/technical/sources.json",
+      "bytes": 1712,
+      "sha256": "3c9211f15fe9ebfd22fda7290fe924cca8a149920672b42e3888f6f5fa09304c"
+    },
+    {
+      "path": "fonts.css",
+      "bytes": 613,
+      "sha256": "265a69b4a631d6a6639d004e0a1a90426f041f85981d0336e9369b1024e8989a"
+    },
+    {
+      "path": "icons/evidence.svg",
+      "bytes": 343,
+      "sha256": "b81f5f120c743984aa9472f7103f014bae68d985181821c8525776de316cae66"
+    },
+    {
+      "path": "icons/experiment.svg",
+      "bytes": 387,
+      "sha256": "daef5bbabddced3b5671b5e90390d58778b77c8232d38025871aa16ffdf56418"
+    },
+    {
+      "path": "icons/question.svg",
+      "bytes": 340,
+      "sha256": "169d6350f82e1049a1bed7114e305d56ee69f6ccb56de7e1e15691ecf6dad7ae"
+    },
+    {
+      "path": "icons/reframe.svg",
+      "bytes": 336,
+      "sha256": "64a1c49eb505104706e645f35e393ff01513fc36e738818e62ce3fe7cd881d19"
+    },
+    {
+      "path": "logos/favicon.svg",
+      "bytes": 386,
+      "sha256": "5ccb2f58db8553c73f811963de9f3891998705a5b77c411d773d05b6ce3a4bbd"
+    },
+    {
+      "path": "logos/open-inference-white.svg",
+      "bytes": 301,
+      "sha256": "411af1ac3bef3618cc269f623ba74711496ee1cb84b3ed1fff731cf4a00e79a6"
+    },
+    {
+      "path": "logos/open-inference.svg",
+      "bytes": 292,
+      "sha256": "31eaad062646daa5ac2c53298232611a3905362ea3f792635d26c65fd3ad46e0"
+    },
+    {
+      "path": "logos/will-yang-bilingual-mulberry.svg",
+      "bytes": 24722,
+      "sha256": "b02dd3f8753c855453ac5bcfe05cb217e918b13cf1469c3a3183df3126964bdb"
+    },
+    {
+      "path": "logos/will-yang-bilingual-white.svg",
+      "bytes": 24722,
+      "sha256": "a5e3ed80843ad1080f2931dacdb412c736e7c0d12e065bc179d26e3d94ee5f66"
+    },
+    {
+      "path": "logos/will-yang-chinese-led-mulberry.svg",
+      "bytes": 24740,
+      "sha256": "832611cb2932156ea4d803ba20297178030068482c9d18c49a76616a599b5609"
+    },
+    {
+      "path": "logos/will-yang-chinese-led-white.svg",
+      "bytes": 24740,
+      "sha256": "5ef13eed71840ed7f31e8ee8a381427855b2b1c42c2a1774779bf9b57d0dbb36"
+    },
+    {
+      "path": "will-tokens.css",
+      "bytes": 154,
+      "sha256": "cd4f393c76a0c0b882aeb566cb3494c080b8a1265ea66a4be32d45b077d3fb39"
+    },
+    {
+      "path": "observation/eye-tracking.svg",
+      "upstreamPath": "assets/icons/observation-glyphs/svg/eye-tracking.svg",
+      "bytes": 980,
+      "sha256": "dc8a31b143fdccbde6c6e29689f1516471df6f95ffffa1b076ecd13a35f52494"
+    },
+    {
+      "path": "observation/eeg.svg",
+      "upstreamPath": "assets/icons/observation-glyphs/svg/eeg.svg",
+      "bytes": 627,
+      "sha256": "867f666811a5d97de95d80b88fbac13a8b9292f0f9b41d9772e65182ae912e6e"
+    },
+    {
+      "path": "observation/usability-task.svg",
+      "upstreamPath": "assets/icons/observation-glyphs/svg/usability-task.svg",
+      "bytes": 718,
+      "sha256": "7b5ac95d045edded0288fd5361a3feb4fff76793bcc56ab5c2484e7b7a53c4ba"
+    },
+    {
+      "path": "observation/use-scenario.svg",
+      "upstreamPath": "assets/icons/observation-glyphs/svg/use-scenario.svg",
+      "bytes": 846,
+      "sha256": "bdf424322d70d95a6e712de933ae557ee7406775042cd562477a33e7032d7722"
+    },
+    {
+      "path": "observation/knowledge-base.svg",
+      "upstreamPath": "assets/icons/observation-glyphs/svg/knowledge-base.svg",
+      "bytes": 1034,
+      "sha256": "cbc7a9f3c7cc5a1b5418e9e4d0010460e90d73f437a44d68e4219cfb904ecbf0"
+    },
+    {
+      "path": "observation/dataset.svg",
+      "upstreamPath": "assets/icons/observation-glyphs/svg/dataset.svg",
+      "bytes": 722,
+      "sha256": "7945bf704707c67bd1caf89c98cda67b407b0ce7535c16ce0975d05e70b93df9"
+    },
+    {
+      "path": "observation/agent-workflow.svg",
+      "upstreamPath": "assets/icons/observation-glyphs/svg/agent-workflow.svg",
+      "bytes": 1009,
+      "sha256": "4cbca08852321f4adaea520e8566c1d2ea4c333627ad4a07c02e552107d17a0e"
+    },
+    {
+      "path": "observation/decision.svg",
+      "upstreamPath": "assets/icons/observation-glyphs/svg/decision.svg",
+      "bytes": 819,
+      "sha256": "938bd2119fc464f4ea41950db7875527f515dc5c767ed80305ed2b30b506f6ea"
+    },
+    {
+      "path": "personal-icons/decide.svg",
+      "upstreamPath": "assets/personal/icons/decide.svg",
+      "bytes": 333,
+      "sha256": "d99846c3a8aab0e13de7f3c525d63ddb51a3e4be28444552fd574ebb8b0c20f2"
+    },
+    {
+      "path": "personal-icons/reframe.svg",
+      "upstreamPath": "assets/personal/icons/reframe.svg",
+      "bytes": 336,
+      "sha256": "64a1c49eb505104706e645f35e393ff01513fc36e738818e62ce3fe7cd881d19"
+    },
+    {
+      "path": "personal-icons/agent.svg",
+      "upstreamPath": "assets/personal/icons/agent.svg",
+      "bytes": 356,
+      "sha256": "2a5cbdd871de013dea85939521431a21a016e3653da8f4167f26f9e9b6a8b2b0"
+    },
+    {
+      "path": "personal-icons/observe.svg",
+      "upstreamPath": "assets/personal/icons/observe.svg",
+      "bytes": 338,
+      "sha256": "3b6a89bf38077c14f46149986157d748c0d2cd765eeadf2cfe8ea4587a2c13eb"
+    },
+    {
+      "path": "personal-icons/experiment.svg",
+      "upstreamPath": "assets/personal/icons/experiment.svg",
+      "bytes": 387,
+      "sha256": "daef5bbabddced3b5671b5e90390d58778b77c8232d38025871aa16ffdf56418"
+    },
+    {
+      "path": "personal-icons/knowledge.svg",
+      "upstreamPath": "assets/personal/icons/knowledge.svg",
+      "bytes": 328,
+      "sha256": "6b431af0436a59847ea0ed82344f15f58a5d8e6745f2d5b1816e14946112dc4c"
+    },
+    {
+      "path": "personal-icons/evidence.svg",
+      "upstreamPath": "assets/personal/icons/evidence.svg",
+      "bytes": 343,
+      "sha256": "b81f5f120c743984aa9472f7103f014bae68d985181821c8525776de316cae66"
+    },
+    {
+      "path": "personal-icons/iterate.svg",
+      "upstreamPath": "assets/personal/icons/iterate.svg",
+      "bytes": 352,
+      "sha256": "910942963b754f36d3991a781780ef5ab49f41f42baa1902b423e3ee06a614f4"
+    }
+  ]
+}

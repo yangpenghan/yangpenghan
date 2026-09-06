@@ -1,0 +1,23 @@
+---
+import type { Locale } from '../../i18n';
+import LibraryIcon from './LibraryIcon.astro';
+interface Props { locale: Locale; }
+const {locale}=Astro.props;
+const zh=locale==='zh';
+const items=[
+ {id:'solution-engineering',title:zh?'问题重构':'Reframing',question:zh?'哪些条件可以改变？':'Which conditions can change?',icon:'reframe'},
+ {id:'agentic-ai',title:zh?'AI 与协作':'AI & collaboration',question:zh?'人和工具怎样分工？':'How do people and tools share work?',icon:'agent'},
+ {id:'behavioral-intelligence',title:zh?'行为与解释':'Behavior & interpretation',question:zh?'观察能支持什么判断？':'What can an observation support?',icon:'observe'},
+ {id:'human-factors',title:zh?'模拟与验证':'Simulation & validation',question:zh?'什么结果才算有效？':'What result would count as useful?',icon:'experiment'},
+] as const;
+---
+<nav class="topic-map" aria-label={zh?'从核心主张探索四个议题':'Explore four subjects from the core argument'}>
+  <div class="map-heading"><span>{zh?'我持续追问的四个方向':'FOUR LINES OF INQUIRY'}</span><span aria-hidden="true">01 — 04</span></div>
+  <div class="map-branches">{items.map((item,index)=><a href={`#${item.id}`}><div class="branch-top"><LibraryIcon name={item.icon} /><span class="branch-number" aria-hidden="true">0{index+1}</span></div><strong>{item.title}</strong><small>{item.question}</small><svg class="branch-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 15 15 5M5 5h10v10"/></svg></a>)}</div>
+  <p class="map-foot">{zh?'共同的问题：怎样找到可以行动的解法？':'A shared question: what makes a solution actionable?'}</p>
+</nav>
+<style>
+.topic-map { border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; background: var(--paper-raised); }.map-heading { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem; padding: 1.1rem 1.5rem; font-size: .63rem; letter-spacing: .08em; color: var(--ink-soft); border-bottom: 1px solid var(--rule); }
+.map-branches { display: grid; grid-template-columns: 1fr 1fr; }a { position: relative; padding: 1.5rem 1.5rem 2.2rem; text-decoration: none; transition: background var(--duration); }a:nth-child(odd) { border-right: 1px solid var(--rule); }a:nth-child(-n+2) { border-bottom: 1px solid var(--rule); }a:hover { background: var(--paper); }.branch-top { display: flex; justify-content: space-between; align-items: center; color: var(--signal); margin-bottom: 1.25rem; }.branch-number { color: var(--ink-soft); font-size: .65rem; }a strong { display: block; font-size: .92rem; font-weight: 500; line-height: 1.5; }a small { display: block; color: var(--ink-soft); font-size: .73rem; margin-top: .5rem; line-height: 1.7; }.branch-arrow { position: absolute; width: 15px; height: 15px; bottom: .75rem; right: 1.1rem; fill: none; stroke: var(--ink-soft); stroke-width: 1.1; transition: transform var(--duration); }a:hover .branch-arrow { transform: translate(2px,-2px); }.map-foot { color: var(--ink-soft); font-size: .68rem; padding: 1rem 1.5rem; border-top: 1px solid var(--rule); margin: 0; }
+@media(max-width:32rem) { a { padding: 1.2rem 1rem 2rem; }.map-heading,.map-foot { padding-inline: 1rem; } }
+</style>

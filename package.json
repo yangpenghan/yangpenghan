@@ -16,7 +16,8 @@
 		"lint": "biome check scripts src/i18n src/content/content.test.ts src/content.config.ts src/styles/global.css astro.config.mjs package.json",
 		"lint:fix": "biome check --write scripts src/i18n src/content/content.test.ts src/content.config.ts src/styles/global.css astro.config.mjs package.json",
 		"test": "vitest run",
-		"verify": "npm run lint && npm run check && npm run test && npm run build"
+		"verify": "npm run lint && npm run check && npm run test && npm run build",
+		"audit:visuals": "node scripts/visual-storytelling-audit.mjs"
 	},
 	"dependencies": {
 		"@astrojs/sitemap": "^3.7.3",

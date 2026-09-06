@@ -1,16 +1,16 @@
 ---
 locale: en
-title: How 24 days, six cities, and 254GB of records became 86 decision-ready issues
-description: Sixty tests and interviews, 3,600 recorded minutes, and roughly 600 pages were not the result. The work was compressing field behavior into product decisions.
+title: "Finance app: turning field records into issues a team can act on"
+description: "From organizing 254GB of records to finding grounds for product changes: review behavior by task and form 86 traceable issues."
 publishDate: 2018-06-01
-updatedDate: 2026-08-12
+updatedDate: 2026-09-05
 status: delivered
 year: "2018"
-order: 7
+order: 1
 kind: study
-featured: false
+featured: true
 discipline: Fintech · User research
-outcome: Travelled 7,488 kilometres for 60 tests and interviews, turning 254GB of records into 86 prioritized issues.
+outcome: "Delivered 86 decision-ready issues in six categories, linked to tasks, observations, and priorities."
 role: Research design, multi-city fieldwork, behavioral analysis, and insight modeling
 tags:
   - Field research
@@ -21,36 +21,32 @@ tags:
 confidentiality: The client, product version, participants, recordings, and individual findings remain private. This page uses only aggregate facts already included in my public résumé.
 ---
 
-## Research scale is not the size of the archive
+## Reframing the problem
 
-Problems in a financial app are easy to record as a page-level list: an entry point is hard to find, a term is unclear, feedback arrives too late, or a process is abandoned. That list can improve the current release, but it rarely explains why similar difficulties recur across different screens. It also gives the next product team little protection against rebuilding the same problem in a new form.
+**If we only ask:** How can a large set of test records become a report?
 
-Across 24 days, my team and I covered six cities and 7,488 kilometres, completed 60 tests and interviews, and recorded 3,600 minutes. The project generated 254GB of behavioral records and roughly 600 pages of working material. Variation in place, experience, and context enriched the evidence, but also created an analysis problem. If every observation were filed only by document or screen, the result would be a large archive that no product team could act on.
+**The more useful question:** Which moments show where a problem occurs and support a concrete product decision? The unit of organization becomes a traceable issue.
 
-## My role and the constraints
+## What needed solving
 
-I worked across research design, multi-city execution, organization of behavioral evidence, and the final model. The output had to work on two time horizons: give the product team specific changes it could make now, while also explaining why people behaved as they did.
+Twenty-four days, six cities, 60 tests and interviews, and 3,600 recorded minutes. After collection, the product team still needed a clear answer: what should change, and why?
 
-Financial tasks add a further constraint. People are evaluating risk, control, and trust as they move through a flow. A pause does not necessarily indicate confusion; it may be a deliberate check before a consequential action. The study therefore needed more than success rates. We had to preserve the relationship between action sequence, hesitation, backtracking, help-seeking, and participants’ explanations.
+I contributed to research design, fieldwork, organization of the records, and analysis. The 254GB of recordings and roughly 600 pages of working material were inputs. Turning them into useful grounds for a product decision was the next task.
 
-## An analysis chain from event to pattern
+## How I reframed it
 
-The analysis operated at three levels.
+A page-by-page list can help fix a release, but it does little to explain recurring difficulties. I worked from events within a task: what state the person encountered, what they did, and what followed.
 
-The first was the **reproducible event**: in which task and interface state did a behavior occur, and what followed? This kept observation separate from interpretation.
+Financial tasks need careful interpretation. A pause may mean confusion, or it may be a deliberate check of the consequences. Treating both as inefficiency can lead to the wrong change.
 
-The second was the **underlying mechanism**. We compared events that looked different on the surface but could arise from a similar cognitive or decision difficulty. A category had to recur across tasks or locations before it could become a candidate pattern.
+## What I did
 
-The third was the **product implication**. An issue was useful only if it could guide design rather than merely describe user difficulty. It needed to show how the interface increased a demand on memory, attention, comprehension, or perceived control—and where the product team could reduce that demand.
+I separated observable events, possible explanations shared across events, and implications for the product. Observation, interpretation, and recommendation stayed distinct.
 
-The study produced 86 issues organized into six families: navigation, feedback, visual design, consistency, terminology, and software defects. The taxonomy was not an exercise in report formatting. It helped different product roles locate responsibility, compare recurring mechanisms, and set priorities.
+The study produced 86 decision-ready issues, organized under navigation, feedback, visual design, consistency, terminology, and software faults. Each issue connected the task, observed behavior, evidence, participant explanation, and priority.
 
-## The deliverable was more than a report
+## Delivery and limits
 
-Each issue connected a task, observed behavior, evidence segment, participant explanation, and priority. The deliverable therefore worked at three levels: traceable events, a structure spanning events, and an explanation connecting that structure to product decisions. Remove any one and the result weakens. Categories without events become an elegant but untestable story. Events without structure leave a team chasing one list after another.
+The output was a set of locatable issues and a basis for discussing priorities. Public material does not include post-release business measures, so I cannot claim a conversion or revenue improvement.
 
-This project changed how I structure research conclusions. I began separating three statements explicitly: what was observed, how we interpret it, and what decision should follow. That structure later reappeared in automotive HMI evaluation, human-factors work, and AI-assisted behavioral analysis.
-
-## Public boundary
-
-The 24 days, six cities, 7,488 kilometres, 60 tests and interviews, 3,600 minutes, 254GB of records, roughly 600 pages, and 86 issues come from my signed 2019 public talk and were cross-checked against the underlying project archive. The 60 research encounters are not the effective sample count used for the issue statistics. Client identity, city names, sample design, raw behavior, product interfaces, and recommendations are intentionally omitted.
+The 60 tests and interviews count research encounters, not the effective sample behind every issue. Aggregate figures come from my 2019 public talk and the existing project-record account. Client identity, interfaces, and individual findings remain private.

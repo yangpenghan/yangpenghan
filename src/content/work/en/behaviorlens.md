@@ -1,15 +1,16 @@
 ---
 locale: en
-title: "BehaviorLens: AI-driven automated behavior coding"
-description: A three-pass architecture designed to replace 9 hours of manual coding, combining structured scanning, multi-model deep analysis, and semantic fusion into a traceable workflow.
+title: "BehaviorLens: keeping review points in automated video coding"
+description: "Video coding takes time and requires context. I designed a three-pass prototype to explore where researchers should review automated work."
 publishDate: 2026-05-01
+updatedDate: 2026-09-05
 status: prototype
 year: 2026—present
-order: 2
+order: 10
 kind: system
-featured: true
+featured: false
 discipline: Agentic AI · Behavior analysis
-outcome: Completed zero-to-one product design (strategy, architecture, prototype, prompt engineering); the three-pass architecture targets 20 minutes of automated processing in place of 9 hours of manual coding.
+outcome: "Concept, architecture, and frontend prototype prepared. The 20-minute processing goal and coding accuracy remain unvalidated."
 role: Initiator, product architecture, core method definition
 tags:
   - behavior-coding
@@ -20,32 +21,28 @@ tags:
 confidentiality: Internal product-concept stage, not yet publicly released. This page describes only the method and architectural direction.
 ---
 
-## The problem
+## Reframing the problem
 
-Anyone who has done structured behavior coding in Observer knows the pattern: a few hours of interaction video take longer to code than to record. The questions researchers actually want to answer sit at the analysis layer, yet enormous amounts of time go into frame-by-frame labeling. Parent-child interaction research is a typical case — rich interaction detail, dense coding schemes, and manual coding that is both the quality bottleneck and the time bottleneck.
+**If we only ask:** How can behavioral coding be faster?
 
-## The three-pass architecture
+**The more useful question:** Which candidate segments can be extracted automatically, and which contextual judgments need human review? Separate the jobs, then test whether the prototype reduces the work.
 
-BehaviorLens (project codename SMT for Human) splits coding into three passes:
+## Which work I wanted to reduce
 
-1. **Structured scanning.** A lightweight model slices through the video and answers a cheap question: where is something happening?
-2. **Selective deep analysis.** Only the segments flagged in pass one are processed in parallel by multiple models, extracting posture, movement, and facial expression separately.
-3. **Semantic fusion.** An LLM receives the extracted results and, together with the coding scheme, generates behavior descriptions and codes.
+Researchers repeatedly watch video, mark events against a coding scheme, and check agreement. Ambiguous actions need context, so faster labeling alone is not enough.
 
-The design goal is to compress what takes 9 hours of manual coding into 20 minutes of automated processing. Note that this is an architectural design target; it has not yet been validated on real research data.
+I initiated BehaviorLens and worked on the concept, architecture, core method, and prompts to separate repetitive scanning from research judgment.
 
-## Why traceability
+## The three passes
 
-An obvious question is why not build an end-to-end model: video in, codes out. Because behavioral research cannot accept black-box output. A code that enters a paper or a conclusion must be defensible: which step produced this label, which signals it rests on, where a human can review it.
+The first pass proposes candidate segments. The second examines those segments in detail. The third uses the coding scheme to assemble descriptions and a timeline. Intermediate outputs allow researchers to inspect and correct each step.
 
-The three passes separate the judgments into layers. A scanning error (a missed segment) and a fusion error (a misworded code) have different characters and different remedies. Each boundary between passes is a natural intervention point — a researcher can inspect segment selection before deep analysis, and check coding rationale after fusion. An end-to-end model offers none of this; it offers an answer.
+There is a cost: later passes looking only at candidates cannot recover events missed by the first pass. Checks against the original video and missed-event evaluation must be part of validation.
 
-## Strategic framing
+## Current state
 
-The product sits inside a four-layer paradigm: Evidence → Feedback → Signal → Pattern. My call is to start at the Evidence layer — reliably automate "what happened" before reaching for higher layers. This matches my background in behavioral research: without a trustworthy evidence layer, everything above is built on sand.
+The work so far covers strategic analysis, architecture, a frontend prototype, and prompts. Validation with real research data is not complete.
 
-The division of labor with PsyPhiClaw falls along the same line: PsyPhiClaw is a workflow for multimodal signal processing, while BehaviorLens is a vertical product for behavior-coding automation. One handles how signals are aligned and fused; the other handles how codes come out fast and checkably.
+Twenty minutes is a processing target. Video duration, the coding task, and the manual comparison need defining before speed and quality can be tested together. There is no measured efficiency gain to report yet.
 
-## Current status
-
-Strategic analysis, architecture design, product concept, theoretical alignment, a front-end prototype, prompt engineering, and the reporting outline are all complete. What remains is validation on real research data — the next step, and the prerequisite for turning 20 minutes from a design target into a measured result.
+The next checks are missed events, coding agreement, and review time. Those results are needed to judge whether the three-pass design helps.

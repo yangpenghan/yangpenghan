@@ -1,0 +1,16 @@
+{
+  "human-factors-process-2020.png": {
+    "source": "../../talks/2020-medical-device-hf-safety.pdf",
+    "title": "医疗器械人因工程中的安全考量",
+    "author": "杨朋翰",
+    "year": 2020,
+    "page": 20,
+    "derivation": "Full page rendered at 1440 × 810 with pdftoppm; original content retained.",
+    "use": "Historical public presentation excerpt, with a source link and accessible explanation."
+  },
+  "methodDiagrams": {
+    "source": "src/components/visuals/",
+    "derivation": "Original, bilingual SVG and HTML diagrams based on existing site case descriptions and the author's stated problem-solving approach.",
+    "use": "Conceptual relationships only; shape counts, sizes, and positions do not represent measured distributions or performance."
+  }
+}

@@ -10,7 +10,7 @@ const t = useTranslations(locale);
 // TODO(will): 替换为真实 Noldus 企业邮箱
 const noldusEmail = 'penghan.yang@noldus.com';
 const gmail = 'yangpenghan1988@gmail.com';
-const consultingSubject = locale === 'zh' ? '咨询合作咨询' : 'Consulting inquiry';
+const consultingSubject = locale === 'zh' ? '项目合作讨论' : 'Consulting inquiry';
 const personalSubject = locale === 'zh' ? '想和你讨论一个问题' : 'A hard problem worth discussing';
 ---
 
@@ -53,7 +53,7 @@ const personalSubject = locale === 'zh' ? '想和你讨论一个问题' : 'A har
 	h2 {
 		max-width: 18ch;
 		margin-top: 2rem;
-		font-family: var(--font-serif);
+		font-family: var(--font-display);
 		font-size: var(--step-3);
 		line-height: 1.08;
 	}
@@ -88,8 +88,8 @@ const personalSubject = locale === 'zh' ? '想和你讨论一个问题' : 'A har
 
 	.primary-link {
 		gap: 0.65rem;
-		background: var(--ink);
-		color: var(--paper);
+		background: var(--signal);
+		color: var(--paper-raised);
 	}
 
 	.secondary-link {
@@ -98,8 +98,8 @@ const personalSubject = locale === 'zh' ? '想和你讨论一个问题' : 'A har
 
 	.primary-link:hover,
 	.secondary-link:hover {
-		background: var(--signal);
-		color: #fff;
+		background: var(--author);
+		color: var(--paper-raised);
 	}
 
 	.primary-link:active,
@@ -112,4 +112,5 @@ const personalSubject = locale === 'zh' ? '想和你讨论一个问题' : 'A har
 			grid-template-columns: 1fr;
 		}
 	}
+:global(.theme-dark) .primary-link, :global(.theme-dark) .secondary-link:hover { color: var(--paper); }
 </style>

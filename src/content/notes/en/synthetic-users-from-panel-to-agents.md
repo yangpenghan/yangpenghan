@@ -1,30 +1,73 @@
 ---
-title: "From panel libraries to agent libraries: where synthetic users stop"
-description: "A consumer-experience research concept built on the synthetic survey respondent (SSR) method: how far OCEAN personality models take you, and which conclusions may always need real humans."
+title: "Virtual users should be able to fail a reality check"
+description: "Moving from plausible responses to testable expectations: defining validation scope, separating calibration data, comparing baselines, and learning from model failure."
 publishDate: 2026-08-21
+updatedDate: 2026-09-06
 locale: en
-category: agentic-ai
-categoryLabel: Agentic AI
-readingMinutes: 7
+category: human-factors
+categoryLabel: Simulation, experience & validation
+readingMinutes: 6
 featured: false
 ---
 
-In July 2026 I drafted an AI simulation concept for a consumer-experience study for a real-estate client. Rather than settling for "have an LLM generate some answers," the concept followed an existing academic line: the Colgate paper on synthetic survey respondents (SSR). That paper showed that LLM-generated, personified respondents can approximate the distributions of real samples on certain survey dimensions. My concept tried to answer a more engineering question: placed in the early phase of a real commercial study, what can this method carry, and where does it break?
+A virtual resident says a kitchen has poor circulation. Asked to elaborate, it describes a rushed morning, two people cooking, and awkward access to utensils.
 
-## The paradigm shift
+That can inspire discussion. What should the design team change, and what would establish that the change improved use?
 
-The traditional infrastructure for survey research is the panel library: recruit, screen with questionnaires, sample against quotas, schedule, execute. The synthetic-user concept swaps that infrastructure for an agent test library—each persona is an agent configured along OCEAN dimensions (openness, conscientiousness, extraversion, agreeableness, neuroticism), plus background and consumption history. To test a concept, you no longer sample and recruit; you run a batch of agents through it.
+I initially considered synthetic responses as a way to inspect questionnaires and scenarios. Following that idea further, I want to ask whether virtual users can make expectations with clear failure conditions and submit them to real behavioral evidence. What follows is a methodological proposal, not a system with completed empirical validation.
 
-At the core of my concept sits a synthetic personality engine: given the structure of a target population, it generates a set of personality instances with a plausible distribution across OCEAN dimensions, each carrying preferences and constraints consistent with its profile. During concept iteration, you can run the entire library repeatedly and compare how different personality profiles react.
+## Specify what is being simulated
 
-## The limits of the paper
+“Virtual user” can mean an interview respondent, a model reproducing recorded behavior, an actor executing tasks in space, or a tool for comparing design alternatives. Each has a different use.
 
-The SSR method has clear boundaries. Personality questionnaires can be reproduced fairly well by synthetic samples, because a questionnaire is itself a self-report language task—exactly what LLMs are best at. But real consumer decisions are not purely language tasks: budget constraints, household negotiation, channel friction, the spatial experience of walking through a property—none of these live inside a personality model's description space. A highly extraverted synthetic respondent will "speak" more socially, but that does not mean it will actually visit three developments on a Saturday.
+A rich personality description may not improve action timing. Reproducing movement in an old layout may not predict adaptation to a new one. Calling everything realistic hides the need to evaluate each capability separately.
 
-So I see the breakthrough space in combining two things. First, task design: instead of having synthetic users fill out questionnaires, put them into structured task situations—given a budget, a household structure, and an information environment, observe their decision paths. Second, behavioral measurement: import methods from human factors. Record not only the agent's final choice but its intermediate steps, hesitations, information-seeking order, and points of abandonment. This is my home turf in behavioral research, and it is usually the missing layer when pure language-model teams build SSR systems.
+I would start with a narrow question: under specified tasks, occupancy, dimensions, and movement constraints, is layout A or B more likely to produce mutual obstruction? That question contains geometry, behavioral scheduling, and people's actual responses.
 
-## Changing the cost structure
+If geometry alone answers the immediate question, a conversational resident is unnecessary. Added behavioral mechanisms become worth building when they change a useful prediction.
 
-With that positioning, the role of synthetic users becomes clear. They cannot replace real behavioral measurement—an agent has no budget pressure, no spouse to argue with, no commuting cost. But they can change the cost structure of early-stage iteration. Concept screening, wording comparisons, stress-testing task flows—work that used to require recruiting real users every round can first go through many rounds on the synthetic library, saving real people for the final rounds of validation.
+## Turn an opinion into an observable expectation
 
-As for which conclusions can be permanently delegated to synthetic users and which must, on principle, return to real populations—I do not have a firm answer. My intuition is that everything that depends on "saying" (preference statements, reason narratives) will be absorbed by synthetic methods first, while everything that depends on "doing," where doing carries real cost, may need real humans for a long time. Where exactly that line sits is probably a question only more project data can answer.
+In the hypothetical kitchen, I would unpack poor circulation into events: who is preparing what, which tasks compete for space, who waits or reroutes, and how the order changes.
+
+Then specify the comparison. What remains constant when storage moves? If residents can learn the layout, which tasks reveal that learning? Repeated runs cannot establish adaptation if the model has no mechanism for it.
+
+Expectations can concern locations, sequences, or rankings between designs. An overall experience score is not a necessary starting point. Detecting serious obstruction and predicting a small time saving also demand different precision.
+
+I would record failure conditions before seeing the observations. Otherwise, a prediction of conflict at the entrance and a real pause at a cupboard can both be relabeled spatial inconvenience after the fact. The simulation then becomes difficult to contradict.
+
+## Validation contains several questions
+
+Does the implementation follow its specification? Do the behavioral assumptions adequately represent the task? Does the output agree with real use at the precision the decision needs? Sargent separates conceptual, implementation, data, and operational validity, relating evaluation to intended purpose and acceptable accuracy. [Verification and Validation of Simulation Models, 2003](https://www.informs-sim.org/wsc03papers/006.pdf)
+
+For me, the practical implication is that collision-free movement checks one constraint. A coherent story checks narrative consistency. Neither independently validates a design comparison.
+
+The model also need not resemble people in every detail. If its purpose is finding possible spatial conflicts, first test whether it identifies worthwhile research questions. Its reported scope must remain equally narrow.
+
+## Keep calibration separate from evaluation
+
+Watching where people pause and changing rules to reproduce those pauses is calibration. It may improve fit to those records. The same records cannot then establish successful prediction.
+
+Where the data permits, I would hold out participants, task combinations, or layouts, depending on the intended extension. Holding out adjacent segments of the same recording provides weak support for claims across households.
+
+Comparison should include simple rules, the existing research process, or researchers' initial judgments. Improving over a random output is not enough to justify a complex system in practice.
+
+I would examine missed problems, false warnings, design rankings, and review costs. A model that flags every location may miss little while providing almost no help with prioritization.
+
+## Locate the discrepancy before choosing a repair
+
+When simulation and observation differ, I would first inspect the layer involved: inaccurate dimensions, an incomplete task script, a human strategy the model disallows, or a narrative that has altered the actual output.
+
+Different failures require different repairs. A measurement error changes the input. Restricted rules may require more behavioral possibilities. Negotiation that changes the task order may require reconsidering the simulation unit.
+
+Sometimes the appropriate response is a narrower use. A system might help generate interview questions while remaining unsuitable for estimating population preferences. That retreat can preserve a useful, limited tool.
+
+## When I would let it influence a design decision
+
+I would want a record of the question, the expectation, the independent evidence, the discrepancies, and the consequences of a mistaken decision.
+
+Early exploration may tolerate more false warnings when the team knows that testing follows. A major layout commitment needs stronger comparisons and error analysis. An unchanged interface does not justify an unchanged level of trust.
+
+My proposed starting point is simulation for exposing questions, comparing hypotheses, and preparing studies, followed by evidence about whether it deserves more responsibility. I cannot claim that it has replaced real users.
+
+The next question is [what changes when experience is studied over a day, a week, or longer](../experience-across-time/). A longer run does not automatically contain longer-term experience.

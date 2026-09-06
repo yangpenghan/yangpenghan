@@ -1,16 +1,16 @@
 ---
 locale: en
-title: Bringing packaging research back to real action
-description: "Combining EEG, eye tracking, and natural behavior to distinguish three different questions: what people notice, understand, and actually do."
+title: "Dairy packaging: research that led to a usage instruction"
+description: "EEG, gaze, and observation each had a role. The task was to connect what people saw with how they picked up, opened, and used the packaging."
 publishDate: 2017-10-01
-updatedDate: 2026-08-12
+updatedDate: 2026-09-05
 status: delivered
 year: "2017"
-order: 8
+order: 5
 kind: study
 featured: false
 discipline: Consumer research · Multimodal behavior
-outcome: Connected experimental signals with natural use behavior and produced concrete packaging changes, including clearer guidance for using a fruit cup.
+outcome: "Combined measurements and natural-use observation to propose packaging changes, including instructions for using the fruit cup."
 role: Multimodal study design, behavioral measurement, and integrated analysis
 tags:
   - EEG
@@ -21,40 +21,24 @@ tags:
 confidentiality: Brand, concepts, participants, source signals, and comparative results remain private. This page covers methods and one recommendation example already disclosed in my public résumé.
 ---
 
-## One package contains at least three questions
+## Reframing the problem
 
-Stated preference does not mean a package will be noticed on a shelf. Attention does not mean its information will be understood. Understanding does not mean somebody can use it smoothly in a real sequence of actions.
+**If we only ask:** How can we compare consumer responses to packaging?
 
-The value of this dairy-packaging study was not that it used EEG and eye tracking at the same time. It was that different forms of evidence were assigned to one decision problem: how does packaging shape an initial response, visual exploration, and actual use?
+**The more useful question:** Which stage needs changing: attention, understanding, or actual use? Put the measures back into the same activity to inform a specific design recommendation.
 
-## My role
+## The question
 
-I designed the multimodal study and worked across behavioral measurement and integrated interpretation. The project needed comparable signals under controlled conditions while preserving the natural sequence in which people picked up, opened, combined, consumed, and handled the package.
+Noticing packaging, understanding its information, and using it successfully are different events. This dairy-packaging study needed to examine each to identify a useful design change.
 
-The central risk was allowing the instruments to define the question. EEG produces one set of measures, eye tracking another, and observational work a third coding system. If each source becomes a separate chapter, the report may look sophisticated without helping a design team choose what to change.
+I led the multimodal research design, measurement, and synthesis. The risk was ending with a separate set of charts from every instrument and no shared design implication.
 
-## Giving each source a limited job
+## How I used the tools
 
-We separated the decision into three levels:
+Each method had a defined job: EEG for comparing early responses, gaze for visual paths, and natural observation for picking up, opening, and eating. I brought results together around the same task step, while keeping their interpretations separate.
 
-1. **Early response** — whether presentation produced a comparable neural response.
-2. **Visual path** — where people looked first, what they missed, and where they moved repeatedly between information areas.
-3. **Real use** — where picking up, opening, combining, or consuming the product diverged from the intended action sequence.
+## A small, concrete output
 
-Each method was allowed to answer only the question it could support. Gaze does not prove preference. EEG does not directly explain why a packaging structure is difficult to use. An interview does not replace an observed action. Integration happened at shared task moments: only when a visual pattern, signal change, and behavioral difficulty converged at the same point did we examine a design implication.
+One shareable recommendation was to add instructions for using the fruit cup. It brought the discussion back to whether the packaging explained the intended action.
 
-## How the findings entered design
-
-The recommendations were written as concrete changes that packaging, information, or the use sequence could carry; research language such as “one metric was higher” appeared only as supporting evidence. One example preserved in my public résumé was clearer guidance for using a fruit cup. The underlying question was whether the package made the intended action intelligible.
-
-It is a small example, but it shows how multimodal research should end. A design team does not need every signal visualized. It needs to know which evidence changed which judgment, and what behavior should be checked after the design changes.
-
-## What this project taught me
-
-The job of multimodal research is to give each source of evidence a bounded responsibility, then bring them together at the same time, task, and decision point. The number of instruments says nothing about how advanced a study is.
-
-If a signal cannot change the design of the study, rule out an alternative explanation, or support a concrete decision, it is probably not worth collecting. That principle now guides how I select gaze, physiology, facial expression, and AI-analysis tools.
-
-## Public boundary
-
-The use of EEG, eye tracking, natural behavior, and the fruit-cup guidance example comes from my public résumé. The brand, study materials, condition comparisons, source data, and other recommendations remain confidential.
+This was a design recommendation; public material does not include post-launch results. Brands, comparisons, and other findings remain private. My contribution was connecting measurements to a specific issue a designer could address.

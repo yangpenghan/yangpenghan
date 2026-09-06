@@ -1,0 +1,52 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import type { Locale } from '../i18n';
+import ToolInstrument from './visuals/ToolInstrument.astro';
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const navUrl = (path: string) => getRelativeLocaleUrl(locale, path);
+const copy = locale === 'zh' ? {
+  eyebrow: '工具箱 / 实际用过的手段',
+  title: '问题决定我拿起什么工具。',
+  intro: '我的工具箱里有测量设备、研究方法，也有代码与 AI。这里列的是它们承担过的具体工作。新问题来了，我会重新判断哪些用得上。',
+  items: [
+    { title: '把发生的事看清楚', tools: '眼动 · EEG · 访谈 · 行为观察', body: '在包装研究里，分别查看视觉路径、比较早期反应、记录拿取与开启动作，再把解释放回同一个使用环节。', slug: 'multimodal-packaging', label: '乳品包装研究' },
+    { title: '在开发之前试一试', tools: 'Wizard-of-Oz · 任务脚本 · 模拟交互', body: '在服务机器人研究里，由后台人员模拟尚未实现的响应，先观察用户能不能发起、完成和结束互动。', slug: 'human-robot-interaction', label: '服务机器人研究' },
+    { title: '让资料能回答具体问题', tools: 'Python · ChromaDB · 关键词与语义检索', body: '维护产品与可用性知识库，分开资料范围、调整段落切分，让查询能返回相关上下文，并保留回看原文的路径。', slug: 'ai-agent-system', label: '个人知识与 AI 系统' },
+    { title: '把重复步骤接起来', tools: 'OpenClaw · Claude Code · 可复用任务指令', body: '组合运行时、编码助手和现有工具，处理查询、信息整理与归档。逐步明确输入、权限和检查方式，再放进日常工作。', slug: 'ai-agent-system', label: '日常 AI 工作流' },
+  ],
+  foot: '选工具前，我会问：它能消除哪个不确定性，或改变哪个卡点？如果一次观察、一张表就够用，就从那里开始。',
+} : {
+  eyebrow: 'Toolbox / Methods I have used',
+  title: 'The problem determines the tool.',
+  intro: 'My toolbox includes measurement equipment, research methods, code, and AI. These are concrete jobs they have done. A new problem calls for a fresh choice.',
+  items: [
+    { title: 'See what actually happens', tools: 'Eye tracking · EEG · Interviews · Observation', body: 'In packaging research, I examined visual paths, compared early responses, and observed handling and opening. I interpreted each within the same stage of use.', slug: 'multimodal-packaging', label: 'Packaging research' },
+    { title: 'Try an interaction before building it', tools: 'Wizard-of-Oz · Task scripts · Simulations', body: 'In service-robot research, a person behind the scenes simulated unfinished responses so we could observe how users started, completed, and ended an interaction.', slug: 'human-robot-interaction', label: 'Service-robot research' },
+    { title: 'Find context that answers a question', tools: 'Python · ChromaDB · Keyword and semantic search', body: 'I maintain separate product and usability libraries, adjusting scope and passage boundaries so retrieval returns relevant context with a route back to the source.', slug: 'ai-agent-system', label: 'Personal knowledge and AI system' },
+    { title: 'Connect repeated steps', tools: 'OpenClaw · Claude Code · Reusable task instructions', body: 'I combine a runtime, coding assistant, and existing tools for lookup, information handling, and filing, defining inputs, permissions, and checks for everyday use.', slug: 'ai-agent-system', label: 'Daily AI workflows' },
+  ],
+  foot: 'Before choosing a tool, I ask which uncertainty it can resolve or which obstacle it can change. If an observation or a table is enough, I start there.',
+};
+---
+<section class="toolbox section-rule" id="toolbox" aria-labelledby="toolbox-title">
+  <div class="page-shell">
+    <header><div><p class="eyebrow">{copy.eyebrow}</p><h2 id="toolbox-title">{copy.title}</h2></div><p class="toolbox-intro">{copy.intro}</p></header>
+    <ul>{copy.items.map((item, index) => <li><ToolInstrument {locale} {index} /><h3>{item.title}</h3><p class="tool-names">{item.tools}</p><p>{item.body}</p><a class="text-link internal" href={navUrl(`work/${item.slug}/`)}>{item.label}</a></li>)}</ul>
+    <p class="toolbox-foot">{copy.foot}</p>
+  </div>
+</section>
+<style>
+  .toolbox { padding-block: clamp(4rem, 7vw, 7rem); scroll-margin-top: calc(var(--header-height) + 1rem); }
+  header { display: grid; grid-template-columns: 1.2fr .8fr; gap: 3rem; align-items: end; margin-bottom: 3rem; }
+  h2 { margin-top: 1.5rem; font-size: var(--step-3); font-weight: 500; line-height: 1.35; }
+  .toolbox-intro, li > p, .toolbox-foot { color: var(--ink-soft); }
+  ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3rem; padding: 0; list-style: none; }
+  li { border-top: 1px solid var(--rule-strong); padding-top: 1.5rem; display: flex; flex-direction: column; align-items: start; gap: 1rem; }
+  h3 { font-size: var(--step-1); font-weight: 500; line-height: 1.45; }
+  li > .tool-names { color: var(--author); font-size: .9rem; font-weight: 500; }
+  li > p { font-size: .95rem; }
+  li > a { margin-top: auto; font-size: .88rem; }
+  .toolbox-foot { max-width: 48rem; margin-top: 3rem; font-size: .9rem; }
+  @media (max-width: 48rem) { header, ul { grid-template-columns: 1fr; gap: 2rem; } }
+</style>

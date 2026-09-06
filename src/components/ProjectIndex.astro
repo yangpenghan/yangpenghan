@@ -2,13 +2,18 @@
 import type { CollectionEntry } from 'astro:content';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { useTranslations, type Locale } from '../i18n';
+import CaseDiagram from './visuals/CaseDiagram.astro';
 
 interface Props {
 	projects: Array<CollectionEntry<'work'>>;
 	locale: Locale;
+ illustrated?: boolean;
 }
 
-const { projects, locale } = Astro.props;
+const { projects, locale, illustrated = false } = Astro.props;
+const diagramKinds: Record<string, 'evidence' | 'iteration' | 'interaction'> = {
+ 'financial-behavior-model': 'evidence', 'medical-devices': 'iteration', 'human-robot-interaction': 'interaction',
+};
 const t = useTranslations(locale);
 const navUrl = (path: string) => getRelativeLocaleUrl(locale, path.replace(/^\//, ''));
 const statusLabel = (status: CollectionEntry<'work'>['data']['status']) => {
@@ -18,13 +23,14 @@ const statusLabel = (status: CollectionEntry<'work'>['data']['status']) => {
 };
 ---
 
-<ol class="project-index">
+<ol class:list={["project-index", { illustrated }]}>
 	{
 		projects.map((project) => {
 			const slug = project.id.split('/').slice(1).join('/');
 			return (
 				<li data-reveal>
 					<a href={navUrl(`/work/${slug}/`)} aria-label={`${t('work.read')}: ${project.data.title}`}>
+						{illustrated && diagramKinds[slug] && <div class="project-visual"><CaseDiagram {locale} kind={diagramKinds[slug]} id={`project-${slug}`} /></div>}
 						<span class="project-number" aria-hidden="true">{String(project.data.order).padStart(2, '0')}</span>
 						<span class="project-main">
 							<span class="project-meta">
@@ -117,10 +123,10 @@ const statusLabel = (status: CollectionEntry<'work'>['data']['status']) => {
 
 	.project-main strong {
 		max-width: 20ch;
-		font-family: var(--font-serif);
+		font-family: var(--font-display);
 		font-size: var(--step-2);
 		font-weight: 600;
-		letter-spacing: -0.035em;
+		letter-spacing: -0.025em;
 		line-height: 1.08;
 		text-wrap: balance;
 	}
@@ -173,4 +179,13 @@ const statusLabel = (status: CollectionEntry<'work'>['data']['status']) => {
 			font-size: clamp(1.55rem, 8vw, 2.2rem);
 		}
 	}
+
+ .project-index.illustrated a { grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 1.5rem clamp(2rem,5vw,5rem); }
+ .illustrated .project-visual { grid-column: 1; grid-row: 1 / 4; align-self: center; min-width: 0; }
+ .illustrated .project-main { grid-column: 2; grid-row: 1; }
+ .illustrated .project-outcome { grid-column: 2; grid-row: 2; }
+ .illustrated .project-arrow { grid-column: 2; grid-row: 3; justify-self: end; }
+ .illustrated .project-number { display: none; }
+ @media(min-width: 60rem) { .illustrated li:nth-child(even) .project-visual { grid-column: 2; }.illustrated li:nth-child(even) :is(.project-main,.project-outcome,.project-arrow) { grid-column: 1; } }
+ @media(max-width: 48rem) { .project-index.illustrated a { grid-template-columns: minmax(0,1fr); gap: 1.5rem; }.illustrated .project-visual, .illustrated .project-main, .illustrated .project-outcome, .illustrated .project-arrow { grid-column: 1; grid-row: auto; } }
 </style>

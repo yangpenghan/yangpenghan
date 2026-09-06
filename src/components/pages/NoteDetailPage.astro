@@ -1,9 +1,12 @@
 ---
 import { getCollection, type CollectionEntry, render } from 'astro:content';
 import { getRelativeLocaleUrl } from 'astro:i18n';
+import BrandIdentity from '../BrandIdentity.astro';
 import ContactCTA from '../ContactCTA.astro';
+import ProblemMap from '../visuals/ProblemMap.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { useTranslations, type Locale } from '../../i18n';
+import { getRelatedNoteSlugs, readingPaths } from '../../i18n/reading-paths';
 
 interface Props {
 	entry: CollectionEntry<'notes'>;
@@ -11,7 +14,8 @@ interface Props {
 }
 
 const { entry, locale } = Astro.props;
-const { Content } = await render(entry);
+const { Content, headings } = await render(entry);
+const contents = headings.filter((heading) => heading.depth === 2);
 const t = useTranslations(locale);
 const navUrl = (path: string) => getRelativeLocaleUrl(locale, path.replace(/^\//, ''));
 const formatter = new Intl.DateTimeFormat(locale === 'zh' ? 'zh-CN' : 'en-GB', {
@@ -19,9 +23,14 @@ const formatter = new Intl.DateTimeFormat(locale === 'zh' ? 'zh-CN' : 'en-GB', {
 });
 const allNotes = (await getCollection('notes'))
 	.filter((note) => note.data.locale === locale)
-	.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
+	.sort((a, b) => (b.data.updatedDate ?? b.data.publishDate).valueOf() - (a.data.updatedDate ?? a.data.publishDate).valueOf() || a.id.localeCompare(b.id));
+const currentSlug = entry.id.split('/').slice(1).join('/');
+const readingPath = readingPaths.find((path) => path.slugs.includes(currentSlug));
+const relatedNotes = getRelatedNoteSlugs(currentSlug)
+	.map((slug) => allNotes.find((note) => note.id === `${locale}/${slug}`))
+	.filter((note): note is CollectionEntry<'notes'> => note !== undefined);
 const currentIndex = allNotes.findIndex((note) => note.id === entry.id);
-const nextNote = allNotes[(currentIndex + 1) % allNotes.length];
+const nextNote = relatedNotes[0] ?? allNotes[(currentIndex + 1) % allNotes.length];
 const nextSlug = nextNote.id.split('/').slice(1).join('/');
 const relatedProject = entry.data.relatedWork
 	? (await getCollection('work')).find((project) => {
@@ -69,8 +78,8 @@ const structuredData: Record<string, unknown> = {
 		</header>
 
 		<div class="note-body page-shell section-rule">
-			<aside data-reveal>
-				<span class="author-mark">WY</span>
+			<aside class="note-sidebar">
+				<span class="author-mark"><BrandIdentity /></span>
 				<div>
 					<strong>{locale === 'zh' ? '杨朋翰' : 'Will Yang'}</strong>
 					<p>{t('index.heroRole')}</p>
@@ -79,11 +88,31 @@ const structuredData: Record<string, unknown> = {
 					<small>{t('notes.updated')}</small>
 					<time datetime={modifiedDate.toISOString()}>{formatter.format(modifiedDate)}</time>
 				</div>
+				{contents.length >= 3 && (
+					<details class="note-toc" open>
+						<summary>{t('notes.contents')}</summary>
+						<nav aria-label={t('notes.contents')}>
+							<ol>{contents.map((heading) => <li><a href={`#${heading.slug}`}>{heading.text}</a></li>)}</ol>
+						</nav>
+					</details>
+				)}
 			</aside>
 			<article class="prose" data-reveal>
+				{entry.id.endsWith('/every-problem-is-technical') && <div class="argument-visual"><ProblemMap {locale} /></div>}
 				<Content />
 			</article>
 		</div>
+		{readingPath && relatedNotes.length > 1 && (
+			<section class="related-ideas page-shell" aria-labelledby="related-ideas-title">
+				<p class="eyebrow">{t('notes.relatedIdeas')}</p>
+				<h2 id="related-ideas-title">{readingPath.title[locale]}</h2>
+				<p>{readingPath.description[locale]}</p>
+				<ul>{relatedNotes.slice(1).map((note) => (
+					<li><a href={navUrl(`/notes/${note.id.split('/').slice(1).join('/')}/`)}>{note.data.title}<span aria-hidden="true"> ↗</span></a></li>
+				))}</ul>
+				<a class="text-link" href={`${navUrl('/notes/')}#${readingPath.id}`}>{t('notes.readingPaths')}</a>
+			</section>
+		)}
 
 		{relatedProject && (
 			<section class="related-work section-rule">
@@ -108,6 +137,18 @@ const structuredData: Record<string, unknown> = {
 </BaseLayout>
 
 <style>
+	.note-sidebar { position: sticky; top: calc(var(--header-height) + 2rem); align-self: start; max-height: calc(100dvh - var(--header-height) - 4rem); overflow-y: auto; padding: .3rem; }
+	.note-toc { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--rule); }
+	.note-toc summary { cursor: pointer; color: var(--ink); font-weight: 650; }
+	.note-toc ol { padding-left: 1.25rem; margin-top: 1rem; display: grid; gap: .75rem; }
+	.note-toc a { text-decoration: none; display: block; overflow-wrap: anywhere; }
+	.note-toc a:hover { color: var(--signal-dark); text-decoration: underline; text-underline-offset: .2em; }
+	.related-ideas { padding-bottom: clamp(3rem, 7vw, 5rem); }
+	.related-ideas h2 { font-family: var(--font-display); font-size: var(--step-2); line-height: 1.3; margin-block: 1rem; }
+	.related-ideas > p:not(.eyebrow) { color: var(--ink-soft); max-width: 44rem; }
+	.related-ideas ul { display: grid; gap: 1rem; padding-left: 1.25rem; margin-block: 1.5rem; }
+	.related-ideas li a { color: var(--ink); text-underline-offset: .2em; }
+ .argument-visual { max-width: 32rem; margin: 0 auto 3rem; }
 	.note-hero {
 		padding-block: clamp(3rem, 7vw, 6rem) clamp(5rem, 11vw, 10rem);
 	}
@@ -145,10 +186,10 @@ const structuredData: Record<string, unknown> = {
 	.note-meta span:first-child { color: var(--signal-dark); }
 
 	h1 {
-		max-width: 16ch;
-		font-family: var(--font-serif);
-		font-size: var(--step-4);
-		line-height: 1;
+		max-width: 24ch;
+		font-family: var(--font-display);
+		font-size: clamp(2.8rem, 5.2vw, 4.9rem);
+		line-height: 1.15;
 	}
 
 	.note-title > p {
@@ -160,7 +201,8 @@ const structuredData: Record<string, unknown> = {
 
 	.note-body {
 		display: grid;
-		grid-template-columns: minmax(12rem, 0.42fr) minmax(0, 1fr) minmax(8rem, 0.2fr);
+		grid-template-columns: minmax(10rem, 14rem) minmax(0, 48rem);
+		justify-content: center;
 		gap: clamp(2rem, 6vw, 6rem);
 		padding-block: clamp(5rem, 11vw, 10rem);
 	}
@@ -179,7 +221,7 @@ const structuredData: Record<string, unknown> = {
 		width: 3rem;
 		height: 3rem;
 		place-items: center;
-		border: 1px solid var(--ink);
+		padding: .2rem;
 		color: var(--ink);
 		font-family: var(--font-mono);
 		font-size: 0.72rem;
@@ -199,11 +241,11 @@ const structuredData: Record<string, unknown> = {
 		text-transform: uppercase;
 	}
 
-	.note-body article { max-width: 44rem; }
+	.note-body article { max-width: 48rem; }
 
 	.next-note a {
 		display: grid;
-		grid-template-columns: 10rem 1fr auto;
+		grid-template-columns: 10rem minmax(0, 1fr) auto;
 		gap: 2rem;
 		align-items: center;
 		padding-block: clamp(3rem, 7vw, 6rem);
@@ -232,7 +274,7 @@ const structuredData: Record<string, unknown> = {
 	}
 
 	.related-work strong {
-		font-family: var(--font-serif);
+		font-family: var(--font-display);
 		font-size: var(--step-2);
 		line-height: 1.15;
 	}
@@ -256,10 +298,10 @@ const structuredData: Record<string, unknown> = {
 	}
 
 	.next-note strong {
-		font-family: var(--font-serif);
+		font-family: var(--font-display);
 		font-size: var(--step-2);
 		font-weight: 600;
-		letter-spacing: -0.035em;
+		letter-spacing: -0.025em;
 	}
 
 	.next-note a > span:last-child {
@@ -272,16 +314,18 @@ const structuredData: Record<string, unknown> = {
 
 	@media (max-width: 56rem) {
 		.note-body { grid-template-columns: 1fr; }
+		.note-sidebar { position: static; max-height: none; overflow: visible; }
+		.note-toc { grid-column: 1 / -1; }
 		.note-body aside { grid-template-columns: auto 1fr; }
 		.update { grid-column: 1 / -1; }
-		.related-work a { grid-template-columns: 1fr auto; }
+		.related-work a { grid-template-columns: minmax(0, 1fr) auto; }
 		.related-work a > span:first-child,
 		.related-work p { grid-column: 1 / -1; }
 	}
 
 	@media (max-width: 42rem) {
-		h1 { font-size: clamp(2.8rem, 13vw, 4.5rem); }
-		.next-note a { grid-template-columns: 1fr auto; }
+		h1 { font-size: clamp(2.1rem, 9vw, 3.5rem); }
+		.next-note a { grid-template-columns: minmax(0, 1fr) auto; }
 		.next-note a > span:first-child { grid-column: 1 / -1; }
 	}
 </style>

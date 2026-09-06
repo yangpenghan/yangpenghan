@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="obs-decision-title">
+  <title id="obs-decision-title">Decision — 决策</title>
+  <line x1="2.75" y1="12" x2="11" y2="12" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M11 12 Q14 12 16 9 L19.5 5.5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M11 12 Q14 12 16 15 L18.5 17.5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="19.5" y1="2.75" x2="19.5" y2="8.25" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="11" cy="12" r="1.2" fill="currentColor"/>
+</svg>

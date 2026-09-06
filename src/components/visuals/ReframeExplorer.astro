@@ -1,0 +1,81 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import type { Locale } from '../../i18n';
+import CaseDiagram from './CaseDiagram.astro';
+interface Props { locale: Locale; id: string; }
+const { locale, id } = Astro.props;
+const zh = locale === 'zh';
+const items = [
+ { kind: 'interaction', name: zh?'机器人交互':'Robot interaction', before: zh?'功能还没做完，怎么测试？':'How do we test an unfinished feature?', turn: zh?'把“理解交互”与“实现功能”分开。':'Separate understanding from implementation.', after: zh?'后台人工模拟关键响应，先看用户能否开始、完成和结束互动。':'Simulate key responses with a researcher. Observe how people begin, complete, and end the interaction.', slug: 'human-robot-interaction' },
+ { kind: 'evidence', name: zh?'研究记录':'Research records', before: zh?'这么多记录，怎么整理完？':'How do we organize all these records?', turn: zh?'先问哪个决定需要什么证据。':'Ask which decision needs which evidence.', after: zh?'按任务定位观察，把每个问题连接到原始片段，再讨论改什么。':'Locate observations by task, connect each issue to its source, then discuss what to change.', slug: 'financial-behavior-model' },
+ { kind: 'iteration', name: zh?'设计验证':'Design validation', before: zh?'开发结束后，怎样完成测试？':'How do we test once development is done?', turn: zh?'把检查移到还能修改的时候。':'Check while changes are still possible.', after: zh?'在设计与实现过程中观察使用，把发现送进下一轮，再安排后续确认。':'Observe use during design and implementation. Feed findings into the next version, then plan confirmation.', slug: 'medical-devices' },
+] as const;
+---
+<reframe-explorer>
+  <div class="explorer-controls" hidden aria-label={zh?'选择一个问题，看重构过程':'Choose a problem to explore its reframing'}>
+    {items.map((item, index)=><button type="button" id={`${id}-tab-${index}`} aria-controls={`${id}-panel-${index}`} data-index={index}><span aria-hidden="true">0{index+1}</span>{item.name}</button>)}
+  </div>
+  {items.map((item,index)=><section class="explorer-panel" id={`${id}-panel-${index}`} data-panel>
+    <div class="explorer-drawing"><CaseDiagram {locale} kind={item.kind} id={`${id}-diagram-${index}`} /></div>
+    <div class="explorer-copy">
+      <p class="explorer-name">{item.name}</p>
+      <p class="before"><span>{zh?'如果只问':'Starting question'}</span>{item.before}</p>
+      <div class="turn"><h3>{item.turn}</h3></div>
+      <p class="after">{item.after}</p>
+      <a class="text-link internal" href={getRelativeLocaleUrl(locale,`work/${item.slug}/`)}>{zh?'看这个判断怎样落地':'Read the case'}</a>
+    </div>
+  </section>)}
+</reframe-explorer>
+<script>
+class ReframeExplorer extends HTMLElement {
+  private controller?: AbortController;
+  connectedCallback() {
+    this.controller?.abort();
+    this.controller = new AbortController();
+    const controls = this.querySelector<HTMLElement>('.explorer-controls');
+    const buttons = [...this.querySelectorAll<HTMLButtonElement>('button[data-index]')];
+    const panels = [...this.querySelectorAll<HTMLElement>('[data-panel]')];
+    if (!controls || !buttons.length || buttons.length !== panels.length) return;
+    const select = (index: number, focus = false) => {
+      buttons.forEach((button, i) => {
+        button.setAttribute('aria-selected', String(i === index));
+        button.tabIndex = i === index ? 0 : -1;
+        panels[i].hidden = i !== index;
+      });
+      if (focus) buttons[index].focus();
+    };
+    buttons.forEach((button, index) => {
+      button.setAttribute('role', 'tab');
+      panels[index].setAttribute('role', 'tabpanel');
+      panels[index].setAttribute('aria-labelledby', button.id);
+      panels[index].tabIndex = 0;
+      button.addEventListener('click', () => select(index), {signal: this.controller?.signal});
+      button.addEventListener('keydown', (event) => {
+        let next: number;
+        if (event.key === 'ArrowRight') next = (index + 1) % buttons.length;
+        else if (event.key === 'ArrowLeft') next = (index - 1 + buttons.length) % buttons.length;
+        else if (event.key === 'Home') next = 0;
+        else if (event.key === 'End') next = buttons.length - 1;
+        else return;
+        event.preventDefault();
+        select(next, true);
+      }, {signal: this.controller?.signal});
+    });
+    controls.setAttribute('role', 'tablist');
+    select(0);
+    controls.hidden = false;
+  }
+  disconnectedCallback() { this.controller?.abort(); }
+}
+if (!customElements.get('reframe-explorer')) customElements.define('reframe-explorer', ReframeExplorer);
+</script>
+<style>
+reframe-explorer { display: block; }
+.explorer-controls:not([hidden]) { display: flex; flex-wrap: wrap; border-bottom: 1px solid var(--rule-strong); margin-bottom: 2rem; gap: .5rem 1.5rem; }
+button { font: inherit; font-size: .95rem; color: var(--ink-soft); background: transparent; border: 0; border-bottom: 3px solid transparent; padding: 1rem .5rem; cursor: pointer; transition: color var(--duration), border-color var(--duration); }
+button span { margin-right: .75rem; font-size: .7rem; }button:hover { color: var(--signal); }button[aria-selected='true'] { color: var(--signal); border-bottom-color: var(--signal); }
+.explorer-panel:not([hidden]) { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); align-items: center; gap: clamp(2rem,5vw,5rem); padding-block: 1rem 2rem; }
+.explorer-copy { display: grid; gap: 1.25rem; justify-items: start; }.explorer-name { font-size: .75rem; color: var(--ink-soft); }.before { display: grid; gap: .6rem; color: var(--ink-soft); font-size: var(--step-1); }.before > span { font-size: .75rem; }
+.turn { border-left: 2px solid var(--signal); padding-left: 1.25rem; color: var(--ink); }.turn h3 { font-size: var(--step-2); font-weight: 500; line-height: 1.4; }.after { color: var(--ink-soft); max-width: 34rem; }.explorer-copy a { font-size: .85rem; }
+@media(max-width: 48rem) { .explorer-panel:not([hidden]) { grid-template-columns: 1fr; gap: 1.5rem; }button { font-size: .85rem; }.explorer-controls:not([hidden]) { gap: 0 .5rem; }button span { margin-right: .35rem; } }
+</style>

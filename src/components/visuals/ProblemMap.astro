@@ -1,0 +1,43 @@
+---
+import type { Locale } from '../../i18n';
+import LibraryIcon from './LibraryIcon.astro';
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const zh = locale === 'zh';
+const lines = Array.from({length: 12}, (_, i) => i);
+---
+<figure class="problem-map">
+  <figcaption><span class="figure-index">{zh ? '重构问题 / 思维模型' : 'REFRAMING / A WORKING MODEL'}</span><LibraryIcon name="reframe" /></figcaption>
+  <svg viewBox="0 0 480 354" role="img" aria-labelledby="problem-map-title problem-map-desc">
+    <title id="problem-map-title">{zh ? '换一个框架，让路径显现' : 'Change the frame. Find a path.'}</title>
+    <desc id="problem-map-desc">{zh ? '三个叠放的平面分别表示原始问题、可以调整的条件和可验证的行动。同一组条件经过重新组织，连接成一条可以尝试的路径。空间结构为概念示意。' : 'Three layered planes represent the initial problem, adjustable conditions, and a testable action. Reorganizing the same conditions reveals a path to try. This is a conceptual illustration.'}</desc>
+    <defs>
+      <linearGradient id="frame-surface" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#394b61" stop-opacity=".9"/><stop offset="1" stop-color="#17232e" stop-opacity=".96"/></linearGradient>
+      <linearGradient id="frame-route"><stop stop-color="#789bdc" stop-opacity=".15"/><stop offset=".55" stop-color="#9bbfff"/><stop offset="1" stop-color="#c5e5ea"/></linearGradient>
+    </defs>
+    <g fill="none" stroke="#607287" stroke-width=".65" opacity=".26">
+      {lines.map(i=><path d={`M${36+i*18} ${228+i*9}l216-108M${36+i*18} ${228-i*9}l216 108`} />)}
+    </g>
+    <path d="M49 239 238 145 430 239 241 334Z" fill="#17232e" stroke="#506073"/>
+    <path d="M49 226 238 132 430 226 241 321Z" fill="url(#frame-surface)" stroke="#718197" stroke-opacity=".7"/>
+    <path d="M49 165 238 71 430 165 241 260Z" fill="url(#frame-surface)" stroke="#8397b1" stroke-opacity=".75"/>
+    <g stroke="#94a8c3" opacity=".2" stroke-dasharray="3 5"><path d="M49 104V226M430 104V226M241 199V321M238 10V132"/></g>
+    <path d="M49 104 238 10 430 104 241 199Z" fill="url(#frame-surface)" stroke="#a3b6cd"/>
+    <g fill="none" stroke="#778ba5" stroke-width=".7" opacity=".55">
+      {[0,1,2,3,4].map(i=><><path d={`M${81+i*32} ${88-i*16}l190 95`}/><path d={`M${81+i*32} ${120+i*16}l190-95`}/></>)}
+    </g>
+    <path d="m111 106 65 32 64-32 64 32 63-32" fill="none" stroke="url(#frame-route)" stroke-width="3" stroke-linejoin="round"/>
+    {[[111,106],[176,138],[240,106],[304,138],[367,106]].map(([x,y],i)=><g><ellipse cx={x} cy={y} rx="10" ry="5" fill="#86acf0" opacity=".13"/><ellipse cx={x} cy={y} rx="3.5" ry="2" fill={i===4?'#c5e5ea':'#a7c8ff'}/></g>)}
+    <path d="M367 106v61l-63 32v61l-63 32" fill="none" stroke="#a7c8ff" stroke-width="1.5"/>
+    <g fill="#bdd1ec"><circle cx="367" cy="167" r="3"/><circle cx="304" cy="260" r="3"/><circle cx="241" cy="292" r="4"/></g>
+    <g class="plane-label"><text x="57" y="148">{zh?'01 / 换一个框架':'01 / REFRAME'}</text><text x="57" y="210">{zh?'02 / 调整条件':'02 / RECOMBINE'}</text><text x="57" y="272">{zh?'03 / 验证行动':'03 / TEST'}</text></g>
+  </svg>
+  <div class="figure-foot"><strong>{zh ? '条件不变，解法也可能改变。' : 'Same conditions. Another way through.'}</strong><span>{zh ? '目标 · 限制 · 可用工具' : 'Goals · Constraints · Available tools'}</span></div>
+</figure>
+<style>
+.problem-map { margin: 0; padding: 1.5rem 1.5rem 1.7rem; color: #e4edf8; background: radial-gradient(ellipse at 70% 25%, #293c55 0, #1a2738 45%, #141f2b 100%); border: 1px solid #3d4d60; border-radius: 8px; overflow: hidden; box-shadow: inset 0 1px 0 #ffffff0d; }
+figcaption { display: flex; justify-content: space-between; align-items: center; color: #b4c5dc; }.figure-index { font-size: .65rem; letter-spacing: .1em; }
+svg { display: block; width: 100%; height: auto; margin: .35rem 0; }.plane-label { fill: #c0cede; font-size: 14px; font-family: var(--font-sans); letter-spacing: .06em; }
+.figure-foot { display: grid; gap: .5rem; border-top: 1px solid #445164; padding-top: 1rem; }.figure-foot strong { font-weight: 500; font-size: 1rem; line-height: 1.5; }.figure-foot span { color: #b4c5dc; font-size: .7rem; }
+@media(max-width:32rem) { .problem-map { padding: 1.1rem; } }
+</style>

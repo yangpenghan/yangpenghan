@@ -1,0 +1,66 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import type { Locale } from '../i18n';
+import { readingPaths } from '../i18n/reading-paths';
+
+interface Props {
+	locale: Locale;
+	notes: CollectionEntry<'notes'>[];
+}
+
+const { locale, notes } = Astro.props;
+const noteById = new Map(notes.map((note) => [note.id, note]));
+const paths = readingPaths.map((path) => ({
+	...path,
+	entries: path.slugs.map((slug) => {
+		const entry = noteById.get(`${locale}/${slug}`);
+		if (!entry) throw new Error(`Missing reading-path article: ${locale}/${slug}`);
+		return { slug, entry };
+	}),
+}));
+---
+
+<section class="reading-paths" id="reading-paths" aria-labelledby="reading-paths-title">
+	<header>
+		<p class="eyebrow">{locale === 'zh' ? '把问题接着往下问' : 'Follow the question further'}</p>
+		<h2 id="reading-paths-title">{locale === 'zh' ? '四条路径，连起来读。' : 'Four connected reading paths.'}</h2>
+		<p>{locale === 'zh' ? '每篇可以单独阅读；沿着顺序读，可以看见一个判断如何延伸到下一个问题。' : 'Each essay stands on its own. Read in sequence to see how one judgment leads to the next question.'}</p>
+	</header>
+	<div class="path-grid">
+		{paths.map((path, index) => (
+			<section class="reading-path" id={path.id} aria-labelledby={`${path.id}-title`}>
+				<p class="path-number" aria-hidden="true">0{index + 1}</p>
+				<h3 id={`${path.id}-title`}>{path.title[locale]}</h3>
+				<p class="path-description">{path.description[locale]}</p>
+				<ol>
+					{path.entries.map(({ slug, entry }) => (
+						<li><a href={getRelativeLocaleUrl(locale, `notes/${slug}/`)}>{entry.data.title}</a></li>
+					))}
+				</ol>
+			</section>
+		))}
+	</div>
+</section>
+
+<style>
+	.reading-paths { margin-bottom: clamp(4rem, 8vw, 7rem); }
+	header { max-width: 48rem; margin-bottom: 2.5rem; }
+	h2 { font-family: var(--font-display); font-size: var(--step-2); margin-block: 1rem; line-height: 1.3; }
+	header > p:last-child, .path-description { color: var(--ink-soft); }
+	.path-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--rule-strong); }
+	.reading-path { padding: clamp(1.25rem, 3vw, 2.5rem); border-bottom: 1px solid var(--rule); min-width: 0; }
+	.reading-path:nth-child(odd) { border-right: 1px solid var(--rule); }
+	.path-number { font-family: var(--font-mono); font-size: .72rem; color: var(--signal-dark); margin-bottom: 1rem; }
+	h3 { font-family: var(--font-display); font-size: var(--step-1); line-height: 1.4; margin-bottom: .75rem; }
+	.path-description { font-size: .88rem; line-height: 1.8; margin-bottom: 1.5rem; }
+	ol { padding-left: 1.5rem; display: grid; gap: .85rem; }
+	li { padding-left: .35rem; font-size: .88rem; line-height: 1.7; }
+	li::marker { color: var(--ink-faint); font-family: var(--font-mono); font-size: .72rem; }
+	a { text-underline-offset: .22em; text-decoration-color: var(--rule-strong); overflow-wrap: anywhere; }
+	a:hover { color: var(--signal-dark); text-decoration-color: currentColor; }
+	@media (max-width: 48rem) {
+		.path-grid { grid-template-columns: minmax(0, 1fr); }
+		.reading-path:nth-child(odd) { border-right: 0; }
+	}
+</style>

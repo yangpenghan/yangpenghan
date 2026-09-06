@@ -1,16 +1,16 @@
 ---
 locale: en
-title: Finding common product questions across five Middle Eastern markets
-description: Combining desk research, interviews, surveys, and competitive analysis to separate cross-market needs, local conditions, and unresolved hypotheses.
+title: "Five Middle Eastern markets: what can be shared, what needs local work"
+description: "I combined desk research, interviews, surveys, and competitor analysis to distinguish shared needs, local conditions, and open questions."
 publishDate: 2019-04-01
-updatedDate: 2026-08-12
+updatedDate: 2026-09-05
 status: delivered
 year: "2019"
-order: 10
+order: 6
 kind: study
 featured: false
 discipline: Mobile products · Cross-cultural research
-outcome: Covered five mobile markets and produced a cross-market need structure without treating “Middle Eastern users” as one uniform segment.
+outcome: "Organized cross-market needs and follow-up questions to support shared-product and localization decisions."
 role: Desk research, interview and survey design, competitive analysis, and cross-market synthesis
 tags:
   - Cross-cultural research
@@ -21,44 +21,24 @@ tags:
 confidentiality: Client, country list, product strategy, sample, and raw findings remain private. This page uses only the study scope already disclosed in my public résumé.
 ---
 
-## “The Middle East” is not a user persona
+## Reframing the problem
 
-When a product team enters an unfamiliar region, the most dangerous shortcut is to use a geographic label as an explanation of behavior. Language use, payment habits, content ecosystems, device conditions, and social norms can vary substantially within one region. A hypothesis that works in one market may become a stereotype in another.
+**If we only ask:** How do local users’ preferences differ?
 
-This study covered five mobile markets. The task went beyond summarizing what “local users” liked: it required an evidence structure that separated shared needs, local differences, and genuine unknowns.
+**The more useful question:** Which task needs are shared, which depend on local conditions, and what remains unknown? Distinguish these before deciding what a common solution can cover.
 
-## My role
+## Unpacking “Middle Eastern users”
 
-I worked across desk research, interview and survey design, competitive analysis, and cross-market synthesis. Existing product assumptions had to be rewritten as researchable questions. During analysis, every promising finding faced another test: did it recur across markets, depend on a particular condition, or still lack enough evidence?
+One regional label is convenient but does not tell a product team what to design. This mobile-product study covered five markets and asked which needs could be shared and which conditions needed local treatment.
 
-## Four methods with four responsibilities
+I contributed to desk research, interview and survey design, competitor analysis, and synthesis across markets.
 
-Desk research established basic context: market structure, product categories, public data, and the competitive landscape. It helped the team avoid questions detached from the local environment, but it could not substitute for user evidence.
+## How I compared them
 
-Interviews explored motivation, strategy, and constraints beneath stated needs. Surveys checked whether selected phenomena appeared more broadly. Competitive analysis placed needs within product conventions and choices people already understood.
+I started with comparable questions. Desk research supplied context, interviews explored people’s accounts, surveys examined the distribution of observations, and competitor analysis added familiar product alternatives.
 
-The difficult part was synthesis. The research needed to preserve three types of conclusion:
+The synthesis kept three kinds of conclusion separate: needs repeated across markets, differences tied to local conditions, and plausible ideas needing more evidence. This gave the team a basis for discussing shared choices and local follow-up.
 
-1. Needs recurring across markets that could enter a shared product foundation.
-2. Conditions driven by local environments that required differentiated treatment.
-3. Important-looking ideas that still lacked sufficient evidence and belonged in the next validation round.
+## Output and limits
 
-Collapse those categories and localization either becomes translation, or requires building an entirely different product for every market.
-
-In sequencing the work, I followed a "commonality first, difference later" order: observe each market with the same task model first, so that comparison happens on comparable behavior; only after confirming which interaction patterns recur across markets do I try to explain how the same pattern plays out differently—how language, culture, and religion change the way people enter the same interaction, interpret the same prompt, and decide which operations they are willing to perform in which settings. Running it the other way (collecting each market's "distinctive features" first) almost always produces a list of country notes that cannot be compared. Where confidentiality limits what can be shared, the report should state that boundary explicitly instead of leaving readers to guess.
-
-## The output was a decision map
-
-The useful output of cross-cultural research is not a set of country portraits. It is a decision map: which choices can be shared, where a local interface must remain open, and what requires further experiment or field validation.
-
-This asks researchers to restrain their own explanatory appetite. The most vivid interview story is not necessarily the most widespread. The largest survey percentage is not automatically the most consequential for the product. A conclusion should state where its evidence came from, the range to which it applies, and what remains unresolved.
-
-## What this study taught me
-
-Establish comparison dimensions before searching for commonality. Write down unknowns before discussing scale. Following that order proved far more useful than memorizing cultural differences.
-
-That principle now shapes how I approach cross-industry work as well. The “user” in healthcare, mobility, or AI is never an average person. A good system preserves the differences between roles, environments, and tasks that actually change the decision.
-
-## Public boundary
-
-The five mobile markets and four method families come from my public résumé. Countries, client identity, product direction, participants, specific needs, competitive judgments, and internal recommendations are intentionally omitted.
+The output was an organization of needs and further validation questions. The five-market scope and methods come from existing public career material. Country names, client identity, samples, strategy, and market outcomes remain private.

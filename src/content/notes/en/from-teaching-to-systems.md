@@ -1,27 +1,28 @@
 ---
-title: "From the classroom to the field: why understanding is not yet change"
-description: "One thread behind four years of teaching and more than a decade of behavioral research and system building: knowledge can change real behavior only through environment, feedback, and action."
+title: "What four years of teaching left me with"
+description: "From the classroom to field research, I learned to ask where someone struggles to act on an explanation."
 publishDate: 2026-07-20
+updatedDate: 2026-09-05
 locale: en
 category: behavioral-intelligence
 categoryLabel: Working path
-readingMinutes: 8
+readingMinutes: 2
 featured: false
 relatedWork: human-robot-interaction
 ---
 
-I studied psychology at East China Normal University, and after graduating I did not go into a research institution. I went to teach mental health and mathematics at a school for four years. That period rarely appears in my project introductions, but it is where all of my later work began.
+After studying psychology at East China Normal University, I taught psychology and mathematics for four years. Students could follow a lesson and still struggle to apply it in a different situation.
 
-I still remember the moment that kept recurring. A lesson would end, the students would nod, the homework would come back correct, and I would assume it had landed. A few days later, in a different situation—a problem with a new surface, tighter time, or real stakes attached to the answer—the same students would do something completely different. Being able to use a method in exercises does not mean using it under pressure; having understood does not mean being able to do. At first I treated this as a teaching problem and assumed that polishing the explanation once more would fix it. Eventually I admitted that what was missing was not an explanation, but the whole process in which a student receives feedback, reads the error, and tries again. During preparation, knowledge can be organized cleanly; in the classroom, attention, prior experience, peer relationships, and the mood of the moment reorganize it. What the teacher says is only one input. What decides learning is more often what the student did, what feedback came back, and whether they were willing to try again.
+At first I worked on explaining things more clearly. I gradually paid more attention to the cues in a task, time pressure, and feedback after a mistake.
 
-From then on, my questions changed. I ask less often whether I explained something clearly, and more often where the other person changed their action. The first question centers the speaker. The second requires observing an entire system.
+## The same question appeared in research
 
-When I moved into user research, I met the same gap on a different field. A participant could recite exactly how a function works and still fail to find its entry during a task. He said the packaging information was clear, then opened it in a completely different sequence. He knew an alarm mattered, and in a multitasking environment never noticed it. At first this is easy to file under "users are dishonest" or "users are careless." But the classroom taught me not to rush to blame the person. A verbal answer and an action on site face different cues and different costs: interviews are for understanding how people explain things, tasks are for observing action, and extended field work is for watching how habits form. The research method has to match the scale at which the problem occurs.
+A participant could describe a function yet fail to find it during a task. Someone could know an instruction mattered and still miss it in use. Their account alone did not show where the difficulty occurred.
 
-Psychological training pulls you toward looking for causes inside the person—ability, motivation, attitude. The projects I have taken on kept pushing me in the other direction. A use error with a medical device may be produced jointly by information hierarchy, similar-looking controls, handover procedure, and time pressure. Driver distraction may trace back to the system demanding unnecessary visual attention at a critical moment, with self-control not the main variable. A person repeating commands to a robot may have little to do with willingness to accept AI; the problem is more that sound, motion, and state feedback never formed a consistent interaction grammar. When the explanation shifts from "what is wrong with this person" to "how do people act under which conditions," the product and the organization finally have a responsibility they can carry.
+I like to watch the sequence: what they encountered, what they did, what feedback they received, and what happened next. I try to establish that before explaining why.
 
-Later I began turning this experience into methods, templates, knowledge bases, and agent workflows—what I call Solution Engineering. When systematizing, I keep reminding myself of the classroom lesson: standardization must not compress individual differences into an average. What needs standardizing is the evidence chain—how a question is defined, how an observation is recorded, how an interpretation is challenged, how a decision is validated. What needs to keep its variation is the users, tasks, environments, and consequences. Standardize the former, and the team can see the latter more steadily. It is in this sense that I understand where templates, tools, and AI each belong: a template reminds the team not to skip the consequential questions, a tool makes repeated steps more dependable, and AI helps a person maintain context, call tools, and preserve provenance—none of them makes the judgment for the person.
+## It changed what I look for in a handover
 
-Now, when I check my own work—whether the object is teaching, research, or system design—I ask a few similar questions. Who do we want to act differently, in which situation. What cues, friction, and consequences the environment currently gives them. What evidence could distinguish "understood" from "can actually do it." Once a change happens, how the system keeps giving feedback and correcting itself. A proposal that can only argue its idea is right, but cannot answer these, I already know has not yet entered reality.
+A clear report, training session, or tool still needs someone to use it. Can the next person start? Do they know what to do with an exception? Where do they still need an explanation?
 
-Looking back, the specific habits of teaching have long faded. What stayed from the classroom is a lasting sensitivity to whether action actually happens. Measuring gaze, behavior, and physiological signals, building human-factors processes, orchestrating AI agents—all of it keeps answering the question I first met at the blackboard: how to let understanding pass through the constraints of the real world and become action that lasts.
+Teaching did not supply an answer for every industry. It left me with a question: after someone says they understand, what actually happens?

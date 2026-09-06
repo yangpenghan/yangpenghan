@@ -1,0 +1,24 @@
+---
+import type { Locale } from '../../i18n';
+import LibraryIcon from './LibraryIcon.astro';
+interface Props { locale: Locale; index: number; }
+const {locale,index}=Astro.props;
+const zh=locale==='zh';
+const items = [
+ {icon:'observe', category:zh?'观察与测量':'OBSERVATION', tools:['Eye tracking','EEG',zh?'行为观察':'Behavior'], focus:zh?'把信号放回使用情境':'Signals in the context of use'},
+ {icon:'experiment', category:zh?'原型与实验':'PROTOTYPING', tools:['Wizard-of-Oz',zh?'任务脚本':'Task scripts',zh?'模拟交互':'Simulation'], focus:zh?'用可体验的原型检查假设':'Test assumptions through experience'},
+ {icon:'knowledge', category:zh?'检索与知识':'RETRIEVAL', tools:['Python','ChromaDB',zh?'语义检索':'Semantic search'], focus:zh?'从问题到有出处的上下文':'From a question to sourced context'},
+ {icon:'agent', category:zh?'执行与协作':'ORCHESTRATION', tools:['OpenClaw','Claude Code',zh?'任务指令':'Instructions'], focus:zh?'让执行有边界，让结果可检查':'Bounded execution, checkable results'},
+] as const;
+const item=items[index];
+---
+<div class="instrument">
+  <div class="instrument-mark"><LibraryIcon name={item.icon} /><span class="mark-corner" aria-hidden="true"></span></div>
+  <div class="instrument-body"><span class="instrument-category">{item.category}</span><div class="tool-assembly">{item.tools.map(tool=><span>{tool}</span>)}</div><p>{item.focus}</p></div>
+</div>
+<style>
+.instrument { display: flex; gap: 1.3rem; align-items: center; min-height: 9rem; width: 100%; padding: 1.35rem; border: 1px solid var(--rule); border-radius: 8px; background: linear-gradient(120deg,var(--paper-raised),var(--paper)); }
+.instrument-mark { display: grid; place-items: center; flex: 0 0 3.8rem; height: 3.8rem; position: relative; color: var(--signal); border: 1px solid var(--rule); border-radius: 10px; background: var(--paper-raised); box-shadow: 0 4px 12px color-mix(in srgb,var(--ink) 5%,transparent), inset 0 -3px 0 var(--paper-deep); }
+.mark-corner { position: absolute; width: 4px; height: 4px; right: 6px; bottom: 6px; background: var(--signal); opacity: .65; border-radius: 50%; }.instrument-body { min-width: 0; }.instrument-category { display: block; font-size: .62rem; letter-spacing: .1em; color: var(--ink-soft); margin-bottom: .8rem; }.tool-assembly { display: flex; flex-wrap: wrap; gap: .4rem .7rem; }.tool-assembly span { font-size: .84rem; font-weight: 500; color: var(--ink); }.tool-assembly span + span::before { content: '/'; color: var(--rule-strong); margin-right: .7rem; font-weight: 400; }.instrument p { font-size: .68rem; color: var(--ink-soft); margin-top: .65rem; line-height: 1.6; }
+@media(max-width:32rem) { .instrument { gap: .9rem; padding: 1rem; }.instrument-mark { flex-basis: 3rem; height: 3rem; }.tool-assembly span { font-size: .75rem; } }
+</style>

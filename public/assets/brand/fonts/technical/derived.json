@@ -1,0 +1,20 @@
+{
+  "files": [
+    {
+      "path": "assets/personal/fonts/technical/IBMPlexSans.woff2",
+      "derivedFrom": "IBMPlexSans.ttf",
+      "operation": "fontTools container conversion; names and outlines retained",
+      "license": "OFL-1.1",
+      "bytes": 230404,
+      "sha256": "e69427cdfe81d4d038f4dc94446f52e777fee3af722dba5b22acdd47cfd2f9b7"
+    },
+    {
+      "path": "assets/personal/fonts/technical/NotoSansSC.woff2",
+      "derivedFrom": "NotoSansSC.ttf",
+      "operation": "fontTools container conversion; names and outlines retained",
+      "license": "OFL-1.1",
+      "bytes": 7782012,
+      "sha256": "3ddfdcc1d677923ee082f69686fae864ef34f5e5b4fdd8b3be82e4d69f573617"
+    }
+  ]
+}

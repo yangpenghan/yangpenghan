@@ -1,55 +1,57 @@
 :root {
 	color-scheme: light;
-	--paper: #f3f0e8;
-	--paper-raised: #fbf9f3;
-	--paper-deep: #e8e3d8;
-	--ink: #171714;
-	--ink-soft: #5b5a53;
-	--ink-faint: #807e75;
-	--rule: #cbc7bc;
-	--rule-strong: #aaa69a;
-	--signal: #d7442f;
-	--signal-dark: #a92e20;
-	--selection: #f4b5a7;
-	--inverse-bg: #171714;
-	--inverse-ink: #f3f0e8;
-	--inverse-soft: #c7c2b8;
-	--inverse-signal: #ff8a77;
+	--paper: #f4f6f8;
+	--paper-raised: #ffffff;
+	--paper-deep: #e7ecf1;
+	--ink: #17232e;
+	--ink-soft: #536475;
+	--ink-faint: #536475;
+	--rule: #ccd4dd;
+	--rule-strong: #9aa9b8;
+	--author: #433c53;
+	--signal: #285aca;
+	--signal-dark: #285aca;
+	--selection: #a8ccd6;
+	--inverse-bg: #433c53;
+	--inverse-ink: #f4f6f8;
+	--inverse-soft: #e7ecf1;
+	--inverse-signal: #a8ccd6;
 	--font-sans:
-		"Arial Nova", "Helvetica Neue", "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
-	--font-serif:
-		"Iowan Old Style", "Baskerville", "Times New Roman", "Noto Serif CJK SC", "Songti SC", STSong, serif;
-	--font-mono: "SFMono-Regular", Consolas, "Liberation Mono", "Noto Sans Mono", monospace;
-	--step--1: clamp(0.75rem, 0.72rem + 0.12vw, 0.84rem);
-	--step-0: clamp(1rem, 0.96rem + 0.18vw, 1.125rem);
+		"Will Display", "Will Text", "Will Text Complete", "PingFang SC", "Microsoft YaHei", sans-serif;
+	--font-display: var(--font-sans);
+	--font-mono: "Will Display", "Will Text", "Will Text Complete", sans-serif;
+	--step--1: clamp(0.78rem, 0.75rem + 0.12vw, 0.88rem);
+	--step-0: clamp(1.0625rem, 1rem + 0.2vw, 1.1875rem);
 	--step-1: clamp(1.2rem, 1.08rem + 0.5vw, 1.55rem);
 	--step-2: clamp(1.55rem, 1.32rem + 0.92vw, 2.2rem);
-	--step-3: clamp(2.1rem, 1.62rem + 1.9vw, 3.4rem);
-	--step-4: clamp(3.2rem, 1.9rem + 5.4vw, 7rem);
-	--step-5: clamp(3.75rem, 2rem + 7.7vw, 9rem);
-	--page-gutter: clamp(1.25rem, 4vw, 4rem);
-	--page-max: 92rem;
+	--step-3: clamp(2rem, 1.62rem + 1.7vw, 3.2rem);
+	--step-4: clamp(2.6rem, 1.9rem + 3.5vw, 5rem);
+	--step-5: clamp(3rem, 2rem + 3.8vw, 5.5rem);
+	--page-gutter: clamp(1.25rem, 5vw, 4.5rem);
+	--page-max: 86rem;
 	--content-max: 68rem;
-	--reading-max: 44rem;
-	--header-height: 5rem;
+	--reading-max: 48rem;
+	--header-height: 6rem;
 	--ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 	--duration: 220ms;
 	--z-header: 20;
 }
 
+/* Dark mode is a site adaptation of the V2 palette. */
 :root.theme-dark {
 	color-scheme: dark;
-	--paper: #151512;
-	--paper-raised: #1e1e1a;
-	--paper-deep: #24241f;
-	--ink: #f0ede4;
-	--ink-soft: #aaa79e;
-	--ink-faint: #817f77;
-	--rule: #3c3b35;
-	--rule-strong: #59574f;
-	--signal: #f0644f;
-	--signal-dark: #ff8a77;
-	--selection: #803529;
+	--paper: #151d26;
+	--paper-raised: #1d2833;
+	--paper-deep: #24313e;
+	--ink: #f4f6f8;
+	--ink-soft: #b6c3cf;
+	--ink-faint: #a8b7c7;
+	--rule: #3b4a5b;
+	--rule-strong: #647487;
+	--author: #d6cfe4;
+	--signal: #9cbcff;
+	--signal-dark: #9cbcff;
+	--selection: #365168;
 }
 
 *,
@@ -75,14 +77,11 @@ html:not(.theme-ready) *::after {
 body {
 	min-height: 100%;
 	margin: 0;
-	background:
-		linear-gradient(90deg, transparent calc(100% - 1px), color-mix(in srgb, var(--rule) 28%, transparent) 0) 0
-		0 / clamp(5rem, 11vw, 10rem) 100%,
-		var(--paper);
+	background: var(--paper);
 	color: var(--ink);
 	font-family: var(--font-sans);
 	font-size: var(--step-0);
-	line-height: 1.65;
+	line-height: 1.8;
 	-webkit-font-smoothing: antialiased;
 	overflow-x: clip;
 }
@@ -135,9 +134,10 @@ h1,
 h2,
 h3 {
 	font-weight: 600;
-	letter-spacing: -0.045em;
-	line-height: 1;
+	letter-spacing: -0.025em;
+	line-height: 1.22;
 	text-wrap: balance;
+	overflow-wrap: anywhere;
 }
 
 p {
@@ -177,7 +177,7 @@ p {
 	display: flex;
 	align-items: center;
 	gap: 0.75rem;
-	color: var(--signal-dark);
+	color: var(--author);
 }
 
 .eyebrow::before {
@@ -250,9 +250,10 @@ p {
 }
 
 .prose {
+	overflow-wrap: anywhere;
 	color: var(--ink-soft);
 	font-size: var(--step-0);
-	line-height: 1.78;
+	line-height: 1.9;
 }
 
 .prose > * + * {
@@ -262,7 +263,7 @@ p {
 .prose h2,
 .prose h3 {
 	color: var(--ink);
-	font-family: var(--font-serif);
+	font-family: var(--font-display);
 	font-weight: 600;
 }
 
@@ -300,7 +301,7 @@ p {
 	padding: 0.5rem 0 0.5rem 1.5rem;
 	border-left: 3px solid var(--signal);
 	color: var(--ink);
-	font-family: var(--font-serif);
+	font-family: var(--font-display);
 	font-size: var(--step-1);
 	line-height: 1.45;
 }
@@ -354,13 +355,6 @@ p {
 }
 
 @media (max-width: 42rem) {
-	body {
-		background:
-			linear-gradient(90deg, transparent calc(100% - 1px), color-mix(in srgb, var(--rule) 22%, transparent) 0)
-			0 0 / 4rem 100%,
-			var(--paper);
-	}
-
 	:root {
 		--header-height: 4.35rem;
 	}
@@ -373,5 +367,25 @@ p {
 
 	.eyebrow::before {
 		background: currentColor;
+	}
+}
+
+body {
+	font-variant-numeric: tabular-nums;
+}
+[id] {
+	scroll-margin-top: calc(var(--header-height) + 1.5rem);
+}
+summary:focus-visible,
+[tabindex="0"]:focus-visible {
+	outline: 2px solid var(--signal);
+	outline-offset: 4px;
+}
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		transition-duration: 0s;
+		animation-duration: 0s;
 	}
 }

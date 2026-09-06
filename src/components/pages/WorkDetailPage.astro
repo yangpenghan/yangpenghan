@@ -1,7 +1,10 @@
 ---
 import { getCollection, type CollectionEntry, render } from 'astro:content';
 import { getRelativeLocaleUrl } from 'astro:i18n';
+import BrandIdentity from '../BrandIdentity.astro';
 import ContactCTA from '../ContactCTA.astro';
+import CaseDiagram from '../visuals/CaseDiagram.astro';
+import PublicSlide from '../visuals/PublicSlide.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { useTranslations, type Locale } from '../../i18n';
 
@@ -26,6 +29,8 @@ const currentIndex = allProjects.findIndex((project) => project.id === entry.id)
 const nextProject = allProjects[(currentIndex + 1) % allProjects.length];
 const nextSlug = nextProject.id.split('/').slice(1).join('/');
 const entrySlug = entry.id.split('/').slice(1).join('/');
+const diagramKinds: Record<string, 'evidence' | 'iteration' | 'interaction'> = { 'financial-behavior-model': 'evidence', 'medical-devices': 'iteration', 'human-robot-interaction': 'interaction' };
+const diagramKind = diagramKinds[entrySlug];
 const relatedNotes = (await getCollection('notes'))
 	.filter((note) => note.data.locale === locale && note.data.relatedWork === entrySlug)
 	.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
@@ -79,7 +84,7 @@ const structuredData: Record<string, unknown> = {
 			<aside class="case-aside" data-reveal>
 				<div class="case-mark" aria-hidden="true">
 					<span>{String(entry.data.order).padStart(2, '0')}</span>
-					<strong>WY</strong>
+					<strong><BrandIdentity /></strong>
 				</div>
 				{entry.data.confidentiality && (
 					<div class="confidentiality">
@@ -89,9 +94,12 @@ const structuredData: Record<string, unknown> = {
 				)}
 			</aside>
 			<article class="prose" data-reveal>
+				{diagramKind && <div class="inline-visual"><CaseDiagram {locale} kind={diagramKind} id={`detail-${entrySlug}`} /></div>}
 				<Content />
 			</article>
 		</div>
+
+		{entrySlug === 'medical-devices' && <section class="source-section page-shell section-rule" aria-label={locale === 'zh' ? '公开演讲材料' : 'Public presentation material'}><PublicSlide {locale} /></section>}
 
 		{relatedNotes.length > 0 && (
 			<section class="related-thinking section-rule" aria-labelledby="related-title">
@@ -119,6 +127,8 @@ const structuredData: Record<string, unknown> = {
 </BaseLayout>
 
 <style>
+ .inline-visual { margin-bottom: 3rem; }
+ .source-section { padding-block: 4rem; }
 	.case-hero {
 		padding-block: clamp(3rem, 7vw, 6rem) clamp(5rem, 11vw, 10rem);
 	}
@@ -163,9 +173,10 @@ const structuredData: Record<string, unknown> = {
 
 	h1 {
 		max-width: 14ch;
-		font-family: var(--font-serif);
+		overflow-wrap: anywhere;
+		font-family: var(--font-display);
 		font-size: var(--step-5);
-		line-height: 0.95;
+		line-height: 1.15;
 	}
 
 	.case-dek {
@@ -251,6 +262,7 @@ const structuredData: Record<string, unknown> = {
 		grid-column: 2;
 		grid-row: 2;
 		font-size: 0.82rem;
+  padding: .65rem;
 	}
 
 	.confidentiality {
@@ -269,7 +281,7 @@ const structuredData: Record<string, unknown> = {
 
 	.next-project a {
 		display: grid;
-		grid-template-columns: 10rem 1fr auto;
+		grid-template-columns: 10rem minmax(0, 1fr) auto;
 		gap: 2rem;
 		align-items: center;
 		padding-block: clamp(3rem, 7vw, 6rem);
@@ -289,7 +301,7 @@ const structuredData: Record<string, unknown> = {
 
 	.related-grid h2 {
 		margin-top: 1.5rem;
-		font-family: var(--font-serif);
+		font-family: var(--font-display);
 		font-size: var(--step-3);
 	}
 
@@ -305,7 +317,7 @@ const structuredData: Record<string, unknown> = {
 
 	.related-grid a {
 		display: grid;
-		grid-template-columns: 1fr auto;
+		grid-template-columns: minmax(0, 1fr) auto;
 		gap: 0.75rem 2rem;
 		padding-block: 1.5rem;
 		text-decoration: none;
@@ -320,7 +332,7 @@ const structuredData: Record<string, unknown> = {
 	}
 
 	.related-grid strong {
-		font-family: var(--font-serif);
+		font-family: var(--font-display);
 		font-size: var(--step-1);
 		line-height: 1.2;
 	}
@@ -338,10 +350,10 @@ const structuredData: Record<string, unknown> = {
 	}
 
 	.next-project strong {
-		font-family: var(--font-serif);
+		font-family: var(--font-display);
 		font-size: var(--step-2);
 		font-weight: 600;
-		letter-spacing: -0.035em;
+		letter-spacing: -0.025em;
 	}
 
 	.next-project a > span:last-child {
@@ -396,7 +408,7 @@ const structuredData: Record<string, unknown> = {
 		}
 
 		.next-project a {
-			grid-template-columns: 1fr auto;
+			grid-template-columns: minmax(0, 1fr) auto;
 		}
 
 		.next-project a > span:first-child {

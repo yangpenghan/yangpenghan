@@ -1,0 +1,8 @@
+---
+interface Props { name: 'reframe' | 'observe' | 'experiment' | 'knowledge' | 'agent' | 'evidence' | 'iterate' | 'decide'; }
+const { name } = Astro.props;
+---
+<span class="library-icon" aria-hidden="true" style={`--glyph: url('${import.meta.env.BASE_URL}assets/brand/personal-icons/${name}.svg')`}></span>
+<style>
+.library-icon { display: inline-block; flex: 0 0 auto; width: 2rem; height: 2rem; background: currentColor; mask: var(--glyph) center / contain no-repeat; }
+</style>

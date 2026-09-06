@@ -14,8 +14,10 @@ const t = useTranslations(locale);
 const projects = (await getCollection('work'))
 	.filter((entry) => entry.data.locale === locale)
 	.sort((a, b) => a.data.order - b.data.order);
-const systems = projects.filter((project) => project.data.kind === 'system');
-const studies = projects.filter((project) => project.data.kind === 'study');
+const experimentSlugs = new Set(['ai-agent-system', 'psyphiclaw', 'behaviorlens']);
+const experiments = projects.filter((project) => experimentSlugs.has(project.id.split('/').at(-1) ?? ''));
+const systems = projects.filter((project) => project.data.featured);
+const studies = projects.filter((project) => !project.data.featured && !experiments.includes(project));
 ---
 
 <BaseLayout locale={locale} title={t('work.metaTitle')} description={t('work.metaDesc')}>
@@ -40,7 +42,7 @@ const studies = projects.filter((project) => project.data.kind === 'study');
 				<p class="eyebrow">{t('work.systemsEyebrow')}</p>
 				<h2 id="systems-title">{t('work.systemsTitle')}</h2>
 			</header>
-			<ProjectIndex projects={systems} {locale} />
+			<ProjectIndex projects={systems} {locale} illustrated />
 		</section>
 
 		<section class="archive-list studies page-shell" aria-labelledby="studies-title">
@@ -49,6 +51,14 @@ const studies = projects.filter((project) => project.data.kind === 'study');
 				<h2 id="studies-title">{t('work.studiesTitle')}</h2>
 			</header>
 			<ProjectIndex projects={studies} {locale} />
+		</section>
+		<section class="archive-list page-shell" aria-labelledby="experiments-title">
+			<header class="archive-section-heading" data-reveal>
+				<p class="eyebrow">{t('work.experimentsEyebrow')}</p>
+				<h2 id="experiments-title">{t('work.experimentsTitle')}</h2>
+				<p>{t('work.experimentsIntro')}</p>
+			</header>
+			<ProjectIndex projects={experiments} {locale} />
 		</section>
 	</main>
 	<ContactCTA {locale} />
@@ -69,9 +79,9 @@ const studies = projects.filter((project) => project.data.kind === 'study');
 
 	h1 {
 		max-width: 13ch;
-		font-family: var(--font-serif);
+		font-family: var(--font-display);
 		font-size: var(--step-5);
-		line-height: 0.95;
+		line-height: 1.15;
 	}
 
 	.archive-grid > div {
@@ -122,7 +132,7 @@ const studies = projects.filter((project) => project.data.kind === 'study');
 
 	.archive-section-heading h2 {
 		max-width: 18ch;
-		font-family: var(--font-serif);
+		font-family: var(--font-display);
 		font-size: var(--step-3);
 		line-height: 1.05;
 	}

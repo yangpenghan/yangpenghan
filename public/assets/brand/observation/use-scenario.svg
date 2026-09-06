@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="obs-use-scenario-title">
+  <title id="obs-use-scenario-title">Use scenario — 使用情境</title>
+  <polyline points="4 4 4 20 10 20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="9" y1="6" x2="9" y2="11" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="14.5" y1="12.5" x2="14.5" y2="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M2.75 9 H11 Q13 9 13 11 V13 Q13 15 15 15 H18 L21 12" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="21" cy="12" r="1.2" fill="currentColor"/>
+</svg>

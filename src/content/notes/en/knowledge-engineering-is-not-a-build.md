@@ -1,44 +1,78 @@
 ---
-title: "A knowledge base delivers paragraphs, not storage"
-description: "How 146 product documents and 217 usability documents became 6,000+ indexed paragraphs: separate libraries, three-level retrieval, and why chunking decides everything."
+title: "After the conversation: how knowledge enters a team's work"
+description: "Between finding a PDF and reusing a judgment lie context, versions, access, and collaboration. Knowledge engineering continues through actual use and correction."
 publishDate: 2026-08-20
+updatedDate: 2026-09-06
 locale: en
 category: solution-engineering
-categoryLabel: Solution engineering
+categoryLabel: Reframing problems & knowledge
 readingMinutes: 6
-featured: true
+featured: false
 relatedWork: medical-devices
 ---
 
-Most people think of a knowledge base as a place to store documents: collect the files, make them searchable, done. After building two of these systems, I have learned that almost nothing important happens on the storage side.
+A search for a product parameter returns a long PDF. I still have to open it and search again. Finding the file has done only part of the job.
 
-I maintain two separate knowledge bases. One comes from 146 Noldus product documents, covering the product line from observation labs to behavioral analysis software. The other comes from 217 usability documents covering IEC 62366, ANSI/AAMI HE75, and NMPA guidance. I deliberately kept them apart instead of merging them into one large library, because the questions they answer are completely different. The product library answers "how does this feature work, how is it configured." The usability library answers "how does this regulatory requirement land in practice." Merge them and retrieval degrades on both sides: a product-configuration query returns a passage of regulation text, a regulation query returns setup instructions, and a human has to filter every result. The cost of separation is maintaining two indexes; the benefit is that every question enters the right corpus.
+Even an accurate answer may leave a colleague repeating the search next week. An answer that works in a conversation has not necessarily become part of a team's capability.
 
-## The processing chain
+I want to examine knowledge engineering through use: finding material, understanding what it answers, and carrying its conditions into the next task.
 
-The product library runs on this pipeline:
+## Retrieval and resolution are different stages
 
-- Text conversion, normalizing various document formats into plain text;
-- Paragraph chunking, split at semantic boundaries rather than fixed lengths;
-- A keyword index for exact matching;
-- Vector embeddings stored in ChromaDB for semantic retrieval.
+I maintain separate product and usability references because configuration questions and questions about applicable requirements need different context.
 
-Chunking is the step that determines quality. Cut too long, and retrieval returns "the section containing the answer" rather than the answer. Cut too short, and a paragraph loses its context and makes no sense on its own. The target size is the smallest semantic unit that can stand alone and be cited directly. Across both libraries, this currently adds up to more than 6,000 indexed paragraphs.
+A precise model name or term may suit keyword search. Uncertain natural language can benefit from semantic retrieval of candidates. A relevant passage still needs checking against the actual question.
 
-## Three levels of retrieval
+An old manual may be highly similar but refer to another configuration. A correct methods paragraph may omit conditions explained earlier. I treat retrieval as an entrance to judgment and preserve the route to the source.
 
-Retrieval runs in three tiers, ordered by cost:
+“Found” and “applicable” should remain different states.
 
-**L1, filename matching**, essentially free, locates the rough territory of a question. **L2, keyword search**, around 0.2 seconds, handles queries with precise terminology—product names, feature names, standard numbers. **L3, semantic search**, one to two seconds, handles vaguely phrased queries that require intent understanding.
+## Splitting documents also sets interpretation boundaries
 
-Most day-to-day questions end at L2 and never touch semantic search. This layering is not showing off; it follows from usage frequency. Cheap paths serve the frequent questions, and the expensive path is reserved for queries that genuinely need it.
+Long passages still need screening. Short ones can separate qualifications, exceptions, and definitions from the statements they govern.
 
-## Where the value sits
+I want a passage understandable on its own, with its document, section, and version recoverable. Some definitions and exceptions should remain together even if that breaks a preferred chunk size.
 
-Once the base was running, its value showed up in one concrete scenario: after asking a question, you get back paragraphs you can use directly—a standard's wording on formative-study sample size, or the configuration notes for a specific product parameter. Not a list of file links that you then have to open and navigate yourself.
+Relationships among documents matter too. An update may alter an older manual's interpretation. A general method may have a task-specific exception. Storing both neatly without preserving their relationship still leaves the user to assemble the answer.
 
-That changes the design standard for a knowledge base. You judge it not by how many documents it holds, but by how much rework a retrieval leaves the user with. The less rework, the closer your chunking and indexing are to the real units of use.
+These decisions cannot all be completed on the first day. Real questions reveal poor boundaries and missing connections, which should change the organization.
 
-Maintenance matters just as much. Product documentation gets updated, standards get revised, and the index has to be rebuildable. Paragraph-level chunking helps here too: when one document changes, you reprocess only that document and leave the rest of the library untouched.
+## Preserve a question and its conditions, not only a conclusion
 
-Knowledge engineering sounds like a one-time construction project. In practice it is continuous curation—deciding what belongs together, what must stay apart, and along which path a question should be answered.
+Suppose a paper finds one interaction approach performs better in an experiment. Saving only “A beats B” makes it easy to carry the result into different tasks and populations.
+
+I would retain the research question, participants, task, comparison, main result, limitations, and possible decision implications. An interesting method is not automatically suitable for our project.
+
+Datasheets proposes documenting a dataset's motivation, composition, collection, and recommended uses. I borrow its attention to conditions of use; it does not validate the team knowledge system proposed here. [Datasheets for Datasets](https://arxiv.org/abs/1803.09010)
+
+Such records make correction possible. When new findings conflict, we can inspect differences in tasks or samples, or revise the earlier interpretation, instead of merely placing two summaries together.
+
+## Access changes whether knowledge is used
+
+A briefing available only inside its author's conversation, or requiring additional software, has a restricted practical audience.
+
+This is why I care about HTML pages, copyable tables, and content that can be edited and redeployed. A page supports browsing and stable reference; a table supports comparison and further work; the original document supports detailed checking.
+
+A webpage does not establish universal access. Readers' networks, phones, login requirements, and download conditions need checking. The author opening it successfully is only a starting point, especially across locations.
+
+Presentation should also fit the reader's task. Researchers need methods and limits; product teams need application conditions and open opportunities. They can enter different layers of the same sources rather than receive unrelated conclusions.
+
+## Updates must reach old answers
+
+A knowledge collection looks most successful just after organization. The harder test comes when sources change and old answers remain in circulation.
+
+I would distinguish original sources, interpreted entries, and records of use. A source update should trigger inspection of affected entries. An entry change should explain its difference. Earlier projects should still be able to recover the version they used.
+
+Obsolete does not always mean useless. A historical judgment may explain a previous decision without supporting current advice. Dates and status help more than silently replacing everything with a current version.
+
+Responsibility also needs names or roles. Who notices a change, assesses its effects, updates the entry, and responds to colleagues' questions? Without that arrangement, the collection may remain a searchable pile of files.
+
+## Evaluate the next task
+
+Entry count interests me less than whether colleagues find relevant material, assess its applicability, and avoid unnecessary searching. Where must the author still explain everything again?
+
+Missing answers deserve a record. Is the evidence absent, or is existing material difficult to find? The first needs research; the second needs organization. Confusing them can cause repeated acquisition of information already held, or unrealistic expectations that better filing will create missing facts.
+
+When a project adds a limitation or counterexample, it should have an easy route back into the collection. Maintenance close to ordinary work is less likely to leave learning only in personal memory.
+
+The cycle I want begins with a concrete question, uses sources to support a judgment, checks that judgment in practice, and lets new findings alter the records. It complements [reusable research skills](../from-research-to-reusable-skills/): one preserves how to proceed; the other preserves what should be known while proceeding.

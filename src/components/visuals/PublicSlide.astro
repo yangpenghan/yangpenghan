@@ -1,0 +1,20 @@
+---
+import type { Locale } from '../../i18n';
+interface Props { locale: Locale; }
+const {locale} = Astro.props;
+const zh=locale==='zh';
+const base=import.meta.env.BASE_URL;
+---
+<figure class="public-slide">
+  <a class="slide-preview" href={`${base}talks/2020-medical-device-hf-safety.pdf#page=20`} aria-label={zh?'打开 2020 年演讲第 20 页原文（PDF）':'Open page 20 of the 2020 talk (PDF)'}>
+    <img src={`${base}assets/visuals/human-factors-process-2020.png`} width="1440" height="810" loading="lazy" decoding="async" alt={zh?'公开演讲原页：需求分析、设计、实现、验证与确认之间的迭代关系，分为洞察、迭代和确认三个阶段。':'Original Chinese presentation slide showing requirements, design, implementation, verification, and confirmation within insight, iteration, and confirmation stages.'} />
+    <span>{zh?'查看原文 · 第 20 页':'View source · Page 20'} ↗</span>
+  </a>
+  <figcaption><span class="eyebrow">{zh?'来自我的公开演讲 / 2020':'From my public talk / 2020'}</span><h3>{zh?'把研究放回开发过程。':'Place research within development.'}</h3><p>{zh?'这张演讲原页把洞察、迭代和确认放在同一条过程中。它说明我为什么关心“什么时候检查”：观察要有机会影响后面的设计。':'This original slide connects insight, iteration, and confirmation. It explains my interest in when a check happens: observations need a chance to shape the design that follows.'}</p><small>{zh?'《医疗器械人因工程中的安全考量》· 杨朋翰 · 历史演讲材料':'Safety considerations in medical-device human factors · Will Yang · Historical presentation'}</small></figcaption>
+</figure>
+<style>
+.public-slide { margin: 0; display: grid; grid-template-columns: minmax(0,1.3fr) minmax(0,.7fr); gap: clamp(1.5rem,4vw,4rem); align-items: center; }
+.slide-preview { display: block; background: var(--paper-deep); border: 1px solid var(--rule); border-radius: 8px; padding: clamp(1rem,3vw,2.5rem); text-decoration: none; }.slide-preview img { display: block; width: 100%; height: auto; border: 1px solid var(--rule); box-shadow: 0 8px 24px color-mix(in srgb,var(--ink) 8%,transparent); }.slide-preview > span { display: block; padding: 1.2rem 0 0; font-size: .8rem; color: var(--signal); }.slide-preview:hover { border-color: var(--signal); }
+figcaption { display: grid; gap: 1.2rem; }h3 { font-size: var(--step-2); font-weight: 500; line-height: 1.35; }p { font-size: .95rem; color: var(--ink-soft); }small { font-size: .7rem; color: var(--ink-soft); }
+@media(max-width:48rem) { .public-slide { grid-template-columns: 1fr; } }
+</style>

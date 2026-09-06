@@ -1,51 +1,30 @@
 ---
-title: "Medical-device usability is an engineering chain, not one test"
-description: "Compressing usability into a final validation round misses the best window for discovering risk and makes every meaningful change more expensive."
+title: "What is this stage of testing trying to answer?"
+description: "How I distinguish early learning from later validation when planning medical-device usability work."
 publishDate: 2026-07-10
+updatedDate: 2026-09-05
 locale: en
 category: human-factors
 categoryLabel: Human Factors
-readingMinutes: 7
-featured: true
+readingMinutes: 2
+featured: false
 relatedWork: medical-devices
 ---
 
-When teams discuss medical-device usability, the first picture is often a late-stage study: recruit users, ask them to complete tasks on a nearly finished device, record errors, and produce a report.
+If usability is first discussed when a product is nearly fixed, findings may affect hardware, software, instructions, and training together. Time and room for changes are limited.
 
-That study matters, but it is only one checkpoint in a longer engineering chain. Useful human-factors work begins with users, environments, and risk. It continues through requirements, design, formative evaluation, risk control, and final validation. This chain is what standards such as IEC 62366 formalize, and regulators elsewhere expect the same evidence: the EU MDR requires usability-engineering documentation as part of conformity assessment, and the FDA reviews human-factors validation for safety-critical devices.
+In medical-device consulting, I first ask where development stands and what can still change. That helps define what this evaluation needs to answer.
 
-If the first observation of real users happens near the end, the team may not discover an isolated interface issue. It may discover a system of problems already embedded in hardware, software, labeling, and training materials.
+## Early work exposes assumptions
 
-I have seen this timing problem recur across ventilators, monitoring systems, surgical devices, and IVD products. After work spanning more than 25 medical-device companies, the most durable lesson is not simply to run more tests. Each evaluation round has a different job: expose risk assumptions early, compare design controls in the middle, and validate the complete use system only when it is ready. I now also organize standards, methods, and anonymized experience in an internal search index of more than 6,000 passages. Its purpose is to retrieve evidence faster, not to make risk judgments for the team.
+Sketches or prototypes can support discussion of tasks and observation of difficulties. Records should preserve what happened, the participant’s account, and uncertain causes so the team can decide what to change and examine next.
 
-## Risk is not an error count
+## Later work needs the full use conditions
 
-The same operational error can have very different consequences. Pressing the wrong control once does not automatically mean the design is unsafe. Conversely, an unlikely mistake may still demand attention when its potential harm is severe.
+Near final validation, planning needs to return to intended users, tasks, environments, and accompanying materials. Exploratory settings cannot simply be carried over; their representativeness needs examination.
 
-Human-factors analysis therefore needs more than task-success percentages. It must connect several kinds of evidence: who is performing which task in what context, where perception or understanding breaks down, what use error could follow, and whether the current design adequately controls the associated risk.
+This note describes my planning approach. The specific evaluation depends on product risk, development state, and applicable requirements.
 
-The earlier this chain is made explicit, the more useful it becomes for design decisions.
+## There is a step after the report
 
-## Formative evaluation is for learning
-
-A formative evaluation is not a smaller version of validation. Its purpose is to expose assumptions while the design can still change.
-
-Early work may use a flow sketch, paper interface, or simple prototype to observe critical tasks. Mid-stage studies can examine information hierarchy, alarm logic, and action sequences. Closer to design completion, the team can evaluate the integrated interface, supporting materials, and representative environments. Each round should be driven by risk and the assumptions that remain uncertain, rather than mechanically repeating the same study.
-
-Effective teams feed findings back into three places: design requirements, risk analysis, and the plan for the next evaluation. Usability then becomes a development feedback loop instead of an isolated report.
-
-## Validation evaluates a system
-
-Final validation does not evaluate a screen in isolation. It evaluates the complete use system: device, accessories, labeling, instructions, training, and the conditions in which intended users actually work. Participants, tasks, and environments need to represent intended use, and critical tasks should be derived from the earlier risk analysis.
-
-This is why late remediation is often expensive. The change may affect not only pixels, but also risk documentation, software implementation, supporting material, and the validation plan itself.
-
-## Put human factors back into engineering
-
-I often suggest starting with a simple chain:
-
-**Users and environments → critical tasks → potential use errors → risk controls → evaluation evidence → design decisions**
-
-Each study should say which part of that chain it strengthens. Each consequential design decision should be able to point to relevant evidence.
-
-When usability enters the engineering process this way, testing is no longer an attempt to prove that a product is “easy to use.” It becomes a continuous effort to reduce risks arising from real use, with conclusions that can be traced, explained, and reviewed.
+I want each finding to have someone who will discuss it, a corresponding design question, and a next check. Making that follow-up explicit helps research enter development work.

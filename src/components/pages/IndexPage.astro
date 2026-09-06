@@ -1,12 +1,14 @@
 ---
 import { getCollection } from 'astro:content';
 import { getRelativeLocaleUrl } from 'astro:i18n';
+import ProblemMap from '../visuals/ProblemMap.astro';
+import ReframeExplorer from '../visuals/ReframeExplorer.astro';
 import ContactCTA from '../ContactCTA.astro';
 import NoteList from '../NoteList.astro';
+import Toolbox from '../Toolbox.astro';
 import ProjectIndex from '../ProjectIndex.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { useTranslations, type Locale } from '../../i18n';
-import type { UIKey } from '../../i18n/ui';
 
 interface Props {
 	locale: Locale;
@@ -23,22 +25,7 @@ const notes = (await getCollection('notes'))
 	.filter((entry) => entry.data.locale === locale && entry.data.featured)
 	.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
 	.slice(0, 3);
-const stats = [1, 2, 3, 4].map((index) => ({
-	num: t(`index.stat${index}Num` as UIKey),
-	label: t(`index.stat${index}Label` as UIKey),
-}));
-const methods = [1, 2, 3, 4].map((index) => ({
-	title: t(`index.method${index}Title` as UIKey),
-	body: t(`index.method${index}Body` as UIKey),
-}));
-const talkSlides: Record<number, string> = { 5: `${import.meta.env.BASE_URL}talks/2020-medical-device-hf-safety.pdf` };
-const talks = [1, 2, 3, 4, 5, 6].map((index) => ({
-	year: t(`index.talk${index}Year` as UIKey),
-	venue: t(`index.talk${index}Venue` as UIKey),
-	topic: t(`index.talk${index}Topic` as UIKey),
-	summary: t(`index.talk${index}Summary` as UIKey),
-	slides: talkSlides[index],
-}));
+
 ---
 
 <BaseLayout locale={locale} title={t('index.metaTitle')} description={t('index.metaDesc')}>
@@ -53,45 +40,19 @@ const talks = [1, 2, 3, 4, 5, 6].map((index) => ({
 				<div class="hero-intro">
 					<p>{t('index.heroIntro')}</p>
 					<div class="hero-actions">
-						<a class="text-link internal" href={navUrl('/work/')}>{t('index.heroWork')}</a>
-						<a class="quiet-link" href="#contact">{t('index.heroContact')} <span aria-hidden="true">↓</span></a>
+						<a class="text-link internal" href={navUrl('/notes/every-problem-is-technical/')}>{t('index.heroWork')}</a>
+						<a class="quiet-link" href="#selected-work-title">{t('index.heroContact')} <span aria-hidden="true">↓</span></a>
 					</div>
 				</div>
 			</div>
 
 			<aside class="identity" aria-label={t('nav.brand')}>
-				<div class="portrait-frame">
-					<img
-						src={`${base}assets/portrait.jpg`}
-						alt={t('index.portraitAlt')}
-						width="480"
-						height="620"
-						fetchpriority="high"
-					/>
-					<span class="signal-square" aria-hidden="true"></span>
-				</div>
-				<div class="identity-copy">
-					<strong>{locale === 'zh' ? '杨朋翰' : 'Will Yang'}</strong>
-					<span>{locale === 'zh' ? 'Will Yang' : '杨朋翰'}</span>
-					<p>{t('index.heroRole')}</p>
-				</div>
-			</aside>
-		</section>
-
-		<section class="proof section-rule" aria-labelledby="proof-title">
-			<div class="page-shell">
-				<h2 id="proof-title" class="meta-label">{t('index.proofLabel')}</h2>
-				<div class="proof-grid">
-					{
-						stats.map((stat) => (
-							<div class="proof-item">
-								<strong>{stat.num}</strong>
-								<span>{stat.label}</span>
-							</div>
-						))
-					}
-				</div>
-			</div>
+    <ProblemMap {locale} />
+    <div class="identity-person">
+     <img src={`${base}assets/portrait.jpg`} alt={t('index.portraitAlt')} width="80" height="100" fetchpriority="high" />
+     <div><strong>{locale === 'zh' ? '杨朋翰 / Will Yang' : 'Will Yang / 杨朋翰'}</strong><p>{t('index.heroRole')}</p><a href={navUrl('/about/')}>{t('nav.about')} <span aria-hidden="true">↗</span></a></div>
+    </div>
+   </aside>
 		</section>
 
 		<section class="work-section page-shell" aria-labelledby="selected-work-title">
@@ -105,7 +66,7 @@ const talks = [1, 2, 3, 4, 5, 6].map((index) => ({
 					<a class="text-link internal" href={navUrl('/work/')}>{t('index.workAll')}</a>
 				</div>
 			</header>
-			<ProjectIndex {projects} {locale} />
+			<ProjectIndex {projects} {locale} illustrated />
 		</section>
 
 		<section class="method-section section-rule" aria-labelledby="method-title">
@@ -114,46 +75,17 @@ const talks = [1, 2, 3, 4, 5, 6].map((index) => ({
 					<p class="eyebrow">{t('index.methodEyebrow')}</p>
 					<h2 id="method-title">{t('index.methodTitle')}</h2>
 				</header>
-				<ol class="method-line">
-					{
-						methods.map((method, index) => (
-							<li>
-								<span class="method-number">{String(index + 1).padStart(2, '0')}</span>
-								<h3>{method.title}</h3>
-								<p>{method.body}</p>
-							</li>
-						))
-					}
-				</ol>
+				<ReframeExplorer {locale} id="home-reframe" />
 				<a class="text-link internal method-more" href={navUrl('/method/')}>{t('index.methodMore')}</a>
 			</div>
 		</section>
 
-		<section class="focus-section section-rule" aria-labelledby="focus-title">
-			<div class="page-shell focus-grid">
-				<div class="focus-copy">
-					<p class="eyebrow">{t('index.focusEyebrow')}</p>
-					<h2 id="focus-title">{t('index.focusTitle')}</h2>
-					<p>{t('index.focusBody')}</p>
-					<a class="text-link" href="https://github.com/psyphiclaw/openclaw">{t('index.focusLink')}</a>
-				</div>
-				<a
-					class="signal-map"
-					href="https://github.com/psyphiclaw/openclaw"
-					aria-label="PsyPhiClaw pipeline: import, normalize, fuse, report"
-					data-reveal
-				>
-					<span class="map-status">{t('index.focusStatus')}</span>
-					<div class="map-inputs">
-						<span>FACE</span><span>GAZE</span><span>EEG</span><span>PHYSIO</span><span>fNIRS</span><span>EVENTS</span>
-					</div>
-					<div class="map-core">
-						<span aria-hidden="true">Ψ</span>
-						<strong>PsyPhiClaw</strong>
-						<small>OPEN PIPELINE</small>
-					</div>
-					<div class="map-output"><span>IMPORT</span><span>NORMALIZE</span><span>FUSE</span><span>REPORT</span></div>
-				</a>
+		<Toolbox {locale} />
+
+		<section class="about-section page-shell section-rule" aria-labelledby="about-title">
+			<div class="section-heading">
+				<div><p class="eyebrow">{t('index.aboutEyebrow')}</p><h2 id="about-title">{t('index.aboutTitle')}</h2></div>
+				<div class="section-intro"><p>{t('index.aboutBody')}</p><a class="text-link internal" href={navUrl('/about/')}>{t('index.aboutLink')}</a></div>
 			</div>
 		</section>
 
@@ -168,651 +100,52 @@ const talks = [1, 2, 3, 4, 5, 6].map((index) => ({
 			<NoteList {notes} {locale} />
 		</section>
 
-		<section class="talks-section section-rule" aria-labelledby="talks-title">
-			<div class="page-shell talks-grid">
-				<header>
-					<p class="eyebrow">{t('index.talksEyebrow')}</p>
-					<h2 id="talks-title">{t('index.talksTitle')}</h2>
-				</header>
-				<ol>
-					{
-						talks.map((talk) => (
-							<li>
-								<time>{talk.year}</time>
-								<div>
-									<strong>{talk.topic}</strong>
-									<span>{talk.venue}</span>
-									<p class="talk-summary">{talk.summary}</p>
-									{talk.slides && <a class="talk-slides" href={talk.slides} target="_blank" rel="noopener">{t('index.talkSlides')} <span aria-hidden="true">↗</span></a>}
-								</div>
-							</li>
-						))
-					}
-				</ol>
-			</div>
-		</section>
 	</main>
 
 	<ContactCTA {locale} />
 </BaseLayout>
 
 <style>
-	.hero {
-		display: grid;
-		grid-template-columns: minmax(0, 1.55fr) minmax(18rem, 0.45fr);
-		gap: clamp(3rem, 8vw, 8rem);
-		align-items: end;
-		min-height: calc(100dvh - var(--header-height));
-		padding-block: clamp(4rem, 9vw, 9rem) clamp(4rem, 7vw, 7rem);
-	}
-
-	.hero-copy {
-		display: grid;
-		gap: clamp(2.5rem, 6vw, 5rem);
-	}
-
-	.hero h1 {
-		position: relative;
-		z-index: 1;
-		font-family: var(--font-serif);
-		font-size: var(--step-5);
-		font-weight: 600;
-		letter-spacing: -0.065em;
-		line-height: 0.93;
-	}
-
-	.hero h1 span {
-		display: block;
-	}
-
-	.hero h1 span:last-child {
-		margin-left: clamp(0rem, 8vw, 7rem);
-		color: var(--signal-dark);
-	}
-
-	.hero-intro {
-		display: grid;
-		grid-template-columns: minmax(0, 34rem) auto;
-		gap: clamp(2rem, 6vw, 6rem);
-		align-items: end;
-		margin-left: clamp(0rem, 8vw, 7rem);
-	}
-
-	.hero-intro > p {
-		color: var(--ink-soft);
-		font-size: var(--step-1);
-		line-height: 1.6;
-	}
-
-	.hero-actions {
-		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
-		gap: 1rem;
-	}
-
-	.quiet-link {
-		color: var(--ink-soft);
-		font-size: 0.82rem;
-		font-weight: 650;
-		text-decoration: none;
-	}
-
-	.quiet-link:hover {
-		color: var(--signal-dark);
-	}
-
-	.identity {
-		display: grid;
-		gap: 1.25rem;
-	}
-
-	.portrait-frame {
-		position: relative;
-		border: 1px solid var(--rule-strong);
-		background: var(--paper-deep);
-	}
-
-	.portrait-frame::before {
-		position: absolute;
-		inset: 0.65rem;
-		z-index: 1;
-		border: 1px solid color-mix(in srgb, var(--paper-raised) 50%, transparent);
-		content: "";
-		pointer-events: none;
-	}
-
-	.portrait-frame img {
-		width: 100%;
-		aspect-ratio: 4 / 5;
-		object-fit: cover;
-		filter: saturate(0.72) contrast(1.03);
-	}
-
-	.signal-square {
-		position: absolute;
-		right: -0.7rem;
-		bottom: -0.7rem;
-		width: 1.4rem;
-		height: 1.4rem;
-		background: var(--signal);
-	}
-
-	.identity-copy {
-		display: grid;
-		grid-template-columns: auto 1fr;
-		gap: 0.1rem 0.75rem;
-		line-height: 1.3;
-	}
-
-	.identity-copy strong {
-		font-size: 0.95rem;
-	}
-
-	.identity-copy > span {
-		color: var(--ink-faint);
-		font-family: var(--font-mono);
-		font-size: 0.7rem;
-	}
-
-	.identity-copy p {
-		grid-column: 1 / -1;
-		margin-top: 0.45rem;
-		color: var(--ink-soft);
-		font-size: 0.78rem;
-		line-height: 1.5;
-	}
-
-	.proof {
-		padding-block: 2.25rem 4rem;
-	}
-
-	.proof h2 {
-		margin-bottom: 2.25rem;
-		color: var(--ink-faint);
-		font-weight: 500;
-	}
-
-	.proof-grid {
-		display: grid;
-		grid-template-columns: repeat(4, minmax(0, 1fr));
-		border-top: 1px solid var(--rule-strong);
-	}
-
-	.proof-item {
-		display: grid;
-		gap: 0.75rem;
-		padding: 1.5rem 1.5rem 0 0;
-		border-right: 1px solid var(--rule);
-	}
-
-	.proof-item:not(:first-child) {
-		padding-left: 1.5rem;
-	}
-
-	.proof-item:last-child {
-		border-right: 0;
-	}
-
-	.proof-item strong {
-		font-family: var(--font-serif);
-		font-size: var(--step-3);
-		font-variant-numeric: tabular-nums;
-		letter-spacing: -0.05em;
-		line-height: 1;
-	}
-
-	.proof-item span {
-		max-width: 18rem;
-		color: var(--ink-soft);
-		font-size: 0.78rem;
-		line-height: 1.5;
-	}
-
-	.work-section,
-	.notes-section {
-		padding-block: clamp(6rem, 12vw, 12rem);
-	}
-
-	.section-heading {
-		display: grid;
-		grid-template-columns: minmax(0, 1.5fr) minmax(18rem, 0.5fr);
-		gap: clamp(3rem, 8vw, 8rem);
-		align-items: end;
-		margin-bottom: clamp(3rem, 7vw, 6rem);
-	}
-
-	.section-heading h2,
-	.method-heading h2,
-	.focus-copy h2,
-	.talks-section h2 {
-		margin-top: 2rem;
-		font-family: var(--font-serif);
-		font-size: var(--step-4);
-		white-space: pre-line;
-	}
-
-	.section-intro {
-		display: grid;
-		gap: 1.75rem;
-		justify-items: start;
-		color: var(--ink-soft);
-	}
-
-	.section-heading.compact {
-		align-items: end;
-	}
-
-	.section-heading.compact > .text-link {
-		justify-self: end;
-	}
-
-	.method-section {
-		padding-block: clamp(6rem, 12vw, 11rem);
-		background: var(--paper-deep);
-	}
-
-	.method-heading {
-		display: grid;
-		grid-template-columns: 1fr 2fr;
-		gap: 3rem;
-		align-items: start;
-		margin-bottom: clamp(4rem, 8vw, 7rem);
-	}
-
-	.method-heading h2 {
-		max-width: 15ch;
-		margin-top: 0;
-	}
-
-	.method-line {
-		display: grid;
-		grid-template-columns: repeat(4, minmax(0, 1fr));
-		padding: 0;
-		border-top: 1px solid var(--rule-strong);
-		list-style: none;
-	}
-
-	.method-more {
-		margin-top: 3rem;
-	}
-
-	.method-line li {
-		position: relative;
-		display: grid;
-		gap: 1.25rem;
-		padding: 2rem 2rem 0 0;
-		border-right: 1px solid var(--rule);
-	}
-
-	.method-line li:not(:first-child) {
-		padding-left: 2rem;
-	}
-
-	.method-line li:last-child {
-		border-right: 0;
-	}
-
-	.method-line li::before {
-		position: absolute;
-		top: -0.35rem;
-		left: 0;
-		width: 0.65rem;
-		height: 0.65rem;
-		border: 1px solid var(--signal);
-		background: var(--paper-deep);
-		content: "";
-	}
-
-	.method-line li:not(:first-child)::before {
-		left: 2rem;
-	}
-
-	.method-number {
-		color: var(--signal-dark);
-		font-family: var(--font-mono);
-		font-size: 0.68rem;
-	}
-
-	.method-line h3 {
-		font-family: var(--font-serif);
-		font-size: var(--step-2);
-	}
-
-	.method-line p {
-		color: var(--ink-soft);
-		font-size: 0.86rem;
-	}
-
-	.focus-section {
-		padding-block: clamp(6rem, 12vw, 11rem);
-	}
-
-	.focus-grid {
-		display: grid;
-		grid-template-columns: minmax(0, 0.85fr) minmax(26rem, 1.15fr);
-		gap: clamp(4rem, 9vw, 9rem);
-		align-items: center;
-	}
-
-	.focus-copy {
-		display: grid;
-		justify-items: start;
-		gap: 2rem;
-	}
-
-	.focus-copy h2 {
-		margin-top: 0;
-		font-size: var(--step-3);
-		line-height: 1.08;
-	}
-
-	.focus-copy > p:not(.eyebrow) {
-		color: var(--ink-soft);
-	}
-
-	.signal-map {
-		position: relative;
-		display: grid;
-		grid-template-columns: 1fr 1.15fr 1fr;
-		align-items: center;
-		min-height: 28rem;
-		padding: 3.5rem 2rem 2rem;
-		text-decoration: none;
-		border: 1px solid var(--rule-strong);
-		background:
-			linear-gradient(var(--rule) 1px, transparent 1px),
-			linear-gradient(90deg, var(--rule) 1px, transparent 1px),
-			var(--paper-raised);
-		background-size: 3rem 3rem;
-	}
-
-	.map-status {
-		position: absolute;
-		top: 1.25rem;
-		left: 1.25rem;
-		padding: 0.35rem 0.5rem;
-		background: var(--ink);
-		color: var(--paper);
-		font-family: var(--font-mono);
-		font-size: 0.58rem;
-		letter-spacing: 0.06em;
-	}
-
-	.map-inputs,
-	.map-output {
-		display: grid;
-		gap: 0.7rem;
-	}
-
-	.map-inputs span,
-	.map-output span {
-		padding: 0.45rem 0.65rem;
-		border: 1px solid var(--rule-strong);
-		background: var(--paper);
-		font-family: var(--font-mono);
-		font-size: 0.62rem;
-		letter-spacing: 0.04em;
-		text-align: center;
-	}
-
-	.map-core {
-		position: relative;
-		display: grid;
-		place-items: center;
-		aspect-ratio: 1;
-		margin-inline: 1.5rem;
-		border: 1px solid var(--signal);
-		background: var(--paper);
-		box-shadow: 0 0 0 0.5rem color-mix(in srgb, var(--signal) 10%, transparent);
-		text-align: center;
-		transition: box-shadow var(--duration) ease;
-	}
-
-	.signal-map:hover .map-core {
-		box-shadow: 0 0 0 0.75rem color-mix(in srgb, var(--signal) 18%, transparent);
-	}
-
-	.map-core::before,
-	.map-core::after {
-		position: absolute;
-		top: 50%;
-		width: 1.5rem;
-		height: 1px;
-		background: var(--signal);
-		content: "";
-	}
-
-	.map-core::before { right: 100%; }
-	.map-core::after { left: 100%; }
-
-	.map-core > span {
-		color: var(--signal-dark);
-		font-family: var(--font-serif);
-		font-size: 3rem;
-		line-height: 1;
-	}
-
-	.map-core strong {
-		font-size: 0.9rem;
-	}
-
-	.map-core small {
-		font-family: var(--font-mono);
-		font-size: 0.48rem;
-		letter-spacing: 0.06em;
-	}
-
-	.talks-section {
-		padding-block: clamp(6rem, 12vw, 10rem);
-		background: var(--inverse-bg);
-		color: var(--inverse-ink);
-	}
-
-	.talks-section :global(.eyebrow) {
-		color: var(--inverse-signal);
-	}
-
-	.talks-grid {
-		display: grid;
-		grid-template-columns: minmax(0, 0.8fr) minmax(26rem, 1.2fr);
-		gap: clamp(4rem, 9vw, 9rem);
-	}
-
-	.talks-section h2 {
-		max-width: 12ch;
-		font-size: var(--step-3);
-	}
-
-	.talks-section ol {
-		padding: 0;
-		border-top: 1px solid color-mix(in srgb, var(--inverse-ink) 35%, transparent);
-		list-style: none;
-	}
-
-	.talks-section li {
-		display: grid;
-		grid-template-columns: 4rem 1fr;
-		gap: 1.5rem;
-		padding-block: 1.75rem;
-		border-bottom: 1px solid color-mix(in srgb, var(--inverse-ink) 22%, transparent);
-	}
-
-	.talks-section time {
-		color: var(--inverse-signal);
-		font-family: var(--font-mono);
-		font-size: 0.72rem;
-	}
-
-	.talks-section li div {
-		display: grid;
-		gap: 0.45rem;
-	}
-
-	.talks-section li strong {
-		font-family: var(--font-serif);
-		font-size: var(--step-1);
-		font-weight: 600;
-		line-height: 1.3;
-	}
-
-	.talks-section li span {
-		color: var(--inverse-soft);
-		font-size: 0.78rem;
-	}
-
-	.talk-slides {
-		display: inline-block;
-		margin-top: 0.6rem;
-		color: var(--inverse-signal);
-		font-size: 0.78rem;
-		font-weight: 650;
-		text-decoration: none;
-		border-bottom: 1px solid color-mix(in srgb, var(--inverse-signal) 45%, transparent);
-	}
-
-	.talk-slides:hover {
-		border-bottom-color: var(--inverse-signal);
-	}
-
-	.talk-summary {
-		margin-top: 0.35rem;
-		max-width: 42rem;
-		color: var(--inverse-soft);
-		font-size: 0.8rem;
-		line-height: 1.55;
-	}
-
-	@media (max-width: 64rem) {
-		.hero {
-			grid-template-columns: minmax(0, 1fr) 15rem;
-		}
-
-		.hero-intro {
-			grid-template-columns: 1fr;
-		}
-
-		.focus-grid,
-		.talks-grid {
-			grid-template-columns: 1fr;
-		}
-	}
-
-	@media (max-width: 48rem) {
-		.hero {
-			grid-template-columns: 1fr;
-			align-items: start;
-			min-height: 0;
-		}
-
-		.hero h1 {
-			min-width: 0;
-			font-size: clamp(3rem, 14vw, 5.5rem);
-			overflow-wrap: anywhere;
-		}
-
-		.hero h1 span:last-child,
-		.hero-intro {
-			margin-left: 0;
-		}
-
-		.identity {
-			grid-template-columns: 8rem 1fr;
-			align-items: end;
-		}
-
-		.proof-grid {
-			grid-template-columns: 1fr;
-		}
-
-		.method-line {
-			grid-template-columns: 1fr 1fr;
-		}
-
-		.proof-item,
-		.proof-item:not(:first-child) {
-			padding-left: 0;
-			border-right: 0;
-			border-top: 1px solid var(--rule);
-			padding-top: 1.5rem;
-		}
-
-		.proof-item:first-child {
-			border-top: 0;
-			padding-top: 0;
-		}
-
-		.method-line li:nth-child(2) {
-			border-right: 0;
-		}
-
-		.method-line li:nth-child(n + 3) {
-			border-top: 1px solid var(--rule);
-		}
-
-		.method-line li:nth-child(3) {
-			padding-left: 0;
-		}
-
-		.method-line li:nth-child(3)::before {
-			left: 0;
-		}
-
-		.section-heading,
-		.method-heading {
-			grid-template-columns: 1fr;
-		}
-
-		.section-heading.compact > .text-link {
-			justify-self: start;
-		}
-
-		.section-heading h2,
-		.method-heading h2 {
-			font-size: clamp(2.65rem, 12vw, 4.2rem);
-		}
-
-		.signal-map {
-			grid-template-columns: 1fr;
-			gap: 1.5rem;
-			min-height: auto;
-			padding-top: 4.5rem;
-		}
-
-		.map-inputs,
-		.map-output {
-			grid-template-columns: repeat(3, 1fr);
-		}
-
-		.map-core {
-			width: min(11rem, 65vw);
-			margin-inline: auto;
-		}
-
-		.map-core::before,
-		.map-core::after {
-			display: none;
-		}
-	}
-
-	@media (max-width: 24rem) {
-		.proof-grid,
-		.method-line {
-			grid-template-columns: 1fr;
-		}
-
-		.proof-item,
-		.proof-item:not(:first-child),
-		.method-line li,
-		.method-line li:not(:first-child) {
-			padding-left: 0;
-			border-right: 0;
-			border-top: 1px solid var(--rule);
-		}
-
-		.method-line li::before,
-		.method-line li:not(:first-child)::before {
-			left: 0;
-		}
-	}
+ .hero { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(19rem, .8fr); gap: clamp(3rem, 6vw, 6rem); align-items: center; padding-block: clamp(4rem, 7vw, 7rem); }
+ .hero-copy { display: grid; gap: 2.5rem; }
+ .hero .eyebrow { max-width: 32rem; font-weight: 500; letter-spacing: .03em; }
+ h1 { font-size: clamp(2.7rem, 4.5vw, 4.5rem); font-weight: 500; letter-spacing: -.025em; line-height: 1.3; }
+ h1 span { display: block; }
+ h1 span:last-child { color: var(--author); }
+ .hero-intro { display: grid; gap: 2.25rem; max-width: 35rem; }
+ .hero-intro > p { color: var(--ink-soft); font-size: var(--step-0); line-height: 1.9; }
+ .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1.5rem; }
+ .hero-actions .text-link { min-height: 3.25rem; padding: .7rem 1.25rem; background: var(--signal); color: var(--paper-raised); border: 0; font-size: .95rem; }
+ :global(.theme-dark) .hero-actions .text-link { color: var(--paper); }
+ .hero-actions .text-link:hover { background: var(--author); }
+ .hero-actions .text-link:active { transform: translateY(1px); }
+ .quiet-link { color: var(--ink-soft); font-size: .9rem; text-decoration: none; text-underline-offset: .3em; }
+ .quiet-link:hover { color: var(--signal-dark); text-decoration: underline; }
+ .identity { border-top: 2px solid var(--author); background: var(--paper-deep); }
+ .identity-person { display: flex; align-items: center; gap: 1rem; padding: 1.25rem 1.5rem; background: var(--paper-raised); }
+ .identity-person img { width: 4rem; height: 5rem; object-fit: cover; object-position: center 25%; }
+ .identity-person strong { font-size: .88rem; font-weight: 500; }
+ .identity-person p { color: var(--ink-soft); font-size: .75rem; line-height: 1.5; margin-block: .2rem; }
+ .identity-person a { font-size: .75rem; color: var(--signal-dark); text-decoration: none; }
+ .work-section, .notes-section, .about-section { padding-block: clamp(4rem, 7vw, 7rem); }
+ .section-heading { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(16rem, .8fr); gap: clamp(2rem, 6vw, 6rem); align-items: end; margin-bottom: 3.5rem; }
+ .section-heading h2, .method-heading h2 { margin-top: 1.5rem; font-size: var(--step-3); font-weight: 500; white-space: pre-line; line-height: 1.35; }
+ .section-intro { display: grid; gap: 1.5rem; justify-items: start; color: var(--ink-soft); }
+ .section-heading.compact > .text-link { justify-self: end; }
+ .method-section { padding-block: clamp(4rem, 7vw, 7rem); background: var(--paper-deep); }
+ .method-heading { display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; margin-bottom: 3.5rem; }
+ .method-heading h2 { margin-top: 0; }
+ .method-more { margin-top: 3rem; }
+ .about-section .section-heading { margin-bottom: 0; }
+ @media (max-width: 62rem) {
+  .hero { grid-template-columns: minmax(0, 1.2fr) minmax(17rem, .8fr); gap: 2rem; }
+  h1 { font-size: clamp(2.3rem, 4.5vw, 3.5rem); }
+ }
+ @media (max-width: 48rem) {
+  .hero, .section-heading, .method-heading { grid-template-columns: 1fr; }
+  .hero { gap: 3rem; }
+  h1 { font-size: clamp(2rem, 7.7vw, 3.5rem); overflow-wrap: anywhere; }
+  .hero-copy { gap: 2rem; }
+  .section-heading.compact > .text-link { justify-self: start; }
+ }
 </style>
