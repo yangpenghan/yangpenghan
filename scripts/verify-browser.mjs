@@ -1,10 +1,36 @@
 import { spawn } from 'node:child_process';
+import { createServer } from 'node:net';
 import { setTimeout as delay } from 'node:timers/promises';
+import { terminateOwnedProcess, waitForOwnedProcess } from './process-lifecycle.mjs';
 
-const siteUrl = new URL(process.env.SITE_URL ?? 'http://127.0.0.1:4321/yangpenghan/');
+const explicitSiteUrl = process.env.SITE_URL;
+const siteUrl = explicitSiteUrl ? new URL(explicitSiteUrl) : await availableLocalSiteUrl();
 const auditScripts = ['scripts/browser-audit.mjs', 'scripts/optimization-audit.mjs'];
 let preview;
-let stopping = false;
+let activeAudit;
+let cleanupPromise;
+let receivedSignal;
+
+async function availableLocalSiteUrl() {
+	const port = await new Promise((resolve, reject) => {
+		const server = createServer();
+		server.unref();
+		server.once('error', reject);
+		server.listen(0, '127.0.0.1', () => {
+			const address = server.address();
+			if (!address || typeof address === 'string') {
+				server.close();
+				reject(new Error('Could not allocate a local preview port'));
+				return;
+			}
+			server.close((error) => {
+				if (error) reject(error);
+				else resolve(address.port);
+			});
+		});
+	});
+	return new URL(`http://127.0.0.1:${port}/yangpenghan/`);
+}
 
 async function siteIsReady() {
 	try {
@@ -15,24 +41,12 @@ async function siteIsReady() {
 	}
 }
 
-function stopPreview(signal = 'SIGTERM') {
-	if (!preview || preview.exitCode !== null || preview.signalCode !== null) return;
-	if (process.platform === 'win32') preview.kill(signal);
-	else process.kill(-preview.pid, signal);
-}
-
-async function cleanupPreview() {
-	if (!preview || stopping || preview.exitCode !== null || preview.signalCode !== null) return;
-	stopping = true;
-	stopPreview();
-	const stopped = await Promise.race([
-		new Promise((resolve) => preview?.once('exit', resolve)),
-		delay(5000).then(() => false),
-	]);
-	if (stopped === false) {
-		stopPreview('SIGKILL');
-		await new Promise((resolve) => preview?.once('exit', resolve));
-	}
+function cleanupOwnedProcesses() {
+	cleanupPromise ??= (async () => {
+		await terminateOwnedProcess(activeAudit);
+		await terminateOwnedProcess(preview);
+	})();
+	return cleanupPromise;
 }
 
 async function waitForPreview() {
@@ -50,31 +64,41 @@ async function waitForPreview() {
 async function runAudit(script) {
 	const child = spawn(process.execPath, [script], {
 		cwd: process.cwd(),
+		detached: process.platform !== 'win32',
 		env: { ...process.env, SITE_URL: siteUrl.href },
 		stdio: 'inherit',
 	});
-	const code = await new Promise((resolve, reject) => {
-		child.once('error', reject);
-		child.once('exit', (exitCode, signal) => {
-			if (signal) reject(new Error(`${script} terminated by ${signal}`));
-			else resolve(exitCode ?? 1);
-		});
-	});
-	if (code !== 0) throw new Error(`${script} failed with exit code ${code}`);
+	activeAudit = child;
+	try {
+		await waitForOwnedProcess(child);
+		if (child.signalCode) throw new Error(`${script} terminated by ${child.signalCode}`);
+		if (child.exitCode !== 0) throw new Error(`${script} failed with exit code ${child.exitCode ?? 1}`);
+	} finally {
+		if (activeAudit === child && (child.exitCode !== null || child.signalCode !== null))
+			activeAudit = undefined;
+	}
 }
 
 for (const [signal, code] of [
 	['SIGINT', 130],
 	['SIGTERM', 143],
 ]) {
-	process.once(signal, async () => {
-		await cleanupPreview();
-		process.exit(code);
+	process.once(signal, () => {
+		receivedSignal = code;
+		void cleanupOwnedProcesses().then(
+			() => process.exit(code),
+			(error) => {
+				console.error(error);
+				process.exit(1);
+			},
+		);
 	});
 }
 
+let failure;
 try {
-	if (!(await siteIsReady())) {
+	const reuseExplicitSite = explicitSiteUrl && (await siteIsReady());
+	if (!reuseExplicitSite) {
 		if (!['127.0.0.1', 'localhost', '::1'].includes(siteUrl.hostname)) {
 			throw new Error(`SITE_URL is unavailable and cannot be started locally: ${siteUrl.href}`);
 		}
@@ -98,6 +122,11 @@ try {
 		await waitForPreview();
 	}
 	for (const script of auditScripts) await runAudit(script);
+} catch (error) {
+	failure = error;
 } finally {
-	await cleanupPreview();
+	await cleanupOwnedProcesses();
 }
+
+if (receivedSignal !== undefined) process.exit(receivedSignal);
+if (failure) throw failure;

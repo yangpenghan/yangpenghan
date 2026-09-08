@@ -55,7 +55,7 @@ npx playwright install chromium
 npm run verify:browser
 ```
 
-`verify:browser` 会复用 `browser-audit.mjs` 和 `optimization-audit.mjs`，在默认地址没有既有服务时启动并回收静态预览服务器。它不会终止已在 `SITE_URL` 运行的服务器。默认使用 Playwright 管理的 Chromium；如需显式使用本机 Chrome：
+`verify:browser` 会复用 `browser-audit.mjs` 和 `optimization-audit.mjs`。未设置 `SITE_URL` 时，它会选择可用的本机端口，启动并回收当前工作树的静态预览，避免误用其他检出的服务。只有显式设置 `SITE_URL` 时才会复用已在该地址运行的服务器，且不会终止该外部服务。默认使用 Playwright 管理的 Chromium；如需显式使用本机 Chrome：
 
 ```bash
 CHROME_PATH=/usr/bin/google-chrome npm run verify:browser

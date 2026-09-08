@@ -45,11 +45,11 @@
 		"evidence": [
 			{
 				"source": "https://github.com/psyphiclaw/PsyPhiClaw",
-				"status": "已有公开项目说明链接"
+				"status": "公开项目背景；README 的 20/20+ 表述不作为 18 个模块的数量证据"
 			},
 			{
-				"source": "https://github.com/psyphiclaw/openclaw",
-				"status": "已有公开模块源码链接；模块数量仍应按对应版本复核"
+				"source": "https://github.com/psyphiclaw/openclaw/tree/2eff8a1227459a72b5962d0c706a054993dfc9be/skills",
+				"status": "2026-09-09 已核验非截断源码树：18 个 psyphiclaw-* 目录各含一个 SKILL.md；只证明源码结构，不证明科学有效性"
 			}
 		],
 		"allowedInterpretations": [
