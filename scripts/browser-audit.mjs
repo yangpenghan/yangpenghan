@@ -3,12 +3,12 @@ import AxeBuilder from '@axe-core/playwright';
 import { chromium } from '@playwright/test';
 
 const siteUrl = new URL(process.env.SITE_URL ?? 'http://localhost:4321/yangpenghan/');
-const executablePath = process.env.CHROME_PATH ?? '/usr/bin/google-chrome';
-const browser = await chromium.launch({
+const launchOptions = {
 	headless: true,
-	executablePath,
 	args: ['--disable-extensions'],
-});
+};
+if (process.env.CHROME_PATH) launchOptions.executablePath = process.env.CHROME_PATH;
+const browser = await chromium.launch(launchOptions);
 
 const browserErrors = [];
 const badRoutes = [];

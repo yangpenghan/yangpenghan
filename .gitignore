@@ -40,5 +40,6 @@ drafts/
 # Local visual verification artifacts
 artifacts/visual-refresh/
 artifacts/thinking-expansion/
+artifacts/verification/
 .impeccable/
 docs/website-optimization-plan.md

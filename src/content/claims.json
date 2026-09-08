@@ -1,0 +1,193 @@
+{
+	"financial-research-issues": {
+		"protectedFact": {
+			"zh": "金融研究最终形成 86 个可追溯问题，按六类组织。",
+			"en": "The financial study produced 86 traceable, decision-ready issues in six categories."
+		},
+		"documents": {
+			"zh": "work/zh/financial-behavior-model.md",
+			"en": "work/en/financial-behavior-model.md"
+		},
+		"evidence": [
+			{
+				"source": "本人署名的 2019 年公开演讲与既有项目档案说明",
+				"status": "作者自述；本仓库未提供可独立核验 86 这一数量的公开来源"
+			}
+		],
+		"allowedInterpretations": [
+			"86 是交付的问题条目数，可说明分析与交付范围。",
+			"60 次测试与访谈是研究接触次数，不是每个问题的有效样本数。"
+		],
+		"prohibitedInferences": [
+			"不得由问题数量推断转化率、收入或其他上线后业务提升。",
+			"不得把 86 当成参与者数量或独立样本量。"
+		],
+		"validation": {
+			"required": {
+				"zh": ["最终形成 86 个问题", "不能据此声称转化率或收入提升"],
+				"en": ["produced 86 decision-ready issues", "cannot claim a conversion or revenue improvement"]
+			},
+			"forbidden": {
+				"zh": ["86\\s*(名|位)\\s*(参与者|用户|被试)"],
+				"en": ["86\\s+(participants?|users?|subjects?)"]
+			}
+		}
+	},
+	"psyphiclaw-modules": {
+		"protectedFact": {
+			"zh": "PsyPhiClaw 公开代码包含 18 个行为分析模块；真实数据验证暂停。",
+			"en": "PsyPhiClaw's public code contains 18 behavioral-analysis modules; real-data validation is paused."
+		},
+		"documents": {
+			"zh": "work/zh/psyphiclaw.md",
+			"en": "work/en/psyphiclaw.md"
+		},
+		"evidence": [
+			{
+				"source": "https://github.com/psyphiclaw/PsyPhiClaw",
+				"status": "已有公开项目说明链接"
+			},
+			{
+				"source": "https://github.com/psyphiclaw/openclaw",
+				"status": "已有公开模块源码链接；模块数量仍应按对应版本复核"
+			}
+		],
+		"allowedInterpretations": [
+			"18 说明公开原型的模块范围。",
+			"可以描述已实现的模块，但必须保留原型与待验证状态。"
+		],
+		"prohibitedInferences": [
+			"不得由模块数量推断准确性、可靠性或正式研究适用性。",
+			"不得称为完成生产验证的产品。"
+		],
+		"validation": {
+			"required": {
+				"zh": ["公开代码包含 18 个行为分析模块", "这是公开原型", "真实数据上的有效性仍待验证"],
+				"en": [
+					"public code includes 18 behavioral-analysis modules",
+					"This is a public prototype",
+					"validity on real data remains to be tested"
+				]
+			},
+			"forbidden": {
+				"zh": ["这是已完成生产验证的产品", "已可直接用于正式研究结论"],
+				"en": [
+					"This is a production[- ]validated product",
+					"The (system|prototype) can be relied on for formal research conclusions"
+				]
+			}
+		}
+	},
+	"behaviorlens-processing-target": {
+		"protectedFact": {
+			"zh": "BehaviorLens 的 20 分钟处理时间是设计目标，不是实测结果。",
+			"en": "BehaviorLens's twenty-minute processing time is a design target, not a measured result."
+		},
+		"documents": {
+			"zh": "work/zh/behaviorlens.md",
+			"en": "work/en/behaviorlens.md"
+		},
+		"evidence": [
+			{
+				"source": "BehaviorLens 内部产品概念与架构材料",
+				"status": "作者自述；未公开、未独立验证"
+			}
+		],
+		"allowedInterpretations": [
+			"20 分钟只能描述为待检验的处理目标。",
+			"可以描述概念、架构、前端原型和计划中的验证指标。"
+		],
+		"prohibitedInferences": [
+			"不得称 20 分钟为实测处理时间。",
+			"不得声称已经证明节省时间、提高效率或达到准确性目标。"
+		],
+		"validation": {
+			"required": {
+				"zh": ["20 分钟是自动处理的设计目标", "目前没有实测效率提升可报告"],
+				"en": ["Twenty minutes is a processing target", "There is no measured efficiency gain to report yet"]
+			},
+			"forbidden": {
+				"zh": ["已(经)?证实.{0,12}(节省时间|效率提升)", "实测.{0,8}20\\s*分钟"],
+				"en": ["proven.{0,16}(time savings?|efficiency gains?)", "measured.{0,16}twenty[- ]minute"]
+			}
+		}
+	},
+	"agent-system-efficiency": {
+		"protectedFact": {
+			"zh": "个人 Agent 系统已用于日常工作，但没有公开效率对照数据。",
+			"en": "The personal agent system is used in daily work, but has no public efficiency benchmark."
+		},
+		"documents": {
+			"zh": "work/zh/ai-agent-system.md",
+			"en": "work/en/ai-agent-system.md"
+		},
+		"evidence": [
+			{
+				"source": "个人日常系统运行与内部记录",
+				"status": "作者自述；运行细节与效率数据未公开、未独立验证"
+			}
+		],
+		"allowedInterpretations": [
+			"可以描述日常使用、工作流结构与权限设计。",
+			"可以说明作者通过实际使用检查和调整工作流。"
+		],
+		"prohibitedInferences": [
+			"不得声称公开数据证明节省时间、降低错误率或提升生产率。",
+			"不得把个人使用描述为通用产品验证。"
+		],
+		"validation": {
+			"required": {
+				"zh": ["尚无公开效率对照", "没有公开的节省时间或错误率对照数据"],
+				"en": [
+					"No public efficiency benchmark is available",
+					"no public time-saving or error-rate comparison"
+				]
+			},
+			"forbidden": {
+				"zh": ["公开数据.{0,12}(证明|证实).{0,12}(节省时间|效率提升|错误率降低)"],
+				"en": ["public data.{0,16}(proves?|confirms?).{0,16}(time savings?|efficiency|error-rate reduction)"]
+			}
+		}
+	},
+	"medical-service-scope": {
+		"protectedFact": {
+			"zh": "相关医疗器械服务累计覆盖 25+ 家企业及机构；这是团队实践范围，不是个人独立完成数量。",
+			"en": "The medical-device practice has cumulatively served 25+ companies and institutions; this is practice scope, not Will's individual output."
+		},
+		"documents": {
+			"zh": "work/zh/medical-devices.md",
+			"en": "work/en/medical-devices.md"
+		},
+		"evidence": [
+			{
+				"source": "既有项目档案与团队服务记录",
+				"status": "作者自述；客户清单受保密约束，25+ 数量未独立验证"
+			},
+			{
+				"source": "/talks/2020-medical-device-hf-safety.pdf",
+				"status": "仓库内公开演讲仅支持方法背景，不作为 25+ 服务数量的证据"
+			}
+		],
+		"allowedInterpretations": [
+			"25+ 可以描述 Noldus 相关实践累计服务范围。",
+			"个人贡献限于方向开拓、方法设计、方案和关键项目交付等页面明确角色。"
+		],
+		"prohibitedInferences": [
+			"不得把团队与产品的全部成果归为个人独立完成。",
+			"不得由服务数量推断产品安全、注册结果或个人完成 25+ 个项目。"
+		],
+		"validation": {
+			"required": {
+				"zh": ["累计服务 25+ 家医疗器械企业及相关机构", "团队和产品的全部成果不等同于我个人完成"],
+				"en": [
+					"practice has served 25+ medical-device companies and related institutions",
+					"full output of the team and product is broader than my individual contribution"
+				]
+			},
+			"forbidden": {
+				"zh": ["我(独立|个人)完成.{0,8}25\\+"],
+				"en": ["I (individually|personally) (completed|served).{0,8}25\\+"]
+			}
+		}
+	}
+}
