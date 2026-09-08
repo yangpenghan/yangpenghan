@@ -43,3 +43,11 @@ artifacts/thinking-expansion/
 artifacts/verification/
 .impeccable/
 docs/website-optimization-plan.md
+# Research brief pilot: local environment, private observations, and generated output
+analysis/research-brief/.venv/
+analysis/research-brief/data/
+analysis/research-brief/outputs/
+analysis/research-brief/.ipynb_checkpoints/
+analysis/research-brief/__pycache__/
+analysis/research-brief/.pytest_cache/
+analysis/research-brief/.ruff_cache/

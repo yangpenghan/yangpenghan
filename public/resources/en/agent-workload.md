@@ -33,3 +33,7 @@ Use agent-workload.csv in the same directory. Record time in minutes. Leave unkn
 4. Record perceived effort separately. Task counts do not measure attention burden.
 
 Next decision: continue / adjust permissions or workflow / return to a simpler tool. Record the reason and next review date.
+
+## Public-source research brief pilot
+
+To run a paired pilot, start with the [research-brief pilot method](https://github.com/yangpenghan/yangpenghan/tree/main/analysis/research-brief#readme). It retains failures and retries and excludes incomplete pairs from percentage-saved calculations. The working materials are in Chinese.

@@ -1,0 +1,1 @@
+trial_id,pair_id,condition,task_id,started_at,setup_human_minutes,research_human_minutes,supervision_human_minutes,correction_human_minutes,recovery_human_minutes,elapsed_minutes,interruptions_count,accepted,quality_notes,model,skills_revision,sources_cutoff,notes
