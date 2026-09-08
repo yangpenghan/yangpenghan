@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Final
@@ -75,9 +76,18 @@ def _blank(value: object) -> bool:
 def load_trials(path: str | Path) -> pd.DataFrame:
     """Read and validate a v1 pilot CSV without converting blanks to zero."""
     frame = pd.read_csv(Path(path), dtype=str, keep_default_na=False)
-    missing_columns = [column for column in COLUMNS if column not in frame.columns]
-    if missing_columns:
-        raise ValidationError(f"缺少列：{', '.join(missing_columns)}")
+    actual_columns = list(frame.columns)
+    if actual_columns != COLUMNS:
+        missing_columns = [column for column in COLUMNS if column not in actual_columns]
+        extra_columns = [column for column in actual_columns if column not in COLUMNS]
+        problems: list[str] = []
+        if missing_columns:
+            problems.append(f"缺少列：{', '.join(missing_columns)}")
+        if extra_columns:
+            problems.append(f"多余列：{', '.join(extra_columns)}")
+        if not missing_columns and not extra_columns:
+            problems.append("列顺序与试点 schema 不一致")
+        raise ValidationError("；".join(problems))
     frame = frame[COLUMNS].copy()
     if frame.empty:
         return frame
@@ -122,6 +132,8 @@ def load_trials(path: str | Path) -> pd.DataFrame:
                 raise ValidationError(
                     f"{field} 必须是数值或留空（行 {offset}）"
                 ) from exc
+            if not math.isfinite(value):
+                raise ValidationError(f"{field} 必须是有限数值（行 {offset}）")
             if value < 0:
                 raise ValidationError(f"{field} 不能为负数（行 {offset}）")
             converted.append(value)
@@ -137,6 +149,8 @@ def load_trials(path: str | Path) -> pd.DataFrame:
             raise ValidationError(
                 f"interruptions_count 必须是非负整数（行 {offset}）"
             ) from exc
+        if not math.isfinite(value):
+            raise ValidationError(f"interruptions_count 必须是有限数值（行 {offset}）")
         if value < 0 or not value.is_integer():
             raise ValidationError(f"interruptions_count 必须是非负整数（行 {offset}）")
         interruptions.append(int(value))
@@ -192,6 +206,14 @@ def _pair_table(attempts: pd.DataFrame) -> pd.DataFrame:
                 reasons.append("同一条件的重试必须使用同一 task_id")
             if success_counts[condition] > 1:
                 reasons.append("同一条件出现多次 accepted=true")
+            if part is not None:
+                acceptance = list(part["accepted"])
+                first_success = next(
+                    (index for index, value in enumerate(acceptance) if value is True),
+                    None,
+                )
+                if first_success is not None and first_success < len(acceptance) - 1:
+                    reasons.append("验收通过后仍有后续尝试")
         if len(task_ids["human"]) == 1 and task_ids["human"] == task_ids["agent"]:
             reasons.append("两个条件必须使用不同 task_id")
         if not group[HUMAN_STAGES].notna().all(axis=None):

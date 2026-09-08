@@ -100,6 +100,32 @@ def test_duplicate_trial_id_is_rejected(tmp_path: Path) -> None:
         load_trials(path)
 
 
+@pytest.mark.parametrize(
+    ("mutate", "message"),
+    [
+        (lambda frame: frame.loc[:, list(reversed(COLUMNS))], "列顺序"),
+        (lambda frame: frame.assign(unexpected="value"), "多余列.*unexpected"),
+    ],
+)
+def test_header_must_match_exact_schema(
+    tmp_path: Path, mutate: object, message: str
+) -> None:
+    frame = mutate(pd.DataFrame([row()], columns=COLUMNS))
+    path = tmp_path / "trials.csv"
+    frame.to_csv(path, index=False)
+
+    with pytest.raises(ValidationError, match=message):
+        load_trials(path)
+
+
+@pytest.mark.parametrize("field", ["research_human_minutes", "interruptions_count"])
+def test_numeric_overflow_is_rejected(tmp_path: Path, field: str) -> None:
+    path = write_csv(tmp_path / "trials.csv", [row(**{field: "1e309"})])
+
+    with pytest.raises(ValidationError, match="有限数值"):
+        load_trials(path)
+
+
 def test_missing_stage_makes_total_missing_but_failure_is_retained(
     tmp_path: Path,
 ) -> None:
@@ -158,6 +184,26 @@ def test_complete_pair_uses_all_attempt_costs_and_hand_calculated_savings(
     assert pair["absolute_minutes_saved"] == 5
     assert pair["percent_human_time_saved"] == pytest.approx(12.5)
     assert pair["comparison_status"] == "comparable"
+
+
+def test_retry_after_acceptance_excludes_pair_but_retains_attempt_and_cost(
+    tmp_path: Path,
+) -> None:
+    rows = [
+        row(trial_id="H1", accepted="true", research_human_minutes=10),
+        row(trial_id="H2", accepted="false", research_human_minutes=20),
+        row(trial_id="A1", condition="agent", task_id="R02", accepted="true"),
+    ]
+
+    result = analyze_trials(load_trials(write_csv(tmp_path / "trials.csv", rows)))
+    pair = result.pairs.iloc[0]
+
+    assert list(result.attempts["trial_id"]) == ["H1", "H2", "A1"]
+    assert pair["human_attempts"] == 2
+    assert pair["human_total_minutes"] == 40
+    assert pair["comparison_status"] == "incomplete"
+    assert "验收通过后仍有后续尝试" in pair["exclusion_reason"]
+    assert pd.isna(pair["percent_human_time_saved"])
 
 
 @pytest.mark.parametrize(
