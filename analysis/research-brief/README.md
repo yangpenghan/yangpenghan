@@ -23,13 +23,16 @@
 
    ```bash
    .venv/bin/python -m pytest -q test_analysis.py
-   .venv/bin/jupyter execute analysis.ipynb --inplace
+   mkdir -p outputs
+   .venv/bin/python -c "from pathlib import Path; import nbformat; from nbclient import NotebookClient; source=Path('analysis.ipynb'); target=Path('outputs/analysis.executed.ipynb'); notebook=nbformat.read(source, 4); NotebookClient(notebook, timeout=600, kernel_name='python3', resources={'metadata': {'path': str(source.parent)}}).execute(); nbformat.write(notebook, target)"
    ```
 
-   若没有 `jupyter` 命令，可用仓库验证方式：
+   执行结果写入已忽略的 `outputs/analysis.executed.ipynb`，不会把私有表格保存进受版本控制的 `analysis.ipynb`。
+
+5. 如果曾在 Jupyter 中交互执行或保存受版本控制的 `analysis.ipynb`，提交前清空其输出和执行序号：
 
    ```bash
-   .venv/bin/python -c "from pathlib import Path; import nbformat; from nbclient import NotebookClient; p=Path('analysis.ipynb'); n=nbformat.read(p, 4); NotebookClient(n, timeout=600, kernel_name='python3', resources={'metadata': {'path': str(p.parent)}}).execute()"
+   .venv/bin/python -c "from pathlib import Path; import nbformat; path=Path('analysis.ipynb'); notebook=nbformat.read(path, 4); [(cell.__setitem__('outputs', []), cell.__setitem__('execution_count', None)) for cell in notebook.cells if cell.cell_type == 'code']; nbformat.write(notebook, path)"
    ```
 
 笔记本优先读取 `data/trials.csv`，文件不存在时读取空模板。默认不会用合成数据替代真实记录；没有记录时只显示“待采集”，不会生成数值图。字段定义见 [data-dictionary.md](data-dictionary.md)，任务与执行规则见 [protocol.md](protocol.md)。
