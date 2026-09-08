@@ -57,6 +57,40 @@ describe('owned process lifecycle', () => {
 		},
 	);
 
+	it.skipIf(process.platform === 'win32')(
+		'cleans a surviving descendant after its process-group leader exits',
+		async () => {
+			const descendant = `process.on('SIGTERM', () => {}); setInterval(() => {}, 1000);`;
+			const parent = `
+				const { spawn } = require('node:child_process');
+				const child = spawn(process.execPath, ['-e', ${JSON.stringify(descendant)}], { stdio: 'ignore' });
+				console.log(JSON.stringify({ parentPid: process.pid, descendantPid: child.pid }));
+				setTimeout(() => process.exit(0), 25);
+			`;
+			const leader = spawn(process.execPath, ['-e', parent], {
+				detached: true,
+				stdio: ['ignore', 'pipe', 'inherit'],
+			});
+			if (!leader.stdout) throw new Error('Expected process stdout');
+			const [line] = await once(createInterface({ input: leader.stdout }), 'line');
+			const { parentPid, descendantPid } = JSON.parse(String(line)) as {
+				parentPid: number;
+				descendantPid: number;
+			};
+			await once(leader, 'exit');
+			expect(processExists(descendantPid)).toBe(true);
+			try {
+				await terminateOwnedProcess(leader, { graceMs: 100 });
+				expect(processExists(descendantPid)).toBe(false);
+			} finally {
+				try {
+					process.kill(-parentPid, 'SIGKILL');
+				} catch {
+					// The process group is already gone.
+				}
+			}
+		},
+	);
 	it('returns promptly when the owned child exited before cleanup started', async () => {
 		const child = spawn(process.execPath, ['-e', 'process.exit(0)']);
 		await once(child, 'exit');

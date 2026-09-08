@@ -74,6 +74,7 @@ async function runAudit(script) {
 		if (child.signalCode) throw new Error(`${script} terminated by ${child.signalCode}`);
 		if (child.exitCode !== 0) throw new Error(`${script} failed with exit code ${child.exitCode ?? 1}`);
 	} finally {
+		await terminateOwnedProcess(child);
 		if (activeAudit === child && (child.exitCode !== null || child.signalCode !== null))
 			activeAudit = undefined;
 	}
