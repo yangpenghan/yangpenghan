@@ -1,0 +1,108 @@
+---
+import MainHead from '../MainHead.astro';
+import BrandIdentity from '../BrandIdentity.astro';
+import Evidence from './Evidence.astro';
+import Measurement from './Measurement.astro';
+import MethodLinks from './MethodLinks.astro';
+import { targetLetters, translate, phaseNames, type Copy, type Language } from '../../lib/explore/model';
+import '../../styles/explore.css';
+import '../../styles/cinema.css';
+import '../../styles/measurement.css';
+interface Props { locale: Language }
+const { locale } = Astro.props;
+const t = (value: Copy) => translate(value, locale);
+const base = import.meta.env.BASE_URL;
+const home = `${base}${locale === 'en' ? 'en/' : ''}`;
+const link = (path: string) => `${home}${path}`;
+const terms = [['facial-expression-analysis', 'eeg'], ['emg', 'eeg'], ['eye-tracking', 'behavioral-tasks']];
+const destinations = [
+ { id: 'research', name: ['问题模糊，怎样研究', 'Frame a vague question'], question: ['把一个模糊的问题，变成研究。', 'Turn an open question into a study.'], items: [ ['method/', ['从哪里开始拆解问题', 'Start framing a question']], ['notes/multimodal-evidence-and-inference/', ['不同证据，怎样一起解释', 'Interpret different sources of evidence']], ['resources/zh/study-preparation.md', ['带走一份研究准备模板', 'Take a study preparation template']] ] },
+ { id: 'product', name: ['产品已有，验证体验', 'Evaluate a product experience'], question: ['在还能修改时，知道该改哪里。', 'Learn what to change while you still can.'], items: [ ['work/human-robot-interaction/', ['功能没做完，也能研究交互', 'Study interaction before a feature is finished']], ['work/medical-devices/', ['让研究及时进入设计', 'Bring research into design']], ['resources/zh/interaction-prototype.md', ['带走一份交互原型模板', 'Take an interaction prototype template']] ] },
+ { id: 'ai', name: ['流程复杂，让 AI 参与', 'Bring AI into complex work'], question: ['同样先明确问题、观察与验证，再让 AI 参与工作。', 'Clarify the question, observations and validation before bringing AI into the work.'], items: [ ['work/ai-agent-system/', ['AI 怎样进入实际工作', 'AI in everyday work']], ['notes/automation-and-human-burden/', ['自动化后，人的负担减少了吗', 'Does automation reduce human effort?']], ['resources/zh/agent-workload.md', ['带走一份工作负担记录', 'Take a workload template']] ] },
+] as const;
+---
+<!doctype html>
+<html lang={locale === 'zh' ? 'zh-CN' : 'en'}>
+ <head><MainHead locale={locale} title={t(['把问题展开 — 杨朋翰', 'Unfold a question — Will Yang'])} description={t(['从一句问题，到一段完整的研究。与杨朋翰一起探索问题怎样被拆解。', 'From one question to a complete study. Explore how Will Yang approaches a problem.'])} /></head>
+ <body class="explore-body immersive">
+ <a class="skip-link" href="#story-main">{t(['跳到内容', 'Skip to content'])}</a>
+ <header class="explore-header">
+  <a class="explore-brand" href={home} aria-label={t(['杨朋翰 · 主页', 'Will Yang · Home'])}><BrandIdentity kind="mark" locale={locale}/></a>
+  <div class="explore-tools"><div class="sound-controls" data-sound data-locale={locale}><button type="button" data-sound-toggle aria-pressed="false">{t(['播放背景音乐','Play music'])}</button><details><summary aria-label={t(['音乐音量','Music volume'])}>♫</summary><div><label>{t(['音量','Volume'])}<input type="range" min="0" max="100" value="45" data-sound-volume /></label><small>{t(['原创背景音乐 · 点击播放','Original score · tap to play'])}</small></div></details><span class="sound-feedback" aria-live="polite" data-sound-status></span></div><details class="experience-menu"><summary aria-label={t(['更多选项', 'More options'])}>···</summary><div><a href={`${base}${locale === 'zh' ? 'en/' : ''}explore/`} data-language>{locale === 'zh' ? 'English' : '中文'}</a><a href={link('about/')}>{t(['关于我', 'About me'])}</a></div></details><a class="exit-link" href={`${home}#selected-work-title`}>{t(['跳过故事', 'Skip the story'])}<span aria-hidden="true"> ↗</span></a></div>
+ </header>
+ <main id="story-main" tabindex="-1" class="story-shell cinema-shell" data-story data-locale={locale}>
+
+  <section id="intro" data-scene="intro" class="scene cinema-cover" aria-labelledby="intro-title">
+   <img class="cinema-backdrop cover-art" src={base+'assets/explore/milk.webp'} alt="" width="1536" height="1024" fetchpriority="high"/>
+   <div class="cover-copy"><p class="cinema-kicker">WILL YANG / 杨朋翰</p>
+    <h1 id="intro-title" tabindex="-1">{t(['把一个问题，','Turn a question'])}<br/><em>{t(['变成验证。','into a study.'])}</em></h1>
+    <div class="cover-author"><img src={base+'assets/portrait.jpg'} alt={t(['杨朋翰','Will Yang'])} width="64" height="80"/><p>{t(['我是杨朋翰。心理学出身，在 Noldus 从事行为研究与解决方案工作。','I’m Will Yang. With a background in psychology, I work on behavioral research and solutions at Noldus.'])}</p></div>
+    <p class="cover-belief">{t(['我相信，所有问题都是技术性问题。','I believe every problem is a technical problem.'])}</p>
+    <p class="cover-invitation">{t(['我帮助团队把模糊的问题，变成具体的研究与行动。从这杯助眠奶开始。','I help teams turn vague questions into research and action. Start with this sleep-support drink.'])}</p>
+    <a href="#question" class="primary-action">{t(['从这杯奶开始','Start with this glass'])} <span>↗</span></a>
+   </div>
+   <a class="cup-entry" href="#question" aria-label={t(['点击杯子，开始故事','Touch the glass to begin'])}><span>＋</span></a>
+   <p class="cinema-credit">{t(['AI 情境画面 · 真实研究故事','AI scene illustration · a real research story'])}</p>
+  </section>
+  <section id="question" data-scene="question" class="scene cinema-question" aria-labelledby="question-title">
+   <div class="verdict-stage">
+    <img class="verdict-art" src={base+'assets/explore/milk.webp'} alt={t(['夜色中的一杯奶，AI 情境示意','A glass of milk at night, an AI illustration'])} width="1536" height="1024"/>
+    <div class="verdict-copy"><p class="cinema-kicker">{t(['一个看似简单的问题','A SEEMINGLY SIMPLE QUESTION'])}</p><h2 id="question-title" tabindex="-1">{t(['助眠奶，','A sleep-support drink.'])}<br/>{t(['有用吗？','Does it work?'])}</h2><p>{t(['一句“喝了以后好像睡得更好”，是研究的起点。如果继续了解，你想先看什么？','“I seem to sleep better after drinking it” is a starting point. What evidence would you explore first?'])}</p>
+     <div class="verdict-choices" role="group" aria-label={t(['选择证据入口','Choose an evidence entry point'])}>{([['self-report',['饮用者自己的感受','How people felt']],['sleep-duration',['睡了多长时间','How long they slept']],['whole-process',['整个入睡前后过程','The whole sleep process']]] as const).map(([id,label])=><button type="button" data-choice={id} aria-pressed="false">{t(label)}</button>)}</div>
+     <p class="verdict-feedback" data-feedback aria-live="polite">{t(['这些观察都有价值。选择一个入口，看看它能回答什么。','Each observation has value. Choose one to see what it can tell us.'])}</p>
+    </div>
+   </div>
+   <div class="question-unfold" data-question-unfold>
+    <p class="unfold-statement">{t(['保留这些观察，再把时间展开。','Keep these observations. Now unfold the timeline.'])}</p>
+    <p class="study-context">{t(['下面进入一段午后实验室小睡研究，画面为情境示意。','We now enter an afternoon laboratory nap study. The images are illustrative.'])}</p><div class="fold-film" data-fold-film>
+     {['before','during','after'].map((phase,i)=><a href={'#'+phase} class={'fold-frame fold-'+phase}>{i<2 ? <img src={base+'assets/explore/'+(i===0?'before':'during')+'-small.webp'} alt="" width="768" height="512"/> : <div class="fold-task-art" aria-hidden="true">A H R<br/>K A N<br/>R H A</div>}<span><small>0{i+1}</small><strong>{t(phaseNames[i])}</strong><em>{t([['困意如何变化','入睡如何发生','醒后如何表现'][i],['How sleepiness changes','How sleep begins','How we perform after waking'][i]])}</em></span></a>)}
+    </div>
+    <div class="fold-facts">{([['睡前：饮用后观察 30 分钟，每 5 分钟记录一次困倦自评。','Before sleep: observe for 30 minutes after intake, with sleepiness ratings every five minutes.'],['入睡：关灯后观察 30 分钟，将手臂肌电与脑电按时间对照。','Sleep onset: observe for 30 minutes after lights off, aligning arm EMG and EEG.'],['醒后：15 分钟阶段包含自评和 20 秒视觉搜索，注意与任务完成分别观察。','After waking: a 15-minute phase includes self-reports and a 20-second search, separating attention and task completion.']] as const).map((copy,i)=><p data-fold-fact={i}>{t(copy)}</p>)}</div><div class="fold-control"><label for="unfold-time">{t(['拉开这段时间','Pull the timeline open'])}</label><input id="unfold-time" data-fold type="range" min="0" max="100" value="0"/><button type="button" data-fold-all>{t(['点按展开','Tap to unfold'])} ↔</button></div>
+    <a href="#before" class="primary-action" data-fold-enter>{t(['进入睡前的观察','Enter the first observation'])} →</a>
+   </div>
+  </section>
+  <section id="before" data-scene="before" class="scene cinema-room before-room" aria-labelledby="before-title">
+   <img class="cinema-backdrop" src={base+'assets/explore/before.webp'} alt={t(['睡前靠在沙发上的人物，AI 情境示意','A person resting before sleep, an AI illustration'])} width="1536" height="1024"/>
+   <div class="room-title"><p class="cinema-kicker">01 / {t(['睡前','BEFORE SLEEP'])}</p><h2 id="before-title" tabindex="-1">{t(['觉得困，','Feeling sleepy.'])}<br/>{t(['只能问出来吗？','Can we also observe it?'])}</h2><p>{t(['自我感受很重要。我们还可以把它与同一时段的动作记录放在一起。','Self-reports matter. We can also compare them with movements recorded during the same period.'])}</p></div>
+   <button class="scene-hotspot eye-hotspot" type="button" data-observe="before" aria-expanded="false" aria-controls="before-observation"><span>＋</span>{t(['看看眼部动作怎样记录','How are eyelid movements recorded?'])}</button>
+   <div class="observation-reveal" id="before-observation" data-observation="before"><div class="observation-intro"><p class="cinema-kicker">{t(['从一个时刻，到一段时间','FROM A MOMENT TO A PERIOD'])}</p><h3>{t(['“觉得困”之后，','Beyond “I feel sleepy”,'])}<br/>{t(['还能看见什么？','what can we observe?'])}</h3><p>{t(['观看纪录片的 30 分钟里，每 5 分钟记录一次困倦自评，同时记录视频中的闭眼等面部动作。把“什么时候觉得困”与“同一时段有什么动作”对齐，才有了比较的起点。','Across 30 minutes watching a documentary, participants rate sleepiness every five minutes while video records eyelid and other facial movements. Aligning feelings and movements in time gives us a basis for comparison.'])}</p>
+    </div><Measurement locale={locale} kind="face"/><div class="sampling-strip"><p>{t(['记录安排示意 · 非测量结果','Recording plan · not measured results'])}</p><ol>{[5,10,15,20,25,30].map(min=><li><strong>{min} min</strong><span>{t(['困倦自评','Sleepiness rating'])}</span><span>{t(['同步视频','Synced video'])}</span></li>)}</ol></div><p class="content-boundary">{t(['面部分析记录闭眼等动作，脑电提供另一条记录。动作是线索，不能单凭它判断困倦或产品效果。','Facial analysis records eyelid and other movements; EEG adds another record. A movement alone does not establish sleepiness or product efficacy.'])}</p>
+    <MethodLinks locale={locale} phase="before" ids={terms[0]}/>
+    <a class="primary-action" href="#during">{t(['有了困意，怎样观察入睡？','How do we observe the transition to sleep?'])} →</a>
+   </div>
+   <p class="cinema-credit">{t(['AI 情境示意 · 非参与者照片','AI illustration · not a participant photograph'])}</p>
+  </section>
+  <section id="during" data-scene="during" class="scene cinema-room during-room" aria-labelledby="during-title">
+   <img class="cinema-backdrop" src={base+'assets/explore/during.webp'} alt={t(['手握软球的情境示意','An illustrative hand holding a soft ball'])} width="1536" height="1024"/>
+   <div class="room-title"><p class="cinema-kicker">02 / {t(['入睡','FALLING ASLEEP'])}</p><h2 id="during-title" tabindex="-1">{t(['入睡，','Falling asleep'])}<br/>{t(['是一段过程。','is a process.'])}</h2><p>{t(['参与者随呼吸握松软球，尽可能持续完成动作。手臂肌电把动作相关的肌肉活动记录下来。','Participants grip and release a soft ball with their breathing for as long as they can. Arm EMG records the associated muscle activity.'])}</p></div>
+   <button class="scene-hotspot hand-hotspot" type="button" data-observe="during" data-play aria-pressed="false" aria-expanded="false" aria-controls="during-observation"><span>▷</span>{t(['看动作如何形成记录','See how an action becomes a record'])}</button>
+   <div class="observation-reveal" id="during-observation" data-observation="during"><div class="observation-intro"><p class="cinema-kicker">{t(['握 · 松 · 记录','GRIP · RELEASE · RECORD'])}</p><h3>{t(['看不见的过程，','An unseen process,'])}<br/>{t(['有了观察的入口。','a way to observe it.'])}</h3><p>{t(['肌电记录与肌肉活动有关的电信号，脑电记录脑部电活动的变化。把两条记录对齐到关灯后的时间，一起观察入睡过程；不能把“握不住球”直接等同于已经睡着。','EMG records electrical activity associated with muscles; EEG records brain electrical activity. Aligning them after lights off helps us observe sleep onset. Failure to grip the ball alone does not establish that someone is asleep.'])}</p>
+    </div><Measurement locale={locale} kind="eeg"/><Measurement locale={locale} kind="emg"/><div class="grip-sequence" aria-label={t(['记录关系示意，非实测信号','Recording relationship, not measured signals'])}><span class="grip-pair"><b>{t(['握','Grip'])}</b><small>→</small><b>{t(['松','Release'])}</b></span><i></i><span>{t(['手臂肌电','Arm EMG'])}</span><i></i><span>{t(['与脑电对照','Compare with EEG'])}</span></div><p class="content-boundary">{t(['展开查看电极采集、信号处理与时间对齐。原理动画帮助理解测量；正式实验的定量结果在后面的图表中呈现。','Explore electrodes, signal processing and time alignment. The animation explains measurement; quantitative experimental results follow in the charts.'])}</p>
+    <MethodLinks locale={locale} phase="during" ids={terms[1]}/>
+    <a class="primary-action" href="#after">{t(['醒后表现，还需要单独观察','Waking performance needs its own observation'])} →</a>
+   </div><p class="cinema-credit">{t(['AI 情境示意 · 动作演示非测量记录','AI scene illustration · the animation is not measured data'])}</p>
+  </section>
+  <section id="after" data-scene="after" class="scene cinema-morning" aria-labelledby="after-title">
+   <div class="morning-copy"><p class="cinema-kicker">03 / {t(['醒后','AFTER WAKING'])}</p><h2 id="after-title" tabindex="-1">{t(['醒了。','Awake.'])}<br/><em>{t(['然后呢？','And then?'])}</em></h2><p>{t(['除了问“清醒了吗”，也看看人怎样完成一件小事。','Alongside asking about alertness, watch someone complete a small task.'])}</p><p class="task-invitation">{t(['简化网页体验：24 个字母中找 5 个 A，不限时、不评分。原研究：117 个字母中找 10 个目标，限时 20 秒。也可以直接看报告。','Simplified web activity: find 5 As among 24 letters, without a timer or score. The actual study used 117 letters, 10 targets and a 20-second limit. You can also go straight to the report.'])}</p></div>
+   <div class="letter-board"><div class="board-heading"><span>{t(['一次小小的观察','A SMALL OBSERVATION'])}</span><span data-count>0 / 5</span></div><div class="letter-grid" aria-label={t(['寻找五个字母 A','Find five letter As'])}>{targetLetters.map((letter,i)=><button type="button" data-letter={letter} data-position={i} aria-pressed="false" aria-label={t(['位置','Position'])+' '+(i+1)+': '+letter}>{letter}</button>)}</div><p data-result class="task-result" aria-live="polite"></p><div class="task-meaning"><p>{t(['点击告诉我们选了哪些位置；任务完成记录告诉我们找到了多少目标。','Clicks tell us which positions were chosen; task completion tells us how many targets were found.'])}</p><p>{t(['眼动还可记录视线落在哪里、怎样分配注视。本页不采集眼动，也不把你的点击数与报告成绩比较。','Eye tracking can additionally record where gaze lands and how fixations are distributed. This page does not track gaze or compare your clicks with study results.'])}</p></div><div class="task-footer"><span>{t(['网页点击体验 · 非眼动测量','Website clicks · not eye tracking'])}</span><button type="button" data-reset>{t(['再试一次','Try again'])} ↺</button></div><noscript><p>{t(['这是包含 5 个 A 的任务示例；点击体验需要 JavaScript。','This task example contains five As; interaction requires JavaScript.'])}</p></noscript></div>
+   <div class="morning-measurement"><Measurement locale={locale} kind="eye"/></div><div class="morning-next"><MethodLinks locale={locale} phase="after" ids={terms[2]}/><a class="primary-action" href="#delivery">{t(['打开真实研究记录','Open the actual study records'])} ↗</a></div>
+  </section>
+  <section id="delivery" data-scene="delivery" class="scene cinema-evidence" aria-labelledby="delivery-title">
+   <div class="evidence-story"><p class="cinema-kicker">{t(['从体验，回到证据','FROM EXPERIENCE TO EVIDENCE'])}</p><h2 id="delivery-title" tabindex="-1">{t(['把感觉，','Give a feeling'])}<br/><em>{t(['放回记录里。','a place in the record.'])}</em></h2><p>{t(['同一组两名参与者分别体验样品奶与普通奶条件。分阶段比较，看看变化出现在哪里、不同记录怎样互相补充。','The same two participants experienced sample milk and regular milk. Compare the phases to see where records differ and how observations complement one another.'])}</p><button class="primary-action" type="button" data-open-evidence aria-expanded="false" aria-controls="cinema-report">{t(['从睡前记录开始看','Start with the pre-sleep records'])} ↗</button><p class="evidence-mini">{t(['正式实验真实结果 · 两名参与者，样品奶与普通奶交叉比较','Actual experimental results · two participants, sample and regular-milk crossover'])}</p></div>
+   <div id="cinema-report" class="cinema-report"><Evidence locale={locale}/><a href="#synthesis" class="primary-action">{t(['把这些记录，收拢成一份交付','Bring the records together into a deliverable'])} →</a></div>
+  </section>
+  <section id="synthesis" data-scene="synthesis" class="scene cinema-synthesis" aria-labelledby="synthesis-title"><p class="cinema-kicker">{t(['从一句需求，到一份交付','FROM A REQUEST TO A DELIVERABLE'])}</p><h2 id="synthesis-title" tabindex="-1">{t(['问题展开了，','The question is unfolded.'])}<br/><em>{t(['交付也具体了。','The deliverable becomes concrete.'])}</em></h2><p>{t(['我们还在回答“有没有效果”，但现在能说明这个答案来自哪些观察。','We are still asking whether it works, but can now explain which observations inform the answer.'])}</p><p class="study-context">{t(['研究交付结构示意 · 根据本故事整理','Illustrative deliverable structure · organized from this story'])}</p><div class="synthesis-map">{([
+[['睡前状态怎样变化','How does the pre-sleep state change?'],['自评、面部动作、脑电','Self-reports, facial movements, EEG'],['变化出现的时段，以及不同记录如何对照。','When changes appear and how records compare.']],
+[['入睡过程怎样发生','How does sleep onset unfold?'],['握松任务的肌电与脑电','Grip-task EMG and EEG'],['过程线索、个体差异，以及解释范围。','Process clues, individual differences and interpretation limits.']],
+[['醒后表现怎样','How do people perform after waking?'],['自评、视觉搜索眼动与任务完成','Self-reports, search-task gaze and completion'],['感受之外的注意分配与任务表现记录。','Attention allocation and task performance beyond feelings.']]
+] as const).map((row,i)=><article><span>0{i+1}</span><h3>{t(row[0])}</h3><p>{t(row[1])}</p><strong>{t(row[2])}</strong></article>)}</div><p class="synthesis-author">{t(['我做的，是把一句需求拆成研究问题，把问题变成观察安排，再把记录整理成能讨论、能追问的交付。','My work turns a request into research questions, questions into observation plans, and records into a deliverable that can be discussed and examined.'])}</p><p>{t(['这就是这个故事里的“技术性”：把问题界定清楚，让观察和验证有办法发生。完整的过程，也可能得到“不确定，需要继续研究”的答案。','This is what “technical” means in this story: define the question and make observation and validation possible. A complete process can still conclude that more research is needed.'])}</p><a class="primary-action" href="#paths">{t(['你的问题，最需要补哪一段？','Which part does your question need?'])} →</a></section>
+  <section id="paths" data-scene="paths" class="scene paths-scene" aria-labelledby="paths-title"><div class="scene-top"><span>04 / {t(['继续探索', 'YOUR DIRECTION'])}</span><a href="#intro">{t(['重新看故事', 'Replay the story'])} ↺</a></div><div class="paths-heading"><h2 id="paths-title" tabindex="-1">{t(['接下来，', 'What would you'])}<br/>{t(['看你关心的。', 'like to explore?'])}</h2><p>{t(['把问题拆开，是为了更具体地行动。\n选一个方向，看看我的相关工作。', 'Unfolding a question makes action more specific.\nChoose a direction to explore my work.'])}</p></div>
+   <div class="interest-nav" role="group" aria-label={t(['选择兴趣方向', 'Choose a direction'])}>{destinations.map((destination, i) => <button type="button" data-interest={destination.id} aria-pressed={i === 0 ? 'true' : 'false'}>{t(destination.name)}<span aria-hidden="true">↗</span></button>)}</div>
+   {destinations.map((destination) => <div class="recommendations" data-recommendations={destination.id}><h3>{t(destination.question)}</h3><div>{destination.items.map(([path, name], i) => <a href={path.startsWith('resources/') ? `${base}${path.replace('/zh/', `/${locale}/`)}` : link(path)}><span>0{i+1}</span><strong>{t(name)}</strong><span aria-hidden="true">↗</span></a>)}</div></div>)}
+   <div class="paths-footer"><a href={link('about/')}>{t(['了解我的经历', 'About me'])} ↗</a><a href={link('work/')}>{t(['看全部工作', 'All work'])} ↗</a><a href={`${home}#contact`}>{t(['讨论你的问题', 'Discuss your question'])} ↗</a></div>
+  </section>
+  <footer class="story-footer"><a href="#intro" data-back>← {t(['上一步', 'Back'])}</a><span data-position-label>01 / 08</span></footer>
+ </main>
+ <script>import '../../lib/explore/controller';</script>
+ </body>
+</html>

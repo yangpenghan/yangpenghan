@@ -1,0 +1,14 @@
+---
+import { translate, type Language, type Copy } from '../../lib/explore/model';
+interface Props { kind: 'question' | 'before' | 'during' | 'method'; locale: Language; labels?: readonly Copy[]; }
+const { kind, locale, labels = [] } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const t = (value: Copy) => translate(value, locale);
+---
+{kind !== 'method' && <figure class:list={['story-art', 'art-' + kind]}>
+ <div class="story-art-frame"><img src={base + 'assets/explore/' + (kind === 'question' ? 'milk' : kind) + '.webp'} srcset={base + 'assets/explore/' + (kind === 'question' ? 'milk' : kind) + '-small.webp 768w, ' + base + 'assets/explore/' + (kind === 'question' ? 'milk' : kind) + '.webp 1536w'} sizes="(max-width: 600px) 92vw, 720px" width="1536" height="1024" loading="lazy" decoding="async" alt={t(kind === 'question' ? ['暖光下，床边桌面上的一杯奶。', 'A glass of milk on a bedside table in warm evening light.'] : kind === 'before' ? ['睡前靠在沙发上的人物，柔和灯光照亮眼部。', 'A person resting on a sofa before sleep, soft light falling across her eyes.'] : ['一只手轻握软球，放在柔软的床品上。', 'A hand loosely holding a soft ball, resting on linen.'])}/></div>
+ {kind === 'before' && <div class="art-time-track" aria-label={t(['观察时点示意', 'Illustrative observation moments'])}>{[0,1,2].map((i)=><span class:list={{'extra-time':i>0}}>{t([['开始观察','继续观察','回看变化'][i],['Observe','Follow','Compare'][i]])}</span>)}</div>}
+ {kind === 'during' && <div class="action-track"><span class="grip-cue">{t(['握', 'Grip'])}</span><i></i><span class="release-cue">{t(['松', 'Release'])}</span><i></i><span>{t(['记录', 'Record'])}</span></div>}
+ <figcaption class="diagram-note">{t(['AI 生成情境示意 · 非研究现场照片', 'AI-generated illustration · not a study photograph'])}</figcaption>
+</figure>}
+{kind === 'method' && <div class="method-diagram">{labels.map((label, index) => <div><span class="method-number">0{index + 1}</span><span>{t(label)}</span>{index < labels.length - 1 && <span class="method-arrow" aria-hidden="true">→</span>}</div>)}</div>}

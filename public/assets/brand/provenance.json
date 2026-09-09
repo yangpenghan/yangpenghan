@@ -4,7 +4,7 @@
   "version": "Personal V2, 2026-09-05",
   "adaptations": [
     "fonts.css: site subset with complete local fallback",
-    "fonts/technical/NotoSansSC-site.woff2: subset of verified upstream NotoSansSC.woff2, fontTools, site characters including the 2026-09-06 visitor and content optimization"
+    "fonts/technical/NotoSansSC-site.woff2: subset of verified upstream NotoSansSC.woff2, fontTools, including the 2026-09-09 interactive story and method notes"
   ],
   "files": [
     {
@@ -24,8 +24,8 @@
     },
     {
       "path": "fonts/technical/NotoSansSC-site.woff2",
-      "bytes": 344076,
-      "sha256": "603d3612e6b934260c1493586f6ea4a8999c121f9bc5c9f56e0c2cc69ab9c1f4"
+      "bytes": 357168,
+      "sha256": "6c9b8e9940865ca259d77dbddef3607517588be41ea69271fec31eb0cd55508e"
     },
     {
       "path": "fonts/technical/NotoSansSC.woff2",

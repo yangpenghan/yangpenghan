@@ -1,0 +1,421 @@
+.measurement {
+	width: 100%;
+	padding: 0 14px;
+	background: #101a23;
+	box-sizing: border-box;
+	margin: 24px 0;
+	border-block: 1px solid #56636b;
+	color: #edf2f5;
+	text-align: left;
+}
+.measurement summary {
+	display: flex;
+	justify-content: space-between;
+	gap: 16px;
+	padding: 18px 0;
+	cursor: pointer;
+	font-size: 16px;
+	list-style: none;
+}
+.measurement summary::-webkit-details-marker {
+	display: none;
+}
+.measurement[open] summary > :where(span) {
+	transform: rotate(45deg);
+}
+.measurement .measurement-caption {
+	font-size: 11px;
+	line-height: 1.7;
+	color: #b9cbd4;
+	margin: 0 0 10px;
+}
+.measurement-image {
+	position: relative;
+	aspect-ratio: 3 / 2;
+	overflow: hidden;
+	background: #0a1016;
+}
+.measurement-image img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	filter: brightness(0.72);
+}
+.measurement-image svg {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+.measurement-image svg text {
+	fill: #eff8fa;
+	font-size: 12px;
+	font-family: var(--font-display, "Will Display"), sans-serif;
+}
+.measure-mark,
+.measure-line {
+	stroke: #a8ccd6;
+	stroke-width: 1.5;
+	fill: none;
+}
+.measure-line {
+	stroke-dasharray: 1000;
+	stroke-dashoffset: 0;
+}
+.measure-dot {
+	fill: #c2edf6;
+}
+.measure-gold {
+	stroke: #e9c58f;
+	fill: none;
+}
+.gaze-screen,
+.signal-panel {
+	fill: #0b141ded;
+	stroke: #67818d;
+	stroke-width: 1;
+}
+.electrode {
+	fill: #d4e5e9;
+	stroke: #17232e;
+	stroke-width: 3;
+}
+.fixation-ring {
+	fill: none;
+	stroke: #edce9b;
+	stroke-width: 2;
+}
+.cinema-ready .measurement .layer-2,
+.cinema-ready .measurement .layer-3 {
+	display: none;
+}
+.cinema-ready .measurement[data-step="2"] .layer-2,
+.cinema-ready .measurement[data-step="3"] .layer-2,
+.cinema-ready .measurement[data-step="3"] .layer-3 {
+	display: initial;
+}
+.measurement[open] .measure-line {
+	animation: measurement-draw 1.6s ease-out both;
+}
+.measurement[open] .fixation-ring {
+	animation: measurement-point 0.8s ease-out both;
+	animation-delay: calc(var(--point) * 0.35s);
+}
+.measurement[open] .signal-trace {
+	animation-duration: 2.2s;
+}
+.measurement-steps {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 6px;
+	margin-top: 12px;
+}
+.measurement-steps button {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	padding: 12px 8px;
+	min-height: 66px;
+	border: 1px solid #5c717d;
+	background: #14212c;
+	color: #e1ebf0;
+	font: inherit;
+	font-size: 12px;
+	cursor: pointer;
+	text-align: left;
+}
+.measurement-steps button span {
+	color: #b8cfdb;
+	font-size: 11px;
+}
+.measurement-steps button[aria-pressed="true"] {
+	background: #a8ccd6;
+	border-color: #a8ccd6;
+	color: #17232e;
+}
+.measurement-steps button[aria-pressed="true"] span {
+	color: #253944;
+}
+.measurement .measurement-explanation p {
+	font-size: 13px;
+	line-height: 1.9;
+	margin: 16px 0 20px;
+	color: #d6e3e9;
+}
+.measurement :focus-visible {
+	outline: 2px solid #d9eaf3;
+	outline-offset: 4px;
+}
+@keyframes measurement-draw {
+	from {
+		stroke-dashoffset: 1000;
+	}
+	to {
+		stroke-dashoffset: 0;
+	}
+}
+@keyframes measurement-point {
+	from {
+		opacity: 0;
+		transform: translateY(3px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+@media (prefers-reduced-motion: reduce) {
+	.measurement[open] .measure-line,
+	.measurement[open] .fixation-ring {
+		animation: none;
+	}
+}
+
+.band-bars rect {
+	fill: #a8ccd6;
+	transform-box: fill-box;
+	transform-origin: bottom;
+	animation: band-reveal 1s ease-out both;
+}
+@keyframes band-reveal {
+	from {
+		transform: scaleY(0);
+	}
+	to {
+		transform: scaleY(1);
+	}
+}
+@media (prefers-reduced-motion: reduce) {
+	.band-bars rect {
+		animation: none;
+	}
+}
+
+/* Let the measurement carry the scene, with one shared reading axis. */
+.cinema-shell .cinema-room:where(.observation-open),
+.cinema-shell:not(.cinema-ready) .cinema-room {
+	display: flex;
+	flex-direction: column;
+	gap: 32px;
+	padding-bottom: 64px;
+}
+.observation-open .room-title {
+	max-width: 1100px;
+	width: 100%;
+}
+.cinema-shell .observation-open .room-title h2 {
+	font-size: clamp(36px, 4.5vw, 64px);
+}
+.observation-open :where(.room-title) > p:last-child {
+	max-width: 640px;
+}
+.observation-open .scene-hotspot {
+	position: static;
+	align-self: flex-start;
+	order: 0;
+	box-shadow: none;
+}
+.observation-open .observation-reveal {
+	width: 100%;
+	max-width: 1200px;
+	align-self: stretch;
+	margin: 0;
+	padding: 32px;
+	box-sizing: border-box;
+}
+.observation-intro {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+	gap: 0 48px;
+	align-items: start;
+	margin-bottom: 24px;
+}
+.observation-intro .cinema-kicker {
+	grid-column: 1 / -1;
+}
+.observation-intro h3 {
+	margin: 16px 0 0;
+}
+.observation-intro > p:last-child {
+	margin: 16px 0 0;
+	color: #d8cfc1;
+	font-size: 15px;
+	line-height: 1.9;
+}
+.measurement {
+	padding: 0 24px;
+	margin: 24px 0;
+}
+.measurement summary {
+	font-size: 20px;
+	padding: 22px 0;
+}
+.measurement-content {
+	display: grid;
+	grid-template-columns: minmax(0, 1.8fr) minmax(250px, 1fr);
+	grid-template-rows: auto auto 1fr;
+	gap: 16px 28px;
+	padding-bottom: 24px;
+}
+.measurement-content .measurement-caption {
+	grid-column: 1 / -1;
+	margin: 0;
+	font-size: 12px;
+}
+.measurement-image {
+	grid-column: 1;
+	grid-row: 2 / 4;
+	align-self: start;
+}
+.measurement-steps {
+	grid-column: 2;
+	grid-row: 2;
+	grid-template-columns: 1fr;
+	margin: 0;
+	gap: 8px;
+}
+.measurement-steps button {
+	flex-direction: row;
+	align-items: center;
+	gap: 16px;
+	min-height: 52px;
+	padding: 12px 16px;
+	font-size: 14px;
+}
+.measurement-explanation {
+	grid-column: 2;
+	grid-row: 3;
+}
+.measurement .measurement-explanation p {
+	margin: 0;
+	font-size: 14px;
+}
+.observation-reveal > .sampling-strip {
+	margin-top: 32px;
+}
+.observation-reveal > .content-boundary {
+	max-width: 800px;
+}
+.cinema-shell .cinema-morning {
+	gap: 40px 64px;
+	align-items: start;
+}
+.cinema-morning .letter-board {
+	transform: none;
+}
+.morning-measurement,
+.morning-next {
+	grid-column: 1 / -1;
+	width: 100%;
+	min-width: 0;
+}
+.morning-next {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 24px;
+}
+.morning-measurement .measurement {
+	margin: 0;
+}
+@media (max-width: 900px) {
+	.measurement-content {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 16px;
+	}
+	.measurement-image {
+		grid-column: 1;
+		grid-row: 2;
+	}
+	.measurement-steps {
+		grid-column: 1;
+		grid-row: 3;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+	.measurement-steps button {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 8px;
+		padding: 12px;
+	}
+	.measurement-explanation {
+		grid-column: 1;
+		grid-row: 4;
+	}
+	.observation-intro {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 12px;
+	}
+	.observation-intro > p:last-child {
+		margin: 0;
+	}
+}
+@media (max-width: 760px) {
+	.cinema-shell .cinema-room:where(.observation-open),
+	.cinema-shell:not(.cinema-ready) .cinema-room {
+		padding: 32px 16px 48px;
+		gap: 24px;
+	}
+	.observation-open .observation-reveal {
+		padding: 24px 0;
+		border-top: 1px solid #9e8460;
+		background: #080d13ed;
+	}
+	.observation-intro,
+	.observation-reveal > .sampling-strip,
+	.observation-reveal > .content-boundary,
+	.observation-reveal > .cinema-methods,
+	.observation-reveal > .grip-sequence {
+		margin-inline: 8px;
+	}
+	.observation-reveal > .primary-action {
+		margin-left: 8px;
+	}
+	.measurement {
+		padding: 0 12px;
+	}
+	.measurement summary {
+		font-size: 17px;
+		padding: 18px 0;
+	}
+	.measurement-content {
+		padding-bottom: 20px;
+	}
+	.measurement-steps {
+		gap: 6px;
+	}
+	.measurement-steps button {
+		font-size: 13px;
+		padding: 12px 8px;
+	}
+	.measurement .measurement-explanation p {
+		font-size: 14px;
+	}
+	.cinema-shell .cinema-morning {
+		padding: 40px 16px;
+		gap: 32px;
+	}
+	.morning-next {
+		flex-direction: column;
+		align-items: stretch;
+	}
+}
+
+.cinema-shell:not(.cinema-ready) .observation-reveal {
+	width: 100%;
+	margin: 0;
+	box-sizing: border-box;
+}
+.cinema-shell:not(.cinema-ready) .measurement-content {
+	grid-template-columns: minmax(0, 1fr);
+}
+.cinema-shell:not(.cinema-ready) .measurement-image {
+	grid-column: 1;
+	grid-row: 2;
+}
+.cinema-shell:not(.cinema-ready) .measurement-explanation {
+	grid-column: 1;
+	grid-row: 4;
+}

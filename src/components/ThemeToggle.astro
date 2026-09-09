@@ -30,7 +30,7 @@ const t = useTranslations(locale);
 				document.documentElement.classList.toggle('theme-dark', dark);
 				button.setAttribute('aria-pressed', String(dark));
 				state.textContent = dark ? lightLabel : darkLabel;
-				localStorage.setItem('theme', dark ? 'dark' : 'light');
+				try { localStorage.setItem('theme', dark ? 'dark' : 'light'); } catch { /* Theme still works in memory. */ }
 			};
 
 			button.addEventListener('click', () => {

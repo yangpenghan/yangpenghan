@@ -1,0 +1,33 @@
+---
+import MainHead from '../MainHead.astro';
+import BrandIdentity from '../BrandIdentity.astro';
+import ThemeToggle from '../ThemeToggle.astro';
+import Diagram from './Diagram.astro';
+import { methods, translate, type Copy, type Language, type MethodId } from '../../lib/explore/model';
+import '../../styles/explore.css';
+interface Props { locale: Language; methodId: MethodId }
+const { locale, methodId } = Astro.props;
+const method = methods.find((item) => item.id === methodId);
+if (!method) throw new Error('Unknown method');
+const t = (value: Copy) => translate(value, locale);
+const base = import.meta.env.BASE_URL;
+const home = `${base}${locale === 'en' ? 'en/' : ''}`;
+---
+<!doctype html><html lang={locale === 'zh' ? 'zh-CN' : 'en'}><head><MainHead locale={locale} title={`${t(method.label)} — Will Yang`} description={t(method.short)}/></head><body>
+<a class="skip-link" href="#method-main">{t(['跳到内容', 'Skip to content'])}</a>
+<header class="explore-header"><a class="explore-brand" href={home} aria-label={t(['杨朋翰 · 主页', 'Will Yang · Home'])}><BrandIdentity kind="signature" locale={locale}/></a><div class="explore-tools"><a href={`${base}${locale === 'zh' ? 'en/' : ''}method/${method.id}/`} data-method-language>{locale === 'zh' ? 'EN' : '中'}</a><ThemeToggle locale={locale}/><a href={`${home}explore/#${method.stage}`} data-story-return data-home={`${home}explore/`} data-zh={locale === 'zh' ? 'true' : 'false'}>{t(['在故事中看这个方法', 'See this method in the story'])} ↗</a></div></header>
+<main id="method-main" class="method-page"><p class="phase-eyebrow">{t(['方法笔记', 'METHOD NOTES'])} / {t(method.label)}</p><h1>{t(method.title)}</h1><p class="method-lead">{t(method.question)}</p><Diagram kind="method" locale={locale} labels={method.steps}/><p class="diagram-note">{t(['方法关系示意 · 非实测结果', 'Method illustration, not measured results'])}</p><h2>{t(['它记录什么', 'What it records'])}</h2><p>{t(method.short)}</p><h2>{t(['怎样进入这个研究', 'Its role in this study'])}</h2><p>{t(method.example)}</p><h2>{t(['解释之前，先检查什么', 'Before interpreting'])}</h2><p>{t(method.boundary)}</p><div class="method-source">{method.source && <p>{t(['原理参考：', 'Reference: '])}<a href={method.source}>{method.sourceName} ↗</a></p>}<p>{t(['方法说明 · 2026-09-09。故事图形用于解释研究思路，不是客户实测数据。', 'Method note · 2026-09-09. Story graphics explain the approach; they are not client measurements.'])}</p></div><a class="primary-action" href={`${home}explore/#${method.stage}`} data-story-return data-home={`${home}explore/`} data-zh={locale === 'zh' ? 'true' : 'false'}>{t(['在故事中看这个方法', 'See this method in the story'])} →</a><p class="paths-footer"><a href={`${home}method/`}>{t(['查看完整工作方法', 'Explore my working approach'])} ↗</a></p></main>
+<script>
+ import { stages } from '../../lib/explore/model';
+ const from = new URLSearchParams(location.search).get('from');
+ const stage = stages.find((item) => item === from);
+ if (stage) {
+  document.querySelectorAll<HTMLAnchorElement>('[data-story-return]').forEach((anchor) => {
+   anchor.href = `${anchor.dataset.home}#${stage}`;
+   anchor.textContent = anchor.dataset.zh === 'true' ? '← 返回故事，继续探索' : '← Return to the story';
+  });
+  const language = document.querySelector<HTMLAnchorElement>('[data-method-language]');
+  if (language) language.search = new URLSearchParams({ from: stage }).toString();
+ }
+</script>
+</body></html>

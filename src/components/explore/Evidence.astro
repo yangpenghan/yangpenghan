@@ -1,0 +1,25 @@
+---
+import { readingGuides } from '../../lib/explore/reading-guide';
+import { reportDatasets } from '../../lib/explore/report-data';
+import { translate, type Copy, type Language } from '../../lib/explore/model';
+interface Props { locale: Language }
+const { locale } = Astro.props;
+const t = (text: Copy) => translate(text, locale);
+const category = (value: string) => ({ Total: t(['全部', 'Total']), Target: t(['目标', 'Target']), 'Non-target': t(['非目标', 'Non-target']), 'Target clicks': t(['目标点击', 'Target clicks']) }[value] ?? value);
+---
+<div class="evidence-explorer" data-evidence data-locale={locale}>
+ <div class="evidence-phases" role="group" aria-label={t(['选择数据阶段', 'Choose a data phase'])}>{(['before','during','after'] as const).map((phase, i) => <button type="button" data-evidence-phase={phase} aria-pressed={i===0 ? 'true' : 'false'}>{t([['睡前','睡中','睡后'][i],['Before sleep','Sleep onset','After waking'][i]])}</button>)}</div>
+ <div class="evidence-metrics" role="group" aria-label={t(['选择观察指标', 'Choose a measure'])}>{reportDatasets.map((dataset, i) => <button type="button" data-dataset={dataset.id} data-phase={dataset.phase} aria-pressed={i===0 ? 'true':'false'}>{t(dataset.label)}</button>)}</div>
+ {reportDatasets.map(dataset => <section class="chart-reading" data-reading={dataset.id} aria-label={t(['读图问题','Reading question'])}><h3>{t(readingGuides[dataset.id].question)}</h3><p>{t(readingGuides[dataset.id].meaning)}</p></section>)}
+ <div class="chart-heading"><div><h3 data-chart-title>{t(reportDatasets[0].title)}</h3><p data-chart-unit>{t(reportDatasets[0].unit)}</p></div><div class="chart-legend"><span><i class="sample-key"></i>{t(['样品条件', 'Sample'])}</span><span><i class="control-key"></i>{t(['对照条件', 'Control'])}</span></div></div>
+ <p class="chart-provenance" data-chart-context></p>
+ <div class="report-plot"><svg data-report-svg role="img" aria-label={t(['报告数据图；数值见下方数据表', 'Report chart. Values are available in the table below.'])} viewBox="0 0 800 300"></svg></div>
+ <div class="point-selector" role="group" aria-label={t(['点选时段或类别，比较数值', 'Select a period or category to compare values'])} data-point-selector></div>
+ <div class="chart-readout" aria-live="polite" data-chart-readout></div>
+ {reportDatasets.map(dataset => <section class="chart-reading reading-result" data-reading={dataset.id} aria-label={t(['比较与解释边界','Comparison and limits'])}><p class="reading-finding">{t(readingGuides[dataset.id].finding)}</p><p class="content-boundary">{t(readingGuides[dataset.id].boundary)}</p></section>)}
+ <p class="chart-provenance"><span data-chart-source>{t(['报告第 7 页', 'Report slide 7'])}</span><span>{t(['正式交叉实验 · 报告实测结果', 'Crossover experiment · actual reported results'])}</span></p>
+ <details class="evidence-source"><summary>{t(['查看数据与研究条件', 'View data and study conditions'])}</summary><div class="evidence-source-content"><p>{t(['2023 年研究汇报中的精选图表。折线数值展示保留三位小数，绘图使用原值精度。正式实验是午饭后的实验室小睡，准备 30 分钟、睡前观察 30 分钟、关灯后 30 分钟、醒后阶段 15 分钟（含 20 秒视觉搜索）。两名参与者分别体验样品与普通奶对照；入组前筛选了自报有改善的人。A、B 是两份独立记录，不作合并。折线连接各 5 分钟区间的报告值，不作平滑；柱图从零开始。', 'Selected charts from the 2023 report. Line values display three decimal places; plots retain source precision. The formal afternoon laboratory protocol included 30 minutes of preparation, 30 minutes before sleep, 30 minutes after lights off and a 15-minute waking phase including the 20-second search. Two participants experienced the sample and regular-milk control, after screening for self-reported benefit. A and B remain separate records. Lines connect reported five-minute intervals without smoothing; bars start at zero.'])}</p><p>{t(['这些观察展示了研究如何形成证据，不代表普遍功效证明。报告未提供这些图表的不确定性区间与完整汇总细节，本页不补算误差线或显著性。', 'These observations illustrate how research produces evidence, not universal efficacy. The report does not provide uncertainty intervals or complete aggregation details for these charts; no error bars or significance tests have been added.'])}</p>
+ {reportDatasets.map(dataset => <div data-source-table={dataset.id}><h4>{t(dataset.title)} · {t(['报告第', 'Slide'])} {dataset.slide} {t(['页', ''])}</h4><table><caption>{t(dataset.unit)}</caption><thead><tr><th scope="col">{t(dataset.kind==='line' ? ['时段（分钟）','Period (min)'] : ['类别','Category'])}</th><th scope="col">{t(['样品', 'Sample'])}</th><th scope="col">{t(['对照', 'Control'])}</th></tr></thead><tbody>{dataset.categories.map((label,i)=><tr><th scope="row">{category(label)}</th><td>{dataset.series[0][i].toFixed(dataset.precision)}</td><td>{dataset.series[1][i].toFixed(dataset.precision)}</td></tr>)}</tbody></table></div>)}
+ </div></details>
+ <noscript><p>{t(['打开“查看数据与研究条件”，可阅读全部报告数值。', 'Open “View data and study conditions” to read all reported values.'])}</p></noscript>
+</div>

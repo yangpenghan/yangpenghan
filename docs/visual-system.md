@@ -22,7 +22,7 @@ Dark mode is a site adaptation, using the upstream white identity assets. `Brand
 
 `public/assets/brand/provenance.json` records the exact upstream revision and SHA-256 of the imported assets. `fonts/technical/sources.json`, `derived.json` and the two OFL files retain upstream font attribution. Full source WOFF2 hashes were checked against upstream `derived.json`.
 
-IBM Plex Sans uses `Will Display`; Noto Sans SC uses `Will Text`. After the 2026-09-06 visitor and content optimization, the Chinese subset is 344,076 bytes (about 336 KiB). The unmodified full Chinese font is a fallback (`Will Text Complete`), downloaded only if newly added text needs characters missing from the subset. Both are served locally. Subsetting changes glyph coverage, not the design of the letters.
+IBM Plex Sans uses `Will Display`; Noto Sans SC uses `Will Text`. After the 2026-09-09 interactive narrative update, the Chinese subset is 357,168 bytes (about 349 KiB). The unmodified full Chinese font is a fallback (`Will Text Complete`), downloaded only if newly added text needs characters missing from the subset. Both are served locally. Subsetting changes glyph coverage, not the design of the letters.
 
 To refresh the subset after a major content update (requires fontTools with Brotli and `pyftsubset`):
 
@@ -60,3 +60,23 @@ Run `npm run audit:visuals` for the new interaction and visual checks, with `SIT
 The site keeps the V2 identity while prioritizing contact, readable prose, a complete essay index and inspectable materials. Blank templates are explicitly separate from historical project evidence. Professional biographies and all new templates have Chinese and English versions. Existing page URLs and meaningful home toolbox/explorer anchors remain usable.
 
 Run `npm run audit:optimization` for contact, copy success/failure, search/empty/reset states, narrow-screen reading, reduced motion, legacy anchors, linked explorer panels and no-JavaScript checks. Download integrity is also covered by the browser audit and resource unit tests.
+
+## Interactive preview · 2026-09-09
+
+The separate `/explore/` and `/en/explore/` routes use an independent deep-dark canvas, local fonts and a small identity mark. A portrait and brief introduction open the story; each scene concentrates on one question and interaction, with method explanations collapsed. The final evidence explorer renders six selected report datasets as unsmoothed lines or zero-based bars. Two individual records retain the same scale and remain separate. Source tables and study conditions are accessible without JavaScript.
+
+The Chinese subset was refreshed for the story, quantitative charts and method notes: 353,340 bytes, with size and SHA-256 recorded in `public/assets/brand/provenance.json`.
+
+Run `npm run audit:explore` for bilingual navigation, chart selection, accessibility and mobile checks. The shared theme initialization tolerates unavailable browser storage; the story deliberately keeps its dark appearance in either OS theme.
+
+The story now discloses explanations and figures in two click-paced steps per scene. Reveal controls support keyboard input; unrevealed content is inert. SVG curves and bars animate on reveal or measure selection, while reduced-motion settings show the completed chart immediately. Background music is an original four-chord sine-pad score synthesized locally with Web Audio, enabled explicitly via the header control. Volume is adjustable; audio pauses when hidden and stops on navigation. No audio tracking or remote media service is involved.
+
+The story’s original cup, eye and hand line illustrations have been replaced by three cinematic AI-generated images: milk, before-sleep portrait and grip task. Full and mobile WebP assets plus the prompt set are in `public/assets/explore/`. Captions identify illustrative provenance. Real report charts remain data-driven SVGs.
+
+## Cinematic narrative replacement · 2026-09-09
+
+The current preview supersedes the earlier seven-slide disclosure layout. It uses a cup-led cover, verdict-triggered folding filmstrip, photographic observation hotspots, a light morning task and report reveal. Stage URLs remain stable. Session schema v2 isolates older choice meanings and preserves the unfolded timeline and report state. Styles are in `src/styles/cinema.css`, layered after the shared experience/method styles. The existing local mark and fonts remain; warm scene colors are specific to this campaign.
+
+## Interactive narrative implementation — 2026-09-09
+
+The eight-scene cinematic experience connects each scene to its research question and evidence. Animation reveals an observation, record or comparison at each step. Six report datasets have visible reading questions, findings and limits. A delivery synthesis connects the case back to Will’s work before visitors choose their next destination. The generated photographic scenes remain illustrative; quantitative charts remain tied to the source report.

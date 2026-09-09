@@ -1,0 +1,9 @@
+---
+import MethodPage from '../../components/explore/MethodPage.astro';
+import { methods } from '../../lib/explore/model';
+export function getStaticPaths() {
+ return methods.map((method) => ({ params: { technique: method.id }, props: { methodId: method.id } }));
+}
+const { methodId } = Astro.props;
+---
+<MethodPage locale="zh" methodId={methodId}/>

@@ -1,0 +1,10 @@
+---
+import { methods, translate, type Language } from '../../lib/explore/model';
+interface Props { locale: Language; phase: string; ids: string[] }
+const {locale,phase,ids}=Astro.props;
+const base=import.meta.env.BASE_URL + (locale==='en'?'en/':'');
+---
+<div class="cinema-methods">
+<button class="help-toggle" type="button" data-help aria-expanded="false">{translate(['这些观察怎样测量？','How are these observations measured?'],locale)} ＋</button>
+<div class="term-links">{ids.map(id=>{const method=methods.find(m=>m.id===id);return method && <details class="term-note"><summary>{translate(method.label,locale)} ＋</summary><div class="term-content"><p>{translate(method.short,locale)}</p><a href={base+'method/'+id+'/?from='+phase} data-method-link>{translate(['深入了解','Explore this method'],locale)} →</a></div></details>;})}</div>
+</div>
