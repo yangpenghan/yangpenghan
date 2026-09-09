@@ -29,7 +29,7 @@ const destinations = [
  <body class="explore-body immersive">
  <a class="skip-link" href="#story-main">{t(['跳到内容', 'Skip to content'])}</a>
  <header class="explore-header">
-  <a class="explore-brand" href={home} aria-label={t(['杨朋翰 · 主页', 'Will Yang · Home'])}><BrandIdentity kind="mark" locale={locale}/></a>
+  <a class="explore-brand" href={overview} aria-label={t(['返回主页总览', 'Back to the overview'])}><BrandIdentity kind="mark" locale={locale}/></a>
   <div class="explore-tools"><div class="sound-controls" data-sound data-locale={locale}><button type="button" data-sound-toggle aria-pressed="false">{t(['播放背景音乐','Play music'])}</button><details><summary aria-label={t(['音乐音量','Music volume'])}>♫</summary><div><label>{t(['音量','Volume'])}<input type="range" min="0" max="100" value="45" data-sound-volume /></label><small>{t(['原创背景音乐 · 点击播放','Original score · tap to play'])}</small></div></details><span class="sound-feedback" aria-live="polite" data-sound-status></span></div><details class="experience-menu"><summary aria-label={t(['更多选项', 'More options'])}>···</summary><div><a href={`${base}${locale === 'zh' ? 'en/' : ''}${homeEntry ? '' : 'explore/'}`} data-language>{locale === 'zh' ? 'English' : '中文'}</a><a href={link('about/')}>{t(['关于我', 'About me'])}</a></div></details><a class="exit-link" href={`${overview}#selected-work-title`}>{t(['跳过故事', 'Skip the story'])}<span aria-hidden="true"> ↗</span></a></div>
  </header>
  <main id="story-main" tabindex="-1" class="story-shell cinema-shell" data-story data-locale={locale} data-home-entry={homeEntry} data-overview={overview}>

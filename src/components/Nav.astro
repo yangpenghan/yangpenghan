@@ -26,12 +26,12 @@ const isCurrent = (path: string) => normalizedPath === path || normalizedPath.st
 
 <header class="masthead">
 	<nav class="page-shell" aria-label={t('nav.home')}>
-		<a class="brand" href={navUrl('/')} aria-label={`${t('nav.brand')} — ${t('nav.home')}`}>
+		<a class="brand" href={navUrl('/overview/')} aria-label={locale === 'zh' ? '返回主页总览' : 'Back to the overview'}>
 			<span class="brand-signature"><BrandIdentity kind="signature" {locale} /></span>
    <span class="brand-mobile"><span class="mobile-mark"><BrandIdentity /></span><span>{t('nav.brand')}</span></span>
 		</a>
 
-		<div class="nav-links"><a href={navUrl('/overview/')} aria-current={isCurrent('/overview/') ? 'page' : undefined}>{locale === 'zh' ? '总览' : 'Overview'}</a>
+		<div class="nav-links"><a href={navUrl('/')} data-interactive-home>{locale === 'zh' ? '互动主页' : 'Interactive home'}</a>
 			{
 				items.map((item) => (
 					<a href={navUrl(item.path)} aria-current={isCurrent(item.path) ? 'page' : undefined}>

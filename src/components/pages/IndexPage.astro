@@ -37,7 +37,7 @@ const notes = (await getCollection('notes'))
 				</h1>
 				<div class="hero-intro">
 					<p>{t('index.heroIntro')}</p>
-					<div class="hero-actions">
+					<div class="hero-actions"><a class="text-link internal" href={navUrl('/')} data-interactive-home>{locale === 'zh' ? '进入互动主页' : 'Enter the interactive home'} <span aria-hidden="true">↗</span></a>
 						<a class="text-link internal" href="#selected-work-title">{locale === 'zh' ? '看相关案例' : 'Explore the cases'}</a>
 						<a class="quiet-link" href="#contact">{locale === 'zh' ? '讨论你的问题' : 'Discuss your project'} <span aria-hidden="true">↓</span></a>
 					</div>
