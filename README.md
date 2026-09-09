@@ -26,8 +26,11 @@
 
 ## Local development
 
+项目固定使用 `.nvmrc` 中的 Node 22.12.0。首次检出后安装锁文件依赖并启动后台开发服务器：
+
 ```bash
-npm install
+nvm use
+npm ci
 npx astro dev --background
 ```
 
@@ -39,25 +42,26 @@ npx astro dev logs
 npx astro dev stop
 ```
 
-完整质量门：
+完整的代码质量门会依次执行 Biome、Astro 类型检查、Vitest 和生产构建：
 
 ```bash
 npm run verify
 ```
 
-它依次执行 Biome、Astro 类型检查、Vitest 和生产构建。
-
-开发服务器运行时，可以复现浏览器、可访问性、坏链和移动端审计：
+首次运行浏览器门禁前，安装与锁文件中的 Playwright 版本配套的 Chromium：
 
 ```bash
-npm run audit:browser
-npm run audit:visuals
-npm run audit:optimization
+npx playwright install chromium
+npm run verify:browser
 ```
 
-`audit:visuals` 检查双语桌面/手机的案例推演、键盘切换、图形 ID、议题入口、演讲图片加载与无 JavaScript 降级，并保存截图。服务不在默认端口时设置 `SITE_URL`。
+`verify:browser` 会复用 `browser-audit.mjs` 和 `optimization-audit.mjs`。未设置 `SITE_URL` 时，它会选择可用的本机端口，启动并回收当前工作树的静态预览，避免误用其他检出的服务。只有显式设置 `SITE_URL` 时才会复用已在该地址运行的服务器，且不会终止该外部服务。默认使用 Playwright 管理的 Chromium；如需显式使用本机 Chrome：
 
-`audit:optimization` 检查联系入口、搜索与空结果、邮箱复制成功/失败、手机阅读位置、减少动态效果、旧锚点与无 JavaScript 阅读。所有检查的本地截图和日志保存在 Git 忽略的目录中。
+```bash
+CHROME_PATH=/usr/bin/google-chrome npm run verify:browser
+```
+
+单独开发其他浏览器检查时仍可运行 `npm run audit:visuals`。服务不在默认端口时设置 `SITE_URL`。所有检查的本地截图和日志保存在 Git 忽略的目录中。
 
 ## Editing content
 

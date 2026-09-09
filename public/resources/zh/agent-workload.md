@@ -33,3 +33,7 @@
 4. 把主观轻松程度单独记录，不用任务数量替代注意力负担。
 
 下一步决定：继续使用 / 调整权限或流程 / 退回简单工具。填写理由和下次检查日期。
+
+## 公开来源研究简报试点
+
+要实际跑一次配对试点，可从[研究简报试点方法](https://github.com/yangpenghan/yangpenghan/tree/main/analysis/research-brief#readme)开始。方法保留失败与重试，并把不完整配对排除在节省百分比之外。

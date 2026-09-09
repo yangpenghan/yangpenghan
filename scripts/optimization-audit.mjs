@@ -5,10 +5,9 @@ import { chromium } from '@playwright/test';
 const site = new URL(process.env.SITE_URL ?? 'http://localhost:4321/yangpenghan/');
 const directory = 'artifacts/visual-refresh/optimization-2026-09-06';
 await mkdir(directory, { recursive: true });
-const browser = await chromium.launch({
-	executablePath: process.env.CHROME_PATH ?? '/usr/bin/google-chrome',
-	headless: true,
-});
+const launchOptions = { headless: true };
+if (process.env.CHROME_PATH) launchOptions.executablePath = process.env.CHROME_PATH;
+const browser = await chromium.launch(launchOptions);
 const measurements = [];
 const checks = [];
 const errors = [];

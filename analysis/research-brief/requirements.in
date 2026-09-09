@@ -1,0 +1,8 @@
+pandas
+matplotlib
+nbformat
+nbclient
+ipykernel
+pytest
+black
+ruff
