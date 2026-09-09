@@ -15,7 +15,7 @@ CSV 必须保留以下列名和顺序，不得增加额外列。每次尝试占�
 | `correction_human_minutes` | 非负数或空白 | 事实核验、质量验收、改写和重跑所用的人时 |
 | `recovery_human_minutes` | 非负数或空白 | 失败恢复、撤销和补救所用的人时 |
 | `elapsed_minutes` | 非负数或空白 | 从开始到结束的经过时间；不与人工阶段相加 |
-| `interruptions_count` | 非负整数 | 人被叫回处理的次数 |
+| `interruptions_count` | 非负整数或空白 | 人被叫回处理的次数；空白表示未知，`0` 表示确认没有中断 |
 | `accepted` | `true` / `false` / `unknown` | 四项验收均通过才为 `true` |
 | `quality_notes` | 文本 | 逐项写事实、引用、覆盖、格式的结果与问题 |
 | `model` | 文本 | 模型和可影响结果的设置；人工条件填 `none` |

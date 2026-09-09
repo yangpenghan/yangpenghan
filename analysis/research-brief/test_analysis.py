@@ -142,6 +142,38 @@ def test_missing_stage_makes_total_missing_but_failure_is_retained(
     assert "T001：缺少 correction_human_minutes" in result.missing_items
 
 
+def test_missing_interruptions_remain_unknown_and_are_reported(
+    tmp_path: Path,
+) -> None:
+    rows = [
+        row(
+            trial_id="UNKNOWN",
+            interruptions_count="",
+            setup_human_minutes="",
+            research_human_minutes="",
+            supervision_human_minutes="",
+            correction_human_minutes="",
+            recovery_human_minutes="",
+        ),
+        row(trial_id="NONE", interruptions_count=0),
+    ]
+
+    result = analyze_trials(load_trials(write_csv(tmp_path / "trials.csv", rows)))
+
+    assert result.attempts["interruptions_count"].dtype == "Int64"
+    assert pd.isna(result.attempts.loc[0, "interruptions_count"])
+    assert result.attempts.loc[1, "interruptions_count"] == 0
+    missing_fields = [
+        "setup_human_minutes",
+        "research_human_minutes",
+        "supervision_human_minutes",
+        "correction_human_minutes",
+        "recovery_human_minutes",
+        "interruptions_count",
+    ]
+    assert result.missing_items == [f"UNKNOWN：缺少 {', '.join(missing_fields)}"]
+
+
 def test_complete_pair_uses_all_attempt_costs_and_hand_calculated_savings(
     tmp_path: Path,
 ) -> None:

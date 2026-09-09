@@ -139,9 +139,12 @@ def load_trials(path: str | Path) -> pd.DataFrame:
             converted.append(value)
         frame[field] = pd.Series(converted, dtype="Float64")
 
-    interruptions: list[int] = []
+    interruptions: list[int | None] = []
     for offset, raw in enumerate(frame["interruptions_count"], start=2):
-        if _blank(raw) or raw.strip().lower() in {"nan", "inf", "infinity"}:
+        if _blank(raw):
+            interruptions.append(None)
+            continue
+        if raw.strip().lower() in {"nan", "inf", "infinity"}:
             raise ValidationError(f"interruptions_count 必须是非负整数（行 {offset}）")
         try:
             value = float(raw)
@@ -175,7 +178,11 @@ def _attempt_table(frame: pd.DataFrame) -> tuple[pd.DataFrame, list[str]]:
     )
     missing_items: list[str] = []
     for _, trial in attempts.iterrows():
-        missing = [field for field in HUMAN_STAGES if pd.isna(trial[field])]
+        missing = [
+            field
+            for field in [*HUMAN_STAGES, "interruptions_count"]
+            if pd.isna(trial[field])
+        ]
         if missing:
             missing_items.append(f"{trial['trial_id']}：缺少 {', '.join(missing)}")
     return attempts, missing_items
