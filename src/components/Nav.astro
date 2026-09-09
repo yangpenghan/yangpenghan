@@ -31,7 +31,7 @@ const isCurrent = (path: string) => normalizedPath === path || normalizedPath.st
    <span class="brand-mobile"><span class="mobile-mark"><BrandIdentity /></span><span>{t('nav.brand')}</span></span>
 		</a>
 
-		<div class="nav-links">
+		<div class="nav-links"><a href={navUrl('/overview/')} aria-current={isCurrent('/overview/') ? 'page' : undefined}>{locale === 'zh' ? '总览' : 'Overview'}</a>
 			{
 				items.map((item) => (
 					<a href={navUrl(item.path)} aria-current={isCurrent(item.path) ? 'page' : undefined}>
@@ -42,7 +42,7 @@ const isCurrent = (path: string) => normalizedPath === path || normalizedPath.st
 		</div>
 
 		<div class="nav-tools">
-			<a class="contact-link" href={normalizedPath.includes('404') ? `${navUrl('/')}#contact` : '#contact'}>{t('nav.contact')}</a>
+			<a class="contact-link" href={normalizedPath.includes('404') ? `${navUrl('/overview/')}#contact` : '#contact'}>{t('nav.contact')}</a>
 			<a class="language" href={switchUrl} aria-label={t('nav.language')} lang={switchLocale === 'zh' ? 'zh-CN' : 'en'}>
 				{switchLocale === 'zh' ? '中' : 'EN'}
 			</a>

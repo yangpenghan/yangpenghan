@@ -22,16 +22,16 @@ for (const policy of ['no-user-gesture-required', 'document-user-activation-requ
 			await page.goto('http://localhost:4325/yangpenghan/explore/#intro');
 			await page.locator('.sound-ready').waitFor();
 			const toggle = page.locator('[data-sound-toggle]');
-			if (policy === 'no-user-gesture-required') {
-				await page.waitForFunction(() => window.testAudio?.state === 'running');
-				assert.equal(await toggle.getAttribute('aria-pressed'), 'true');
-			} else {
-				assert.equal(await page.evaluate(() => window.testAudio.state), 'suspended');
-				if (gesture === 'click') await page.locator('.cup-entry').click();
-				else await page.keyboard.press('Tab');
-				await page.waitForFunction(() => window.testAudio?.state === 'running');
-				assert.equal(await toggle.getAttribute('aria-pressed'), 'true');
+
+			assert.equal(await page.evaluate(() => window.testAudio === undefined), true);
+			if (gesture === 'click') await page.locator('[data-start-story]').first().click();
+			else {
+				await page.locator('[data-start-story]').first().focus();
+				await page.keyboard.press('Enter');
 			}
+			await page.waitForFunction(() => window.testAudio?.state === 'running');
+			assert.equal(await toggle.getAttribute('aria-pressed'), 'true');
+
 			await toggle.click();
 			await page.waitForFunction(() => window.testAudio.state === 'suspended');
 			await page.locator('[data-scene]:visible .cinema-kicker').first().click();

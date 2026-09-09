@@ -1,0 +1,20 @@
+---
+import { translate, type Copy, type Language } from '../../lib/explore/model';
+interface Props { locale: Language }
+const {locale}=Astro.props;
+const t=(copy:Copy)=>translate(copy,locale);
+const base=import.meta.env.BASE_URL;
+const home=base+(locale==='en'?'en/':'');
+---
+<section id="intro" data-scene="intro" class="scene home-intro" aria-labelledby="intro-title">
+ <div class="home-intro-copy">
+  <p class="cinema-kicker">WILL YANG / 杨朋翰</p>
+  <p class="home-role">{t(['行为研究 · 产品体验 · AI 工作流','BEHAVIORAL RESEARCH · PRODUCT EXPERIENCE · AI WORKFLOWS'])}</p>
+  <h1 id="intro-title" tabindex="-1">{t(['把模糊的问题，','Turn open questions'])}<br/><em>{t(['变成可验证的行动。','into testable action.'])}</em></h1>
+  <p class="home-bio">{t(['我是杨朋翰。心理学出身，在 Noldus 从事行为研究与解决方案工作，也在探索 AI 怎样进入真实的工作流程。','I’m Will Yang. With a background in psychology, I work on behavioral research and solutions at Noldus, and explore how AI can become part of everyday work.'])}</p>
+  <p class="home-belief">{t(['我相信，所有问题都是技术性问题。','I believe every problem is a technical problem.'])}</p>
+  <div class="home-actions"><a class="primary-action" href="#question" data-start-story>{t(['用一个真实案例，了解我的方法','Explore my approach through a real case'])} ↗</a><a class="home-direct" href={home+'overview/#selected-work-title'}>{t(['直接看我的工作','Go straight to my work'])} →</a></div>
+  <p class="home-case-note">{t(['从一项助眠奶实验，看一个问题怎样被拆解、测量和验证。进入案例后播放音乐，可随时关闭或跳过。','Follow a sleep-support drink study from question to measurement and evidence. Music starts when you enter; you can mute or skip at any time.'])}</p>
+ </div>
+ <figure class="home-portrait"><img src={base+'assets/portrait.jpg'} alt={t(['杨朋翰','Will Yang'])} width="480" height="640" fetchpriority="high"/><figcaption>{t(['研究，始于把问题说清楚。','Research begins with a clear question.'])}</figcaption></figure>
+</section>

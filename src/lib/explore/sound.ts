@@ -92,7 +92,6 @@ export function initializeSound(root: HTMLElement) {
 	};
 	const removeActivation = () => {
 		document.removeEventListener('click', activate);
-		document.removeEventListener('keydown', activate);
 	};
 	async function setPlayback(wanted: boolean, explicit = false) {
 		requested = wanted;
@@ -135,13 +134,13 @@ export function initializeSound(root: HTMLElement) {
 	}
 	function activate(event: Event) {
 		if (!automatic || enabled || document.hidden) return;
-		if (event.target instanceof Node && root.contains(event.target)) return;
-		if (event instanceof KeyboardEvent && (event.repeat || event.ctrlKey || event.metaKey || event.altKey))
+		if (event instanceof MouseEvent && (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey))
 			return;
+		if (!(event.target instanceof Element) || !event.target.closest('[data-start-story]')) return;
 		void setPlayback(true);
 	}
 	document.addEventListener('click', activate);
-	document.addEventListener('keydown', activate);
+
 	toggle.addEventListener('click', () => {
 		automatic = false;
 		removeActivation();
@@ -169,6 +168,9 @@ export function initializeSound(root: HTMLElement) {
 				});
 		}
 	});
+	window.addEventListener('pageshow', () => {
+		if (automatic && !enabled) document.addEventListener('click', activate);
+	});
 	window.addEventListener('pagehide', () => {
 		generation++;
 		requested = false;
@@ -179,5 +181,4 @@ export function initializeSound(root: HTMLElement) {
 		void context?.suspend().catch(() => {});
 	});
 	update();
-	void setPlayback(true);
 }

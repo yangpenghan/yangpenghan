@@ -2,17 +2,19 @@
 import MainHead from '../MainHead.astro';
 import BrandIdentity from '../BrandIdentity.astro';
 import Evidence from './Evidence.astro';
+import HomeIntro from './HomeIntro.astro';
 import Measurement from './Measurement.astro';
 import MethodLinks from './MethodLinks.astro';
 import { targetLetters, translate, phaseNames, type Copy, type Language } from '../../lib/explore/model';
 import '../../styles/explore.css';
 import '../../styles/cinema.css';
 import '../../styles/measurement.css';
-interface Props { locale: Language }
-const { locale } = Astro.props;
+interface Props { locale: Language; homeEntry?: boolean }
+const { locale, homeEntry = false } = Astro.props;
 const t = (value: Copy) => translate(value, locale);
 const base = import.meta.env.BASE_URL;
 const home = `${base}${locale === 'en' ? 'en/' : ''}`;
+const overview = `${home}overview/`;
 const link = (path: string) => `${home}${path}`;
 const terms = [['facial-expression-analysis', 'eeg'], ['emg', 'eeg'], ['eye-tracking', 'behavioral-tasks']];
 const destinations = [
@@ -23,15 +25,16 @@ const destinations = [
 ---
 <!doctype html>
 <html lang={locale === 'zh' ? 'zh-CN' : 'en'}>
- <head><MainHead locale={locale} title={t(['把问题展开 — 杨朋翰', 'Unfold a question — Will Yang'])} description={t(['从一句问题，到一段完整的研究。与杨朋翰一起探索问题怎样被拆解。', 'From one question to a complete study. Explore how Will Yang approaches a problem.'])} /></head>
+ <head><MainHead locale={locale} title={homeEntry ? t(['杨朋翰 — 行为研究、产品体验与 AI', 'Will Yang — Behavioral research, product experience and AI']) : t(['把问题展开 — 杨朋翰', 'Unfold a question — Will Yang'])} description={t(['从一句问题，到一段完整的研究。与杨朋翰一起探索问题怎样被拆解。', 'From one question to a complete study. Explore how Will Yang approaches a problem.'])} /></head>
  <body class="explore-body immersive">
  <a class="skip-link" href="#story-main">{t(['跳到内容', 'Skip to content'])}</a>
  <header class="explore-header">
   <a class="explore-brand" href={home} aria-label={t(['杨朋翰 · 主页', 'Will Yang · Home'])}><BrandIdentity kind="mark" locale={locale}/></a>
-  <div class="explore-tools"><div class="sound-controls" data-sound data-locale={locale}><button type="button" data-sound-toggle aria-pressed="false">{t(['播放背景音乐','Play music'])}</button><details><summary aria-label={t(['音乐音量','Music volume'])}>♫</summary><div><label>{t(['音量','Volume'])}<input type="range" min="0" max="100" value="45" data-sound-volume /></label><small>{t(['原创背景音乐 · 点击播放','Original score · tap to play'])}</small></div></details><span class="sound-feedback" aria-live="polite" data-sound-status></span></div><details class="experience-menu"><summary aria-label={t(['更多选项', 'More options'])}>···</summary><div><a href={`${base}${locale === 'zh' ? 'en/' : ''}explore/`} data-language>{locale === 'zh' ? 'English' : '中文'}</a><a href={link('about/')}>{t(['关于我', 'About me'])}</a></div></details><a class="exit-link" href={`${home}#selected-work-title`}>{t(['跳过故事', 'Skip the story'])}<span aria-hidden="true"> ↗</span></a></div>
+  <div class="explore-tools"><div class="sound-controls" data-sound data-locale={locale}><button type="button" data-sound-toggle aria-pressed="false">{t(['播放背景音乐','Play music'])}</button><details><summary aria-label={t(['音乐音量','Music volume'])}>♫</summary><div><label>{t(['音量','Volume'])}<input type="range" min="0" max="100" value="45" data-sound-volume /></label><small>{t(['原创背景音乐 · 点击播放','Original score · tap to play'])}</small></div></details><span class="sound-feedback" aria-live="polite" data-sound-status></span></div><details class="experience-menu"><summary aria-label={t(['更多选项', 'More options'])}>···</summary><div><a href={`${base}${locale === 'zh' ? 'en/' : ''}${homeEntry ? '' : 'explore/'}`} data-language>{locale === 'zh' ? 'English' : '中文'}</a><a href={link('about/')}>{t(['关于我', 'About me'])}</a></div></details><a class="exit-link" href={`${overview}#selected-work-title`}>{t(['跳过故事', 'Skip the story'])}<span aria-hidden="true"> ↗</span></a></div>
  </header>
- <main id="story-main" tabindex="-1" class="story-shell cinema-shell" data-story data-locale={locale}>
+ <main id="story-main" tabindex="-1" class="story-shell cinema-shell" data-story data-locale={locale} data-home-entry={homeEntry} data-overview={overview}>
 
+  {homeEntry ? <HomeIntro locale={locale}/> : <>
   <section id="intro" data-scene="intro" class="scene cinema-cover" aria-labelledby="intro-title">
    <img class="cinema-backdrop cover-art" src={base+'assets/explore/milk.webp'} alt="" width="1536" height="1024" fetchpriority="high"/>
    <div class="cover-copy"><p class="cinema-kicker">WILL YANG / 杨朋翰</p>
@@ -39,11 +42,12 @@ const destinations = [
     <div class="cover-author"><img src={base+'assets/portrait.jpg'} alt={t(['杨朋翰','Will Yang'])} width="64" height="80"/><p>{t(['我是杨朋翰。心理学出身，在 Noldus 从事行为研究与解决方案工作。','I’m Will Yang. With a background in psychology, I work on behavioral research and solutions at Noldus.'])}</p></div>
     <p class="cover-belief">{t(['我相信，所有问题都是技术性问题。','I believe every problem is a technical problem.'])}</p>
     <p class="cover-invitation">{t(['我帮助团队把模糊的问题，变成具体的研究与行动。从这杯助眠奶开始。','I help teams turn vague questions into research and action. Start with this sleep-support drink.'])}</p>
-    <a href="#question" class="primary-action">{t(['从这杯奶开始','Start with this glass'])} <span>↗</span></a>
+    <a href="#question" data-start-story class="primary-action">{t(['从这杯奶开始','Start with this glass'])} <span>↗</span></a>
    </div>
-   <a class="cup-entry" href="#question" aria-label={t(['点击杯子，开始故事','Touch the glass to begin'])}><span>＋</span></a>
+   <a class="cup-entry" data-start-story href="#question" aria-label={t(['点击杯子，开始故事','Touch the glass to begin'])}><span>＋</span></a>
    <p class="cinema-credit">{t(['AI 情境画面 · 真实研究故事','AI scene illustration · a real research story'])}</p>
   </section>
+  </>}
   <section id="question" data-scene="question" class="scene cinema-question" aria-labelledby="question-title">
    <div class="verdict-stage">
     <img class="verdict-art" src={base+'assets/explore/milk.webp'} alt={t(['夜色中的一杯奶，AI 情境示意','A glass of milk at night, an AI illustration'])} width="1536" height="1024"/>
@@ -99,7 +103,7 @@ const destinations = [
   <section id="paths" data-scene="paths" class="scene paths-scene" aria-labelledby="paths-title"><div class="scene-top"><span>04 / {t(['继续探索', 'YOUR DIRECTION'])}</span><a href="#intro">{t(['重新看故事', 'Replay the story'])} ↺</a></div><div class="paths-heading"><h2 id="paths-title" tabindex="-1">{t(['接下来，', 'What would you'])}<br/>{t(['看你关心的。', 'like to explore?'])}</h2><p>{t(['把问题拆开，是为了更具体地行动。\n选一个方向，看看我的相关工作。', 'Unfolding a question makes action more specific.\nChoose a direction to explore my work.'])}</p></div>
    <div class="interest-nav" role="group" aria-label={t(['选择兴趣方向', 'Choose a direction'])}>{destinations.map((destination, i) => <button type="button" data-interest={destination.id} aria-pressed={i === 0 ? 'true' : 'false'}>{t(destination.name)}<span aria-hidden="true">↗</span></button>)}</div>
    {destinations.map((destination) => <div class="recommendations" data-recommendations={destination.id}><h3>{t(destination.question)}</h3><div>{destination.items.map(([path, name], i) => <a href={path.startsWith('resources/') ? `${base}${path.replace('/zh/', `/${locale}/`)}` : link(path)}><span>0{i+1}</span><strong>{t(name)}</strong><span aria-hidden="true">↗</span></a>)}</div></div>)}
-   <div class="paths-footer"><a href={link('about/')}>{t(['了解我的经历', 'About me'])} ↗</a><a href={link('work/')}>{t(['看全部工作', 'All work'])} ↗</a><a href={`${home}#contact`}>{t(['讨论你的问题', 'Discuss your question'])} ↗</a></div>
+   <div class="paths-footer"><a href={link('about/')}>{t(['了解我的经历', 'About me'])} ↗</a><a href={link('work/')}>{t(['看全部工作', 'All work'])} ↗</a><a href={`${overview}#contact`}>{t(['讨论你的问题', 'Discuss your question'])} ↗</a></div>
   </section>
   <footer class="story-footer"><a href="#intro" data-back>← {t(['上一步', 'Back'])}</a><span data-position-label>01 / 08</span></footer>
  </main>

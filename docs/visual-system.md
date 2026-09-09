@@ -80,3 +80,7 @@ The current preview supersedes the earlier seven-slide disclosure layout. It use
 ## Interactive narrative implementation — 2026-09-09
 
 The eight-scene cinematic experience connects each scene to its research question and evidence. Animation reveals an observation, record or comparison at each step. Six report datasets have visible reading questions, findings and limits. A delivery synthesis connects the case back to Will’s work before visitors choose their next destination. The generated photographic scenes remain illustrative; quantitative charts remain tied to the source report.
+
+## Homepage entry
+
+The root homepage introduces Will and his work before offering a real-case experience or direct access to the work overview. A real portrait anchors the dark introduction. The case begins on the same page; music starts only on entering the case or explicitly using the music control. The previous browsing homepage is available at `/overview/` in both languages.

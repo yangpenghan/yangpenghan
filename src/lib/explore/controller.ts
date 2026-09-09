@@ -9,6 +9,14 @@ const story = document.querySelector<HTMLElement>('[data-story]');
 if (story) initializeStory(story);
 
 function initializeStory(root: HTMLElement) {
+	const redirectLegacy = () => {
+		if (root.dataset.homeEntry === 'true' && ['#contact', '#selected-work-title'].includes(location.hash)) {
+			location.replace(`${root.dataset.overview}${location.hash}`);
+			return true;
+		}
+		return false;
+	};
+	if (redirectLegacy()) return;
 	initializeMeasurements(root);
 	const zh = root.dataset.locale === 'zh';
 	root.querySelectorAll<HTMLElement>('[data-evidence]').forEach(initializeEvidence);
@@ -63,6 +71,7 @@ function initializeStory(root: HTMLElement) {
 		go(readStage(hash));
 	});
 	const syncHistory = () => {
+		if (redirectLegacy()) return;
 		if (!location.hash || stages.some((stage) => `#${stage}` === location.hash)) render(true);
 	};
 	window.addEventListener('popstate', syncHistory);
