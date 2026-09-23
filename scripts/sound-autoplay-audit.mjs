@@ -19,7 +19,7 @@ for (const policy of ['no-user-gesture-required', 'document-user-activation-requ
 			page.setDefaultTimeout(10000);
 			const errors = [];
 			page.on('pageerror', (e) => errors.push(e.message));
-			await page.goto('http://localhost:4325/yangpenghan/explore/#intro');
+			await page.goto('http://localhost:4325/explore/#intro');
 			await page.locator('.sound-ready').waitFor();
 			const toggle = page.locator('[data-sound-toggle]');
 

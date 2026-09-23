@@ -25,8 +25,8 @@ These are discussion topics. Event scope, format, and arrangements are agreed se
 
 ## Public material and contact
 
-- Website: https://yangpenghan.github.io/yangpenghan/en/
-- Chinese profile: https://yangpenghan.github.io/yangpenghan/about/
-- 2020 talk, Safety considerations in medical-device human factors (Chinese): https://yangpenghan.github.io/yangpenghan/talks/2020-medical-device-hf-safety.pdf
+- Website: https://willyang.org/en/
+- Chinese profile: https://willyang.org/about/
+- 2020 talk, Safety considerations in medical-device human factors (Chinese): https://willyang.org/talks/2020-medical-device-hf-safety.pdf
 - Enterprise projects: penghan.yang@noldus.com
 - Methods, tools, and conversations: yangpenghan1988@gmail.com

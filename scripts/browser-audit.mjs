@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import AxeBuilder from '@axe-core/playwright';
 import { chromium } from '@playwright/test';
 
-const siteUrl = new URL(process.env.SITE_URL ?? 'http://localhost:4321/yangpenghan/');
+const siteUrl = new URL(process.env.SITE_URL ?? 'http://localhost:4321/');
 const executablePath = process.env.CHROME_PATH ?? '/usr/bin/google-chrome';
 const browser = await chromium.launch({
 	headless: true,

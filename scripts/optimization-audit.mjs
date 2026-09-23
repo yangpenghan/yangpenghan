@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { chromium } from '@playwright/test';
 
-const site = new URL(process.env.SITE_URL ?? 'http://localhost:4321/yangpenghan/');
+const site = new URL(process.env.SITE_URL ?? 'http://localhost:4321/');
 const directory = 'artifacts/visual-refresh/optimization-2026-09-06';
 await mkdir(directory, { recursive: true });
 const browser = await chromium.launch({

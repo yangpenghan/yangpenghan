@@ -4,7 +4,7 @@
 
 叙事与编辑依据见 [核心主张重构](docs/technical-problem-narrative.md) 与 [内容审评](docs/content-narrative-review.md)。可视化的逐页评估、素材来源与选择见 [可视化审评](docs/visual-storytelling-audit.md)；最新图形重做见 [视觉精修](docs/visual-refinement.md)。
 
-线上地址：[yangpenghan.github.io/yangpenghan](https://yangpenghan.github.io/yangpenghan/)
+线上地址：[willyang.org](https://willyang.org/)
 
 ## Information architecture
 
@@ -76,8 +76,7 @@ npm run audit:optimization
 推送 `main` 后，`.github/workflows/deploy.yml` 构建并发布到 GitHub Pages。生产配置固定使用：
 
 ```js
-site: 'https://yangpenghan.github.io'
-base: '/yangpenghan/'
+site: 'https://willyang.org'
 ```
 
 不要在公开仓库提交本地研究材料、过程文档或未确认公开边界的客户信息。
@@ -92,6 +91,6 @@ The story uses scene-specific actions: a full-bleed portrait-and-cup cover, thre
 
 The story moves from dark cinematic scenes to a warm morning canvas, with local SVG/CSS and TypeScript. Six selected native chart datasets from the 2023 report support phase/measure selection, interval comparisons and accessible tables. Study conditions and the two-participant study conditions and interpretation limits are disclosed alongside the charts. Browser session storage optionally preserves choices and task records when visiting method notes; no recordings are uploaded. Story illustrations use four generated cinematic images with responsive WebP sources in `public/assets/explore/`; `prompts.json` records the generation prompts and built-in tool. They depict fictional scenes, not study participants. The letter task records clicks rather than gaze.
 
-After `npm run build` and `npx astro preview --background --host 0.0.0.0 --port 4325`, run `npm run audit:explore` (default `http://localhost:4325/yangpenghan/`; override with `SITE_URL`, including the base path and trailing slash). The audit covers both languages, stage navigation, method return, task state, interest links, 320/390px layouts, accessibility, reduced motion, no JavaScript, and disabled storage. Screenshots are saved under `artifacts/visual-refresh/explore/`.
+After `npm run build` and `npx astro preview --background --host 0.0.0.0 --port 4325`, run `npm run audit:explore` (default `http://localhost:4325/`; override with `SITE_URL`, with the local root URL and trailing slash). The audit covers both languages, stage navigation, method return, task state, interest links, 320/390px layouts, accessibility, reduced motion, no JavaScript, and disabled storage. Screenshots are saved under `artifacts/visual-refresh/explore/`.
 
 Run `node scripts/home-entry-audit.mjs` to check the bilingual home entry, overview exits, method return, legacy contact anchors, responsive layout and accessibility.

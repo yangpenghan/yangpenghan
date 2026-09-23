@@ -3,7 +3,7 @@ import { mkdir } from 'node:fs/promises';
 import AxeBuilder from '@axe-core/playwright';
 import { chromium } from '@playwright/test';
 
-const siteUrl = process.env.SITE_URL ?? 'http://localhost:4321/yangpenghan/';
+const siteUrl = process.env.SITE_URL ?? 'http://localhost:4321/';
 const browser = await chromium.launch({
 	executablePath: process.env.CHROME_PATH ?? '/usr/bin/google-chrome',
 	headless: true,

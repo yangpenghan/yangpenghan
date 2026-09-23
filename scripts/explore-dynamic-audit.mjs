@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { chromium } from '@playwright/test';
 
 const browser = await chromium.launch();
-const origin = process.env.SITE_URL ?? 'http://localhost:4325/yangpenghan/';
+const origin = process.env.SITE_URL ?? 'http://localhost:4325/';
 try {
 	const context = await browser.newContext();
 	await context.addInitScript(() => {

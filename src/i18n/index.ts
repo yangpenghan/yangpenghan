@@ -5,7 +5,7 @@ export { defaultLocale, languages };
 
 /** Infer the current locale from a URL's pathname. */
 export function getLocaleFromUrl(url: URL): Locale {
-	const base = import.meta.env.BASE_URL; // '/yangpenghan/'
+	const base = import.meta.env.BASE_URL; // '/'
 	const pathWithoutBase = url.pathname.replace(base, '');
 	const [first] = pathWithoutBase.split('/');
 	if (first === 'en') return 'en';

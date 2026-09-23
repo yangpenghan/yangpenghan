@@ -14,7 +14,7 @@ try {
 			const context = await browser.newContext({ viewport: { width, height: 1000 } });
 			const page = await context.newPage();
 			page.on('pageerror', (e) => errors.push(e.message));
-			await page.goto(`http://localhost:4325/yangpenghan/${locale === 'en' ? 'en/' : ''}explore/#before`);
+			await page.goto(`http://localhost:4325/${locale === 'en' ? 'en/' : ''}explore/#before`);
 			await page.locator('.cinema-ready').waitFor();
 			for (const [kind, phase] of [
 				['face', 'before'],

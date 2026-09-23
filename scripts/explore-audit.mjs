@@ -3,7 +3,7 @@ import { mkdir } from 'node:fs/promises';
 import AxeBuilder from '@axe-core/playwright';
 import { chromium } from '@playwright/test';
 
-const origin = process.env.SITE_URL ?? 'http://localhost:4325/yangpenghan/';
+const origin = process.env.SITE_URL ?? 'http://localhost:4325/';
 const output = 'artifacts/visual-refresh/explore';
 const phases = ['intro', 'question', 'before', 'during', 'after', 'delivery', 'synthesis', 'paths'];
 await mkdir(output, { recursive: true });

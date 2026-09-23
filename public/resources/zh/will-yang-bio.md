@@ -25,8 +25,8 @@
 
 ## 公开资料与联系
 
-- 网站：https://yangpenghan.github.io/yangpenghan/
-- 英文简介：https://yangpenghan.github.io/yangpenghan/en/about/
-- 2020 年演讲《医疗器械人因工程中的安全考量》（中文）：https://yangpenghan.github.io/yangpenghan/talks/2020-medical-device-hf-safety.pdf
+- 网站：https://willyang.org/
+- 英文简介：https://willyang.org/en/about/
+- 2020 年演讲《医疗器械人因工程中的安全考量》（中文）：https://willyang.org/talks/2020-medical-device-hf-safety.pdf
 - 企业项目：penghan.yang@noldus.com
 - 方法、工具与交流：yangpenghan1988@gmail.com
