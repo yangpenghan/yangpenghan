@@ -16,7 +16,7 @@ const homeUrl = getRelativeLocaleUrl(locale, '');
 <footer>
 	<div class="page-shell footer-grid">
 		<div class="footer-mark">
-			<a href={homeUrl} aria-label={`${t('nav.brand')} — ${t('nav.home')}`}><BrandIdentity /></a>
+			<a href={homeUrl} aria-label={`${t('nav.brand')} — ${t('nav.home')}`}><BrandIdentity {locale} /></a>
 			<p>{t('footer.tagline')}</p>
 		</div>
 
@@ -55,7 +55,7 @@ const homeUrl = getRelativeLocaleUrl(locale, '');
 
 	.footer-mark > a {
 		display: grid;
-		width: 3rem;
+		width: 3.25rem;
 		height: 3rem;
 		place-items: center;
 		flex-shrink: 0;

@@ -147,7 +147,7 @@ const mobileContext = await browser.newContext({
 	colorScheme: 'light',
 });
 const mobilePage = await mobileContext.newPage();
-await mobilePage.goto(siteUrl.href, { waitUntil: 'networkidle' });
+await mobilePage.goto(new URL('overview/', siteUrl).href, { waitUntil: 'networkidle' });
 const brandResult = await mobilePage.evaluate(async () => {
 	await document.fonts.ready;
 	const logo = document.querySelector('.brand-mobile .brand-identity img.light');
@@ -190,7 +190,7 @@ const mobileResult = await mobilePage.evaluate(() => {
 assert.equal(mobileResult.dark, true);
 assert.equal(mobileResult.savedTheme, 'dark');
 assert.equal(mobileResult.navBottom, 12);
-assert.equal(mobileResult.navLinks, 4);
+assert.equal(mobileResult.navLinks, 5);
 await mobilePage.reload({ waitUntil: 'networkidle' });
 assert.equal(
 	await mobilePage.evaluate(() => document.documentElement.classList.contains('theme-dark')),
@@ -218,7 +218,7 @@ const noScriptContext = await browser.newContext({
 	javaScriptEnabled: false,
 });
 const noScriptPage = await noScriptContext.newPage();
-await noScriptPage.goto(siteUrl.href, { waitUntil: 'domcontentloaded' });
+await noScriptPage.goto(new URL('overview/', siteUrl).href, { waitUntil: 'domcontentloaded' });
 const noScriptOpacity = await noScriptPage.evaluate(() => {
 	const work = document.querySelector('.work-section');
 	const notes = document.querySelector('.notes-section');

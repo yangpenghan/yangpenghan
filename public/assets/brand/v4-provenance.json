@@ -1,0 +1,95 @@
+{
+  "repository": "https://github.com/yangpenghan/will-noldus-visual-system",
+  "revision": "0431ccbd843097fbcb86e2630994d35d816423ba",
+  "version": "Personal V4.1, 2026-09-23",
+  "files": [
+    {
+      "path": "logos/open-inference.svg",
+      "sha256": "8d635d372a643054bec5c5cb750d8d66201810cccd8485e0f3e5290077115367"
+    },
+    {
+      "path": "logos/open-inference-white.svg",
+      "sha256": "8c90bec2c737b5f2c3b0a2d7928ad7df20efaec8f9569f70db80be64dc148cd2"
+    },
+    {
+      "path": "logos/han-seal.svg",
+      "sha256": "c8950c9adeb0e9f63fa842898deeedb094d2ae4e805fed308d5cdc13d563b8d7"
+    },
+    {
+      "path": "logos/han-seal-white.svg",
+      "sha256": "b278dc81a848036823ad12de2e164c1bf7447e1d6cf280a89bf898c3b7bb1cb2"
+    },
+    {
+      "path": "logos/favicon.svg",
+      "sha256": "2fdae12fc20a62cbc6ba9dd44c7afbb9ed7cac1e5ad18155f469a0d0c093924d"
+    },
+    {
+      "path": "licenses/han-seal-source.json",
+      "sha256": "af9c72274cf93eb7a0ec7a1c6d9543fbaa26753001205c30a4695dca7e355432"
+    },
+    {
+      "path": "personal-icons/structures/compact/color/observe.svg",
+      "sha256": "526cd6e878a5190e2b9eec8e352b108c7e2db387fa23e4680ead72f191cbe210"
+    },
+    {
+      "path": "personal-icons/structures/compact/inverse/observe.svg",
+      "sha256": "aeae9e4de133e005103970b92ee8a52d61c23e75ba15546233673006d557acf8"
+    },
+    {
+      "path": "personal-icons/structures/compact/color/reframe.svg",
+      "sha256": "a77e4d8406b2053b5b1c068949a803a7efafbcc260600e0139e27eab44a9609d"
+    },
+    {
+      "path": "personal-icons/structures/compact/inverse/reframe.svg",
+      "sha256": "2e383555713fc5f815e4fb433f285ed851344502593cb12ae56bd777f3536b1a"
+    },
+    {
+      "path": "personal-icons/structures/compact/color/evidence.svg",
+      "sha256": "044ea6a3121a16e850afeede485fd5122d360da4071d5fb13222cd50d08e9d55"
+    },
+    {
+      "path": "personal-icons/structures/compact/inverse/evidence.svg",
+      "sha256": "c58f68caafa36e0c25d4d5305438247ffbb727acd94aba6653bcd4aa8fd803b3"
+    },
+    {
+      "path": "personal-icons/structures/compact/color/decide.svg",
+      "sha256": "617d9cc1c896ff0ad8892131c2906783f53253e80a8108e76fe22e76aa4d98f9"
+    },
+    {
+      "path": "personal-icons/structures/compact/inverse/decide.svg",
+      "sha256": "cf0b86b5d922b50e99c53c00f11f4c01c3837b0561747b52828ba6f70a37810e"
+    },
+    {
+      "path": "personal-icons/structures/compact/color/iterate.svg",
+      "sha256": "01ba03e3217a3f52d2f46502e8c4e3e23be6f168d522189c4d05f95e32a371d4"
+    },
+    {
+      "path": "personal-icons/structures/compact/inverse/iterate.svg",
+      "sha256": "3ab2e28e9b019a12e559d35495677489697b1f4ab925db5cc3ac3bc7bf6131af"
+    },
+    {
+      "path": "personal-icons/structures/compact/color/experiment.svg",
+      "sha256": "ed188116158a6e1beec82b8aa33f5798f41dc8fa11ac844120cc30430c55b114"
+    },
+    {
+      "path": "personal-icons/structures/compact/inverse/experiment.svg",
+      "sha256": "6ddd661639716a1dc3e93824f933dea9e4b9c19e9c45b3d3403780c230d5a6e9"
+    },
+    {
+      "path": "personal-icons/structures/compact/color/knowledge.svg",
+      "sha256": "4de427c41e98a0ccbc6e6a10960aa4f250cf89bac17da30f26b5fe676abd9988"
+    },
+    {
+      "path": "personal-icons/structures/compact/inverse/knowledge.svg",
+      "sha256": "4bcee02238201038a747a6ef117415e7732b98239f92f71b11f140a1a7a3681c"
+    },
+    {
+      "path": "personal-icons/structures/compact/color/agent.svg",
+      "sha256": "37485a8cda1c735053dc1853cbfdb499586b9ae4412f379f9707050e981ec262"
+    },
+    {
+      "path": "personal-icons/structures/compact/inverse/agent.svg",
+      "sha256": "b704690a0ff5a793eae926c334ed07d35ae8b7c460eb04b6a046d4dec4851481"
+    }
+  ]
+}

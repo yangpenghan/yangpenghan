@@ -7,19 +7,25 @@ interface Props {
 }
 const { kind = 'mark', locale = 'zh' } = Astro.props;
 const root = `${import.meta.env.BASE_URL}assets/brand/logos/`;
-const signature = locale === 'zh' ? 'will-yang-chinese-led' : 'will-yang-bilingual';
-const light = kind === 'mark' ? 'open-inference' : `${signature}-mulberry`;
-const dark = kind === 'mark' ? 'open-inference-white' : `${signature}-white`;
+const mark = locale === 'zh' ? 'han-seal' : 'open-inference';
 ---
 
-<span class:list={['brand-identity', kind]} aria-hidden="true">
-	<img class="light" src={`${root}${light}.svg`} alt="" width={kind === 'mark' ? 96 : 439.296} height={kind === 'mark' ? 96 : 142} />
-	<img class="dark" src={`${root}${dark}.svg`} alt="" width={kind === 'mark' ? 96 : 439.296} height={kind === 'mark' ? 96 : 142} />
+<span class:list={['brand-identity', kind, locale]} aria-hidden="true">
+	<span class="identity-mark">
+		<img class="light" src={`${root}${mark}.svg`} alt="" width="96" height="96" />
+		<img class="dark" src={`${root}${mark}-white.svg`} alt="" width="96" height="96" />
+	</span>
+	{kind === 'signature' && <span class="identity-name">{locale === 'zh' ? '杨朋翰' : 'Will Yang'}<small>{locale === 'zh' ? 'WILL YANG' : '杨朋翰'}</small></span>}
 </span>
 
 <style>
-	.brand-identity { display: block; width: 100%; }
-	img { width: 100%; height: auto; }
+	.brand-identity { display: inline-flex; align-items: center; gap: .75rem; max-width: 100%; }
+	.identity-mark { display: block; width: 100%; min-width: 0; }
+	.signature .identity-mark { width: 3rem; flex: 0 0 3rem; }
+	.mark.zh .identity-mark { min-width: 3rem; }
+	img { display: block; width: 100%; height: auto; }
+	.identity-name { display: grid; color: var(--author); font-size: 1.18rem; font-weight: 600; line-height: 1.2; white-space: nowrap; }
+	small { margin-top: .2rem; color: var(--ink-soft); font-size: .58rem; letter-spacing: .07em; }
 	.dark { display: none; }
 	:global(.theme-dark) .light { display: none; }
 	:global(.theme-dark) .dark { display: block; }
