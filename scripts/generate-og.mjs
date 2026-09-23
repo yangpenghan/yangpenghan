@@ -6,10 +6,7 @@ const portraitPath = fileURLToPath(new URL('../public/assets/portrait.jpg', impo
 const portrait = await readFile(portraitPath);
 const portraitUrl = `data:image/jpeg;base64,${portrait.toString('base64')}`;
 const brandRoot = new URL('../public/assets/brand/', import.meta.url);
-const marks = {
-	zh: await readFile(new URL('logos/han-seal.svg', brandRoot)),
-	en: await readFile(new URL('logos/open-inference.svg', brandRoot)),
-};
+const mark = await readFile(new URL('logos/open-inference.svg', brandRoot));
 const latin = await readFile(new URL('fonts/technical/IBMPlexSans.woff2', brandRoot));
 const chinese = await readFile(new URL('fonts/technical/NotoSansSC-site.woff2', brandRoot));
 const executablePath = process.env.CHROME_PATH ?? '/usr/bin/google-chrome';
@@ -51,7 +48,7 @@ function escapeHtml(value) {
 }
 
 function renderCover(cover) {
-	const markUrl = `data:image/svg+xml;base64,${marks[cover.locale].toString('base64')}`;
+	const markUrl = `data:image/svg+xml;base64,${mark.toString('base64')}`;
 	return `<!doctype html>
 <html lang="${cover.locale === 'zh' ? 'zh-CN' : 'en'}">
 <head>

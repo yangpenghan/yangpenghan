@@ -16,7 +16,7 @@ The governing V4.1 references are `src/data/personal-system.json` and `assets/pe
 | Interactive state | #285ACA | `--signal` |
 | Selection | #A8CCD6 | `--selection` |
 
-Dark mode is a site adaptation, using the upstream white identity assets. `BrandIdentity.astro` selects the independent Han seal for Chinese and Precision Assembly W/Y for English. Existing semantic icons use V4.1 structures compact assets at 32px and dedicated inverse variants in dark mode. Observation glyphs remain domain-specific illustrations. No generated research data is presented as actual work. Existing bilingual content, routes, contact links and portrait are retained.
+Dark mode is a site adaptation, using the upstream white identity assets. `BrandIdentity.astro` uses Precision Assembly W/Y sitewide; only the Chinese overview and about footers use the independent Han seal. Both social previews use W/Y. Existing semantic icons use V4.1 structures compact assets at 32px and dedicated inverse variants in dark mode. Observation glyphs remain domain-specific illustrations. No generated research data is presented as actual work. Existing bilingual content, routes, contact links and portrait are retained.
 
 ## Assets and fonts
 

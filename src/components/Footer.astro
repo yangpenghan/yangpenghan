@@ -11,12 +11,13 @@ const { locale } = Astro.props;
 const t = useTranslations(locale);
 const year = new Date().getFullYear();
 const homeUrl = getRelativeLocaleUrl(locale, '');
+const useHanSeal = locale === 'zh' && ['/overview/', '/about/'].some((path) => Astro.url.pathname.endsWith(path));
 ---
 
 <footer>
 	<div class="page-shell footer-grid">
 		<div class="footer-mark">
-			<a href={homeUrl} aria-label={`${t('nav.brand')} — ${t('nav.home')}`}><BrandIdentity {locale} /></a>
+			<a href={homeUrl} aria-label={`${t('nav.brand')} — ${t('nav.home')}`}><BrandIdentity {locale} {useHanSeal} /></a>
 			<p>{t('footer.tagline')}</p>
 		</div>
 

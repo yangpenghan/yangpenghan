@@ -4,7 +4,7 @@ This site presents an independent problem-solving practice across behavioral res
 
 ## Identity
 
-Use Personal V4.1: cool paper surfaces, plum authorship, blue action accents, local IBM Plex Sans and Noto Sans SC. The English identity uses the Precision Assembly W/Y mark; the Chinese identity uses the independent Han seal. Choose semantic icons by meaning, family, and rendered size. Canonical tokens and asset provenance are documented in [the visual system](docs/visual-system.md) and implemented in `src/styles/global.css` and `public/assets/brand/`.
+Use Personal V4.1: cool paper surfaces, plum authorship, blue action accents, local IBM Plex Sans and Noto Sans SC. Use the Precision Assembly W/Y mark sitewide, including Chinese pages and social previews. Reserve the independent Han seal for the Chinese overview and about footers. Choose semantic icons by meaning, family, and rendered size. Canonical tokens and asset provenance are documented in [the visual system](docs/visual-system.md) and implemented in `src/styles/global.css` and `public/assets/brand/`.
 
 Use calm editorial hierarchy, clear rules, generous but purposeful spacing, and diagrams that explain relationships. Do not substitute a generic component-library appearance or use diagram geometry to imply unmeasured quantities.
 

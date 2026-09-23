@@ -4,13 +4,14 @@ import type { Locale } from '../i18n';
 interface Props {
 	kind?: 'mark' | 'signature';
 	locale?: Locale;
+	useHanSeal?: boolean;
 }
-const { kind = 'mark', locale = 'zh' } = Astro.props;
+const { kind = 'mark', locale = 'zh', useHanSeal = false } = Astro.props;
 const root = `${import.meta.env.BASE_URL}assets/brand/logos/`;
-const mark = locale === 'zh' ? 'han-seal' : 'open-inference';
+const mark = useHanSeal ? 'han-seal' : 'open-inference';
 ---
 
-<span class:list={['brand-identity', kind, locale]} aria-hidden="true">
+<span class:list={['brand-identity', kind, { 'han-seal': useHanSeal }]} aria-hidden="true">
 	<span class="identity-mark">
 		<img class="light" src={`${root}${mark}.svg`} alt="" width="96" height="96" />
 		<img class="dark" src={`${root}${mark}-white.svg`} alt="" width="96" height="96" />
@@ -22,7 +23,7 @@ const mark = locale === 'zh' ? 'han-seal' : 'open-inference';
 	.brand-identity { display: inline-flex; align-items: center; gap: .75rem; max-width: 100%; }
 	.identity-mark { display: block; width: 100%; min-width: 0; }
 	.signature .identity-mark { width: 3rem; flex: 0 0 3rem; }
-	.mark.zh .identity-mark { min-width: 3rem; }
+	.mark.han-seal .identity-mark { min-width: 3rem; }
 	img { display: block; width: 100%; height: auto; }
 	.identity-name { display: grid; color: var(--author); font-size: 1.18rem; font-weight: 600; line-height: 1.2; white-space: nowrap; }
 	small { margin-top: .2rem; color: var(--ink-soft); font-size: .58rem; letter-spacing: .07em; }
