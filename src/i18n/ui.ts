@@ -223,6 +223,9 @@ const zh = {
 	'404.eyebrow': '404 · 档案缺页',
 	'404.title': '这条线索不在档案里。',
 	'404.body': '地址可能已经改变，或者这个页面从未存在。',
+	'404.reassure': '不要怕，是技术性调整。',
+	'404.figAlt': '《大时代》剧照：丁蟹说“不要怕，是技术性调整”。',
+	'404.figCaption': '行情会调整，地址不会。',
 	'404.home': '返回首页',
 	'404.work': '浏览工作档案',
 } as const;
@@ -453,6 +456,10 @@ const en: Record<UIKey, string> = {
 	'404.eyebrow': '404 · Missing file',
 	'404.title': 'This lead is not in the archive.',
 	'404.body': 'The address may have changed, or the page may never have existed.',
+	'404.reassure': "Don't panic. It's a technical adjustment.",
+	'404.figAlt':
+		'Still from The Greed of Man (1992): Ting Hai says, "Don\'t panic, it\'s a technical adjustment."',
+	'404.figCaption': 'Markets adjust. Addresses do not.',
 	'404.home': 'Return home',
 	'404.work': 'Browse the work archive',
 };
